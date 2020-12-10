@@ -41,7 +41,7 @@
 #bo_list .tbl_head01 td {}
 #bo_list .tbl_head01 a {}
 #bo_list td.empty_table {}
-#bo_list tbody .even td {background:#fbfbfb}
+.even {background:#fbfbfb}
 
 /* 읽기 내 테이블 */
 #bo_v .tbl_head01 {}
@@ -91,7 +91,7 @@
 #bo_list .td_board {width:120px;text-align:center}
 #bo_list .td_chk {width:30px;text-align:center;border-top:1px solid #ecf0f1;border-bottom:1px solid #ecf0f1}
 #bo_list .td_date {width:60px;text-align:center}
-#bo_list .td_datetime {width:60px;text-align:center}
+#bo_list .td_datetime {text-align:center}
 #bo_list .td_group {width:100px;text-align:center}
 #bo_list .td_mb_id {width:100px;text-align:center}
 #bo_list .td_mng {width:80px;text-align:center}
@@ -102,8 +102,13 @@
 #bo_list .td_numbig {width:80px;text-align:center}
 #bo_list .txt_active {color:#5d910b}
 #bo_list .txt_expired {color:#ccc}
-#bo_list tbody tr {border-left:2px solid transparent}
-#bo_list tbody tr:hover {border-left:2px solid #253dbe}
+#bo_list tbody .tr {border-left:2px solid transparent}
+#bo_list tbody .tr_hover:hover {border-left:2px solid #253dbe}
+#bo_list #tbody:hover{border-left:2px solid #253dbe; background-color: #fbfbfb;}
+#bo_list #tbody{border-left:2px solid transparent}
+#bo_list #tbody tr{border: none;}
+.title_border{border-bottom: 2px solid black; }
+
 
 #bo_cate {margin:25px 0}
 #bo_cate h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}

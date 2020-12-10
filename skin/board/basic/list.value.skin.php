@@ -15,14 +15,12 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 
 
 
-
 ?>
 <!-- 게시판 목록 시작 { -->
 <aside id="bo_side">
-    <h2 class="aside_nav">보고서 제출</h2>
+    <h2 class="aside_nav">지원결과 확인</h2>
     <?php $class_get =  $_GET['bo_idx'] == '1'?"aisde_click":""; ?>
-    <a class="aside_nav <?php echo $class_get =  $_GET['bo_idx'] == '1'?"aisde_click":""; ?>" href="<?= G5_BBS_URL ?>/board.report.php?bo_table=business&bo_idx=1">중간보고서</a>
-    <a class="aside_nav <?php echo $class_get =  $_GET['bo_idx'] == '2'?"aisde_click":""; ?>" href="<?= G5_BBS_URL ?>/board.report.php?bo_table=business&bo_idx=2">결과(연차)보고서</a>
+    <a class="aside_nav aisde_click" href="<?= G5_BBS_URL ?>/board.value.php?bo_table=business&bo_idx=1">지원결과 확인</a>
 </aside>
 <!-- $bo_title -->
 <div id="bo_list" >
@@ -42,17 +40,12 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 
     <!-- 게시판 페이지 정보 및 버튼 시작 { -->
     <div id="bo_btn_top">
-        <h1 id=""><?php echo $bo_title; ?></h1>
+        <h1 id="">지원결과 확인</h1>
 
         <ul class="btn_bo_user">
             <li>
             	<button type="button" class="btn_bo_sch btn_b01 btn" title="게시판 검색"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">게시판 검색</span></button>
             </li>
-        	<?php if ($is_admin == 'super') {  ?>
-                <li>
-                    <a href="<?php echo $write_href ?>" class="btn_b01 btn" title="글쓰기"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sound_only">글쓰기</span></a>
-                </li>
-        	<?php }  ?>
         </ul>
     </div>
     <!-- } 게시판 페이지 정보 및 버튼 끝 -->
@@ -60,23 +53,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     <div class="tbl_head01 tbl_wrap">
         <table>
         <caption><?php echo $board['bo_subject'] ?> 목록</caption>
-        <thead>
-        <tr>
-            <th scope="col">번호</th>
-            <th scope="col">지원사업 분야</th>
-            <th scope="col">제목</th>
-            <th scope="col">마감일</th>
-            <th scope="col">상태</th>
-        </tr>
-        </thead>
-        <tbody>
+        
         <?php
-        if( $_GET['bo_idx'] == 1) {
-            $value = 'value';
-        } else if($_GET['bo_idx'] == 2){
-            $value = 'report_val_1';
-        }
-            $sql2 = " select * from g5_business_propos where mb_id = '{$member[mb_id]}' AND $value = '1' ";
+            $sql2 = " select * from g5_business_propos where mb_id = '{$member[mb_id]}'";
             $sql2 .= " {$sql_order} limit {$from_record}, $page_rows ";
 
             $result2 = sql_query($sql2);
@@ -86,55 +65,56 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                 if ($i%2==0) $lt_class = "even";
                 else $lt_class = "";
 
-                $sql = " select * from report where mb_id= '{$member['mb_id']}' AND business_idx = '{$row['idx']}'";
-                $result = sql_query($sql);
-                $row22 = sql_fetch_array($result);
-               
-                $sql = " select * from g5_write_business_title where idx= '{$row[bo_title_idx]}'";
-                $result = sql_query($sql);
-                $row33 = sql_fetch_array($result);
-
                 $sql = " select * from g5_write_business where wr_id= '{$row[bo_idx]}'";
                 $result = sql_query($sql);
                 $row44 = sql_fetch_array($result);
 		?>
-        <tr class="<?= $lt_class ?> tr_hover">
-            <td class="td_idx td_center">
-           <?=
-             $list[$i]['num'];
-             ?>
-            </td>
-
-            <td class="td_download td_center">
-                 <?= $row33['title']; ?>
-            </td>
-            <td class="td_title" style="padding-left:<?php echo $list[$i]['reply'] ? (strlen($list[$i]['wr_reply'])*10) : '0'; ?>px">
-                <a href="../bbs/board.report.php?bo_table=<?=$_GET['bo_table']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&wr_bo_idx=<?php echo $row['idx']; ?>&wr_idx=<?php echo $row['bo_idx']; ?>">
+        <tbody id = "tbody" class="<?= $lt_class ?>" style="">
+            <tr> 
+                <td class="" style="border:none; text-align:left; width: 70%">
+                <span >지원사업 제목 : </span>
                     <?= $row44['wr_subject']; ?>
-                </a>
-            </td>
-            <td class="td_datetime td_center"><?php echo $row44['wr_date_end'] ?></td>
-            <td class="td_end td_center">
-                <?php  
-                    if($row22['report'] == 2){
-                        echo '제출완료';
-                    }else if($row22['report'] == 1){
-                        echo '작성중';
-                    }else{
-                        echo '미작성';
-                    }  ?>
-            </td>
-            
+                </td>
+                <td class="" style="border:none; text-align:left; width: 30%">
+                    <span >지원일자 : </span>
 
-        </tr>
+                    <?= $row['bf_datetime']; ?>
+                </td>
+                
+            </tr>
+            <tr>
+                <td class="" style="border:none; text-align:left; width: 70%">
+                    <span >지원상태 : </span>
 
+                    <?php 
+                        if($row['value'] == 2 || $row22['value'] == 3){
+                            echo '심사완료';
+                        }else if($row['value'] == 1){
+                            echo '심사중';
+                        }else{
+                            echo '제출완료';
+                        }
+                    ?>
+                </td>
+                <td class="" style="border:none; text-align:left; width: 30%">
+                    <span >지원결과 : </span>
+
+                    <?php 
+                        if($row['value'] == 3){
+                            echo '합격';
+                        }else if($row['value'] == 2){
+                            echo '불합격';
+                        }else{
+                            echo '심사중';
+                        }
+                    ?>
+                </td>
+                
+            </tr>
+        </tbody>
         <?php }?>
-
-        
-
         <?php if ($total_count == 0) { echo '<tr><td colspan="6" class="empty_table">게시물이 없습니다.</td></tr>'; } ?>
 
-        </tbody>
         </table>
     </div>
 

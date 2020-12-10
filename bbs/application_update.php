@@ -342,7 +342,8 @@ if ($w == '' || $w == 'r') {
     }
 
     $sql = " insert into g5_business_propos
-                set bo_idx = '{$_POST['wr_id']}',
+                set bo_title_idx = '{$_POST['bo_idx']}',
+                bo_idx = '{$_POST['wr_id']}',
                 mb_id = '{$member['mb_id']}',
                 info_number = '{$_POST['info_number']}',
                 quest_number = '{$_POST['quest_number']}',
@@ -356,6 +357,7 @@ if ($w == '' || $w == 'r') {
                 phone = '{$_POST['phone']}',
                 main_member = '{$_POST['main_member']}',
                 sub_member = '{$_POST['sub_member']}',
+                bf_datetime = '".G5_TIME_YMDHIS."',
                 date_start = '{$_POST['date_start']}',
                 date_end = '{$_POST['date_end']}',
                 money = '{$_POST['money']}',
@@ -363,12 +365,11 @@ if ($w == '' || $w == 'r') {
                 two_year = '{$_POST['two_year']}',
                 file = '{$_POST['file_count']}',
                 wr_hit = 0,
+                report_val_1 = '0',
+                report_val_2 = '0',
                 value = 'null'";
 
     sql_query($sql);
-    echo $sql;
-    echo "<br>";
-    echo "<br>";
 
 }  
 
@@ -514,8 +515,6 @@ if(isset($_FILES['bf_file']['name']) && is_array($_FILES['bf_file']['name'])) {
 }   // end if
 
 // 나중에 테이블에 저장하는 이유는 $wr_id 값을 저장해야 하기 때문입니다.
-echo "<br>";
-    echo "<br>";
 for ($i=0; $i<count($upload); $i++)
 {   
     if($upload[$i]['source'] != ""){
@@ -546,9 +545,6 @@ for ($i=0; $i<count($upload); $i++)
                                     and wr_id = '{$wr_id}'
                                     and bf_no = '{$i}' ";
                 sql_query($sql);
-                echo $sql;
-                echo "<br>";
-                echo "<br>";
             }
             else
             {
@@ -558,9 +554,6 @@ for ($i=0; $i<count($upload); $i++)
                                       and wr_id = '{$wr_id}'
                                       and bf_no = '{$i}' ";
                 sql_query($sql);
-                echo $sql;
-                echo "<br>";
-                echo "<br>";
             }
         }
         else
@@ -582,10 +575,7 @@ for ($i=0; $i<count($upload); $i++)
                              bf_type = '".(int)$upload[$i]['image'][2]."',
                              bf_datetime = '".G5_TIME_YMDHIS."' ";
             sql_query($sql);
-            echo $sql;
             run_event('write_update_file_insert', $bo_table, $wr_id, $upload[$i], $w);
-            echo "<br>";
-            echo "<br>";
         }
     }
 }
@@ -614,17 +604,16 @@ sql_query(" delete from {$g5['autosave_table']} where as_uid = '{$uid}' ");
 
 
 // 사용자 코드 실행
-// @include_once($board_skin_path.'/write_update.skin.php');
-// @include_once($board_skin_path.'/write_update.tail.skin.php');
+@include_once($board_skin_path.'/write_update.skin.php');
+@include_once($board_skin_path.'/write_update.tail.skin.php');
 
-// delete_cache_latest($bo_table);
+delete_cache_latest($bo_table);
 
-// $redirect_url = run_replace('write_update_move_url', short_url_clean(G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr), $board, $wr_id, $w, $qstr, $file_upload_msg);
+alert("신청완료", G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&bo_idx='.$_POST['bo_idx']);
+run_event('write_update_after', $board, $wr_id, $w, $qstr, $redirect_url);
 
-// run_event('write_update_after', $board, $wr_id, $w, $qstr, $redirect_url);
-
-// if ($file_upload_msg)
-//     alert($file_upload_msg, $redirect_url);
-// else
-//     goto_url($redirect_url);
+if ($file_upload_msg)
+    alert($file_upload_msg, $redirect_url);
+else
+    goto_url($redirect_url);
 // ?>

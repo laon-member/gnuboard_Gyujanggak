@@ -90,7 +90,7 @@ $result = sql_query($sql);
         	if ($i%2==0) $lt_class = "even";
             else $lt_class = "";
 		?>
-        <tr class="<?php if ($list[$i]['is_notice']) echo "bo_notice"; ?> <?php echo $lt_class ?>">
+        <tr class="<?php if ($list[$i]['is_notice']) echo "bo_notice"; ?> <?php echo $lt_class ?> tr_hover">
             
             <td class="td_idx td_center">
             <?php

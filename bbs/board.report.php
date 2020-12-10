@@ -9,6 +9,9 @@ if (!$board['bo_table']) {
    alert('존재하지 않는 게시판입니다.', G5_URL);
 }
 
+if (!$is_member)
+        alert('로그인 후 이용하여 주십시오.', G5_URL);
+
 check_device($board['bo_device']);
 
 if (isset($write['wr_is_comment']) && $write['wr_is_comment']) {
@@ -230,6 +233,9 @@ $admin_href = "";
 // 최고관리자 또는 그룹관리자라면
 if ($member['mb_id'] && ($is_admin === 'super' || $group['gr_admin'] === $member['mb_id']))
     $admin_href = G5_ADMIN_URL.'/board_form.php?w=u&amp;bo_table='.$bo_table;
+
+$board_report_border = "title_border";
+$board_user = 1;
 
 include_once(G5_BBS_PATH.'/board_head.php');
 $wr_bo_idx = $_GET['wr_bo_idx'];

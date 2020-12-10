@@ -31,15 +31,18 @@ $result = sql_query($sql);
     <h2 class="aside_nav">사업 공고</h2>
     <?php 
         for($k=1; $row=sql_fetch_array($result); $k++) {
-            $class_get =  $_GET['bo_idx'] == $k?"aisde_click":"";
+            $class_get =  $_GET['bo_idx'] == $row['idx']?"aisde_click":"";
+            $title_text = $_GET['bo_idx'] == $row['idx']? $row['title'] : "";
             echo '<a class="aside_nav '.$class_get.'" href="'.G5_BBS_URL .'/board.php?bo_table='.$bo_table.'&bo_idx='.$k.'">'.$row["title"].'</a>';
         }
     ?>
 </aside>
 <div id="bo_list" >
-
-   
-    
+    <?php 
+        $sql = " select * from g5_write_business_title where idx = '{$_GET[bo_idx]}'";
+        $result = sql_query($sql);
+        $row = sql_fetch_array($result);
+    ?>
     <form name="fboardlist" id="fboardlist" action="<?php echo G5_BBS_URL; ?>/board_list_update.php" onsubmit="return fboardlist_submit(this);" method="post">
     
     <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
@@ -54,7 +57,7 @@ $result = sql_query($sql);
 
     <!-- 게시판 페이지 정보 및 버튼 시작 { -->
     <div id="bo_btn_top">
-        <h1 id=""><?php echo $title_text; ?></h1>
+        <h1 id=""><?php  echo $row['title']; ?></h1>
 
         <ul class="btn_bo_user">
             <li>
@@ -90,7 +93,7 @@ $result = sql_query($sql);
         	if ($i%2==0) $lt_class = "even";
             else $lt_class = "";
 		?>
-        <tr class="<?php if ($list[$i]['is_notice']) echo "bo_notice"; ?> <?php echo $lt_class ?>">
+        <tr class="<?php if ($list[$i]['is_notice']) echo "bo_notice"; ?> <?php echo $lt_class ?> tr_hover">
             
             <td class="td_idx td_center">
             <?php
@@ -151,7 +154,7 @@ $result = sql_query($sql);
 
         </tr>
         <?php } ?>
-        <?php if (count($list) == 0) { echo '<tr><td colspan="6" class="empty_table">게시물이 없습니다.</td></tr>'; } ?>
+        <?php if (count($list) == 0) { echo '<tr><td colspan="6" class="empty_table">사업공고 내용이 없습니다.</td></tr>'; } ?>
         </tbody>
         </table>
     </div>

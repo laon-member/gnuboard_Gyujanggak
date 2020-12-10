@@ -4,11 +4,13 @@ include_once('./_common.php');
 // {
 //     alert('로그인 하십시오.', G5_BBS_URL.'/login.php?url=' . urlencode(correct_goto_url(G5_ADMIN_URL)));
 // }
-$bo_idx = $_GET['bo_idx'];
 
 if (!$board['bo_table']) {
-   alert('존재하지 않는 게시판입니다.', G5_URL);
-}
+    alert('존재하지 않는 게시판입니다.', G5_URL);
+ }
+
+ if (!$is_member)
+        alert('로그인 후 이용하여 주십시오.', G5_URL);
 
 check_device($board['bo_device']);
 
@@ -183,7 +185,7 @@ if ((isset($wr_id) && $wr_id) || (isset($wr_seo_title) && $wr_seo_title)) {
 }
 
 
-$board_user = 1;
+
 include_once(G5_PATH.'/head.sub.php');
 
 $width = $board['bo_table_width'];
@@ -232,19 +234,18 @@ $admin_href = "";
 if ($member['mb_id'] && ($is_admin === 'super' || $group['gr_admin'] === $member['mb_id']))
     $admin_href = G5_ADMIN_URL.'/board_form.php?w=u&amp;bo_table='.$bo_table;
 
-$board_notice_border = "title_border";
+$board_value_border = "title_border";  
+$board_user = 1;
 include_once(G5_BBS_PATH.'/board_head.php');
+$wr_bo_idx = $_GET['wr_bo_idx'];
 
-// 게시물 아이디가 있다면 게시물 보기를 INCLUDE
-if (isset($wr_id) && $wr_id) {
-    include_once(G5_BBS_PATH.'/view.notice.php');
-}
+include_once (G5_BBS_PATH.'/list.value.php');
 
 // 전체목록보이기 사용이 "예" 또는 wr_id 값이 없다면 목록을 보임
 //if ($board['bo_use_list_view'] || empty($wr_id))
 if ($member['mb_level'] >= $board['bo_list_level'] && $board['bo_use_list_view'] || empty($wr_id))
-    include_once (G5_BBS_PATH.'/list.notice.php');
 
+  
 include_once(G5_BBS_PATH.'/board_tail.php');
 
 echo "\n<!-- 사용스킨 : ".(G5_IS_MOBILE ? $board['bo_mobile_skin'] : $board['bo_skin'])." -->\n";

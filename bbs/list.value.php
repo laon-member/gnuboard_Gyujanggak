@@ -94,6 +94,14 @@ if(G5_IS_MOBILE) {
     $list_page_rows = $board['bo_page_rows'];
 }
 
+
+// for($i = 0; $i < 10; $i++){
+//     if($i == 5){
+//         break;
+//     }
+//     echo $i;
+// }
+
 if ($page < 1) { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 
 // 년도 2자리
@@ -300,7 +308,14 @@ if ($board['bo_use_rss_view']) {
     $rss_href = G5_BBS_URL.'/rss.php?bo_table='.$bo_table;
 }
 
+$bo_idx = $_GET['bo_idx'];
+if($bo_idx == 1){
+    $bo_title = "중간보고서";
+} else {
+    $bo_title = "결과(연차)보고서";
+}
+
 
 $stx = get_text(stripslashes($stx));
-include_once($board_skin_path.'/list.report.skin.php');
+include_once($board_skin_path.'/list.value.skin.php');
 ?>

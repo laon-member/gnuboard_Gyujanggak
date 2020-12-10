@@ -7,8 +7,10 @@ include_once('./_common.php');
 $bo_idx = $_GET['bo_idx'];
 
 if (!$board['bo_table']) {
-   alert('존재하지 않는 게시판입니다.', G5_URL);
-}
+    alert('존재하지 않는 게시판입니다.', G5_URL);
+ }
+
+
 
 check_device($board['bo_device']);
 
@@ -182,7 +184,7 @@ if ((isset($wr_id) && $wr_id) || (isset($wr_seo_title) && $wr_seo_title)) {
     $g5['title'] = $g5['board_title'].' '.$page.' 페이지';
 }
 
-
+$board_border = "title_border";
 
 include_once(G5_PATH.'/head.sub.php');
 
@@ -232,6 +234,7 @@ $admin_href = "";
 if ($member['mb_id'] && ($is_admin === 'super' || $group['gr_admin'] === $member['mb_id']))
     $admin_href = G5_ADMIN_URL.'/board_form.php?w=u&amp;bo_table='.$bo_table;
 
+$board_user = 1;
 include_once(G5_BBS_PATH.'/board_head.php');
 
 // 게시물 아이디가 있다면 게시물 보기를 INCLUDE

@@ -36,13 +36,6 @@ $stx = trim($stx);
 //검색인지 아닌지 구분하는 변수 초기화
 $is_search_bbs = false;
 
-
-if( $_GET['bo_idx'] == 1) {
-    $value = 'value';
-} else if($_GET['bo_idx'] == 2){
-    $value = 'report_val_1';
-}
-
 if ($sca || $stx || $stx === '0') {     //검색이면
     $is_search_bbs = true;      //검색구분변수 true 지정
     $sql_search = get_sql_search($sca, $sfl, $stx, $sop);
@@ -58,11 +51,10 @@ if ($sca || $stx || $stx === '0') {     //검색이면
 
     // 원글만 얻는다. (코멘트의 내용도 검색하기 위함)
     // 라엘님 제안 코드로 대체 http://sir.kr/g5_bug/2922
-    $sql = " SELECT COUNT(DISTINCT `idx`) AS `cnt` FROMreport where mb_id = '$member[mb_id]' AND report_idx = '{$_GET['bo_idx']}' ";
-
-
+    $sql = " SELECT COUNT(DISTINCT `wr_parent`) AS `cnt` FROM {$write_table} WHERE {$sql_search} ";
     $total_count = $row['cnt'];
-    
+
+    echo $total_count;
     $title_text = '검색';
 
     // for($i=1; $row=sql_fetch_array($result); $i++) {
@@ -80,11 +72,11 @@ if ($sca || $stx || $stx === '0') {     //검색이면
     //     alert('존재하지 않는 게시판입니다.', G5_URL);
     //  }
 
-    $sql = " SELECT COUNT(DISTINCT `idx`) AS `cnt` FROM g5_business_propos where mb_id = '$member[mb_id]' AND $value = '1'";
+    $sql = "  select COUNT(DISTINCT `idx`) as cnt from rater where user_id = '{$member['mb_id']}' AND value = '2' AND test_id = '{$_GET['bo_idx']}'";
     $row = sql_fetch($sql);
     $total_count = $row['cnt'];
-
 }
+
 
 if(G5_IS_MOBILE) {
     $page_rows = $board['bo_mobile_page_rows'];
@@ -104,39 +96,36 @@ $i = 0;
 $notice_count = 0;
 $notice_array = array();
 
-// // 공지 처리
-// if (!$is_search_bbs) {
-//     $arr_notice = explode(',', trim($board['bo_notice']));
-//     $from_notice_idx = ($page - 1) * $page_rows;
-//     if($from_notice_idx < 0)
-//         $from_notice_idx = 0;
-//     $board_notice_count = count($arr_notice);
+// 공지 처리
+if (!$is_search_bbs) {
+    $arr_notice = explode(',', trim($board['bo_notice']));
+    $from_notice_idx = ($page - 1) * $page_rows;
+    if($from_notice_idx < 0)
+        $from_notice_idx = 0;
+    $board_notice_count = count($arr_notice);
 
-//     for ($k=0; $k<$board_notice_count; $k++) {
-//         if (trim($arr_notice[$k]) == '') continue;
+    for ($k=0; $k<$board_notice_count; $k++) {
+        if (trim($arr_notice[$k]) == '') continue;
 
-//         $row = sql_fetch(" select * from {$write_table} where mb_id = '{$member[mb_id]}' ");
+        $row = sql_fetch(" select * from {$write_table} where wr_title_idx = '{$bo_idx}' ");
 
-//         echo $write_table;
-//         echo $write_table;
-//         // if (!$row['wr_id']) continue;
+        if (!$row['wr_id']) continue;
 
-//         // $notice_array[] = $row['wr_id'];
+        $notice_array[] = $row['wr_id'];
 
-//         // if($k < $from_notice_idx) continue;
+        if($k < $from_notice_idx) continue;
 
-//     $list[$i] = sql_query($row);
+        $list[$i] = get_list($row, $board, $board_skin_url, G5_IS_MOBILE ? $board['bo_mobile_subject_len'] : $board['bo_subject_len']);
+        $list[$i]['is_notice'] = true;
 
-//         // $list[$i] = get_list($row, $board, $board_skin_url, G5_IS_MOBILE ? $board['bo_mobile_subject_len'] : $board['bo_subject_len']);
-//         // $list[$i]['is_notice'] = true;
+        $i++;
+        $notice_count++;
 
-//         $i++;
-//         $notice_count++;
+        if($notice_count >= $list_page_rows)
+            break;
+    }
+}
 
-//         if($notice_count >= $list_page_rows)
-//             break;
-//     }
-// }
 
 $total_page  = ceil($total_count / $page_rows);  // 전체 페이지 계산
 $from_record = ($page - 1) * $page_rows; // 시작 열을 구함
@@ -198,56 +187,37 @@ if ($sst) {
 
 
 // 여기 입니다.
+    $sql = " select * from rater where user_id = '{$member['mb_id']}' AND value = '2' AND test_id = '{$_GET['bo_idx']}'";
+    if(!empty($notice_array))
+        $sql .= " and wr_id not in (".implode(', ', $notice_array).") ";
+    $sql .= " {$sql_order} limit {$from_record}, $page_rows ";
 
-$sql = " select * from g5_business_propos where mb_id = '$member[mb_id]' AND $value = '1'";
-$sql .= " {$sql_order} limit {$from_record}, $page_rows ";
 
 // 페이지의 공지개수가 목록수 보다 작을 때만 실행
-$j = 0;
 if($page_rows > 0) {
     $result = sql_query($sql);
 
     $k = 0;
+
     while ($row = sql_fetch_array($result))
     {
-
         // 검색일 경우 wr_id만 얻었으므로 다시 한행을 얻는다
-        // if (strstr($sfl, 'subject')) {
-        //     $list[$i]['subject'] = search_font($stx, $list[$i]['subject']);
-        // }
-        // $list[$i]['is_notice'] = false;
-        
+        if ($is_search_bbs)
+            $row = sql_fetch(" select * from {$write_table} where wr_id = '{$row['wr_parent']}' ");
+
+        $list[$i] = get_list($row, $board, $board_skin_url, G5_IS_MOBILE ? $board['bo_mobile_subject_len'] : $board['bo_subject_len']);
         if (strstr($sfl, 'subject')) {
             $list[$i]['subject'] = search_font($stx, $list[$i]['subject']);
         }
         $list[$i]['is_notice'] = false;
         $list_num = $total_count - ($page - 1) * $list_page_rows - $notice_count;
         $list[$i]['num'] = $list_num - $k;
+
         $i++;
         $k++;
-
     }
-
-    // while ($row = sql_fetch_array($result))
-    // {
-    //     // 검색일 경우 wr_id만 얻었으므로 다시 한행을 얻는다
-    //     if ($is_search_bbs)
-    //         $row = sql_fetch(" select * from {$write_table} where wr_id = '{$row['wr_parent']}' ");
-
-    //     $list[$i] = get_list($row, $board, $board_skin_url, G5_IS_MOBILE ? $board['bo_mobile_subject_len'] : $board['bo_subject_len']);
-    //     if (strstr($sfl, 'subject')) {
-    //         $list[$i]['subject'] = search_font($stx, $list[$i]['subject']);
-    //     }
-    //     $list[$i]['is_notice'] = false;
-    //     $list_num = $total_count - ($page - 1) * $list_page_rows - $notice_count;
-    //     $list[$i]['num'] = $list_num - $k;
-
-    //     $i++;
-    //     $k++;
-    // }
-
-    
 }
+
 g5_latest_cache_data($board['bo_table'], $list);
 
 
@@ -285,7 +255,7 @@ if ($is_search_bbs) {
 
 $write_href = '';
 if ($member['mb_level'] >= $board['bo_write_level']) {
-    $write_href = short_url_clean(G5_BBS_URL.'/write.report.php?bo_table='.$bo_table);
+    $write_href = short_url_clean(G5_BBS_URL.'/write.php?bo_table='.$bo_table);
 }
 
 $nobr_begin = $nobr_end = "";
@@ -300,7 +270,6 @@ if ($board['bo_use_rss_view']) {
     $rss_href = G5_BBS_URL.'/rss.php?bo_table='.$bo_table;
 }
 
-
 $stx = get_text(stripslashes($stx));
-include_once($board_skin_path.'/list.report.skin.php');
+include_once($board_skin_path.'/list.rater.skin.php');
 ?>

@@ -2,8 +2,10 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 include_once('./_common.php');
+
 // 선택옵션으로 인해 셀합치기가 가변적으로 변함
 $colspan = 5;
+
 if ($is_checkbox) $colspan++;
 if ($is_good) $colspan++;
 if ($is_nogood) $colspan++;
@@ -11,23 +13,31 @@ if ($is_nogood) $colspan++;
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
 
-  
 
+$sql = " select * from rater where test_id = '{$_GET[bo_table]}' AND value = '2'";
+$result = sql_query($sql);
 
-
+// $sql1 = " SELECT * FROM {$write_table} WHERE wr_title_idx = {$bo_idx} ";
+// $result1 = sql_query($sql1);
+// $num = 0;
+// for($j=1; $row=sql_fetch_array($result1); $j++) {
+    
+//     $num ++;
+// }
 
 ?>
 <!-- 게시판 목록 시작 { -->
 <aside id="bo_side">
-    <h2 class="aside_nav">보고서 제출</h2>
-    <?php $class_get =  $_GET['bo_idx'] == '1'?"aisde_click":""; ?>
-    <a class="aside_nav <?php echo $class_get =  $_GET['bo_idx'] == '1'?"aisde_click":""; ?>" href="<?= G5_BBS_URL ?>/board.report.php?bo_table=business&bo_idx=1">중간보고서</a>
-    <a class="aside_nav <?php echo $class_get =  $_GET['bo_idx'] == '2'?"aisde_click":""; ?>" href="<?= G5_BBS_URL ?>/board.report.php?bo_table=business&bo_idx=2">결과(연차)보고서</a>
+    <h2 class="aside_nav">심사관리</h2>
+   
+    <a class="aside_nav <?= $_GET['bo_idx'] == 1?"aisde_click":""; ?>" href="<?= G5_BBS_URL ?>/board.rater.php?bo_table=<?= $bo_table ?>&bo_idx=1">지원자 선발</a>
+    <a class="aside_nav <?= $_GET['bo_idx'] == 2?"aisde_click":""; ?>" href="<?= G5_BBS_URL ?>/board.rater.php?bo_table=<?= $bo_table ?>&bo_idx=2">중간보고서</a>
+    <a class="aside_nav <?= $_GET['bo_idx'] == 3?"aisde_click":""; ?>" href="<?= G5_BBS_URL ?>/board.rater.php?bo_table=<?= $bo_table ?>&bo_idx=3">결과(연차)보고서</a>
 </aside>
-<!-- $bo_title -->
 <div id="bo_list" >
-
-    
+    <?php 
+       
+    ?>
     <form name="fboardlist" id="fboardlist" action="<?php echo G5_BBS_URL; ?>/board_list_update.php" onsubmit="return fboardlist_submit(this);" method="post">
     
     <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
@@ -42,18 +52,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 
     <!-- 게시판 페이지 정보 및 버튼 시작 { -->
     <div id="bo_btn_top">
-        <h1 id=""><?php echo $bo_title; ?></h1>
+        <h1 id="">심사관리</h1>
 
-        <ul class="btn_bo_user">
-            <li>
-            	<button type="button" class="btn_bo_sch btn_b01 btn" title="게시판 검색"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">게시판 검색</span></button>
-            </li>
-        	<?php if ($is_admin == 'super') {  ?>
-                <li>
-                    <a href="<?php echo $write_href ?>" class="btn_b01 btn" title="글쓰기"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sound_only">글쓰기</span></a>
-                </li>
-        	<?php }  ?>
-        </ul>
     </div>
     <!-- } 게시판 페이지 정보 및 버튼 끝 -->
         	
@@ -63,77 +63,58 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         <thead>
         <tr>
             <th scope="col">번호</th>
-            <th scope="col">지원사업 분야</th>
+            <th scope="col">과제번호</th>
             <th scope="col">제목</th>
-            <th scope="col">마감일</th>
-            <th scope="col">상태</th>
+            <th scope="col">심사대상</th>
         </tr>
         </thead>
         <tbody>
         <?php
-        if( $_GET['bo_idx'] == 1) {
-            $value = 'value';
-        } else if($_GET['bo_idx'] == 2){
-            $value = 'report_val_1';
-        }
-            $sql2 = " select * from g5_business_propos where mb_id = '{$member[mb_id]}' AND $value = '1' ";
-            $sql2 .= " {$sql_order} limit {$from_record}, $page_rows ";
 
-            $result2 = sql_query($sql2);
+        for ($i=0; $i<count($list); $i++) {
+            
+        	if ($i%2==0) $lt_class = "even";
+            else $lt_class = "";
 
-            for($i=0; $row=sql_fetch_array($result2); $i++) {
-                
-                if ($i%2==0) $lt_class = "even";
-                else $lt_class = "";
 
-                $sql = " select * from report where mb_id= '{$member['mb_id']}' AND business_idx = '{$row['idx']}'";
-                $result = sql_query($sql);
-                $row22 = sql_fetch_array($result);
-               
-                $sql = " select * from g5_write_business_title where idx= '{$row[bo_title_idx]}'";
-                $result = sql_query($sql);
-                $row33 = sql_fetch_array($result);
+            $sql = " select * from g5_write_business where wr_id= '{$list[$i]['business_idx']}'";
+            $result = sql_query($sql);
+            $row44 = sql_fetch_array($result);
 
-                $sql = " select * from g5_write_business where wr_id= '{$row[bo_idx]}'";
-                $result = sql_query($sql);
-                $row44 = sql_fetch_array($result);
+
+            if($_GET['bo_idx'] == 1){
+                $sql = "  select COUNT(DISTINCT `bo_idx`) as cnt from g5_business_propos where bo_idx = '{$list[$i]['business_idx']}'";
+                $row = sql_fetch($sql);
+            } else if ($_GET['bo_idx'] == 2){
+                $sql = "  select COUNT(DISTINCT `idx`) as cnt from report where business_idx = '{$list[$i]['business_idx']}' AND report_idx = '1'";
+                $row = sql_fetch($sql);
+            } else if ($_GET['bo_idx'] == 3){
+                $sql = "  select COUNT(DISTINCT `idx`) as cnt from report where business_idx = '{$list[$i]['business_idx']}' AND report_idx = '2' ";
+                $row = sql_fetch($sql);
+            }
 		?>
-        <tr class="<?= $lt_class ?> tr_hover">
+        <tr class="<?php if ($list[$i]['is_notice']) echo "bo_notice"; ?> <?php echo $lt_class ?> tr_hover">
+            
             <td class="td_idx td_center">
-           <?=
-             $list[$i]['num'];
+            <?php
+                echo $list[$i]['num'];
              ?>
             </td>
 
-            <td class="td_download td_center">
-                 <?= $row33['title']; ?>
+            <td class="td_title">
+                <?= $row44['wr_quest_number'] ?> 
             </td>
-            <td class="td_title" style="padding-left:<?php echo $list[$i]['reply'] ? (strlen($list[$i]['wr_reply'])*10) : '0'; ?>px">
-                <a href="../bbs/board.report.php?bo_table=<?=$_GET['bo_table']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&wr_bo_idx=<?php echo $row['idx']; ?>&wr_idx=<?php echo $row['bo_idx']; ?>">
+            <td class="td_download td_center"  style="padding-left:<?php echo $list[$i]['reply'] ? (strlen($list[$i]['wr_reply'])*10) : '0'; ?>px">
+               
+                <a href="../bbs/board.rater.php?bo_table=<?=$_GET['bo_table']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&wr_idx=<?php echo $row44['wr_id']; ?>">
                     <?= $row44['wr_subject']; ?>
                 </a>
-            </td>
-            <td class="td_datetime td_center"><?php echo $row44['wr_date_end'] ?></td>
-            <td class="td_end td_center">
-                <?php  
-                    if($row22['report'] == 2){
-                        echo '제출완료';
-                    }else if($row22['report'] == 1){
-                        echo '작성중';
-                    }else{
-                        echo '미작성';
-                    }  ?>
-            </td>
-            
 
+            </td>
+            <td class="td_datetime td_center"><?php echo $row['cnt']; ?></td>
         </tr>
-
-        <?php }?>
-
-        
-
-        <?php if ($total_count == 0) { echo '<tr><td colspan="6" class="empty_table">게시물이 없습니다.</td></tr>'; } ?>
-
+        <?php } ?>
+        <?php if (count($list) == 0) { echo '<tr><td colspan="6" class="empty_table">사업공고 내용이 없습니다.</td></tr>'; } ?>
         </tbody>
         </table>
     </div>
@@ -148,8 +129,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     ?>    
     
     <!-- 총 게시판 -->
-    <?php $total_page  = ceil($total_count / $page_rows);  ?>
-    
+    <?php $total_page  = ceil($num / $page_rows);  ?>
+
     <?php echo get_paging('15', $page, $total_page, $url); ?>
 	<!-- 페이지 -->
 	
@@ -272,7 +253,7 @@ jQuery(function($){
         }
     });
 
-    // if(<?php //echo $_GET['bo_idx'] == 1? true : false ?> ){
+    // if(<?php echo $_GET['bo_idx'] == 1? true : false ?> ){
     //     alert('fdsa');
     // }
 

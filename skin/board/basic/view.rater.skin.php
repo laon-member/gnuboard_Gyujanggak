@@ -1,209 +1,244 @@
 <?php
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
-include_once(G5_LIB_PATH.'/thumbnail.lib.php');
+if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
+
+include_once('./_common.php');
+
+// 선택옵션으로 인해 셀합치기가 가변적으로 변함
+$colspan = 5;
+
+if ($is_checkbox) $colspan++;
+if ($is_good) $colspan++;
+if ($is_nogood) $colspan++;
 
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
 
-// WHERE idx = {$view['wr_title_idx']}
-$sql1 = " SELECT * FROM `g5_write_business_title` where bo_table = '{$_GET[bo_table]}'";
-$result1 = sql_query($sql1);
 
+
+
+// $sql1 = " SELECT * FROM {$write_table} WHERE wr_title_idx = {$bo_idx} ";
+// $result1 = sql_query($sql1);
+// $num = 0;
+// for($j=1; $row=sql_fetch_array($result1); $j++) {
+    
+//     $num ++;
+// }
 
 ?>
-
-<script src="<?php echo G5_JS_URL; ?>/viewimageresize.js"></script>
-
-<!-- 게시물 읽기 시작 { -->
-    <aside id="bo_side">
-    <h2 class="aside_nav">사업 공고</h2>
-    <?php 
-        for($k=1; $row1=sql_fetch_array($result1); $k++) {
-            $class_get = $view['wr_title_idx'] == $row1['idx']?"aisde_click":"";
-            echo '<a class="aside_nav '.$class_get.'" href="'.G5_BBS_URL .'/board.php?bo_table=business&bo_idx='.$k.'&page=1">'.$row1['title'].'</a>';
-           
-            if($view['wr_title_idx'] == $row1['idx']){
-                $category_title =  $row1['title']; 
-            }
-        }
-    ?>
+<!-- 게시판 목록 시작 { -->
+<aside id="bo_side">
+    <h2 class="aside_nav">심사관리</h2>
+   
+    <a class="aside_nav <?= $_GET['bo_idx'] == 1?"aisde_click":""; ?>" href="<?= G5_BBS_URL ?>/board.rater.php?bo_table=<?= $bo_table ?>&bo_idx=1">지원자 선발</a>
+    <a class="aside_nav <?= $_GET['bo_idx'] == 2?"aisde_click":""; ?>" href="<?= G5_BBS_URL ?>/board.rater.php?bo_table=<?= $bo_table ?>&bo_idx=2">중간보고서</a>
+    <a class="aside_nav <?= $_GET['bo_idx'] == 3?"aisde_click":""; ?>" href="<?= G5_BBS_URL ?>/board.rater.php?bo_table=<?= $bo_table ?>&bo_idx=3">결과(연차)보고서</a>
 </aside>
-<article id="bo_v">
-    <header>
-        <?php ob_start(); ?>
-        <!-- 게시물 상단 버튼 시작 { -->
-        <div id="bo_v_top">
-            <h1 class="category_title"><?php
-                echo $category_title;
-             ?></h2>
-            <button type="button" class="btn_bo_sch btn_b01 btn" title="게시판 검색">
-                <i class="fa fa-search" aria-hidden="true"></i>
-            </button>
-        </div>
-        <div class="bo_b_tit_container">
-            <span class="bo_v_tit">
-                <?php echo cut_str(get_text($view['wr_subject']), 70); echo $view['wr_id']// 글제목 출력 ?>
-            </span>
-        </div>       
-        <div class="profile_info_container">
-            <div class="profile_info">
-                <span>지원기간 : <?php echo $view['wr_date_start']; ?> ~ <?php echo $view['wr_date_end']; ?></span>
-            </div>
-            <div class="profile_info">
-                <span>등록일 : <?php echo date("y.m.d", strtotime($view['wr_datetime'])) ?></span>
-                <span>조회 : <?php echo number_format($view['wr_hit']) ?></span>
-            </div>
-        </div>
-        
-     
+<div id="bo_list" >
+    <?php 
+       
+    ?>
+    <form name="fboardlist" id="fboardlist" action="<?php echo G5_BBS_URL; ?>/board_list_update.php" onsubmit="return fboardlist_submit(this);" method="post">
+    
+    <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
+    <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
+    <input type="hidden" name="stx" value="<?php echo $stx ?>">
+    <input type="hidden" name="spt" value="<?php echo $spt ?>">
+    <input type="hidden" name="sca" value="<?php echo $sca ?>">
+    <input type="hidden" name="sst" value="<?php echo $sst ?>">
+    <input type="hidden" name="sod" value="<?php echo $sod ?>">
+    <input type="hidden" name="page" value="<?php echo $page ?>">
+    <input type="hidden" name="sw" value="">
+
+    <!-- 게시판 페이지 정보 및 버튼 시작 { -->
+    <div id="bo_btn_top">
+        <h1 id="">심사관리</h1>
+
+    </div>
+    <!-- } 게시판 페이지 정보 및 버튼 끝 -->
+        	
+    <div class="tbl_head01 tbl_wrap">
+        <table>
+        <caption><?php echo $board['bo_subject'] ?> 목록</caption>
+        <thead>
+        <tr>
+            <th scope="col">번호</th>
+            <th scope="col">접수번호</th>
+            <th scope="col">과제명</th>
+            <th scope="col">연구책임자</th>
+            <th scope="col">평가</th>
+            <th scope="col">심사결과 제출</th>
+        </tr>
+        </thead>
+        <tbody>
         <?php
-            $link_buttons = ob_get_contents();
-            ob_end_flush();
-        ?>
-        <!-- } 게시물 상단 버튼 끝 -->
-    </header>
-    
-    <section id="bo_v_atc">
-        <h2 id="bo_v_atc_title">본문</h2>
+        $sql = "  select COUNT(DISTINCT `idx`) as cnt from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' ";
+        $row = sql_fetch($sql);
+        $total_count = $row['cnt'];
+
+        $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}'";
+        $result = sql_query($sql);
         
 
-        <?php
-        // 파일 출력
-        $v_img_count = count($view['file']);
-        if($v_img_count) {
-            echo "<div id=\"bo_v_img\">\n";
 
-            for ($i=0; $i<=count($view['file']); $i++) {
-                echo get_file_thumbnail($view['file'][$i]);
-            }
+        for ($i=0; $i<$row22 = sql_fetch_array($result); $i++) {
+            
+        	if ($i%2==0) $lt_class = "even";
+            else $lt_class = "";
+           
+		?>
+        <tr class="<?php echo $lt_class ?> tr_hover">
+            
+            <td class="td_idx td_center">
+                <?php
+                    echo $list[$i]['num'];
+                ?>
+            </td>
 
-            echo "</div>\n";
-      
-        }
-         ?>
+            <td class="td_title">
+                <?= $row22['quest_number'] ?> 
+            </td>
+            <td class="td_download td_center"  style="padding-left:<?php echo $row22['reply'] ? (strlen($list[$i]['wr_reply'])*10) : '0'; ?>px">
+               
+                    <?= $row22['ko_title']; ?>
 
-        <!-- 본문 내용 시작 { -->
-        <div id="bo_v_con"><?php echo get_view_thumbnail($view['content']); ?></div>
-        <?php //echo $view['rich_content']; // {이미지:0} 과 같은 코드를 사용할 경우 ?>
-        <!-- } 본문 내용 끝 -->
-
-        <?php if ($is_signature) { ?><p><?php echo $signature ?></p><?php } ?>
-
-
-      
-    </section>
-   
-    <?php
-    $cnt = 0;
-    if ($view['file']['count']) {
-        for ($i=0; $i<count($view['file']); $i++) {
-            if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view'])
-                $cnt++;
-        }
-    }
-    
-	?>
-
-   
-    <!-- 첨부파일 시작 { -->
-    <section id="bo_v_files">
-        <ul class="download_file">
-            <?php if($cnt) { ?>
-            <?php
-            // 가변 파일
-            for ($i=0; $i<count($view['file']); $i++) {
-                if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view']) {
-            ?>
-                <li class="">
-                    <i class="fa fa-download" aria-hidden="true"></i>
-                    <span class="view_file_download_text"><?php echo $view['file'][$i]['source'] ?></span> 
-                    <a href="<?php echo $view['file'][$i]['href'];  ?>" class="view_file_download btn_next_prv" >
-                        다운로드
-                    </a>
-                
-                </li>
-            <?php
-                        }
-                    }
-                }
-            ?>
-    
-        </ul>
-        <?php if ($prev_href || $next_href) { ?>
-        <ul class="btn_container">
-            <?php if ($prev_href) { ?>
-                <li class=" btn_next_prv" >
-                    <a href="<?php echo $prev_href ?>">
-                        <span class="nb_tit">
-                            <i class="fa fa-chevron-up" aria-hidden="true" style="transform: rotate(-90deg);"></i>
-                        </span >
-                    이전글</a> 
-                </li>
-            <?php } ?>
-            <?php if ($next_href) { ?>
-                <li class="btn_next btn_next_prv">
-                    <a href="<?php echo $next_href ?>">다음글
-                        <span class="nb_tit"> 
-                            <i class="fa fa-chevron-down" aria-hidden="true" style="transform: rotate(-90deg);"></i>
-                        </span>
-                    </a>  
-                </li>
-            <?php } ?>
-                <li class="btn_next_prv"><a href="<?php echo G5_BBS_URL .'/board.php?bo_table=business&bo_idx='.$view[wr_title_idx].'&page=1' ?>" class="btn_list">목록</a></li>
-        </ul>
+            </td>
+            <td class="td_datetime td_center"><?php echo $row22['name']; ?></td>
+            <td class="td_datetime td_center"><button type="button"><a href="../bbs/application.rater.php?bo_table=qa&bo_idx='<?= $_GET['bo_idx']; ?>'">평가</a> </button></td>
+            <td class="td_datetime td_center"><button type="button"><a href="">심사결과 제출</a> </button></td>
+        </tr>
         <?php } ?>
-    </section>
-    <!-- } 첨부파일 끝 -->
+        <?php if (count($list) == 0) { echo '<tr><td colspan="6" class="empty_table">사업공고 내용이 없습니다.</td></tr>'; } ?>
+        </tbody>
+        </table>
+    </div>
+
+	<!-- 페이지 -->
+
+    <!-- 현재 URL 주소 -->
+    <?php
+        $http_host = $_SERVER['HTTP_HOST'];
+        $request_uri = $_SERVER['REQUEST_URI'];
+        $url = 'http://' . $http_host . $request_uri;
+    ?>    
     
+    <!-- 총 게시판 -->
+    <?php $total_page  = ceil($num / $page_rows);  ?>
+    <?php echo get_paging('15', $page, $total_page, $url); ?>
+	<!-- 페이지 -->
+	
+    
+    </form>
 
-    <section id="bus_btn" >
-        <a href="../bbs/application.php?bo_table=business&bo_idx=<?php echo $view['wr_title_idx']; ?>&wr_id=<?php echo $_GET['wr_id']; ?>" class="btn_next_prv btn_next_prv_link" title="신청하기">신청하기</a>
-    </section>
+    <!-- 게시판 검색 시작 { -->
+    <div class="bo_sch_wrap">
+        <fieldset class="bo_sch">
+            <h3>검색</h3>
+            <form name="fsearch" method="get">
+            <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
+            <input type="hidden" name="sca" value="<?php echo $sca ?>">
+            <input type="hidden" name="sop" value="and">
+            <label for="sfl" class="sound_only">검색대상</label>
+            <select name="sfl" id="sfl">
+                <?php echo get_board_sfl_select_options($sfl); ?>
+            </select>
+            <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+            <div class="sch_bar">
+                <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" required id="stx" class="sch_input" size="25" maxlength="20" placeholder=" 검색어를 입력해주세요">
+                <button type="submit" value="검색" class="sch_btn"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">검색</span></button>
+            </div>
+            <button type="button" class="bo_sch_cls" title="닫기"><i class="fa fa-times" aria-hidden="true"></i><span class="sound_only">닫기</span></button>
+            </form>
+        </fieldset>
+        <div class="bo_sch_bg"></div>
+    </div>
+    <script>
+    jQuery(function($){
+        // 게시판 검색
+        $(".btn_bo_sch").on("click", function() {
+            $(".bo_sch_wrap").toggle();
+        })
+        $('.bo_sch_bg, .bo_sch_cls').click(function(){
+            $('.bo_sch_wrap').hide();
+        });
+    });
+    </script>
+    <!-- } 게시판 검색 끝 --> 
+</div>
 
-
-</article>
-
-
-<script>
-<?php if ($board['bo_download_point'] < 0) { ?>
-// $(function() {
-//     $("a.view_file_download").click(function() {
-//         if(!g5_is_member) {
-//             alert("다운로드 권한이 없습니다.\n회원이시라면 로그인 후 이용해 보십시오.");
-//             return false;
-//         }
-
-//         var msg = "파일을 다운로드 하시면 포인트가 차감(<?php echo number_format($board['bo_download_point']) ?>점)됩니다.\n\n포인트는 게시물당 한번만 차감되며 다음에 다시 다운로드 하셔도 중복하여 차감하지 않습니다.\n\n그래도 다운로드 하시겠습니까?";
-
-//         if(confirm(msg)) {
-//             var href = $(this).attr("href")+"&js=on";
-//             $(this).attr("href", href);
-
-//             return true;
-//         } else {
-//             return false;
-//         }
-//     });
-// });
+<?php if($is_checkbox) { ?>
+<noscript>
+<p>자바스크립트를 사용하지 않는 경우<br>별도의 확인 절차 없이 바로 선택삭제 처리하므로 주의하시기 바랍니다.</p>
+</noscript>
 <?php } ?>
 
-// function board_move(href)
-// {
-//     window.open(href, "boardmove", "left=50, top=50, width=500, height=550, scrollbars=1");
-// }
-</script>
-
+<?php if ($is_checkbox) { ?>
 <script>
-// $(function() {
-//     $("a.view_image").click(function() {
-//         window.open(this.href, "large_image", "location=yes,links=no,toolbar=no,top=10,left=10,width=10,height=10,resizable=yes,scrollbars=no,status=no");
-//         return false;
-//     });
+function all_checked(sw) {
+    var f = document.fboardlist;
 
-//     // 이미지 리사이즈
-//     $("#bo_v_atc").viewimageresize();
-// });
+    for (var i=0; i<f.length; i++) {
+        if (f.elements[i].name == "chk_wr_id[]")
+            f.elements[i].checked = sw;
+    }
+}
+
+function fboardlist_submit(f) {
+    var chk_count = 0;
+
+    for (var i=0; i<f.length; i++) {
+        if (f.elements[i].name == "chk_wr_id[]" && f.elements[i].checked)
+            chk_count++;
+    }
+
+    if (!chk_count) {
+        alert(document.pressed + "할 게시물을 하나 이상 선택하세요.");
+        return false;
+    }
+
+    if(document.pressed == "선택복사") {
+        select_copy("copy");
+        return;
+    }
+
+    if(document.pressed == "선택이동") {
+        select_copy("move");
+        return;
+    }
+
+    if(document.pressed == "선택삭제") {
+        if (!confirm("선택한 게시물을 정말 삭제하시겠습니까?\n\n한번 삭제한 자료는 복구할 수 없습니다\n\n답변글이 있는 게시글을 선택하신 경우\n답변글도 선택하셔야 게시글이 삭제됩니다."))
+            return false;
+
+        f.removeAttribute("target");
+        f.action = g5_bbs_url+"/board_list_update.php";
+    }
+
+    return true;
+}
 
 
+// 게시판 리스트 관리자 옵션
+jQuery(function($){
+    $(".btn_more_opt.is_list_btn").on("click", function(e) {
+        e.stopPropagation();
+        $(".more_opt.is_list_btn").toggle();
+    });
+    $(document).on("click", function (e) {
+        if(!$(e.target).closest('.is_list_btn').length) {
+            $(".more_opt.is_list_btn").hide();
+        }
+    });
+
+    // if(<?php echo $_GET['bo_idx'] == 1? true : false ?> ){
+    //     alert('fdsa');
+    // }
+
+    // $('.aside_nav').click(function(){
+    //     $('.aside_nav').removeClass('.aisde_click');
+    //     $(this).addClass('.aisde_click');
+    // });
+
+});
 </script>
-<!-- } 게시글 읽기 끝 -->
+<?php } ?>
+<!-- } 게시판 목록 끝 -->

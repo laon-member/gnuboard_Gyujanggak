@@ -462,11 +462,12 @@ function get_list($write_row, $board, $skin_url, $subject_len=40)
     // 가변 파일
     if ($board['bo_use_list_file'] || ($list['wr_file'] && $subject_len == 255) /* view 인 경우 */) {
         $list['file'] = get_file($board['bo_table'], $list['wr_id']);
-    } else {
-        $list['file']['count'] = $list['wr_file'];
-    }
-    if ($list['file']['count'])
-        $list['icon_file'] = '<i class="fa fa-download" aria-hidden="true"></i> ';
+    } 
+    // else {
+    //     $list['file']['count'] = $list['wr_file'];
+    // }
+    // if ($list['file']['count'])
+    //     $list['icon_file'] = '<i class="fa fa-download" aria-hidden="true"></i> ';
 
     return $list;
 }

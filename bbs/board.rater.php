@@ -77,6 +77,9 @@ $admin_href = "";
 // 최고관리자 또는 그룹관리자라면
 if ($member['mb_id'] && ($is_admin === 'super' || $group['gr_admin'] === $member['mb_id']))
     $admin_href = G5_ADMIN_URL.'/board_form.php?w=u&amp;bo_table='.$bo_table;
+
+$board_rater_border = "board_nav_list title_border";
+$board_user = '';
 $board_user = 2;
 include_once(G5_BBS_PATH.'/board_head.php');
 

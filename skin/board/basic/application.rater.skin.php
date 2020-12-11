@@ -4,23 +4,27 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
     
-$sql1 = " SELECT * FROM `g5_business_propos` where idx = '{$_GET['wr_idx']}'";
+$sql1 = " SELECT * FROM `g5_business_propos` where idx = '{$_GET['bo_idx']}'";
 $result1 = sql_query($sql1);
+$row=sql_fetch_array($result1);
 
+$sql1 = " SELECT * FROM `g5_write_business` where wr_id = '{$_GET['wr_idx']}'";
+$result1 = sql_query($sql1);
+$row22=sql_fetch_array($result1);
 
 ?>
 <aside id="bo_side">
     <h2 class="aside_nav">사업 공고</h2>
     <?php 
-        for($k=1; $row1=sql_fetch_array($result1); $k++) {
-            $class_get = $_GET['bo_idx'] == $row1['idx']?"aisde_click":"";
-            echo '<a class="aside_nav '.$class_get.'" href="'.G5_BBS_URL .'/board.php?bo_table=business&bo_idx='.$k.'&page=1">'.$row1['title'].'</a>';
+        // for($k=1;  $k++) {
+        //     $class_get = $_GET['bo_idx'] == $row1['idx']?"aisde_click":"";
+        //     echo '<a class="aside_nav '.$class_get.'" href="'.G5_BBS_URL .'/board.php?bo_table=business&bo_idx='.$k.'&page=1">'.$row1['title'].'</a>';
            
-            if($_GET['bo_idx'] == $row1['idx']){
-                $category_title =  $row1['title']; 
-                $category_idx = $row1['idx'];
-            }
-        }
+        //     if($_GET['bo_idx'] == $row1['idx']){
+        //         $category_title =  $row1['title']; 
+        //         $category_idx = $row1['idx'];
+        //     }
+        // }
         
     ?>
 </aside>
@@ -45,82 +49,88 @@ $result1 = sql_query($sql1);
     <div class =" ">
         <div class="bo_w_tit write_div">
             <h1>
-                <?php echo $category_title; ?>
+                <?php echo $row22['wr_subject']; ?>
             </h1>
-            <p><?php echo $row['wr_subject']; ?></p>
-        </div>
-
-        <div class="step_con">
-            <div class="step_bar">
-            <p class="step_text">step 3</p> 
-            </div>
+            <p><?= $row['ko_title']; ?></p>
         </div>
 
         <div class="write_div">
             <label for="info_number_view" class="label_text">접수번호</label>
-            <input type="text" name="info_number_view" id="info_number_view"  class="input_text input_text_50 input_text_end" placeholder="접수번호"  readonly>
+            <input type="text" name="info_number_view" id="info_number_view"  class="input_text input_text_50 input_text_end" placeholder="접수번호" value="<?= $row['info_number']; ?>"  readonly>
 
             <label for="quest_number_view" class="label_text">과제번호</label>
-            <input type="text" name="quest_number_view" id="quest_number_view"  class="input_text input_text_50 input_text_end" placeholder="과제번호" value="<?php echo $quest_number ?>" readonly>
+            <input type="text" name="quest_number_view" id="quest_number_view"  class="input_text input_text_50 input_text_end" placeholder="과제번호" value="<?= $row['quest_number']; ?>" readonly>
 
             <p>연구과제명</p>
             <label for="ko_title_view" class="label_text">과제명(국문)</label>
-            <input type="text" name="ko_title_view" id="ko_title_view"  class="input_text input_text_end" placeholder="과제명(국문)"readonly>
+            <input type="text" name="ko_title_view" id="ko_title_view"  class="input_text input_text_end" placeholder="과제명(국문)"readonly  value="<?= $row['ko_title']; ?>">
             
             <label for="en_title_view" class="label_text">과제명(영문)</label>
-            <input type="text" name="en_title_view" id="en_title_view"  class="input_text input_text_end" placeholder="과제명(영문)" readonly>
+            <input type="text" name="en_title_view" id="en_title_view"  class="input_text input_text_end" placeholder="과제명(영문)" readonly value="<?= $row['en_title']; ?>">
     
             <p>연구책임자</p>
             <label for="name_view" class="label_text">성명</label>
-            <input type="text" name="name_view" id="name_view"  class="input_text input_text_50 input_text_end" placeholder="성명" readonly>
+            <input type="text" name="name_view" id="name_view"  class="input_text input_text_50 input_text_end" placeholder="성명" readonly value="<?= $row['name']; ?>">
             
             <label for="degree_view" class="label_text">전공(학위)</label>
-            <input type="text" name="degree_view" id="degree_view"  class="input_text input_text_50 input_text_end" placeholder="전공(학위)" readonly>
+            <input type="text" name="degree_view" id="degree_view"  class="input_text input_text_50 input_text_end" placeholder="전공(학위)" readonly value="<?= $row['degree']; ?>">
 
             <label for="belong_view" class="label_text">소속</label>
-            <input type="text" name="belong_view" id="belong_view"  class="input_text input_text_50 input_text_end" placeholder="소속" readonly>
+            <input type="text" name="belong_view" id="belong_view"  class="input_text input_text_50 input_text_end" placeholder="소속" readonly value="<?= $row['belong']; ?>">
 
             <label for="rank_view" class="label_text">직급</label>
-            <input type="text" name="rank_view" id="rank_view"  class="input_text input_text_50 input_text_end" placeholder="직급" readonly>
+            <input type="text" name="rank_view" id="rank_view"  class="input_text input_text_50 input_text_end" placeholder="직급" readonly value="<?= $row['rank']; ?>">
 
             <label for="email_view" class="label_text">이메일</label>
-            <input type="text" name="email_view" id="email_view"  class="input_text input_text_50 input_text_end" placeholder="이메일" readonly>
+            <input type="text" name="email_view" id="email_view"  class="input_text input_text_50 input_text_end" placeholder="이메일" readonly value="<?= $row['email']; ?>">
 
             <label for="phone_view" class="label_text">전화</label>
-            <input type="text" name="phone_view" id="phone_view"  class="input_text input_text_50 input_text_end" placeholder="전화" readonly>
+            <input type="text" name="phone_view" id="phone_view"  class="input_text input_text_50 input_text_end" placeholder="전화" readonly value="<?= $row['phone']; ?>">
 
             <label for="main_member_view" class="label_text">공동연구원</label>
-            <input type="text" name="main_member_view" id="main_member_view"  class="input_text input_text_50  input_text_end" placeholder="명" readonly>
+            <input type="text" name="main_member_view" id="main_member_view"  class="input_text input_text_50  input_text_end" placeholder="명" readonly value="<?= $row['main_member']; ?>">
 
             <label for="sub_member_view" class="label_text">연구원보조</label>
-            <input type="text" name="sub_member_view" id="sub_member_view"  class="input_text input_text_50  input_text_end" placeholder="명" readonly>
+            <input type="text" name="sub_member_view" id="sub_member_view"  class="input_text input_text_50  input_text_end" placeholder="명" readonly value="<?= $row['sub_member']; ?>">
             
             <p class="">연구정보</p>
             <label for="date_start_view" class="label_text">총 연구 기간</label>
-            <input type="date" name="date_start_view" id="date_start_view"  class="input_text input_text_50 input_text_end" readonly>
-            <input type="date" name="date_end_view" id="date_end_view"  class="input_text input_text_50 input_text_end" readonly>
+            <input type="date" name="date_start_view" id="date_start_view"  class="input_text input_text_50 input_text_end" readonly value="<?= $row['date_start']; ?>">
+            <input type="date" name="date_end_view" id="date_end_view"  class="input_text input_text_50 input_text_end" readonly value="<?= $row['date_end']; ?>">
             <br>
             <label for="money_view" class="label_text">연구비신청액</label>
-            <input type="text" name="money_view" id="money_view"  class="input_text input_text_end" placeholder="연구비신청액" value="<?php echo $value ?>" readonly>
+            <input type="text" name="money_view" id="money_view"  class="input_text input_text_end" placeholder="연구비신청액" value="<?php echo $value ?>" readonly value="<?= $row['money']; ?>">
             
             <label for="one_year_view" class="label_text">1차년 연구비</label>
-            <input type="text" name="one_year_view" id="one_year_view"  class="input_text input_text_50 input_text_end" placeholder="1차년 연구비" readonly>
+            <input type="text" name="one_year_view" id="one_year_view"  class="input_text input_text_50 input_text_end" placeholder="1차년 연구비" readonly value="<?= $row['one_year']; ?>">
 
             <label for="two_year_view" class="label_text">2차년 연구비</label>
-            <input type="text" name="two_year_view" id="two_year_view"  class="input_text input_text_50 input_text_end" placeholder="2차년 연구비" readonly>
+            <input type="text" name="two_year_view" id="two_year_view"  class="input_text input_text_50 input_text_end" placeholder="2차년 연구비" readonly value="<?= $row['two_year']; ?>">
 
+            <?php if(false){ ?>
+            <label for="" id="bo_side" class="label_text">상세설명</label>
+            <section id="bo_v" class="bo_class">
+                <h2 id="bo_v_atc_title">본문</h2>
+                <input type="text" name="contents" class="input_text input_text_hight" value="<?= $row44['contents']; ?>"<?= $row44['report'] ==2? "disabled": ""; ?>> 
+            </section>
+            <?php } ?>
             <label for="" class="label_text">자료첨부</label>
             <div class="input_file_cont">
                 <input type="text" name="form_file0" id="form_file0"  class="input_text_100 input_text input_text_end form_file" readonly>
                 <input type="text" name="form_file1" id="form_file1"  class="input_text_100 input_text input_text_end form_file" readonly>
                 <input type="text" name="form_file2" id="form_file2"  class="input_text_100 input_text input_text_end form_file" readonly>
                 <input type="text" name="form_file3" id="form_file3"  class="input_text_100 input_text input_text_end form_file" readonly>
+                <?php if(false){ ?>
+                    
+                <?php } ?>
             </div>
+            
         </div>
 
         <div class="btn_confirm write_div btn-cont">
             <button type="button" id="btn_submit1" accesskey="s" class="btn_cancel btn btn_step2">이전</button>
-            <button type="submit" id="btn_submit2" accesskey="s" class="btn_submit btn btn_step4">다음</button>
+            <button type="submit" id="btn_submit2" accesskey="s" class="btn_submit btn btn_step4">평가</button>
+            <button type="submit" id="btn_submit2" accesskey="s" class="btn_submit btn btn_step4">제출</button>
         </div>
     </div>
     </form>
@@ -129,121 +139,6 @@ $result1 = sql_query($sql1);
 <script>
     
     $(function(){
-        $('.btn_step1').click(function(){
-            $('.step').removeClass('step_view');
-            $('.step1').addClass('step_view');
-        });
-        $('.btn_step2').click(function(){
-            $('.step').removeClass('step_view');
-            $('.step2').addClass('step_view');
-        });
-        $('.btn_step3').click(function(){
-            $('.step').removeClass('step_view');
-            $('.step3').addClass('step_view');
-        });
-        $('#info_number').change(function(){
-            $('#info_number_view').val($(this).val());
-        });
-        $('#quest_number').change(function(){
-            $('#quest_number_view').val($(this).val());
-        });
-        $('#ko_title').change(function(){
-            $('#ko_title_view').val($(this).val());
-        });
-        $('#en_title').change(function(){
-            $('#en_title_view').val($(this).val());
-        });
-        $('#name').change(function(){
-            $('#name_view').val($(this).val());
-        });
-        $('#degree').change(function(){
-            $('#degree_view').val($(this).val());
-        });
-        $('#belong').change(function(){
-            $('#belong_view').val($(this).val());
-        });
-        $('#rank').change(function(){
-            $('#rank_view').val($(this).val());
-        });
-        $('#email').change(function(){
-            $('#email_view').val($(this).val());
-        });
-        $('#phone').change(function(){
-            $('#phone_view').val($(this).val());
-        });
-        $('#main_member').change(function(){
-            $('#main_member_view').val($(this).val());
-        });
-        $('#sub_member').change(function(){
-            $('#sub_member_view').val($(this).val());
-        });
-        $('#date_start').change(function(){
-            $('#date_start_view').val($(this).val());
-        });
-        $('#date_end').change(function(){
-            $('#date_end_view').val($(this).val());
-        });
-        $('#money').change(function(){
-            $('#money_view').val($(this).val());
-        });
-        $('#one_year').change(function(){
-            $('#one_year_view').val($(this).val());
-        });
-        $('#two_year').change(function(){
-            $('#two_year_view').val($(this).val());
-        });
-        $('#upload00').change(function(){
-            var fileValue = $(this).val().split("\\");
-            var fileName = fileValue[fileValue.length-1]; // 파일명
-            if(fileName != ""){
-                $('#file_label_view0').val(fileName);
-                $('#form_file0').removeClass('form_file');
-                $('#form_file0').addClass('form_file_view');
-                $('#form_file0').val(fileName);
-            } else {
-                $('#form_file0').removeClass('form_file_view');
-                $('#form_file0').addClass('form_file');
-            }
-        })
-        $('#upload01').change(function(){
-            var fileValue = $(this).val().split("\\");
-            var fileName = fileValue[fileValue.length-1]; // 파일명
-            if(fileName != ""){
-                $('#file_label_view1').val(fileName);
-                $('#form_file1').removeClass('form_file');
-                $('#form_file1').addClass('form_file_view');
-                $('#form_file1').val(fileName);
-            }  else {
-                $('#form_file1').removeClass('form_file_view');
-                $('#form_file1').addClass('form_file');
-            }  
-        })
-        $('#upload02').change(function(){
-            var fileValue = $(this).val().split("\\");
-            var fileName = fileValue[fileValue.length-1]; // 파일명
-            if(fileName != ""){
-                $('#file_label_view2').val(fileName);
-                $('#form_file2').removeClass('form_file');
-                $('#form_file2').addClass('form_file_view');
-                $('#form_file2').val(fileName);
-            } else {
-                $('#form_file2').removeClass('form_file_view');
-                $('#form_file2').addClass('form_file');
-            }   
-        })
-        $('#upload03').change(function(){
-            var fileValue = $(this).val().split("\\");
-            var fileName = fileValue[fileValue.length-1]; // 파일명
-            if(fileName != ""){
-                $('#file_label_view3').val(fileName);
-                $('#form_file3').removeClass('form_file');
-                $('#form_file3').addClass('form_file_view');
-                $('#form_file3').val(fileName);
-            } else {
-                $('#form_file3').removeClass('form_file_view');
-                $('#form_file3').addClass('form_file');
-            }
-        })
 
             $('#file-del0').click(function(){
                 $('#upload00').val("");

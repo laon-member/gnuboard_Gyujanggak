@@ -47,6 +47,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     <input type="hidden" name="sst" value="<?php echo $sst ?>">
     <input type="hidden" name="sod" value="<?php echo $sod ?>">
     <input type="hidden" name="page" value="<?php echo $page ?>">
+    
     <input type="hidden" name="sw" value="">
 
     <!-- 게시판 페이지 정보 및 버튼 시작 { -->
@@ -61,12 +62,12 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         <caption><?php echo $board['bo_subject'] ?> 목록</caption>
         <thead>
         <tr>
-            <th scope="col">번호</th>
-            <th scope="col">접수번호</th>
-            <th scope="col">과제명</th>
-            <th scope="col">연구책임자</th>
-            <th scope="col">평가</th>
-            <th scope="col">심사결과 제출</th>
+            <th scope="col" style="width:5%">번호</th>
+            <th scope="col" style="width:10%">접수번호</th>
+            <th scope="col" style="width:45%">과제명</th>
+            <th scope="col" style="width:10%">연구책임자</th>
+            <th scope="col" style="width:15%">평가</th>
+            <th scope="col" style="width:15%">심사결과 제출</th>
         </tr>
         </thead>
         <tbody>
@@ -84,86 +85,112 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             
         	if ($i%2==0) $lt_class = "even";
             else $lt_class = "";
+        $sql33 = " select * from g5_write_business_title where idx = '{$row22['bo_title_idx']}'";
+        $result33 = sql_query($sql33);
+        $row33 = sql_fetch_array($result33);
+
            
-		?>
+        ?>
+        
         <tr class="<?php echo $lt_class ?> tr_hover">
+            <td class="hidden" style="display:none;">
+                <input type="hidden" class="sql_idx" name="sql_idx" value="<?php echo $row22['idx']; ?>">
+                <input type="hidden" class="sql_title" name="sql_title" value="<?php echo $row33['title']; ?>">
+                <input type="hidden" class="sql_ko_title" name="sql_ko_title" value="<?php echo $row22['ko_title']; ?>">
+            </td>
             
             <td class="td_idx td_center">
                 <?php
                     echo $list[$i]['num'];
                 ?>
+                <?php echo $row22['idx']; ?>
             </td>
 
-            <td class="td_title">
+            <td class="td_center">
                 <?= $row22['quest_number'] ?> 
             </td>
-            <td class="td_download td_center"  style="padding-left:<?php echo $row22['reply'] ? (strlen($list[$i]['wr_reply'])*10) : '0'; ?>px">
-               
+            <td class="td_download "  >
                     <?= $row22['ko_title']; ?>
-
             </td>
             <td class="td_datetime td_center"><?php echo $row22['name']; ?></td>
-            <td class="td_datetime td_center"><button type="button"><a href="../bbs/application.rater.php?bo_table=qa&bo_idx='<?= $_GET['bo_idx']; ?>'">평가</a> </button></td>
-            <td class="td_datetime td_center"><button type="button"><a href="">심사결과 제출</a> </button></td>
+            <td class="td_datetime td_center"><button type="button" class="value_btn "><a href="../bbs/application.rater.php?bo_table=qa&bo_idx=<?= $row22['idx']; ?>&wr_idx=<?= $_GET['wr_idx']; ?>">평가</a> </button></td>
+            <td class="td_datetime td_center" value="<?= $i ?>"><button type="button" class="value_btn btn_bo_val">제출</button></td>
         </tr>
+      
+
         <?php } ?>
         <?php if (count($list) == 0) { echo '<tr><td colspan="6" class="empty_table">사업공고 내용이 없습니다.</td></tr>'; } ?>
         </tbody>
         </table>
     </div>
-
+    
 	<!-- 페이지 -->
 
     <!-- 현재 URL 주소 -->
-    <?php
-        $http_host = $_SERVER['HTTP_HOST'];
-        $request_uri = $_SERVER['REQUEST_URI'];
-        $url = 'http://' . $http_host . $request_uri;
-    ?>    
-    
-    <!-- 총 게시판 -->
-    <?php $total_page  = ceil($num / $page_rows);  ?>
-    <?php echo get_paging('15', $page, $total_page, $url); ?>
-	<!-- 페이지 -->
-	
-    
+    <button type="button" class="value_btn ">목록</button>
     </form>
 
-    <!-- 게시판 검색 시작 { -->
-    <div class="bo_sch_wrap">
-        <fieldset class="bo_sch">
-            <h3>검색</h3>
-            <form name="fsearch" method="get">
-            <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
-            <input type="hidden" name="sca" value="<?php echo $sca ?>">
-            <input type="hidden" name="sop" value="and">
-            <label for="sfl" class="sound_only">검색대상</label>
-            <select name="sfl" id="sfl">
-                <?php echo get_board_sfl_select_options($sfl); ?>
-            </select>
-            <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-            <div class="sch_bar">
-                <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" required id="stx" class="sch_input" size="25" maxlength="20" placeholder=" 검색어를 입력해주세요">
-                <button type="submit" value="검색" class="sch_btn"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">검색</span></button>
-            </div>
-            <button type="button" class="bo_sch_cls" title="닫기"><i class="fa fa-times" aria-hidden="true"></i><span class="sound_only">닫기</span></button>
-            </form>
-        </fieldset>
-        <div class="bo_sch_bg"></div>
-    </div>
-    <script>
-    jQuery(function($){
-        // 게시판 검색
-        $(".btn_bo_sch").on("click", function() {
-            $(".bo_sch_wrap").toggle();
-        })
-        $('.bo_sch_bg, .bo_sch_cls').click(function(){
-            $('.bo_sch_wrap').hide();
-        });
-    });
-    </script>
-    <!-- } 게시판 검색 끝 --> 
+            <!-- 게시판 검색 시작 { -->
+
 </div>
+<script>
+jQuery(function($){
+    // 게시판 검색
+    $(".btn_bo_val").on("click", function() {
+        // var value= $(this).parent().attr(value);
+        var sql_title_view = $(this).parents('.tr_hover').find('.sql_title').attr('value');
+        $('#sql_title_view').text(sql_title_view);
+        var sql_ko_title = $(this).parents('.tr_hover').find('.sql_ko_title').attr('value')
+        $('#sql_ko_title_view').text(sql_ko_title);
+        // var sql_ko_title = $(this).parents('.tr_hover').find('.sql_ko_title').attr('value')
+        // $('#sql_ko_title_view').text(sql_ko_title);
+        // var sql_ko_title = $(this).parents('.tr_hover').find('.sql_ko_title').attr('value')
+        // $('#sql_ko_title_view').text(sql_ko_title);
+        $('.bo_sch_wrap').toggle();
+
+    })
+    $('.bo_sch_bg, .bo_sch_cls').click(function(){
+        $('.bo_sch_wrap').hide();
+    });
+});
+</script>
+<div class="bo_sch_wrap">
+    <fieldset class="bo_sch" style="width:800px; max-height:noen;height:600px;">
+        <h3><?php echo $value; ?></h3>
+        <form name="fsearch" method="get">
+        <input type="hidden" name="bo_table" id= "sql_idx_view" value="">
+        <input type="hidden" name="test_id"  value="">
+        <p id="sql_title_view"></p>
+        <h1 id="sql_ko_title_view"></h1>
+        
+        <label for="" class="label_text" style="display:block;">항목평가</label>
+        <label for="info_number_view" class="label_text" style="vertical-align: inherit;">연구진</label>
+        <input type="text" name="info_number_view" id="info_number_view"  class="input_text input_text_40 input_text_end" placeholder="접수번호" value="<?= $row['info_number']; ?>"  readonly> 
+        <span>/80</span>
+        <label for="info_number_view" class="label_text" style="vertical-align: inherit;">주제</label>
+        <input type="text" name="info_number_view" id="info_number_view"  class="input_text input_text_40 input_text_end" placeholder="접수번호" value="<?= $row['info_number']; ?>"  readonly> 
+        <span>/80</span>
+        <label for="info_number_view" class="label_text" style="vertical-align: inherit;">계획</label>
+        <input type="text" name="info_number_view" id="info_number_view"  class="input_text input_text_40 input_text_end" placeholder="접수번호" value="<?= $row['info_number']; ?>"  readonly> 
+        <span>/80</span>
+        <label for="info_number_view" class="label_text" style="vertical-align: inherit;">종합평가</label>
+        <input type="text" name="info_number_view" id="info_number_view"  class="input_text input_text_40 input_text_end" placeholder="접수번호" value="<?= $row['info_number']; ?>"  readonly> 
+        <span>/80</span>
+        <label for="" class="label_text" style="vertical-align: top;">상세설명</label>
+        <input type="text" name="contents" class="input_text input_text_hight" value="<?= $row44['contents']; ?>"<?= $row44['report'] ==2? "disabled": ""; ?>> 
+
+        <button type="button" class="bo_sch_cls" title="닫기"><i class="fa fa-times" aria-hidden="true"></i><span class="sound_only">닫기</span></button>
+        </form>
+        <button type="btn_esc">취소</button>
+        <button type="btn_submit">저장</button>
+    </fieldset>
+    <div class="bo_sch_bg"></div>
+    
+</div>
+
+        
+            <!-- } 게시판 검색 끝 --> 
+
 
 <?php if($is_checkbox) { ?>
 <noscript>

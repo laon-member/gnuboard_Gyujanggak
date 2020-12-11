@@ -426,6 +426,5 @@ include_once('./board_tail.php');
 @include_once ($board_skin_path.'/write.tail.skin.php');
 include_once(G5_PATH.'/tail.sub.php');
 
-echo $is_member;
 
 ?>

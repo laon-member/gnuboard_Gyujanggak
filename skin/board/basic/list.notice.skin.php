@@ -32,7 +32,7 @@ $result = sql_query($sql);
     <?php 
         for($k=1; $row=sql_fetch_array($result); $k++) {
             $class_get =  $_GET['bo_idx'] == $k?"aisde_click":"";
-            echo '<a class="aside_nav '.$class_get.'" href="'.G5_BBS_URL .'/board.notice.php?bo_table='.$bo_table.'&bo_idx='.$k.'">'.$row["title"].'</a>';
+            echo '<a class="aside_nav '.$class_get.'" href="'.G5_BBS_URL .'/board.notice.php?bo_table='.$bo_table.'&bo_idx='.$k.'&bo_titile='.$_GET['bo_titile'].'">'.$row["title"].'</a>';
         }
     ?>
 </aside>

@@ -183,7 +183,7 @@ if ((isset($wr_id) && $wr_id) || (isset($wr_seo_title) && $wr_seo_title)) {
 }
 
 
-$board_user = 1;
+// $board_user = 1;
 include_once(G5_PATH.'/head.sub.php');
 
 $width = $board['bo_table_width'];
@@ -233,6 +233,7 @@ if ($member['mb_id'] && ($is_admin === 'super' || $group['gr_admin'] === $member
     $admin_href = G5_ADMIN_URL.'/board_form.php?w=u&amp;bo_table='.$bo_table;
 
 $board_notice_border = "title_border";
+$board_user = $_GET['bo_titile'];
 include_once(G5_BBS_PATH.'/board_head.php');
 
 // 게시물 아이디가 있다면 게시물 보기를 INCLUDE

@@ -5,7 +5,6 @@ include_once('./_common.php');
 //     alert('로그인 하십시오.', G5_BBS_URL.'/login.php?url=' . urlencode(correct_goto_url(G5_ADMIN_URL)));
 // }
 $bo_idx = $_GET['bo_idx'];
-
 if (!$board['bo_table']) {
     alert('존재하지 않는 게시판입니다.', G5_URL);
  }
@@ -183,7 +182,8 @@ if ((isset($wr_id) && $wr_id) || (isset($wr_seo_title) && $wr_seo_title)) {
 
     $g5['title'] = $g5['board_title'].' '.$page.' 페이지';
 }
-
+$board_user = "";
+$board_user == 1;
 $board_border = "title_border";
 
 include_once(G5_PATH.'/head.sub.php');

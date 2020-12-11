@@ -74,8 +74,8 @@ if ($sca || $stx || $stx === '0') {     //검색이면
 
     $sql = "  select COUNT(DISTINCT `idx`) as cnt from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' ";
     $row = sql_fetch($sql);
-    $total_count = $row['cnt'];
     
+    $total_count = $row['cnt'];
 }
 
 

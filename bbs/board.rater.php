@@ -86,6 +86,8 @@ include_once(G5_BBS_PATH.'/board_head.php');
 // 게시물 아이디가 있다면 게시물 보기를 INCLUDE
 if (isset($_GET['wr_idx'])) {
     include_once(G5_BBS_PATH.'/view.rater.php');
+} else if(){
+    include_once (G5_BBS_PATH.'/list.update.php');
 } else{
     include_once (G5_BBS_PATH.'/list.rater.php');
 

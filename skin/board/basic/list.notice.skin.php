@@ -32,7 +32,7 @@ $result = sql_query($sql);
     <?php 
         for($k=1; $row=sql_fetch_array($result); $k++) {
             $class_get =  $_GET['bo_idx'] == $k?"aisde_click":"";
-            echo '<a class="aside_nav '.$class_get.'" href="'.G5_BBS_URL .'/board.notice.php?bo_table='.$bo_table.'&bo_idx='.$k.'&bo_titile='.$_GET['bo_titile'].'">'.$row["title"].'</a>';
+            echo '<a class="aside_nav '.$class_get.'" href="'.G5_BBS_URL .'/board.notice.php?bo_table='.$bo_table.'&bo_idx='.$k.'&bo_title='.$_GET['bo_title'].'">'.$row["title"].'</a>';
         }
     ?>
 </aside>
@@ -54,7 +54,19 @@ $result = sql_query($sql);
 
     <!-- 게시판 페이지 정보 및 버튼 시작 { -->
     <div id="bo_btn_top">
-        <h1 id=""><?php echo $title_text; ?></h1>
+    <h1 id="">
+        <?php if($_GET['bo_idx'] == 1 ) { 
+                echo "공지사항";
+            } else if($_GET['bo_idx'] == 2){ 
+                if($supper){
+                    echo "서식 관리";
+                } else {
+                    echo "서식 다운로드";
+                }
+             } else if($_GET['bo_idx'] == 3){ 
+                echo "지원실 파일 공유";
+            } ?>
+    </h1>
 
         <ul class="btn_bo_user">
             <li>
@@ -79,7 +91,6 @@ $result = sql_query($sql);
             <th scope="col">첨부</th>
             <th scope="col">등록일</th>
             <th scope="col">조회</th>
-            <th scope="col">상태</th>
         </tr>
         </thead>
         <tbody>
@@ -110,7 +121,7 @@ $result = sql_query($sql);
                 <a href="<?php echo $list[$i]['ca_name_href'] ?>" class="bo_cate_link"><?php echo $list[$i]['ca_name'] ?></a>
                 <?php } ?>
                 <div class="bo_tit">
-                    <a href="<?php echo $list[$i]['href'] ?>">
+                    <a href="../bbs/board.notice.php?bo_table=notice&wr_id=<?php echo $list[$i]['wr_id'] ?>&bo_title=<?php echo $_GET['bo_title'] ?>">
                         <?php echo $list[$i]['icon_reply'] ?>
                         <?php
                             if (isset($list[$i]['icon_secret'])) echo rtrim($list[$i]['icon_secret']);
@@ -128,25 +139,7 @@ $result = sql_query($sql);
             </td>
             <td class="td_datetime td_center"><?php echo $list[$i]['datetime2'] ?></td>
             <td class="td_hit td_center"><?php echo $list[$i]['wr_hit'] ?></td>
-            <td class="td_end td_center">
-                <?php 
-                    // echo $list[$i]['name'];
-                    $timenow = date("Y-m-d H:i:s"); 
-                    $timetarget = $list[$i]['wr_date_end'];
-
-                    $str_now = strtotime($timenow);
-                    $str_target = strtotime($timetarget);
-
-                    if($str_now > $str_target) {
-                        echo "마감";
-                    } else {
-                        echo "접수중";
-                    }
-
-
-
-                ?>
-            </td>
+           
             
 
         </tr>
@@ -205,6 +198,9 @@ $result = sql_query($sql);
         $('.bo_sch_bg, .bo_sch_cls').click(function(){
             $('.bo_sch_wrap').hide();
         });
+
+        
+
     });
     </script>
     <!-- } 게시판 검색 끝 --> 

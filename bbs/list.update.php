@@ -73,13 +73,15 @@ if ($sca || $stx || $stx === '0') {     //검색이면
     //     alert('존재하지 않는 게시판입니다.', G5_URL);
     //  }
 
-  
+    $sql = " SELECT * from {$write_table} where idx = {$bo_idx}";
+    $row = sql_fetch($sql);
+    $title_text = $row['title'];
 
     $total_count = $board['bo_count_write'];
 
-    $sql1 = " SELECT COUNT(DISTINCT `wr_id`) AS `cnt` FROM g5_write_notice";
-    $row = sql_fetch($sql1);
-    $total_count = $row['cnt'];
+    $sql1 = " SELECT COUNT(DISTINCT `wr_id`) AS `cnt` FROM {$write_table} WHERE wr_title_idx = $_GET[bo_idx]";
+$row = sql_fetch($sql1);
+$total_count = $row['cnt'];
 }
 
 
@@ -193,10 +195,12 @@ if ($sst) {
 }
 
 
+// 여기 입니다.
+
 if ($is_search_bbs) {
     $sql = " select distinct wr_parent from {$write_table} where {$sql_search} {$sql_order} limit {$from_record}, $page_rows ";
 } else {
-    $sql = " select * from {$write_table} where notice_table = '{$_GET['bo_idx']}'";
+    $sql = " select * from {$write_table} where wr_title_idx = '$bo_idx' ";
     if(!empty($notice_array))
         $sql .= " and wr_id not in (".implode(', ', $notice_array).") ";
     $sql .= " {$sql_order} limit {$from_record}, $page_rows ";
@@ -280,5 +284,5 @@ if ($board['bo_use_rss_view']) {
 }
 
 $stx = get_text(stripslashes($stx));
-include_once($board_skin_path.'/list.notice.skin.php');
+include_once($board_skin_path.'/list.skin.php');
 ?>

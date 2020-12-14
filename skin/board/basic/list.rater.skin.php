@@ -14,8 +14,19 @@ if ($is_nogood) $colspan++;
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
 
 
-$sql = " select * from rater where test_id = '{$_GET[bo_table]}' AND value = '2'";
-$result = sql_query($sql);
+
+
+// $sql = "  select COUNT(DISTINCT `idx`) as cnt from rater where user_id = '{$member['mb_id']}' and test_id = '{$_GET['bo_idx']}'";
+// echo $sql;
+// $row11 = sql_fetch($sql);
+// $total_count = $row11['cnt'];
+
+// $sql = " select * from rater where user_id = '{$member['mb_id']}' and test_id = '{$_GET['bo_idx']}'";
+// $result = sql_query($sql);
+
+
+
+// for ($i=0; $i<$row = sql_fetch_array($result); $i++) {
 
 // $sql1 = " SELECT * FROM {$write_table} WHERE wr_title_idx = {$bo_idx} ";
 // $result1 = sql_query($sql1);
@@ -70,28 +81,17 @@ $result = sql_query($sql);
         </thead>
         <tbody>
         <?php
-
-        for ($i=0; $i<count($list); $i++) {
+        $sql = "select * from rater where user_id = '{$member['mb_id']}' AND value = '2' AND test_id = '{$_GET['bo_idx']}'";
+        echo $sql;
+        for ($i=0; $row11 = sql_fetch($sql); $i++) {
             
         	if ($i%2==0) $lt_class = "even";
             else $lt_class = "";
-
+            echo $list['business_idx'];
 
             $sql = " select * from g5_write_business where wr_id= '{$list[$i]['business_idx']}'";
             $result = sql_query($sql);
             $row44 = sql_fetch_array($result);
-
-
-            if($_GET['bo_idx'] == 1){
-                $sql = "  select COUNT(DISTINCT `bo_idx`) as cnt from g5_business_propos where bo_idx = '{$list[$i]['business_idx']}'";
-                $row = sql_fetch($sql);
-            } else if ($_GET['bo_idx'] == 2){
-                $sql = "  select COUNT(DISTINCT `idx`) as cnt from report where business_idx = '{$list[$i]['business_idx']}' AND report_idx = '1'";
-                $row = sql_fetch($sql);
-            } else if ($_GET['bo_idx'] == 3){
-                $sql = "  select COUNT(DISTINCT `idx`) as cnt from report where business_idx = '{$list[$i]['business_idx']}' AND report_idx = '2' ";
-                $row = sql_fetch($sql);
-            }
 		?>
         <tr class="<?php if ($list[$i]['is_notice']) echo "bo_notice"; ?> <?php echo $lt_class ?> tr_hover">
             
@@ -106,15 +106,22 @@ $result = sql_query($sql);
             </td>
             <td class="td_download td_center"  style="padding-left:<?php echo $list[$i]['reply'] ? (strlen($list[$i]['wr_reply'])*10) : '0'; ?>px">
                
-                <a href="../bbs/board.rater.php?bo_table=<?=$_GET['bo_table']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&wr_idx=<?php echo $row44['wr_id']; ?>">
+                <a href="../bbs/board.rater.php?bo_table=<?=$_GET['bo_table']; ?>&wr_idx=<?php echo $row44['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>">
                     <?= $row44['wr_subject']; ?>
                 </a>
 
             </td>
-            <td class="td_datetime td_center"><?php echo $row['cnt']; ?></td>
+            <td class="td_datetime td_center">
+                <?php 
+                    $sql = " select COUNT(DISTINCT `idx`) as cnt from rater where value = '2' AND test_id = '{$_GET['bo_idx']}'";
+                    $result = sql_query($sql);
+                    $row55 = sql_fetch_array($result);
+                    echo $row55;
+                 ?>
+            </td>
         </tr>
         <?php } ?>
-        <?php if (count($list) == 0) { echo '<tr><td colspan="6" class="empty_table">사업공고 내용이 없습니다.</td></tr>'; } ?>
+        <?php if (count($list) == 0) { echo '<tr><td colspan="6" class="empty_table">심사관리 내용이 없습니다.</td></tr>'; } ?>
         </tbody>
         </table>
     </div>

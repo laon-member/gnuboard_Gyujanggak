@@ -37,18 +37,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     <?php 
        
     ?>
-    <form name="fboardlist" id="fboardlist" action="<?php echo G5_BBS_URL; ?>/board_list_update.php" onsubmit="return fboardlist_submit(this);" method="post">
     
-    <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
-    <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
-    <input type="hidden" name="stx" value="<?php echo $stx ?>">
-    <input type="hidden" name="spt" value="<?php echo $spt ?>">
-    <input type="hidden" name="sca" value="<?php echo $sca ?>">
-    <input type="hidden" name="sst" value="<?php echo $sst ?>">
-    <input type="hidden" name="sod" value="<?php echo $sod ?>">
-    <input type="hidden" name="page" value="<?php echo $page ?>">
     
-    <input type="hidden" name="sw" value="">
+    
 
     <!-- 게시판 페이지 정보 및 버튼 시작 { -->
     <div id="bo_btn_top">
@@ -72,50 +63,57 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         </thead>
         <tbody>
         <?php
-        $sql = "  select COUNT(DISTINCT `idx`) as cnt from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' ";
-        $row = sql_fetch($sql);
-        $total_count = $row['cnt'];
+        $sql = "  select COUNT(DISTINCT `idx`) as cnt from rater where user_id = '{$member['mb_id']}' and test_id = '{$_GET['bo_idx']}'";
+        echo $sql;
+        $row11 = sql_fetch($sql);
+        $total_count = $row11['cnt'];
 
-        $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}'";
+        $sql = " select * from rater where user_id = '{$member['mb_id']}' and test_id = '{$_GET['bo_idx']}'";
         $result = sql_query($sql);
         
 
 
-        for ($i=0; $i<$row22 = sql_fetch_array($result); $i++) {
+        for ($i=0; $i<$row = sql_fetch_array($result); $i++) {
             
-        	if ($i%2==0) $lt_class = "even";
-            else $lt_class = "";
-        $sql33 = " select * from g5_write_business_title where idx = '{$row22['bo_title_idx']}'";
-        $result33 = sql_query($sql33);
-        $row33 = sql_fetch_array($result33);
-
-           
+        	$sql55 = " select * from g5_write_business where wr_id = '{$row['business_idx']}'";
+            $result55 = sql_query($sql55);
+            $row22 = sql_fetch_array($result55);
         ?>
         
         <tr class="<?php echo $lt_class ?> tr_hover">
             <td class="hidden" style="display:none;">
-                <input type="hidden" class="sql_idx" name="sql_idx" value="<?php echo $row22['idx']; ?>">
+                <input type="hidden" class="sql_idx" name="sql_idx" value="<?= $_GET['bo_idx'] ?>">
                 <input type="hidden" class="sql_title" name="sql_title" value="<?php echo $row33['title']; ?>">
                 <input type="hidden" class="sql_ko_title" name="sql_ko_title" value="<?php echo $row22['ko_title']; ?>">
+
+                
             </td>
             
             <td class="td_idx td_center">
                 <?php
                     echo $list[$i]['num'];
                 ?>
-                <?php echo $row22['idx']; ?>
             </td>
 
             <td class="td_center">
                 <?= $row22['quest_number'] ?> 
             </td>
             <td class="td_download "  >
-            <a href="../bbs/application.rater.php?bo_table=qa&bo_idx=<?= $row22['idx']; ?>&wr_idx=<?= $_GET['wr_idx']; ?>"><?= $row22['ko_title']; ?></a>
+            <a href="../bbs/board.rater.php?bo_table=qa&bo_idx=<?= $_GET['bo_idx'] ?>&wr_idx=<?= $_GET['wr_idx'] ?>&us_idx=<?= $row22['idx']; ?>"><?= $row22['ko_title']; ?></a>
                     
             </td>
             <td class="td_datetime td_center"><?php echo $row22['name']; ?></td>
             <td class="td_datetime td_center"><button type="button" class="value_btn btn_bo_val"> 평가</button></td>
-            <td class="td_datetime td_center" value="<?= $i ?>"><button type="button" class="value_btn btn_bo_val_submit">제출</button></td>
+            <td class="td_datetime td_center" value="<?= $i ?>">
+                <form name="fboardlist" id="fboardlist" action="<?= https_url(G5_BBS_DIR)."/application_update.php"; ?>" method="post">
+                    <input type="hidden" name="business_idx" id= "business_idx_form" value="<?php echo $_GET['wr_idx'] == 1? $row22['idx']: $row55['idx']; ?>">
+                    <input type="hidden" name="test_id"  value="<?= $_GET['bo_idx']?>">
+                    <input type="hidden" name="value_id"  value="2">
+                    <?php echo $_GET['bo_idx'] == 1? $row22['idx']: $row55['idx']; ?>
+                    <?= $row22['idx']?>
+                    <button type="submit" class="value_btn btn_bo_val_submit value_btn_a">제출</button> 
+                </form>
+            </td>
         </tr>
       
 
@@ -129,7 +127,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 
     <!-- 현재 URL 주소 -->
     <button type="button" class="value_btn ">목록</button>
-    </form>
 
             <!-- 게시판 검색 시작 { -->
 
@@ -142,10 +139,13 @@ jQuery(function($){
         $('#sql_title_view').text(sql_title_view);
         var sql_ko_title = $(this).parents('.tr_hover').find('.sql_ko_title').attr('value')
         $('#sql_ko_title_view').text(sql_ko_title);
+        var business_idx_form = $(this).parents('.tr_hover').find('#business_idx_form').attr('value');
+        $('#business_idx').text(business_idx_form);
+        
         $('.bo_sch_wrap').toggle();
 
     })
-    $('.bo_sch_bg, .bo_sch_cls .btn_esc').click(function(){
+    $('.bo_sch_bg, .bo_sch_cls, .btn_esc').click(function(){
         $('.bo_sch_wrap').hide();
     });
     var test_user = 0;
@@ -176,9 +176,10 @@ jQuery(function($){
 
         <p id="sql_title_view"></p>
         <h3 id="sql_ko_title_view"><?php echo $value; ?></h3>
-        <form name="fsearch" method="POST" action="">
+        <form name="fsearch" method="POST" action="<?= https_url(G5_BBS_DIR)."/application_update.php"; ?>">
         <input type="hidden" name="business_idx" id= "business_idx" value="<?= $_GET['wr_idx'] ?>">
         <input type="hidden" name="test_id"  value="<?= $_GET['bo_idx']?>">
+        <input type="hidden" name="value_id"  value="1">
         
         <label for="" class="label_text" style="display:block;">항목평가</label>
         <label for="test_user" class="label_text" style="vertical-align: inherit;">연구진</label>

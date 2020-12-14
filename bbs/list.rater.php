@@ -71,7 +71,7 @@ if ($sca || $stx || $stx === '0') {     //검색이면
     // if (!$bo_idx) {
     //     alert('존재하지 않는 게시판입니다.', G5_URL);
     //  }
-
+    // select COUNT(DISTINCT `idx`) as cnt from rater where user_id = '{$member['mb_id']}' and test_id = '{$_GET['bo_idx']}'
     $sql = "  select COUNT(DISTINCT `idx`) as cnt from rater where user_id = '{$member['mb_id']}' AND value = '2' AND test_id = '{$_GET['bo_idx']}'";
     $row = sql_fetch($sql);
     $total_count = $row['cnt'];

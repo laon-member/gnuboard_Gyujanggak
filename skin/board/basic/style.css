@@ -597,18 +597,17 @@ text-align: right;
 .bo_class{display: inline-block; vertical-align: top;}
 .input_text_hight{height: 300px;}
 
-.value_btn{
+.value_btn, .value_btn_a{
     width: 100px;
     height:30px;
     border: 1px solid transparent;
-}
-
-.value_btn a{
+    background: #3a8afd;
     display: block;
-    height: 100%;
     line-height: 30px;
+    color: #fff;
+    margin: 0 auto;
 }
 
-.value_btn a:hover{
+.value_btn_a:hover{
     text-decoration: none;
 }

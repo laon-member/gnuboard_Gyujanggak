@@ -4,7 +4,7 @@ include_once('./_common.php');
 // {
 //     alert('로그인 하십시오.', G5_BBS_URL.'/login.php?url=' . urlencode(correct_goto_url(G5_ADMIN_URL)));
 // }
-$bo_idx = $_GET['bo_idx'];
+
 
 if (!$board['bo_table']) {
     alert('존재하지 않는 게시판입니다.', G5_URL);
@@ -84,13 +84,15 @@ $board_user = 2;
 include_once(G5_BBS_PATH.'/board_head.php');
 
 // 게시물 아이디가 있다면 게시물 보기를 INCLUDE
-if (isset($_GET['wr_idx'])) {
+if (isset($_GET['wr_idx']) && empty($_GET['us_idx'])) {
     include_once(G5_BBS_PATH.'/view.rater.php');
-} else if(){
-    include_once (G5_BBS_PATH.'/list.update.php');
+} else if(isset($_GET['wr_idx']) && isset($_GET['us_idx'])){
+    include_once (G5_BBS_PATH.'/application.rater.php');
 } else{
     include_once (G5_BBS_PATH.'/list.rater.php');
 
+    // echo isset($_GET['wr_idx']);
+    echo isset($_GET['us_idx']);
 }
 
 // 전체목록보이기 사용이 "예" 또는 wr_id 값이 없다면 목록을 보임

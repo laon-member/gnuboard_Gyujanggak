@@ -416,11 +416,7 @@ include_once('./board_head.php');
 $action_url = https_url(G5_BBS_DIR)."/application_update.php";
 
 echo '<!-- skin : '.(G5_IS_MOBILE ? $board['bo_mobile_skin'] : $board['bo_skin']).' -->';
-if($step == ''){
-    include_once ($board_skin_path.'/application.rater.skin.php');
-} else {
-    alert('잘못된 경로 입니다.');
-}
+include_once ($board_skin_path.'/application.rater.skin.php');
 
 include_once('./board_tail.php');
 @include_once ($board_skin_path.'/write.tail.skin.php');

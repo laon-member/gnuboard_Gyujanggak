@@ -44,6 +44,9 @@ $row22=sql_fetch_array($result1);
     <input type="hidden" name="sod" value="<?php echo $sod ?>">
     <input type="hidden" name="page" value="<?php echo $page ?>">
     <input type="hidden" name="bo_idx" value="<?php echo $_GET['bo_idx'] ?>">
+    <input type="hidden" name="business_idx" id= "business_idx" value="<?= $_GET['wr_idx'] ?>">
+    <input type="hidden" name="test_id"  value="<?= $_GET['bo_idx']?>">
+    <input type="hidden" name="value_id"  value="2">
     
     
     <div class =" ">
@@ -129,12 +132,82 @@ $row22=sql_fetch_array($result1);
 
         <div class="btn_confirm write_div btn-cont">
             <button type="button" id="btn_submit1" accesskey="s" class="btn_cancel btn btn_step2">이전</button>
-            <button type="submit" id="btn_submit2" accesskey="s" class="btn_submit btn btn_step4">평가</button>
-            <button type="submit" id="btn_submit2" accesskey="s" class="btn_submit btn btn_step4">제출</button>
+            <button type="button" id="btn_submit2" accesskey="s" class="btn_submit btn btn_step4 btn_bo_val">평가</button>
+            <button type="submit" id="btn_submit3" accesskey="s" class="btn_submit btn btn_step4">제출</button>
         </div>
     </div>
     </form>
 </section>
+
+<script>
+jQuery(function($){
+    // 게시판 검색
+    $(".btn_bo_val").on("click", function() {
+        $('.bo_sch_wrap').toggle();
+
+    })
+    $('.bo_sch_bg, .bo_sch_cls, .btn_esc').click(function(){
+        $('.bo_sch_wrap').hide();
+    });
+    var test_user = 0;
+    var test_title = 0;
+    var test_plan = 0;
+    var test_sum = 0;
+
+    $('#test_user').change(function(){
+        test_user = parseFloat ($('#test_user').val());
+        test_sum = (test_user + test_title + test_plan)/3;
+        $('#test_sum').val(test_sum);
+    });
+    $('#test_title').change(function(){
+        test_title = parseFloat ($('#test_title').val());
+        test_sum = (test_user + test_title + test_plan)/3;
+        $('#test_sum').val(test_sum);
+    });
+    $('#test_plan').change(function(){
+        test_plan = parseFloat ($('#test_plan').val());
+        test_sum = (test_user + test_title + test_plan)/3;
+        $('#test_sum').val(test_sum);
+    });
+   
+});
+</script>
+<div class="bo_sch_wrap">
+    <fieldset class="bo_sch" style="width:800px; max-height:noen;height:600px;">
+
+        <p id="sql_title_view"><?php echo $row22['wr_subject']; ?></p>
+        <h3 id="sql_ko_title_view"><?= $row['ko_title']; ?></h3>
+        <form name="fsearch" method="POST" action="../bbs/board.rater.php?bo_table=qa&bo_idx=<?= $_GET['bo_idx'] ?>&bo_val=1">
+        <input type="hidden" name="business_idx" id= "business_idx" value="<?= $_GET['wr_idx'] ?>">
+        <input type="hidden" name="test_id"  value="<?= $_GET['bo_idx']?>">
+        <input type="hidden" name="value_id"  value="1">
+        
+        <label for="" class="label_text" style="display:block;">항목평가</label>
+        <label for="test_user" class="label_text" style="vertical-align: inherit;">연구진</label>
+        <input type="number" name="test_user" id="test_user"  class="input_text input_text_40 input_text_end" placeholder="접수번호" value="<?= $row['info_number']; ?>"  maxlength="80"> 
+        <span>/80</span>
+        <label for="test_title" class="label_text" style="vertical-align: inherit;">주제</label>
+        <input type="number" name="test_title" id="test_title"  class="input_text input_text_40 input_text_end" placeholder="접수번호" value="<?= $row['info_number']; ?>"    maxlength="80" > 
+        <span>/80</span>
+        <label for="test_plan" class="label_text" style="vertical-align: inherit;">계획</label>
+        <input type="number" name="test_plan" id="test_plan"  class="input_text input_text_40 input_text_end" placeholder="접수번호" value="<?= $row['info_number']; ?>"    maxlength="80"> 
+        <span>/80</span>
+        <label for="test_sum" class="label_text" style="vertical-align: inherit;">종합평가</label>
+        <input type="number" name="test_sum" id="test_sum"  class="input_text input_text_40 input_text_end" placeholder="접수번호" readonly > 
+        <span>/80</span>
+        <label for="test_opinion" class="label_text" style="vertical-align: top;">상세설명</label>
+        <input type="text" name="test_opinion" id ="test_opinion" class="input_text input_text_hight" value="<?= $row44['contents']; ?>"<?= $row44['report'] ==2? "disabled": ""; ?>> 
+        
+        <button type="button" class="btn_esc">취소</button>
+        <button type="submit" class="btn_submit">저장</button>
+        </form>
+        
+    </fieldset>
+    <div class="bo_sch_bg"></div>
+    
+</div>
+
+
 
 <script>
     

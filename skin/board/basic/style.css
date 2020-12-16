@@ -18,6 +18,7 @@
 #bo_v a.btn_admin:focus, #bo_v a.btn_admin:hover {}
 
 /* 쓰기 버튼 */
+#bo_w {width: 80%;}
 #bo_w .btn_confirm {} /* 서식단계 진행 */
 #bo_w .btn_submit {padding:0 20px;font-size:1.167em}
 #bo_w button.btn_submit {}

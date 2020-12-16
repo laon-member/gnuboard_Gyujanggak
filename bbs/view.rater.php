@@ -72,8 +72,16 @@ if ($sca || $stx || $stx === '0') {     //검색이면
     //     alert('존재하지 않는 게시판입니다.', G5_URL);
     //  }
 
-    $sql = "  select COUNT(DISTINCT `idx`) as cnt from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' ";
-    $row = sql_fetch($sql);
+    if($_GET['bo_idx'] == 1){
+        $sql = " select COUNT(DISTINCT `idx`) as cnt from g5_business_propos where bo_idx = '{$_GET['wr_idx']}'";
+        $row = sql_fetch($sql);
+    } else if ($_GET['bo_idx'] == 2) {
+        $sql = " select COUNT(DISTINCT `idx`) as cnt from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' and report_val_1 = 2";
+        $row = sql_fetch($sql);
+    } else if ($_GET['bo_idx'] == 3) {
+        $sql = " select COUNT(DISTINCT `idx`) as cnt from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' and report_val_2 = 2";
+        $row = sql_fetch($sql);
+    }
     
     $total_count = $row['cnt'];
 }

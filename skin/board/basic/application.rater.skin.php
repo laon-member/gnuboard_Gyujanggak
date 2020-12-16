@@ -31,9 +31,9 @@ $row22=sql_fetch_array($result1);
 <section id="bo_v" style="width:80%;">
     <h2 class="sound_only"><?php echo $g5['title'] ?></h2>
     <!-- 게시물 작성/수정 시작 { -->
-    <form name="fwrite" id="fwrite" action="<?php echo $action_url; ?>" onsubmit="return fwrite_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off" style="width:<?php echo $width; ?>">
+    <form name="fwrite" id="fwrite" action="<?= $action_url; ?>" onsubmit="return fwrite_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off" style="width:<?php echo $width; ?>">
     <input type="hidden" name="uid" value="<?php echo get_uniqid(); ?>">
-    <input type="hidden" name="w" value="<?php echo $w ?>">
+    <input type="hidden" name="w" value="<?php echo $w ?>"> 
     <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
     <input type="hidden" name="wr_id" value="<?php echo $_GET['wr_id'] != "" ? $_GET['wr_id'] : $_POST['wr_id']; ?>">
     <input type="hidden" name="sca" value="<?php echo $sca ?>">
@@ -47,6 +47,7 @@ $row22=sql_fetch_array($result1);
     <input type="hidden" name="business_idx" id= "business_idx" value="<?= $_GET['wr_idx'] ?>">
     <input type="hidden" name="test_id"  value="<?= $_GET['bo_idx']?>">
     <input type="hidden" name="value_id"  value="2">
+    <input type="hidden" name="us_idx"  value="<?= $row['idx']; ?>">
     
     
     <div class =" ">
@@ -54,7 +55,7 @@ $row22=sql_fetch_array($result1);
             <h1>
                 <?php echo $row22['wr_subject']; ?>
             </h1>
-            <p><?= $row['ko_title']; ?></p>
+            <p><?= $row['ko_title']; ?> </p>
         </div>
 
         <div class="write_div">
@@ -109,14 +110,49 @@ $row22=sql_fetch_array($result1);
 
             <label for="two_year_view" class="label_text">2차년 연구비</label>
             <input type="text" name="two_year_view" id="two_year_view"  class="input_text input_text_50 input_text_end" placeholder="2차년 연구비" readonly value="<?= $row['two_year']; ?>">
+            
+            <?php
+                if($_GET['bo_idx'] == 1){
+                    $sql = " select * from rater where user_id = '{$member['mb_id']}' and business_idx = '{$_GET['wr_idx']}' and test_id = '{$_GET['bo_idx']}'";
+                    $result = sql_query($sql);
+                    $row = sql_fetch_array($result);
+                    if($row == ""){
+                        alert("권한이 없습니다");
+                    }
 
-            <?php if(false){ ?>
-            <label for="" id="bo_side" class="label_text">상세설명</label>
-            <section id="bo_v" class="bo_class">
-                <h2 id="bo_v_atc_title">본문</h2>
-                <input type="text" name="contents" class="input_text input_text_hight" value="<?= $row44['contents']; ?>"<?= $row44['report'] ==2? "disabled": ""; ?>> 
-            </section>
-            <?php } ?>
+                } else if($_GET['bo_idx'] == 2){
+                    $sql = " select * from rater where user_id = '{$member['mb_id']}' and business_idx = '{$_GET['wr_idx']}' and test_id = '{$_GET['bo_idx']}'";
+                    $result = sql_query($sql);
+                    $row = sql_fetch_array($result);
+                    if($row == ""){
+                        alert("권한이 없습니다");
+                    }
+
+                    $sql = " select * from report where business_idx = '{$row['idx']}' and report_idx = '1' and report = '2'";
+                    $result = sql_query($sql);
+                    $row_list = sql_fetch_array($result);
+            ?> 
+                <label for="" id="bo_side" class="label_text" style="text-align:left;vertical-align: top;" >상세설명</label>
+                <textarea name="" id=""class="input_text input_text_hight" readonly><?= $row_list['contents']; ?> </textarea>
+            <?php
+                } else if($_GET['bo_idx'] == 3){
+                    $sql = " select * from report where business_idx = '{$row['idx']}' and report_idx = '2' and report = '2'";
+                    $result = sql_query($sql);
+                    $row = sql_fetch_array($result);
+                    if($row == ""){
+                        alert("권한이 없습니다");
+                    }
+                    
+                    $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' AND";
+                    $result = sql_query($sql);
+                    $row_list = sql_fetch_array($result);
+            ?>
+                <label for="" id="bo_side" class="label_text"  style="text-align: left;vertical-align: top;">상세설명</label>
+                <textarea name="" id=""class="input_text input_text_hight" readonly><?= $row_list['contents']; ?> </textarea> 
+            <?php
+                }
+            ?>
+            
             <label for="" class="label_text">자료첨부</label>
             <div class="input_file_cont">
                 <input type="text" name="form_file0" id="form_file0"  class="input_text_100 input_text input_text_end form_file" readonly>
@@ -177,23 +213,24 @@ jQuery(function($){
 
         <p id="sql_title_view"><?php echo $row22['wr_subject']; ?></p>
         <h3 id="sql_ko_title_view"><?= $row['ko_title']; ?></h3>
-        <form name="fsearch" method="POST" action="../bbs/board.rater.php?bo_table=qa&bo_idx=<?= $_GET['bo_idx'] ?>&bo_val=1">
+        <form name="fsearch" method="POST" action="<?= $action_url; ?>">
         <input type="hidden" name="business_idx" id= "business_idx" value="<?= $_GET['wr_idx'] ?>">
         <input type="hidden" name="test_id"  value="<?= $_GET['bo_idx']?>">
         <input type="hidden" name="value_id"  value="1">
+        <input type="hidden" name="us_idx"  value="<?= $_GET['us_idx'] ?>">
         
         <label for="" class="label_text" style="display:block;">항목평가</label>
         <label for="test_user" class="label_text" style="vertical-align: inherit;">연구진</label>
-        <input type="number" name="test_user" id="test_user"  class="input_text input_text_40 input_text_end" placeholder="접수번호" value="<?= $row['info_number']; ?>"  maxlength="80"> 
+        <input type="number" name="test_user" id="test_user"  class="input_text input_text_40 input_text_end" placeholder="연구진" value="<?= $row['info_number']; ?>"  maxlength="80"> 
         <span>/80</span>
         <label for="test_title" class="label_text" style="vertical-align: inherit;">주제</label>
-        <input type="number" name="test_title" id="test_title"  class="input_text input_text_40 input_text_end" placeholder="접수번호" value="<?= $row['info_number']; ?>"    maxlength="80" > 
+        <input type="number" name="test_title" id="test_title"  class="input_text input_text_40 input_text_end" placeholder="주제" value="<?= $row['info_number']; ?>"    maxlength="80" > 
         <span>/80</span>
         <label for="test_plan" class="label_text" style="vertical-align: inherit;">계획</label>
-        <input type="number" name="test_plan" id="test_plan"  class="input_text input_text_40 input_text_end" placeholder="접수번호" value="<?= $row['info_number']; ?>"    maxlength="80"> 
+        <input type="number" name="test_plan" id="test_plan"  class="input_text input_text_40 input_text_end" placeholder="계획" value="<?= $row['info_number']; ?>"    maxlength="80"> 
         <span>/80</span>
         <label for="test_sum" class="label_text" style="vertical-align: inherit;">종합평가</label>
-        <input type="number" name="test_sum" id="test_sum"  class="input_text input_text_40 input_text_end" placeholder="접수번호" readonly > 
+        <input type="number" name="test_sum" id="test_sum"  class="input_text input_text_40 input_text_end" placeholder="종합평가" readonly > 
         <span>/80</span>
         <label for="test_opinion" class="label_text" style="vertical-align: top;">상세설명</label>
         <input type="text" name="test_opinion" id ="test_opinion" class="input_text input_text_hight" value="<?= $row44['contents']; ?>"<?= $row44['report'] ==2? "disabled": ""; ?>> 

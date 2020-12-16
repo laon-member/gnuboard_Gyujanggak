@@ -90,9 +90,6 @@ if (isset($_GET['wr_idx']) && empty($_GET['us_idx'])) {
     include_once (G5_BBS_PATH.'/application.rater.php');
 } else{
     include_once (G5_BBS_PATH.'/list.rater.php');
-
-    // echo isset($_GET['wr_idx']);
-    echo isset($_GET['us_idx']);
 }
 
 // 전체목록보이기 사용이 "예" 또는 wr_id 값이 없다면 목록을 보임

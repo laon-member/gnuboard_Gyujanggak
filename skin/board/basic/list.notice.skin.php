@@ -14,7 +14,7 @@ if ($is_nogood) $colspan++;
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
 
 
-$sql = " select * from g5_write_business_title where bo_table = '{$_GET[bo_table]}'";
+$sql = " select * from g5_write_business_title where bo_table = '{$_GET['bo_table']}'";
 $result = sql_query($sql);
 
 // $sql1 = " SELECT * FROM {$write_table} WHERE wr_title_idx = {$bo_idx} ";
@@ -25,14 +25,21 @@ $result = sql_query($sql);
 //     $num ++;
 // }
 
+$sql1 = " SELECT * FROM `g5_write_business_title` where bo_table = '{$_GET['bo_table']}'";
+$result1 = sql_query($sql1);
+
 ?>
 <!-- 게시판 목록 시작 { -->
 <aside id="bo_side">
-    <h2 class="aside_nav">공지사항</h2>
+    <h2 class="aside_nav">공지상항</h2>
     <?php 
-        for($k=1; $row=sql_fetch_array($result); $k++) {
-            $class_get =  $_GET['bo_idx'] == $k?"aisde_click":"";
-            echo '<a class="aside_nav '.$class_get.'" href="'.G5_BBS_URL .'/board.notice.php?bo_table='.$bo_table.'&bo_idx='.$k.'&bo_title='.$_GET['bo_title'].'">'.$row["title"].'</a>';
+        for($k=7; $row1=sql_fetch_array($result1); $k++) {
+            $class_get = $_GET['bo_idx'] == $row1['idx']?"aisde_click":"";
+            echo '<a class="aside_nav '.$class_get.'" href="'.G5_BBS_URL .'/board.notice.php?bo_table=notice&bo_idx='.$k.'&page=1&bo_title='.$_GET['bo_title'].'">'.$row1['title'].'</a>';
+           
+            if($_GET['bo_idx'] == $row1['idx']){
+                $category_title =  $row1['title']; 
+            }
         }
     ?>
 </aside>
@@ -54,19 +61,9 @@ $result = sql_query($sql);
 
     <!-- 게시판 페이지 정보 및 버튼 시작 { -->
     <div id="bo_btn_top">
-    <h1 id="">
-        <?php if($_GET['bo_idx'] == 1 ) { 
-                echo "공지사항";
-            } else if($_GET['bo_idx'] == 2){ 
-                if($supper){
-                    echo "서식 관리";
-                } else {
-                    echo "서식 다운로드";
-                }
-             } else if($_GET['bo_idx'] == 3){ 
-                echo "지원실 파일 공유";
-            } ?>
-    </h1>
+    <h1 class="category_title"><?php
+                echo $category_title;
+             ?></h1>
 
         <ul class="btn_bo_user">
             <li>
@@ -105,11 +102,6 @@ $result = sql_query($sql);
             
             <td class="td_idx td_center">
             <?php
-            if ($list[$i]['is_notice']) // 공지사항
-                echo '<strong class="notice_icon">공지</strong>';
-            else if ($wr_id == $list[$i]['wr_id'])
-                echo "<span class=\"bo_current\">열람중</span>";
-            else
                 echo $list[$i]['num'];
              ?>
             </td>
@@ -121,7 +113,7 @@ $result = sql_query($sql);
                 <a href="<?php echo $list[$i]['ca_name_href'] ?>" class="bo_cate_link"><?php echo $list[$i]['ca_name'] ?></a>
                 <?php } ?>
                 <div class="bo_tit">
-                    <a href="../bbs/board.notice.php?bo_table=notice&wr_id=<?php echo $list[$i]['wr_id'] ?>&bo_title=<?php echo $_GET['bo_title'] ?>">
+                    <a href="../bbs/board.notice.php?bo_idx=<?= $_GET['bo_idx']; ?>&bo_table=notice&wr_id=<?php echo $list[$i]['wr_id'] ?>&bo_title=<?php echo $_GET['bo_title'] ?>">
                         <?php echo $list[$i]['icon_reply'] ?>
                         <?php
                             if (isset($list[$i]['icon_secret'])) echo rtrim($list[$i]['icon_secret']);

@@ -4,10 +4,10 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
     
-$sql1 = " SELECT * FROM `g5_write_business_title` ";
+$sql1 = " select * from g5_write_business_title where bo_table = '{$_GET['bo_table']}'";
 $result1 = sql_query($sql1);
 
-$sql = " SELECT * FROM `g5_write_business` where wr_id = {$_GET[bo_idx]} ";
+$sql = " SELECT * FROM `g5_write_business` where wr_id = {$_GET['wr_id']} ";
 $result = sql_query($sql);
 $row=sql_fetch_array($result);
 ?>
@@ -127,7 +127,7 @@ $row=sql_fetch_array($result);
                 <div class="input-file">
                     <input type="text" id="file_label_view<?= $i ?>" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능"/>
                     <label for="upload0<?php echo $i ?>" class="file-label">찾아보기</label>
-                    <input type="file" name="bf_file[<?php echo $i ?>]" id="upload0<?php echo $i ?>" class="file-upload" value=""/>
+                    <input type="file" name="bf_file[]" id="upload0<?php echo $i ?>" class="file-upload" value=""/>
                     <button type="button" class="file-label file-del " id="file-del<?= $i ?>">삭제</button>
                 </div>
             <?php } ?>

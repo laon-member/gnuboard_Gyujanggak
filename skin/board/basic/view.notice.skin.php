@@ -6,7 +6,7 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
 
 // WHERE idx = {$view['wr_title_idx']}
-$sql1 = " SELECT * FROM `g5_write_business_title` where bo_table = '{$_GET[bo_table]}'";
+$sql1 = " SELECT * FROM `g5_write_business_title` where bo_table = '{$_GET['bo_table']}'";
 $result1 = sql_query($sql1);
 
 
@@ -16,13 +16,13 @@ $result1 = sql_query($sql1);
 
 <!-- 게시물 읽기 시작 { -->
     <aside id="bo_side">
-    <h2 class="aside_nav">공지상항ㄴ</h2>
+    <h2 class="aside_nav">공지상항</h2>
     <?php 
-        for($k=1; $row1=sql_fetch_array($result1); $k++) {
-            $class_get = $view['wr_title_idx'] == $row1['idx']?"aisde_click":"";
-            echo '<a class="aside_nav '.$class_get.'" href="'.G5_BBS_URL .'/board.php?bo_table=business&bo_idx='.$k.'&page=1">'.$row1['title'].'</a>';
+        for($k=7; $row1=sql_fetch_array($result1); $k++) {
+            $class_get = $_GET['bo_idx'] == $row1['idx']?"aisde_click":"";
+            echo '<a class="aside_nav '.$class_get.'" href="'.G5_BBS_URL .'/board.notice.php?bo_table=notice&bo_idx='.$k.'&page=1&bo_title='.$_GET['bo_title'].'">'.$row1['title'].'</a>';
            
-            if($view['wr_title_idx'] == $row1['idx']){
+            if($_GET['bo_idx'] == $row1['idx']){
                 $category_title =  $row1['title']; 
             }
         }
@@ -35,19 +35,38 @@ $result1 = sql_query($sql1);
         <div id="bo_v_top">
             <h1 class="category_title"><?php
                 echo $category_title;
-             ?></h2>
-            <button type="button" class="btn_bo_sch btn_b01 btn" title="게시판 검색">
-                <i class="fa fa-search" aria-hidden="true"></i>
-            </button>
+             ?></h1>
+     
         </div>
         <div class="bo_b_tit_container">
             <span class="bo_v_tit">
-                <?php echo cut_str(get_text($view['wr_subject']), 70); echo $view['wr_id']// 글제목 출력 ?>
+                <?php echo cut_str(get_text($view['wr_subject']), 70);  // 글제목 출력 ?>
             </span>
         </div>       
         <div class="profile_info_container">
             <div class="profile_info">
-                <span>지원기간 : <?php echo $view['wr_date_start']; ?> ~ <?php echo $view['wr_date_end']; ?></span>
+                <ul class="download_file">
+                    <?php if($cnt) { ?>
+                        <?php
+                        // 가변 파일
+                        for ($i=0; $i<count($view['file']); $i++) {
+                            if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view']) {
+                        ?>
+                            <li class="">
+                                <i class="fa fa-download" aria-hidden="true"></i>
+                                <span class="view_file_download_text"><?php echo $view['file'][$i]['source'] ?></span> 
+                                <a href="<?php echo $view['file'][$i]['href'];  ?>" class="view_file_download btn_next_prv" >
+                                    다운로드
+                                </a>
+                            
+                            </li>
+                        <?php
+                            }
+                        }
+                    }
+                    ?>
+            
+                </ul>
             </div>
             <div class="profile_info">
                 <span>등록일 : <?php echo date("y.m.d", strtotime($view['wr_datetime'])) ?></span>
@@ -68,18 +87,18 @@ $result1 = sql_query($sql1);
         
 
         <?php
-        // 파일 출력
-        $v_img_count = count($view['file']);
-        if($v_img_count) {
-            echo "<div id=\"bo_v_img\">\n";
+        // // 파일 출력
+        // $v_img_count = count($view['file']);
+        // if($v_img_count) {
+        //     echo "<div id=\"bo_v_img\">\n";
 
-            for ($i=0; $i<=count($view['file']); $i++) {
-                echo get_file_thumbnail($view['file'][$i]);
-            }
+        //     for ($i=0; $i<=count($view['file']); $i++) {
+        //         echo get_file_thumbnail($view['file'][$i]);
+        //     }
 
-            echo "</div>\n";
+        //     echo "</div>\n";
       
-        }
+        // }
          ?>
 
         <!-- 본문 내용 시작 { -->
@@ -106,34 +125,13 @@ $result1 = sql_query($sql1);
 
    
     <!-- 첨부파일 시작 { -->
-    <section id="bo_v_files">
-        <ul class="download_file">
-            <?php if($cnt) { ?>
-            <?php
-            // 가변 파일
-            for ($i=0; $i<count($view['file']); $i++) {
-                if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view']) {
-            ?>
-                <li class="">
-                    <i class="fa fa-download" aria-hidden="true"></i>
-                    <span class="view_file_download_text"><?php echo $view['file'][$i]['source'] ?></span> 
-                    <a href="<?php echo $view['file'][$i]['href'];  ?>" class="view_file_download btn_next_prv" >
-                        다운로드
-                    </a>
-                
-                </li>
-            <?php
-                        }
-                    }
-                }
-            ?>
-    
-        </ul>
+    <section id="bo_v_files ">
+        
         <?php if ($prev_href || $next_href) { ?>
         <ul class="btn_container">
             <?php if ($prev_href) { ?>
                 <li class=" btn_next_prv" >
-                    <a href="<?php echo $prev_href ?>">
+                    <a href="../bbs/board.notice.php?bo_idx=<?=$_GET['bo_idx']; ?>&bo_table=notice&wr_id=<?= $prev['wr_id']; ?>">
                         <span class="nb_tit">
                             <i class="fa fa-chevron-up" aria-hidden="true" style="transform: rotate(-90deg);"></i>
                         </span >
@@ -142,25 +140,24 @@ $result1 = sql_query($sql1);
             <?php } ?>
             <?php if ($next_href) { ?>
                 <li class="btn_next btn_next_prv">
-                    <a href="<?php echo $next_href ?>">다음글
+                <a href="../bbs/board.notice.php?bo_idx=<?=$_GET['bo_idx']; ?>&bo_table=notice&wr_id=<?= $next['wr_id']; ?>">다음글
                         <span class="nb_tit"> 
                             <i class="fa fa-chevron-down" aria-hidden="true" style="transform: rotate(-90deg);"></i>
                         </span>
                     </a>  
                 </li>
             <?php } ?>
-                <li class="btn_next_prv"><a href="<?php echo G5_BBS_URL .'/board.php?bo_table=business&bo_idx='.$view[wr_title_idx].'&page=1' ?>" class="btn_list">목록</a></li>
+                <li class="btn_next_prv"><a href="<?php echo G5_BBS_URL .'/board.notice.php?bo_table=notice&bo_idx='.$_GET['bo_idx'].'&page=1'; ?>" class="btn_list">목록</a></li>
         </ul>
         <?php } ?>
+        
     </section>
     <!-- } 첨부파일 끝 -->
-    
 
-    <section id="bus_btn" >
-        <a href="../bbs/application.php?bo_table=business&bo_idx=<?php echo $view['wr_title_idx']; ?>&wr_id=<?php echo $_GET['wr_id']; ?>" class="btn_next_prv btn_next_prv_link" title="신청하기">신청하기</a>
+    <section id="bus_btn">
+        <a href="<?php echo G5_BBS_URL .'/board.notice.php?bo_table=notice&bo_idx='.$_GET['bo_idx'].'&page=1'; ?>" class="btn_next_prv btn_next_prv_link">목록보기</a>
     </section>
-
-
+    
 </article>
 
 

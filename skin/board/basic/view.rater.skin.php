@@ -64,27 +64,50 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         <tbody>
         <?php
         $sql = "  select COUNT(DISTINCT `idx`) as cnt from rater where user_id = '{$member['mb_id']}' and test_id = '{$_GET['bo_idx']}'";
-        echo $sql;
         $row11 = sql_fetch($sql);
         $total_count = $row11['cnt'];
 
-        $sql = " select * from rater where user_id = '{$member['mb_id']}' and test_id = '{$_GET['bo_idx']}'";
+        $sql = " select * from rater where user_id = '{$member['mb_id']}' and business_idx = '{$_GET['wr_idx']}' and test_id = '{$_GET['bo_idx']}'";
         $result = sql_query($sql);
-        
+        $row = sql_fetch_array($result);
+        if($row == ""){
+            alert("권한이 없습니다");
+        }
 
+
+
+        if($_GET['bo_idx'] == 1){
+            $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}'";
+            $result = sql_query($sql);
+        } else if ($_GET['bo_idx'] == 2) {
+            $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' and report_val_1 = 2";
+            $result = sql_query($sql);
+        } else if ($_GET['bo_idx'] == 3) {
+            $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' and report_val_2 = 2";
+            $result = sql_query($sql);
+        }
 
         for ($i=0; $i<$row = sql_fetch_array($result); $i++) {
+
+            // if($_GET['bo_idx'] == 2){
+            //     $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}'";
+            //     $result = sql_query($sql);
+            // } else if ($_GET['bo_idx'] == 3) {
+            //     $sql = " select * from rater where user_id = '{$member['mb_id']}' and test_id = '{$_GET['bo_idx']}'";
+            //     $result = sql_query($sql);
+            // }
             
-        	$sql55 = " select * from g5_write_business where wr_id = '{$row['business_idx']}'";
-            $result55 = sql_query($sql55);
-            $row22 = sql_fetch_array($result55);
+        	// $sql55 = " select * from g5_write_business where wr_id = '{$row['business_idx']}'";
+            // $result55 = sql_query($sql55);
+            // $row22 = sql_fetch_array($result55);
         ?>
         
         <tr class="<?php echo $lt_class ?> tr_hover">
             <td class="hidden" style="display:none;">
                 <input type="hidden" class="sql_idx" name="sql_idx" value="<?= $_GET['bo_idx'] ?>">
-                <input type="hidden" class="sql_title" name="sql_title" value="<?php echo $row33['title']; ?>">
-                <input type="hidden" class="sql_ko_title" name="sql_ko_title" value="<?php echo $row22['ko_title']; ?>">
+                <input type="hidden" class="sql_title" name="sql_title" value="<?php echo $row['title']; ?>">
+                <input type="hidden" class="sql_ko_title" name="sql_ko_title" value="<?php echo $row['ko_title']; ?>">
+                <input type="hidden" class="sql_us_idx" name="us_idx" value="<?php echo $row['idx']; ?>">
 
                 
             </td>
@@ -96,19 +119,20 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             </td>
 
             <td class="td_center">
-                <?= $row22['quest_number'] ?> 
+                <?= $row['quest_number'] ?> 
             </td>
             <td class="td_download "  >
-            <a href="../bbs/board.rater.php?bo_table=qa&bo_idx=<?= $_GET['bo_idx'] ?>&wr_idx=<?= $_GET['wr_idx'] ?>&us_idx=<?= $row22['idx']; ?>"><?= $row22['ko_title']; ?></a>
+            <a href="../bbs/board.rater.php?bo_table=qa&bo_idx=<?= $_GET['bo_idx'] ?>&wr_idx=<?= $_GET['wr_idx'] ?>&us_idx=<?= $row['idx']; ?>"><?= $row['ko_title']; ?></a>
                     
             </td>
-            <td class="td_datetime td_center"><?php echo $row22['name']; ?></td>
+            <td class="td_datetime td_center"><?php echo $row['name']; ?></td>
             <td class="td_datetime td_center"><button type="button" class="value_btn btn_bo_val"> 평가</button></td>
             <td class="td_datetime td_center" value="<?= $i ?>">
-                <form name="fboardlist" id="fboardlist" action="<?= https_url(G5_BBS_DIR)."/application_update.php"; ?>" method="post">
-                    <input type="hidden" name="business_idx" id= "business_idx_form" value="<?php echo $_GET['wr_idx'] == 1? $row22['idx']: $row55['idx']; ?>">
+                <form name="fboardlist" id="fboardlist" action="<?= https_url(G5_BBS_DIR)."/application_rater_update.php"; ?>" method="post">
+                    <input type="hidden" name="business_idx" id= "business_idx_form" value="<?php echo $_GET['wr_idx']; ?>">
                     <input type="hidden" name="test_id"  value="<?= $_GET['bo_idx']?>">
                     <input type="hidden" name="value_id"  value="2">
+                    <input type="hidden" class="sql_us_idx" name="us_idx" value="<?php echo $row['idx']; ?>">
                     <?php echo $_GET['bo_idx'] == 1? $row22['idx']: $row55['idx']; ?>
                     <?= $row22['idx']?>
                     <button type="submit" class="value_btn btn_bo_val_submit value_btn_a">제출</button> 
@@ -141,7 +165,9 @@ jQuery(function($){
         $('#sql_ko_title_view').text(sql_ko_title);
         var business_idx_form = $(this).parents('.tr_hover').find('#business_idx_form').attr('value');
         $('#business_idx').text(business_idx_form);
-        
+        var us_idx = $(this).parents('.tr_hover').find('.sql_us_idx').attr('value');
+        $('#us_idx').val(us_idx);
+
         $('.bo_sch_wrap').toggle();
 
     })
@@ -176,10 +202,11 @@ jQuery(function($){
 
         <p id="sql_title_view"></p>
         <h3 id="sql_ko_title_view"><?php echo $value; ?></h3>
-        <form name="fsearch" method="POST" action="<?= https_url(G5_BBS_DIR)."/application_update.php"; ?>">
+        <form name="fsearch" method="POST" action="<?= https_url(G5_BBS_DIR)."/application_rater_update.php" ?>">
         <input type="hidden" name="business_idx" id= "business_idx" value="<?= $_GET['wr_idx'] ?>">
         <input type="hidden" name="test_id"  value="<?= $_GET['bo_idx']?>">
         <input type="hidden" name="value_id"  value="1">
+        <input type="hidden" name="us_idx" id="us_idx"  value="">
         
         <label for="" class="label_text" style="display:block;">항목평가</label>
         <label for="test_user" class="label_text" style="vertical-align: inherit;">연구진</label>
@@ -214,76 +241,5 @@ jQuery(function($){
 <noscript>
 <p>자바스크립트를 사용하지 않는 경우<br>별도의 확인 절차 없이 바로 선택삭제 처리하므로 주의하시기 바랍니다.</p>
 </noscript>
+
 <?php } ?>
-
-<?php if ($is_checkbox) { ?>
-<script>
-function all_checked(sw) {
-    var f = document.fboardlist;
-
-    for (var i=0; i<f.length; i++) {
-        if (f.elements[i].name == "chk_wr_id[]")
-            f.elements[i].checked = sw;
-    }
-}
-
-function fboardlist_submit(f) {
-    var chk_count = 0;
-
-    for (var i=0; i<f.length; i++) {
-        if (f.elements[i].name == "chk_wr_id[]" && f.elements[i].checked)
-            chk_count++;
-    }
-
-    if (!chk_count) {
-        alert(document.pressed + "할 게시물을 하나 이상 선택하세요.");
-        return false;
-    }
-
-    if(document.pressed == "선택복사") {
-        select_copy("copy");
-        return;
-    }
-
-    if(document.pressed == "선택이동") {
-        select_copy("move");
-        return;
-    }
-
-    if(document.pressed == "선택삭제") {
-        if (!confirm("선택한 게시물을 정말 삭제하시겠습니까?\n\n한번 삭제한 자료는 복구할 수 없습니다\n\n답변글이 있는 게시글을 선택하신 경우\n답변글도 선택하셔야 게시글이 삭제됩니다."))
-            return false;
-
-        f.removeAttribute("target");
-        f.action = g5_bbs_url+"/board_list_update.php";
-    }
-
-    return true;
-}
-
-
-// 게시판 리스트 관리자 옵션
-jQuery(function($){
-    $(".btn_more_opt.is_list_btn").on("click", function(e) {
-        e.stopPropagation();
-        $(".more_opt.is_list_btn").toggle();
-    });
-    $(document).on("click", function (e) {
-        if(!$(e.target).closest('.is_list_btn').length) {
-            $(".more_opt.is_list_btn").hide();
-        }
-    });
-
-    // if(<?php echo $_GET['bo_idx'] == 1? true : false ?> ){
-    //     alert('fdsa');
-    // }
-
-    // $('.aside_nav').click(function(){
-    //     $('.aside_nav').removeClass('.aisde_click');
-    //     $(this).addClass('.aisde_click');
-    // });
-
-});
-</script>
-<?php } ?>
-<!-- } 게시판 목록 끝 -->

@@ -45,14 +45,14 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
             <?php if($board_user == 1){ ?>
                 <li class="board_nav_list <?= $board_border ?>"><a href="../bbs/board.php?bo_table=business&bo_idx=1">사업공고</a></li>
                 <li class="board_nav_list <?= $board_report_border ?>"><a href="../bbs/board.report.php?bo_table=business&bo_idx=1">보고서 제출</a></li>
-                <li class="board_nav_list <?= $board_value_border ?>"><a href="../bbs/board.value.php?bo_table=business&bo_idx=1">지원결과 확인</a></li>
-                <li class="board_nav_list <?= $board_notice_border ?>"><a href="../bbs/board.notice.php?bo_table=notice&bo_idx=1&bo_title=1" >자료실</a></li>
+                <li class="board_nav_list <?= $board_value_border ?>"><a href="../bbs/board.value.php?bo_table=business&bo_idx=7">지원결과 확인</a></li>
+                <li class="board_nav_list <?= $board_notice_border ?>"><a href="../bbs/board.notice.php?bo_table=notice&bo_idx=7&bo_title=1" >자료실</a></li>
             <?php } ?>
             
             
              <?php if($board_user == 2) { ?>
                 <li class="board_nav_list <?= $board_rater_border ?>"><a href="../bbs/board.rater.php?bo_table=qa&bo_idx=1">심사관리</a></li>
-                <li class="board_nav_list <?= $board_notice_border ?>"><a href="../bbs/board.notice.php?bo_table=notice&bo_idx=1&bo_title=2" >공지사항</a></li>
+                <li class="board_nav_list <?= $board_notice_border ?>"><a href="../bbs/board.notice.php?bo_table=notice&bo_idx=7&bo_title=2" >공지사항</a></li>
             <?php } ?>
 
 

@@ -3,13 +3,26 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
+
+$sql = " select * from g5_write_business_title where bo_table = '{$_GET['bo_table']}'";
+$result = sql_query($sql);
 ?>
+<aside id="bo_side">
+    <h2 class="aside_nav">사업 공고</h2>
+    <?php 
+    $title_text="";
+        for($k=1; $row=sql_fetch_array($result); $k++) {
+            $class_get =  $_GET['bo_idx'] == $row['idx']?"aisde_click":"";
+            if($_GET['bo_idx'] == $row['idx'])
+                $title_text = $row['title'];
 
-<section id="bo_w">
-    <h2 class="sound_only"><?php echo $g5['title'] ?></h2>
-
+            echo '<a class="aside_nav '.$class_get.'" href="'.G5_BBS_URL .'/board.php?bo_table='.$bo_table.'&bo_idx='.$k.'">'.$row["title"].'</a>';
+        }
+    ?>
+</aside>
+<section id="bo_v">
     <!-- 게시물 작성/수정 시작 { -->
-    <form name="fwrite" id="fwrite" action="<?php echo $action_url ?>" onsubmit="return fwrite_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off" style="width:<?php echo $width; ?>">
+    <form name="fwrite" id="fwrite" action="<?php echo $action_url ?>" onsubmit="return fwrite_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off" >
     <input type="hidden" name="uid" value="<?php echo get_uniqid(); ?>">
     <input type="hidden" name="w" value="<?php echo $w ?>">
     <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
@@ -49,57 +62,28 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     }
     echo $option_hidden;
     ?>
-    <?php if ($is_category) { ?>
-    <div class="bo_w_select write_div">
-        <label for="ca_name" class="sound_only">분류<strong>필수</strong></label>
-        <select name="ca_name" id="ca_name" required>
-            <option value="">분류를 선택하세요</option>
-            <?php echo $category_option ?>
-        </select>
-    </div>
-    <?php } ?>
-
-    <div class="bo_w_info write_div">
-	    <?php if ($is_name) { ?>
-	        <label for="wr_name" class="sound_only">이름<strong>필수</strong></label>
-	        <input type="text" name="wr_name" value="<?php echo $name ?>" id="wr_name" required class="frm_input half_input required" placeholder="이름">
-	    <?php } ?>
-	
-	    <?php if ($is_password) { ?>
-	        <label for="wr_password" class="sound_only">비밀번호<strong>필수</strong></label>
-	        <input type="password" name="wr_password" id="wr_password" <?php echo $password_required ?> class="frm_input half_input <?php echo $password_required ?>" placeholder="비밀번호">
-	    <?php } ?>
-	
-	    <?php if ($is_email) { ?>
-			<label for="wr_email" class="sound_only">이메일</label>
-			<input type="text" name="wr_email" value="<?php echo $email ?>" id="wr_email" class="frm_input half_input email " placeholder="이메일">
-	    <?php } ?>
-	    
-	
-	    <?php if ($is_homepage) { ?>
-	        <label for="wr_homepage" class="sound_only">홈페이지</label>
-	        <input type="text" name="wr_homepage" value="<?php echo $homepage ?>" id="wr_homepage" class="frm_input half_input" size="50" placeholder="홈페이지">
-	    <?php } ?>
-	</div>
-	
-    <?php if ($option) { ?>
-    <div class="write_div">
-        <span class="sound_only">옵션</span>
-        <ul class="bo_v_option">
-        <?php echo $option ?>
-        </ul>
-    </div>
-    <?php } ?>
+  
+ 
+    <h1 class=""><?= $title_text ?></h1>
 
     <div class="bo_w_tit write_div">
         <label for="wr_subject" class="sound_only">제목<strong>필수</strong></label>
         
         <div id="autosave_wrapper" class="write_div">
             <input type="text" name="wr_subject" value="<?php echo $subject ?>" id="wr_subject" required class="frm_input full_input required" size="50" maxlength="255" placeholder="제목">
-
         </div>
         
     </div>
+
+    <div>
+        <label for="quest_number_view" class="label_text">과제번호</label>
+        <input tyQpe="text" name="quest_number_view" id="quest_number_view"  class="input_text input_text_50 input_text_end" placeholder="과제번호" value="<?= $row['quest_number']; ?>" readonly>
+    </div>
+    
+    
+    <label for="date_start_view" class="label_text">총 연구 기간</label>
+    <input type="date" name="date_start_view" id="date_start_view"  class="frm_input required full_input input_text_50 input_text_end" readonly value="<?= $row['date_start']; ?>">
+    <input type="date" name="date_end_view" id="date_end_view"  class="frm_input required full_input input_text_50 input_text_end" readonly value="<?= $row['date_end']; ?>">
 
     <div class="write_div">
         <label for="wr_content" class="sound_only">내용<strong>필수</strong></label>
@@ -117,22 +101,15 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         
     </div>
 
-    <?php for ($i=1; $is_link && $i<=G5_LINK_COUNT; $i++) { ?>
-    <div class="bo_w_link write_div">
-        <label for="wr_link<?php echo $i ?>"><i class="fa fa-link" aria-hidden="true"></i><span class="sound_only"> 링크  #<?php echo $i ?></span></label>
-        <input type="text" name="wr_link<?php echo $i ?>" value="<?php if($w=="u"){ echo $write['wr_link'.$i]; } ?>" id="wr_link<?php echo $i ?>" class="frm_input full_input" size="50">
-    </div>
-    <?php } ?>
+  
 
-    <?php for ($i=0; $is_file && $i<$file_count; $i++) { ?>
+    <!-- <?php for ($i=0; $i<4; $i++) { ?>
     <div class="bo_w_flie write_div">
         <div class="file_wr write_div">
             <label for="bf_file_<?php echo $i+1 ?>" class="lb_icon"><i class="fa fa-folder-open" aria-hidden="true"></i><span class="sound_only"> 파일 #<?php echo $i+1 ?></span></label>
             <input type="file" name="bf_file[]" id="bf_file_<?php echo $i+1 ?>" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" class="frm_file ">
         </div>
-        <?php if ($is_file_content) { ?>
-        <input type="text" name="bf_content[]" value="<?php echo ($w == 'u') ? $file[$i]['bf_content'] : ''; ?>" title="파일 설명을 입력해주세요." class="full_input frm_input" size="50" placeholder="파일 설명을 입력해주세요.">
-        <?php } ?>
+        
 
         <?php if($w == 'u' && $file[$i]['file']) { ?>
         <span class="file_del">
@@ -141,8 +118,18 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         <?php } ?>
         
     </div>
-    <?php } ?>
-
+    <?php } ?> -->
+    <label for="" id="bo_side"  class="label_text">자료첨부</label>
+        <section id="bo_v"  class="bo_class">
+            <?php for ($i=0; $i<4; $i++) { ?>
+                <div class="input-file">
+                    <input type="text" id="file_label_view<?= $i ?>" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능"  value="<?=  $il_file[$i]?>"/>
+                    <label for="upload0<?php echo $i ?>" class="file-label" style="background:<?= $row44['report'] ==2? '#ccc': '#3a8afd'; ?>">찾아보기</label>
+                    <input type="file" name="bf_file[<?php echo $i ?>]" id="upload0<?php echo $i ?>" class="file-upload" value="" <?= $row44['report'] ==2? "disabled": ""; ?> />
+                    <button type="button" class="file-label file-del " id="file-del<?= $i ?>" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>">삭제</button>
+                </div>
+            <?php } ?>
+        </section>
 
   
 

@@ -402,7 +402,7 @@ $editor_js .= chk_editor_js('wr_content', $is_dhtml_editor);
 $sql1 = " SELECT * FROM `g5_write_business_title` ";
 $result1 = sql_query($sql1);
 
-$sql = " SELECT * FROM `g5_write_business` where wr_id = {$_GET[bo_idx]} ";
+$sql = " SELECT * FROM `g5_write_business` where wr_id = {$_GET['bo_idx']} ";
 $result = sql_query($sql);
 $row=sql_fetch_array($result);
 

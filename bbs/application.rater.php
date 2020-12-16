@@ -399,7 +399,7 @@ $editor_js .= chk_editor_js('wr_content', $is_dhtml_editor);
 $sql1 = " SELECT * FROM `g5_write_business_title` ";
 $result1 = sql_query($sql1);
 
-$sql = " SELECT * FROM `g5_write_business` where wr_id = {$_GET[bo_idx]} ";
+$sql = " SELECT * FROM `g5_write_business` where wr_id = {$_GET['bo_idx']} ";
 $result = sql_query($sql);
 $row=sql_fetch_array($result);
 
@@ -413,7 +413,7 @@ include_once(G5_PATH.'/head.sub.php');
 @include_once ($board_skin_path.'/write.head.skin.php');
 include_once('./board_head.php');
 
-$action_url = https_url(G5_BBS_DIR)."/application_update.php";
+$action_url = https_url(G5_BBS_DIR)."/application_rater_update.php";
 
 echo '<!-- skin : '.(G5_IS_MOBILE ? $board['bo_mobile_skin'] : $board['bo_skin']).' -->';
 include_once ($board_skin_path.'/application.rater.skin.php');

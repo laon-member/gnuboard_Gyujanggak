@@ -55,7 +55,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         <caption><?php echo $board['bo_subject'] ?> 목록</caption>
         
         <?php
-            $sql2 = " select * from g5_business_propos where mb_id = '{$member[mb_id]}'";
+            $sql2 = " select * from g5_business_propos where mb_id = '{$member['mb_id']}'";
             $sql2 .= " {$sql_order} limit {$from_record}, $page_rows ";
 
             $result2 = sql_query($sql2);
@@ -65,7 +65,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                 if ($i%2==0) $lt_class = "even";
                 else $lt_class = "";
 
-                $sql = " select * from g5_write_business where wr_id= '{$row[bo_idx]}'";
+                $sql = " select * from g5_write_business where wr_id= '{$row['bo_idx']}'";
                 $result = sql_query($sql);
                 $row44 = sql_fetch_array($result);
 		?>

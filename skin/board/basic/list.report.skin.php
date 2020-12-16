@@ -76,7 +76,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         } else if($_GET['bo_idx'] == 2){
             $value = 'report_val_1';
         }
-            $sql2 = " select * from g5_business_propos where mb_id = '{$member[mb_id]}' AND $value = '1' ";
+            $sql2 = " select * from g5_business_propos where mb_id = '{$member['mb_id']}' AND $value = '1' ";
             $sql2 .= " {$sql_order} limit {$from_record}, $page_rows ";
 
             $result2 = sql_query($sql2);
@@ -90,11 +90,11 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                 $result = sql_query($sql);
                 $row22 = sql_fetch_array($result);
                
-                $sql = " select * from g5_write_business_title where idx= '{$row[bo_title_idx]}'";
+                $sql = " select * from g5_write_business_title where idx= '{$row['bo_title_idx']}'";
                 $result = sql_query($sql);
                 $row33 = sql_fetch_array($result);
 
-                $sql = " select * from g5_write_business where wr_id= '{$row[bo_idx]}'";
+                $sql = " select * from g5_write_business where wr_id= '{$row['bo_idx']}'";
                 $result = sql_query($sql);
                 $row44 = sql_fetch_array($result);
 		?>

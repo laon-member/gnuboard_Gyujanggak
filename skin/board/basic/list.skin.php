@@ -14,7 +14,7 @@ if ($is_nogood) $colspan++;
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
 
 
-$sql = " select * from g5_write_business_title where bo_table = '{$_GET[bo_table]}'";
+$sql = " select * from g5_write_business_title where bo_table = '{$_GET['bo_table']}'";
 $result = sql_query($sql);
 
 // $sql1 = " SELECT * FROM {$write_table} WHERE wr_title_idx = {$bo_idx} ";
@@ -39,7 +39,7 @@ $result = sql_query($sql);
 </aside>
 <div id="bo_list" >
     <?php 
-        $sql = " select * from g5_write_business_title where idx = '{$_GET[bo_idx]}'";
+        $sql = " select * from g5_write_business_title where idx = '{$_GET['bo_idx']}'";
         $result = sql_query($sql);
         $row = sql_fetch_array($result);
     ?>
@@ -65,7 +65,7 @@ $result = sql_query($sql);
             </li>
         	<?php if ($is_admin == 'super') {  ?>
                 <li>
-                    <a href="<?php echo $write_href ?>" class="btn_b01 btn" title="글쓰기"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sound_only">글쓰기</span></a>
+                    <a href="<?php echo $write_href ?>&bo_idx=<?= $_GET['bo_idx'] ?>" class="btn_b01 btn" title="글쓰기"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sound_only">글쓰기</span></a>
                 </li>
         	<?php }  ?>
         </ul>

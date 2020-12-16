@@ -82,8 +82,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         <tbody>
         <?php
         $sql = "select * from rater where user_id = '{$member['mb_id']}' AND value = '2' AND test_id = '{$_GET['bo_idx']}'";
-        echo $sql;
-        for ($i=0; $row11 = sql_fetch($sql); $i++) {
+        $result = sql_query($sql);
+        for ($i=0; $row11 = sql_fetch_array($result); $i++) {
             
         	if ($i%2==0) $lt_class = "even";
             else $lt_class = "";
@@ -116,7 +116,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                     $sql = " select COUNT(DISTINCT `idx`) as cnt from rater where value = '2' AND test_id = '{$_GET['bo_idx']}'";
                     $result = sql_query($sql);
                     $row55 = sql_fetch_array($result);
-                    echo $row55;
+                    echo $row55['cnt'];
                  ?>
             </td>
         </tr>

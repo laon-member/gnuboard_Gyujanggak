@@ -6,7 +6,7 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
 
 // WHERE idx = {$view['wr_title_idx']}
-$sql1 = " SELECT * FROM `g5_write_business_title` where bo_table = '{$_GET[bo_table]}'";
+$sql1 = " SELECT * FROM `g5_write_business_title` where bo_table = '{$_GET['bo_table']}'";
 $result1 = sql_query($sql1);
 
 
@@ -68,18 +68,18 @@ $result1 = sql_query($sql1);
         
 
         <?php
-        // 파일 출력
-        $v_img_count = count($view['file']);
-        if($v_img_count) {
-            echo "<div id=\"bo_v_img\">\n";
+        // // 파일 출력
+        // $v_img_count = count($view['file']);
+        // if($v_img_count) {
+        //     echo "<div id=\"bo_v_img\">\n";
 
-            for ($i=0; $i<=count($view['file']); $i++) {
-                echo get_file_thumbnail($view['file'][$i]);
-            }
+        //     for ($i=0; $i<=count($view['file']); $i++) {
+        //         echo get_file_thumbnail($view['file'][$i]);
+        //     }
 
-            echo "</div>\n";
+        //     echo "</div>\n";
       
-        }
+        // }
          ?>
 
         <!-- 본문 내용 시작 { -->

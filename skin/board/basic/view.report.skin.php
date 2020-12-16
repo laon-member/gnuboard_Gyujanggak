@@ -6,7 +6,7 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
 
            
-$sql = " select * from g5_business_propos where bo_idx= '{$_GET[wr_idx]}'";
+$sql = " select * from g5_business_propos where bo_idx= '{$_GET['wr_idx']}'";
 $result = sql_query($sql);
 $row22 = sql_fetch_array($result);
 
@@ -94,18 +94,18 @@ while ($row55=sql_fetch_array($result)){
         </section>
     </form>
     <?php
-        // 파일 출력
-        $v_img_count = count($view['file']);
-        if($v_img_count) {
-            echo "<div id=\"bo_v_img\">\n";
+        // // 파일 출력
+        // $v_img_count = count($view['file']);
+        // if($v_img_count) {
+        //     echo "<div id=\"bo_v_img\">\n";
 
-            for ($i=0; $i<=count($view['file']); $i++) {
-                echo get_file_thumbnail($view['file'][$i]);
-            }
+        //     for ($i=0; $i<=count($view['file']); $i++) {
+        //         echo get_file_thumbnail($view['file'][$i]);
+        //     }
 
-            echo "</div>\n";
+        //     echo "</div>\n";
       
-        }
+        // }
          ?>
     <!-- 첨부파일 시작 { -->
     

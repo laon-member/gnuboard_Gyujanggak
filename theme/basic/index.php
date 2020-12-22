@@ -7,8 +7,8 @@ if (G5_IS_MOBILE) {
     return;
 }
 unset($_SESSION['FORM']);
+unset($_SESSION['mb_no']);
 unset($_SESSION['id']);
-
 include_once(G5_THEME_PATH.'/head1.php');
 ?>
 
@@ -16,7 +16,7 @@ include_once(G5_THEME_PATH.'/head1.php');
 <div class="login_info">
     <a href="../bbs/board.php?bo_table=business&bo_idx=1" class="login_info_user">지원자</a>
     <a href="../bbs/board.rater.php?bo_table=qa&bo_idx=1" class="login_info_user">심사자</a>
-    <a href="" class="login_info_user">관리자</a>
+    <a href="../bbs/board.app.php?bo_table=business&bo_idx=1&u_id=1" class="login_info_user">관리자</a>
 </div>
 
 

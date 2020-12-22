@@ -32,7 +32,7 @@ if ($_POST['save'] == '1') {
             contents = '$contents',
             report_file = '0',
             report = '1',
-            report_value = 'null'";
+            value = '0'";
         // echo $sql;
     // sql_query($sql);
 
@@ -42,8 +42,8 @@ if ($_POST['save'] == '1') {
                 report_idx = '$wr_reply',
                 contents = 0,
                 report_file = '$ca_name',
-                report = '$html,$secret,$mail',
-                report_value = '$wr_subject'";
+                report = '2',
+                value = '0'";
     // sql_query($sql);
 } else {
     // alert('w 값이 제대로 넘어오지 않았습니다.');

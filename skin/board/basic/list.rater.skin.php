@@ -73,10 +73,10 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         <caption><?php echo $board['bo_subject'] ?> 목록</caption>
         <thead>
         <tr>
-            <th scope="col">번호</th>
-            <th scope="col">과제번호</th>
-            <th scope="col">제목</th>
-            <th scope="col">심사대상</th>
+            <th scope="col" style="width:10%">번호</th>
+            <th scope="col" style="width:10%">과제번호</th>
+            <th scope="col" style="width:60%">제목</th>
+            <th scope="col" style="width:20%">심사대상</th>
         </tr>
         </thead>
         <tbody>
@@ -101,12 +101,19 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
              ?>
             </td>
 
-            <td class="td_title">
+            <td class="td_title td_center">
+            
                 <?= $row44['wr_quest_number'] ?> 
             </td>
-            <td class="td_download td_center"  style="padding-left:<?php echo $list[$i]['reply'] ? (strlen($list[$i]['wr_reply'])*10) : '0'; ?>px">
+            <td class="td_download "  style="padding-left:<?php echo $list[$i]['reply'] ? (strlen($list[$i]['wr_reply'])*10) : '0'; ?>px">
                
                 <a href="../bbs/board.rater.php?bo_table=<?=$_GET['bo_table']; ?>&wr_idx=<?php echo $row44['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>">
+                    <?php
+                        $sql5 = " select * from g5_write_business_title where idx= '{$row44['wr_title_idx']}'";
+                        $result5 = sql_query($sql5);
+                        $row5 = sql_fetch_array($result5);
+                    ?>
+                    [<?= $row5['title'] ?>]
                     <?= $row44['wr_subject']; ?>
                 </a>
 

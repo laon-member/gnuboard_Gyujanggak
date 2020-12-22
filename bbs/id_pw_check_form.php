@@ -3,7 +3,7 @@ include_once('./_common.php');
 include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 include_once(G5_LIB_PATH.'/register.lib.php');
 
-
+session_start();
 // 불법접근을 막도록 토큰생성
 $token = md5(uniqid(rand(), true));
 set_session("ss_token", $token);
@@ -20,19 +20,21 @@ if( $provider && function_exists('social_nonce_is_valid') ){   //모바일로 �
         $is_social_login_modify = true;
     }
 }
-
-if ($_GET['title'] == "아이디") {
-    include_once(G5_THEME_PATH.'/head1.php');
+include_once(G5_THEME_PATH.'/head1.php');
+if ($_GET['title'] == "id") {
     include_once($member_skin_path.'/register_form_id.skin.php');
     run_event('register_form_after', $w, $agree, $agree2);
-    include_once('./_tail.php'); 
 
-} else if ($_GET['title'] == "비밀번호") {
-    include_once(G5_THEME_PATH.'/head1.php');
+} else if ($_GET['title'] == "pw") {
+    if($_GET['idx'] == 1){
+        include_once($member_skin_path.'/register_form_pw.skin2.php');
+    } else {
         include_once($member_skin_path.'/register_form_pw.skin.php');
-        run_event('register_form_after', $w, $agree, $agree2);
-        include_once('./_tail.php');
+    }
+    run_event('register_form_after', $w, $agree, $agree2);
 } else {
     alert('제대로 된 주소로 들어오세요');
 }
+include_once('./_tail.php');
+
 ?>

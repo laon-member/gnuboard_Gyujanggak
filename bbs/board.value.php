@@ -236,6 +236,7 @@ if ($member['mb_id'] && ($is_admin === 'super' || $group['gr_admin'] === $member
 
 $board_value_border = "title_border";  
 $board_user = 1;
+$user = 3;
 include_once(G5_BBS_PATH.'/board_head.php');
 $wr_bo_idx = $_GET['wr_bo_idx'];
 

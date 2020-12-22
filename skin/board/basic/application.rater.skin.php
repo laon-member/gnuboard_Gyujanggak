@@ -14,17 +14,17 @@ $row22=sql_fetch_array($result1);
 
 ?>
 <aside id="bo_side">
-    <h2 class="aside_nav">사업 공고</h2>
+    <h2 class="aside_nav">보고서 관리</h2>
     <?php 
-        // for($k=1;  $k++) {
-        //     $class_get = $_GET['bo_idx'] == $row1['idx']?"aisde_click":"";
-        //     echo '<a class="aside_nav '.$class_get.'" href="'.G5_BBS_URL .'/board.php?bo_table=business&bo_idx='.$k.'&page=1">'.$row1['title'].'</a>';
+        for($k=1; $row1=sql_fetch_array($result1); $k++) {
+            $class_get = $_GET['bo_idx'] == $row1['idx']?"aisde_click":"";
+            echo '<a class="aside_nav '.$class_get.'" href="'.G5_BBS_URL .'/board.php?bo_table=business&bo_idx='.$k.'&page=1">'.$row1['title'].'</a>';
            
-        //     if($_GET['bo_idx'] == $row1['idx']){
-        //         $category_title =  $row1['title']; 
-        //         $category_idx = $row1['idx'];
-        //     }
-        // }
+            if($_GET['bo_idx'] == $row1['idx']){
+                $category_title =  $row1['title']; 
+                $category_idx = $row1['idx'];
+            }
+        }
         
     ?>
 </aside>

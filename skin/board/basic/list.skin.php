@@ -17,13 +17,13 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 $sql = " select * from g5_write_business_title where bo_table = '{$_GET['bo_table']}'";
 $result = sql_query($sql);
 
-// $sql1 = " SELECT * FROM {$write_table} WHERE wr_title_idx = {$bo_idx} ";
-// $result1 = sql_query($sql1);
-// $num = 0;
-// for($j=1; $row=sql_fetch_array($result1); $j++) {
+$sql1 = " SELECT * FROM {$write_table} WHERE wr_title_idx = {$bo_idx} ";
+$result1 = sql_query($sql1);
+$num = 0;
+for($j=1; $row=sql_fetch_array($result1); $j++) {
     
-//     $num ++;
-// }
+    $num ++;
+}
 
 ?>
 <!-- 게시판 목록 시작 { -->
@@ -170,7 +170,6 @@ $result = sql_query($sql);
     
     <!-- 총 게시판 -->
     <?php $total_page  = ceil($num / $page_rows);  ?>
-
     <?php echo get_paging('15', $page, $total_page, $url); ?>
 	<!-- 페이지 -->
 	

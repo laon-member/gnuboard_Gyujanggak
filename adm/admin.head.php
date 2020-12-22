@@ -94,7 +94,7 @@ function imageview(id, w, h)
         selectBoxHidden(id);
 }
 </script>
-
+<!-- 
 <div id="to_content"><a href="#container">본문 바로가기</a></div>
 
 <header id="hd">
@@ -153,7 +153,7 @@ function imageview(id, w, h)
         </ul>
     </nav>
 
-</header>
+</header> -->
 <script>
 jQuery(function($){
 
@@ -194,6 +194,6 @@ jQuery(function($){
 <div id="wrapper">
 
     <div id="container" class="<?php echo $adm_menu_cookie['container']; ?>">
-
+<!-- 
         <h1 id="container_title"><?php echo $g5['title'] ?></h1>
-        <div class="container_wr">
+        <div class="container_wr"> -->

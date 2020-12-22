@@ -31,36 +31,41 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
         <ul class="hd_login">        
             <?php if ($is_member) {  ?>
             <li><a href=""><?php echo $member['mb_name']; ?>님</a></li>
+            <li><a href="<?php echo G5_BBS_URL ?>/mypage_form.php?page=1">마이페이지</a></li>
             <li><a href="<?php echo G5_BBS_URL ?>/logout.php">로그아웃</a></li>
             <?php //if ($is_admin) {  ?>
             <!-- <li class="tnb_admin"><a href="<?php echo correct_goto_url(G5_ADMIN_URL); ?>">관리자</a></li> -->
             <?php //}  ?>
+            	<?php if ($admin_href) { ?><li><a href="<?php echo $admin_href ?>" class="btn_admin btn" title="관리자"><i class="fa fa-cog fa-spin fa-fw"></i><span class="sound_only">관리자</span></a></li><?php } ?>
+                <!-- /adm/member_list.php -->
             <?php } else {  ?>
             <li><a href="<?php echo G5_BBS_URL ?>/login.php">로그인</a></li>
             <?php }  ?>
+            
+            
         </ul>
     </div>
     <div>
         <ul class="board_nav">
-            <?php if($board_user == 1){ ?>
-                <li class="board_nav_list <?= $board_border ?>"><a href="../bbs/board.php?bo_table=business&bo_idx=1">사업공고</a></li>
-                <li class="board_nav_list <?= $board_report_border ?>"><a href="../bbs/board.report.php?bo_table=business&bo_idx=1">보고서 제출</a></li>
-                <li class="board_nav_list <?= $board_value_border ?>"><a href="../bbs/board.value.php?bo_table=business&bo_idx=7">지원결과 확인</a></li>
-                <li class="board_nav_list <?= $board_notice_border ?>"><a href="../bbs/board.notice.php?bo_table=notice&bo_idx=7&bo_title=1" >자료실</a></li>
+            <?php if($board_user == 1 && $_GET['u_id'] == ""){ ?>
+                <li class="board_nav_list <?= $board_border ?> " style="<?= $user == 1? 'border-bottom: 2px solid black;': ''?>"><a href="../bbs/board.php?bo_table=business&bo_idx=1">사업공고</a></li>
+                <li class="board_nav_list <?= $board_report_border ?>" style="<?= $user == 2? 'border-bottom: 2px solid black;': ''?>"><a href="../bbs/board.report.php?bo_table=business&bo_idx=1">보고서 제출</a></li>
+                <li class="board_nav_list <?= $board_value_border ?>" style="<?= $user == 3? 'border-bottom: 2px solid black;': ''?>"><a href="../bbs/board.value.php?bo_table=business&bo_idx=7">지원결과 확인</a></li>
+                <li class="board_nav_list <?= $board_notice_border ?>" style="<?= $user == 4? 'border-bottom: 2px solid black;': ''?>"><a href="../bbs/board.notice.php?bo_table=notice&bo_idx=7&bo_title=1" >자료실</a></li>
             <?php } ?>
             
             
              <?php if($board_user == 2) { ?>
-                <li class="board_nav_list <?= $board_rater_border ?>"><a href="../bbs/board.rater.php?bo_table=qa&bo_idx=1">심사관리</a></li>
-                <li class="board_nav_list <?= $board_notice_border ?>"><a href="../bbs/board.notice.php?bo_table=notice&bo_idx=7&bo_title=2" >공지사항</a></li>
+                <li class="board_nav_list <?= $board_rater_border ?>" style="<?= $rater == 1? 'border-bottom: 2px solid black;': ''?>"><a href="../bbs/board.rater.php?bo_table=qa&bo_idx=1">심사관리</a></li>
+                <li class="board_nav_list <?= $board_notice_border ?>" style="<?= $rater == 2? 'border-bottom: 2px solid black;': ''?>"><a href="../bbs/board.notice.php?bo_table=notice&bo_idx=7&bo_title=2" >공지사항</a></li>
             <?php } ?>
 
 
-            <?php if($board_user == 3) {?>
-                <li class="board_nav_list"><a href="">신청서관리</a></li>
-                <li class="board_nav_list"><a href="">심사 관리</a></li>
-                <li class="board_nav_list"><a href="">보고서 관리</a></li>
-                <li class="board_nav_list"><a href="">자료실</a></li>
+            <?php if($board_user == 3 && $_GET['u_id'] == "1") { ?>
+                <li class="board_nav_list" style="<?= $admin == 1? 'border-bottom: 2px solid black;': ''?>"><a href="../bbs/board.app.php?bo_table=business&bo_idx=1&u_id=1">신청서관리</a></li>
+                <li class="board_nav_list" style="<?= $admin == 2? 'border-bottom: 2px solid black;': ''?>"><a href="../bbs/board.rater.admin.php?bo_table=qa&bo_idx=1&u_id=1">심사 관리</a></li>
+                <li class="board_nav_list" style="<?= $admin == 3? 'border-bottom: 2px solid black;': ''?>"><a href="../bbs/board_admin.php?bo_table=business&bo_idx=1&u_id=1">보고서 관리</a></li>
+                <li class="board_nav_list" style="<?= $admin == 4? 'border-bottom: 2px solid black;': ''?>"><a href="../bbs/board.notice.php?bo_table=notice&bo_idx=7&bo_title=3&u_id=1">자료실</a></li>
             <?php }  ?>
             
             
@@ -96,14 +101,14 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
         @keyframes slide {
         0% {margin-top:0;} /* 0 ~ 10  : 정지 */
         10% {margin-top:0;} /* 10 ~ 25 : 변이 */
-        20% {margin-top:-2%;} /* 25 ~ 35 : 정지 */
-        30% {margin-top:-2%;} /* 35 ~ 50 : 변이 */
-        40% {margin-top:-4%;}
-        50% {margin-top:-4%;}
-        60% {margin-top:-6%;}
-        70% {margin-top:-6%;}
-        80% {margin-top:-8%;}
-        90% {margin-top:-8%;}
+        20% {margin-top:-3%;} /* 25 ~ 35 : 정지 */
+        30% {margin-top:-3%;} /* 35 ~ 50 : 변이 */
+        40% {margin-top:-5%;}
+        50% {margin-top:-5%;}
+        60% {margin-top:-8%;}
+        70% {margin-top:-8%;}
+        80% {margin-top:-11%;}
+        90% {margin-top:-11%;}
         100% {margin-top:0;}
         }
     </style>

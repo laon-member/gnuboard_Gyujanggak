@@ -101,35 +101,6 @@ $wr_seo_title = exist_seo_title_recursive('bbs', generate_seo_title($wr_subject)
 
 if ($w == '' || $w == 'r') {
 
-    if ($member['mb_id']) {
-        $mb_id = $member['mb_id'];
-        $wr_name = addslashes(clean_xss_tags($board['bo_use_name'] ? $member['mb_name'] : $member['mb_nick']));
-        $wr_password = '';
-        $wr_email = addslashes($member['mb_email']);
-        $wr_homepage = addslashes(clean_xss_tags($member['mb_homepage']));
-    } else {
-        $mb_id = '';
-        // 비회원의 경우 이름이 누락되는 경우가 있음
-        $wr_name = clean_xss_tags(trim($_POST['wr_name']));
-        if (!$wr_name)
-            alert('이름은 필히 입력하셔야 합니다.');
-        $wr_password = get_encrypt_string($wr_password);
-        $wr_email = get_email_address(trim($_POST['wr_email']));
-        $wr_homepage = clean_xss_tags($wr_homepage);
-    }
-
-    if ($w == 'r') {
-        // 답변의 원글이 비밀글이라면 비밀번호는 원글과 동일하게 넣는다.
-        if ($secret)
-            $wr_password = $wr['wr_password'];
-
-        $wr_id = $wr_id . $reply;
-        $wr_num = $write['wr_num'];
-        $wr_reply = $reply;
-    } else {
-        $wr_num = get_next_num($write_table);
-        $wr_reply = '';
-    }
 
     $sql = " insert into g5_business_propos
                 set bo_title_idx = '{$_POST['bo_idx']}',
@@ -372,42 +343,42 @@ for ($i=0; $i<count($upload); $i++)
     }
 }
 
-// // 업로드된 파일 내용에서 가장 큰 번호를 얻어 거꾸로 확인해 가면서
-// // 파일 정보가 없다면 테이블의 내용을 삭제합니다.
-// $row = sql_fetch(" select max(bf_no) as max_bf_no from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' ");
-// for ($i=(int)$row['max_bf_no']; $i>=0; $i--)
-// {
-//     $row2 = sql_fetch(" select bf_file from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
+// 업로드된 파일 내용에서 가장 큰 번호를 얻어 거꾸로 확인해 가면서
+// 파일 정보가 없다면 테이블의 내용을 삭제합니다.
+$row = sql_fetch(" select max(bf_no) as max_bf_no from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' ");
+for ($i=(int)$row['max_bf_no']; $i>=0; $i--)
+{
+    $row2 = sql_fetch(" select bf_file from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
 
-//     // 정보가 있다면 빠집니다.
-//     if ($row2['bf_file']) break;
+    // 정보가 있다면 빠집니다.
+    if ($row2['bf_file']) break;
 
-//     // 그렇지 않다면 정보를 삭제합니다.
-//     sql_query(" delete from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
-// }
+    // 그렇지 않다면 정보를 삭제합니다.
+    sql_query(" delete from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
+}
 
-// // 파일의 개수를 게시물에 업데이트 한다.
-// $row = sql_fetch(" select count(*) as cnt from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' ");
-// sql_query(" update {$write_table} set wr_file = '{$row['cnt']}' where wr_id = '{$wr_id}' ");
+// 파일의 개수를 게시물에 업데이트 한다.
+$row = sql_fetch(" select count(*) as cnt from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' ");
+sql_query(" update {$write_table} set wr_file = '{$row['cnt']}' where wr_id = '{$wr_id}' ");
 
-// // 자동저장된 레코드를 삭제한다.
-// sql_query(" delete from {$g5['autosave_table']} where as_uid = '{$uid}' ");
-// //------------------------------------------------------------------------------
+// 자동저장된 레코드를 삭제한다.
+sql_query(" delete from {$g5['autosave_table']} where as_uid = '{$uid}' ");
+//------------------------------------------------------------------------------
 
 
-// // 사용자 코드 실행
-// @include_once($board_skin_path.'/write_update.skin.php');
-// @include_once($board_skin_path.'/write_update.tail.skin.php');
+// 사용자 코드 실행
+@include_once($board_skin_path.'/write_update.skin.php');
+@include_once($board_skin_path.'/write_update.tail.skin.php');
 
-// delete_cache_latest($bo_table);
+delete_cache_latest($bo_table);
 
-// alert('작성완료.', G5_URL);
-// run_event('write_update_after', $board, $wr_id, $w, $qstr, $redirect_url);
+alert('작성완료.', G5_URL);
+run_event('write_update_after', $board, $wr_id, $w, $qstr, $redirect_url);
 
-// if ($file_upload_msg)
-//     alert($file_upload_msg, $redirect_url);
-// else
-//     goto_url($redirect_url);
+if ($file_upload_msg)
+    alert($file_upload_msg, $redirect_url);
+else
+    goto_url($redirect_url);
 
 
 

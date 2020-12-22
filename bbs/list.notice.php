@@ -77,7 +77,7 @@ if ($sca || $stx || $stx === '0') {     //검색이면
 
     $total_count = $board['bo_count_write'];
 
-    $sql1 = " SELECT COUNT(DISTINCT `wr_id`) AS `cnt` FROM g5_write_notice";
+    $sql1 = " SELECT COUNT(DISTINCT `wr_id`) AS `cnt` FROM g5_write_notice where notice_table = ".$_GET['bo_idx']."";
     $row = sql_fetch($sql1);
     $total_count = $row['cnt'];
 }
@@ -136,7 +136,6 @@ if (!$is_search_bbs) {
 
 $total_page  = ceil($total_count / $page_rows);  // 전체 페이지 계산
 $from_record = ($page - 1) * $page_rows; // 시작 열을 구함
-
 // 공지글이 있으면 변수에 반영
 if(!empty($notice_array)) {
     $from_record -= count($notice_array);

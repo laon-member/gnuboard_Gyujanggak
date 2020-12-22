@@ -35,10 +35,10 @@ $result1 = sql_query($sql1);
         <div id="bo_v_top">
             <h1 class="category_title"><?php
                 echo $category_title;
-             ?></h2>
-            <button type="button" class="btn_bo_sch btn_b01 btn" title="게시판 검색">
+             ?></h1>
+            <!-- <button type="button" class="btn_bo_sch btn_b01 btn" title="게시판 검색">
                 <i class="fa fa-search" aria-hidden="true"></i>
-            </button>
+            </button> -->
         </div>
         <div class="bo_b_tit_container">
             <span class="bo_v_tit">

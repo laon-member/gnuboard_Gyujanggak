@@ -131,7 +131,7 @@ $result1 = sql_query($sql1);
         <ul class="btn_container">
             <?php if ($prev_href) { ?>
                 <li class=" btn_next_prv" >
-                    <a href="../bbs/board.notice.php?bo_idx=<?=$_GET['bo_idx']; ?>&bo_table=notice&wr_id=<?= $prev['wr_id']; ?>">
+                    <a href="../bbs/board.notice.php?bo_idx=<?=$_GET['bo_idx']; ?>&bo_table=notice&wr_id=<?= $prev['wr_id']; ?>&bo_title=<?= $_GET['bo_title']; ?>">
                         <span class="nb_tit">
                             <i class="fa fa-chevron-up" aria-hidden="true" style="transform: rotate(-90deg);"></i>
                         </span >
@@ -140,7 +140,7 @@ $result1 = sql_query($sql1);
             <?php } ?>
             <?php if ($next_href) { ?>
                 <li class="btn_next btn_next_prv">
-                <a href="../bbs/board.notice.php?bo_idx=<?=$_GET['bo_idx']; ?>&bo_table=notice&wr_id=<?= $next['wr_id']; ?>">다음글
+                <a href="../bbs/board.notice.php?bo_idx=<?=$_GET['bo_idx']; ?>&bo_table=notice&wr_id=<?= $next['wr_id']; ?>&bo_title=<?= $_GET['bo_title']; ?>">다음글
                         <span class="nb_tit"> 
                             <i class="fa fa-chevron-down" aria-hidden="true" style="transform: rotate(-90deg);"></i>
                         </span>
@@ -155,7 +155,7 @@ $result1 = sql_query($sql1);
     <!-- } 첨부파일 끝 -->
 
     <section id="bus_btn">
-        <a href="<?php echo G5_BBS_URL .'/board.notice.php?bo_table=notice&bo_idx='.$_GET['bo_idx'].'&page=1'; ?>" class="btn_next_prv btn_next_prv_link">목록보기</a>
+        <a href="<?php echo G5_BBS_URL .'/board.notice.php?bo_table=notice&bo_idx='.$_GET['bo_idx'].'&page=1'; ?>&bo_title=<?= $_GET['bo_title']; ?>" class="btn_next_prv btn_next_prv_link">목록보기</a>
     </section>
     
 </article>

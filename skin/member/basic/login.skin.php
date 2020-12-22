@@ -20,7 +20,6 @@ include_once(G5_THEME_PATH.'/head1.php');
         </div> -->
         <form name="flogin" action="<?php echo $login_action_url ?>" onsubmit="return flogin_submit(this);" method="post">
         <input type="hidden" name="url" value="<?php echo $login_url ?>">
-        
         <fieldset id="login_fs">
             <legend>회원로그인</legend>
             <label for="login_id" class="sound_only2">회원아이디<strong class="sound_only"> 필수</strong></label>

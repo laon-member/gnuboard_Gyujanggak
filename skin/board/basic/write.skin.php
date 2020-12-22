@@ -34,6 +34,7 @@ $result = sql_query($sql);
     <input type="hidden" name="sst" value="<?php echo $sst ?>">
     <input type="hidden" name="sod" value="<?php echo $sod ?>">
     <input type="hidden" name="page" value="<?php echo $page ?>">
+    <input type="hidden" name="bo_idx" value="<?php echo $_GET['bo_idx'] ?>">
     <?php
     $option = '';
     $option_hidden = '';
@@ -77,13 +78,13 @@ $result = sql_query($sql);
 
     <div>
         <label for="quest_number_view" class="label_text">과제번호</label>
-        <input tyQpe="text" name="quest_number_view" id="quest_number_view"  class="input_text input_text_50 input_text_end" placeholder="과제번호" value="<?= $row['quest_number']; ?>" readonly>
+        <input type="text" name="quest_number_view" id="quest_number_view"  class="input_text input_text_50 input_text_end" placeholder="과제번호" value="<?= $row['quest_number']; ?>">
     </div>
     
     
     <label for="date_start_view" class="label_text">총 연구 기간</label>
-    <input type="date" name="date_start_view" id="date_start_view"  class="frm_input required full_input input_text_50 input_text_end" readonly value="<?= $row['date_start']; ?>">
-    <input type="date" name="date_end_view" id="date_end_view"  class="frm_input required full_input input_text_50 input_text_end" readonly value="<?= $row['date_end']; ?>">
+    <input type="date" name="date_start_act" id="date_start_view"  class="frm_input required full_input input_text_50 input_text_end" value='yyyy-mm-dd'>
+    <input type="date" name="date_end_act" id="date_end_view"  class="frm_input required full_input input_text_50 input_text_end"  value='yyyy-mm-dd' >
 
     <div class="write_div">
         <label for="wr_content" class="sound_only">내용<strong>필수</strong></label>
@@ -121,25 +122,23 @@ $result = sql_query($sql);
     <?php } ?> -->
     <label for="" id="bo_side"  class="label_text">자료첨부</label>
         <section id="bo_v"  class="bo_class">
-            <?php for ($i=0; $i<4; $i++) { ?>
-                <div class="input-file">
-                    <input type="text" id="file_label_view<?= $i ?>" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능"  value="<?=  $il_file[$i]?>"/>
-                    <label for="upload0<?php echo $i ?>" class="file-label" style="background:<?= $row44['report'] ==2? '#ccc': '#3a8afd'; ?>">찾아보기</label>
-                    <input type="file" name="bf_file[<?php echo $i ?>]" id="upload0<?php echo $i ?>" class="file-upload" value="" <?= $row44['report'] ==2? "disabled": ""; ?> />
-                    <button type="button" class="file-label file-del " id="file-del<?= $i ?>" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>">삭제</button>
-                </div>
-            <?php } ?>
+        <?php echo "<script>var file_number = 1;</script>"; ?> 
+        <?php $file_number = "<script>document.writeln(file_number);</script>"; ?>
+            <label for="upload01" id="file-label-btn" class="file-label" style="background:<?= $row44['report'] ==2? '#ccc': '#3a8afd'; ?>">찾아보기</label>
+            
         </section>
-
-  
 
     <div class="btn_confirm write_div">
         <a href="<?php echo get_pretty_url($bo_table); ?>" class="btn_cancel btn">취소</a>
         <button type="submit" id="btn_submit" accesskey="s" class="btn_submit btn">작성완료</button>
     </div>
     </form>
-
+              
     <script>
+    
+
+    // alert(vkvk);
+    // alert("DSaf");
     <?php if($write_min || $write_max) { ?>
     // 글자수 제한
     var char_min = parseInt(<?php echo $write_min; ?>); // 최소
@@ -151,8 +150,9 @@ $result = sql_query($sql);
             check_byte("wr_content", "char_count");
         });
     });
-
     <?php } ?>
+
+    
     function html_auto_br(obj)
     {
         if (obj.checked) {
@@ -222,6 +222,49 @@ $result = sql_query($sql);
         document.getElementById("btn_submit").disabled = "disabled";
 
         return true;
+    }
+
+    $(function(){
+        var html = '<div class="input-file"><input type="text" id="file_label_view1" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능"/><input type="file" name="bf_file[]" id="upload01" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?> /><button type="button" class="file-label file-del " id="file-del<?= $i ?>" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>" onClick="removeClick(this.id)">삭제</button></div>';
+        $('.bo_class').append(html);
+
+        $('.file-label').click(function(){
+            $('#upload0'+file_number).change(function(){
+                alert(file_number)
+                var fileValue = $(this).val().split("\\");
+                var fileName = fileValue[fileValue.length-1]; // 파일명
+                
+                if($(this).val() != ""){
+                    file_number++;
+                    $(this).prev().val(fileName);
+
+                    var html = '<div class="input-file"><input type="text" id="file_label_view'+file_number+'" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능"/><input type="file" name="bf_file[]" id="upload0'+file_number+'" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?> /><button type="button" class="file-label file-del " id="file-del'+file_number+'" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>" onClick="removeClick()">삭제</button></div>';
+                    $('.bo_class').append(html);
+
+                    $("#file-label-btn").attr('for', 'upload0'+file_number)
+                }
+            })
+        })
+        
+        // $('.file-del').on('click', function(){
+        //     $(this).parent().remove();
+        //     alert();
+        // })
+
+        // $('.input-file > input[type="file"]').change(function(){
+        //     var f_num = $('.input-file').length;
+
+        //     alert(f_num);
+        // })
+    })
+
+    function removeClick (ids) {
+       
+        var container = document.getElementById(ids);
+        var children = container.parentNode;
+        children.remove();
+        console.log(children.id);
+        alert(children);
     }
     </script>
 </section>

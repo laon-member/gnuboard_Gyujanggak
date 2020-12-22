@@ -80,11 +80,10 @@ if ($sca || $stx || $stx === '0') {     //검색이면
     //     alert('존재하지 않는 게시판입니다.', G5_URL);
     //  }
 
-    $sql = " SELECT COUNT(DISTINCT `idx`) AS `cnt` FROM g5_business_propos where mb_id = '$member[mb_id]' AND $value = '1'";
+    $sql = " SELECT COUNT(DISTINCT `idx`) AS `cnt` FROM g5_business_propos where mb_id = '$member[mb_id]'";
     $row = sql_fetch($sql);
     $total_count = $row['cnt'];
-
-}
+ }
 
 if(G5_IS_MOBILE) {
     $page_rows = $board['bo_mobile_page_rows'];
@@ -147,6 +146,7 @@ $notice_array = array();
 // }
 
 $total_page  = ceil($total_count / $page_rows);  // 전체 페이지 계산
+$total_page;
 $from_record = ($page - 1) * $page_rows; // 시작 열을 구함
 
 // 공지글이 있으면 변수에 반영

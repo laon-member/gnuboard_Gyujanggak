@@ -51,8 +51,8 @@ if(empty($_SESSION['FORM']['mb_id'])){
 	<aside class="register_form_aside">
 		<h2 class="aisde_title">로그인 정보</h2>
 		<a class="aside_nav aisde_click" href="<?php echo G5_BBS_URL ?>/register_form.php">회원가입</a>
-		<a class="aside_nav" href="<?php echo G5_BBS_URL ?>/id_pw_check_form.php?title=아이디">아이디 찾기</a>
-		<a class="aside_nav" href="<?php echo G5_BBS_URL ?>/id_pw_check_form.php?title=비밀번호">비밀번호 찾기</a>
+		<a class="aside_nav" href="<?php echo G5_BBS_URL ?>/id_pw_check_form.php?title=id">아이디 찾기</a>
+		<a class="aside_nav" href="<?php echo G5_BBS_URL ?>/id_pw_check_form.php?title=pw">비밀번호 찾기</a>
 	</aside>
 	<div id="register_form" class="form_01">   
 	    <div class="register_form_inner">
@@ -96,9 +96,11 @@ if(empty($_SESSION['FORM']['mb_id'])){
 
 	if(<?php echo $_GET['btn'] == "" ? true : false ;?> ){
 		$("#btn_submit").attr("disabled",true);
+		$(".btn_id_check").removeAttr("disabled");
 		$("#btn_submit").css({background: "#ccc"});
 	} else {
 		$("#btn_submit").removeAttr("disabled");
+		$(".btn_id_check").attr("disabled",true);
 		$("#btn_submit").css({background: "#ccc"});
 	}
 

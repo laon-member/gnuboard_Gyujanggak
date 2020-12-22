@@ -74,18 +74,18 @@ if ($sca || $stx || $stx === '0') {     //검색이면
     //  }
 
     $sql = " SELECT * from {$write_table} where idx = {$bo_idx}";
+
     $row = sql_fetch($sql);
     $title_text = $row['title'];
 
-    $total_count = $board['bo_count_write'];
 
     $sql1 = " SELECT COUNT(DISTINCT `wr_id`) AS `cnt` FROM {$write_table} WHERE wr_title_idx = $_GET[bo_idx]";
 $row = sql_fetch($sql1);
+
 $total_count = $row['cnt'];
 }
 
 
-echo $total_count1 ."<br>";
 
 if(G5_IS_MOBILE) {
     $page_rows = $board['bo_mobile_page_rows'];

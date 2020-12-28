@@ -5,10 +5,15 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
 
+
            
 $sql = " select * from g5_business_propos where bo_idx= '{$_GET['wr_idx']}'";
 $result = sql_query($sql);
 $row22 = sql_fetch_array($result);
+
+$sql = " select * from g5_write_business where wr_id= '{$row22['bo_idx']}'";
+$result = sql_query($sql);
+$row = sql_fetch_array($result);
 
 $sql = " select * from g5_write_business_title where idx= '{$row22['bo_title_idx']}'";
 $result = sql_query($sql);
@@ -33,13 +38,12 @@ while ($row55=sql_fetch_array($result)){
 
 
 ?>
-<script src="<?php echo G5_JS_URL; ?>/viewimageresize.js"></script>
 
 <!-- 게시물 읽기 시작 { -->
 <aside id="bo_side">
     <h2 class="aside_nav">보고서 제출</h2>
-    <a class="aside_nav " href="<?= G5_BBS_URL ?>/board.report.php?bo_table=<?= $bo_table ?>&bo_idx=1">중간보고서</a>
-    <a class="aside_nav " href="<?= G5_BBS_URL ?>/board.report.php?bo_table=<?= $bo_table ?>&bo_idx=2">결과(연차)보고서</a>
+    <a class="aside_nav <?= $_GET['bo_idx'] ==1 ? "aisde_click" : "" ?>" href="<?= G5_BBS_URL ?>/board.report.php?bo_table=<?= $bo_table ?>&bo_idx=1">중간보고서</a>
+    <a class="aside_nav <?= $_GET['bo_idx'] ==2 ? "aisde_click" : "" ?>" href="<?= G5_BBS_URL ?>/board.report.php?bo_table=<?= $bo_table ?>&bo_idx=2">결과(연차)보고서</a>
 </aside>
 <article id="bo_v">
     <header>
@@ -53,8 +57,7 @@ while ($row55=sql_fetch_array($result)){
         </div>
         <div class="bo_b_tit_container">
             <span clasos="bo_v_tit">
-               <?= $row22['wr_subject']; ?>
-
+            [<?= $row33['title']; ?>]<?= $row['wr_subject']; ?>
             </span>
         </div>       
         <?php
@@ -72,25 +75,36 @@ while ($row55=sql_fetch_array($result)){
         <label for="" id="bo_side" class="label_text">상세설명</label>
         <section id="bo_v" class="bo_class">
             <h2 id="bo_v_atc_title">본문</h2>
-            <input type="text" name="contents" class="input_text input_text_hight" value="<?= $row44['contents']; ?>"<?= $row44['report'] ==2? "disabled": ""; ?>> 
+            <input type="text" name="contents" class="input_text input_text_hight" value="<?= $row44['contents']; ?>"<?= $row44['report'] ==4? "disabled": ""; ?>> 
         </section>
 
 
-        <label for="" id="bo_side"  class="label_text">자료첨부</label>
-        <section id="bo_v"  class="bo_class">
-            <?php for ($i=0; $i<4; $i++) { ?>
-                <div class="input-file">
-                    <input type="text" id="file_label_view<?= $i ?>" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능"  value="<?=  $il_file[$i]?>"/>
-                    <label for="upload0<?php echo $i ?>" class="file-label" style="background:<?= $row44['report'] ==2? '#ccc': '#3a8afd'; ?>">찾아보기</label>
-                    <input type="file" name="bf_file[<?php echo $i ?>]" id="upload0<?php echo $i ?>" class="file-upload" value="" <?= $row44['report'] ==2? "disabled": ""; ?> />
-                    <button type="button" class="file-label file-del " id="file-del<?= $i ?>" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>">삭제</button>
-                </div>
-            <?php } ?>
+        <section id="bo_v"  class="bo_class_form">
+            <label for="" id="bo_side"  class="label_text">자료첨부</label>
+            <?php echo "<script>var file_number = 1;</script>"; ?>
+            <?php $file_number = "<script>document.writeln(file_number);</script>"; ?>
+            <label for="upload01" id="file-label-btn" class="file-label" style="background:<?= $row44['report'] ==2? '#ccc': '#3a8afd'; ?>">찾아보기</label>
+            <?php 
+                if(false){
+                    for($i=0; $i<0; $i++){ 
+            ?>
+        <div class="input-file">
+            <input type="text" id="file_label_view1" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능"/>
+            <input type="file" name="bf_file[]" id="upload01" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?> />
+            <button type="button" class="file-label file-del " id="file-del<?= $i ?>" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>">삭제</button>
+        </div>
+            <?php
+                    }
+                }    
+            ?>
         </section>
+
+
+
         <section id="bus_btn" >
-            <button type="submit" formaction="../bbs/write.report.php?bo_table=<?= $_GET['bo_table'] ?>&bo_idx=1&wr_bo_idx=<?= $_GET['wr_bo_idx'] ?>" class="btn_next_prv btn_next_prv_link" id="save" title="저장하기" <?= $row44['report'] ==2? "disabled": ""; ?> style="background:<?= $row44['report'] ==2? '#ccc': '#3a8afd'; ?>">저장하기</button>
+            <button type="submit" formaction="../bbs/view.report.update.php?bo_table=<?= $_GET['bo_table'] ?>&bo_idx=1&wr_bo_idx=<?= $_GET['wr_bo_idx'] ?>" class="btn_next_prv btn_next_prv_link" id="save" title="<?php $row44 == "" ? '저장하기':'수정하기'; ?>" <?= $row44['report'] ==4? "disabled": ""; ?> style="background:<?= $row44['report'] ==4? '#ccc': '#3a8afd'; ?>"><?= $row44 == "" ? '저장하기':'수정하기'; ?></button>
             <button type="submit" formaction="../bbs/board.report.php?bo_table=business&bo_idx=1" class="btn_next_prv btn_next_prv_link" id="cancel" title="취소">취소</button>
-            <button type="submit" formaction="../bbs/write.report.php?bo_table=<?= $_GET['bo_table'] ?>&bo_idx=1&wr_bo_idx=<?= $_GET['wr_bo_idx'] ?>" class="btn_next_prv btn_next_prv_link" id="submission" title="신청하기" <?= $row44['report'] ==2? "disabled": ""; ?> style="background:<?= $row44['report'] ==2? '#ccc': '#3a8afd'; ?>">신청하기</button>
+            <button type="submit" formaction="../bbs/view.report.update.php?bo_table=<?= $_GET['bo_table'] ?>&bo_idx=1&wr_bo_idx=<?= $_GET['wr_bo_idx'] ?>" class="btn_next_prv btn_next_prv_link" id="submission" title="신청하기" <?= $row44['report'] ==4? "disabled": ""; ?> style="background:<?= $row44['report'] ==4? '#ccc': '#3a8afd'; ?>">신청하기</button>
         </section>
     </form>
     <?php
@@ -118,67 +132,54 @@ while ($row55=sql_fetch_array($result)){
 </article>
 
 <script>
-    $(function(){
+   $(function(){
         $('#save').click(function(){
             $("#fwrite").append('<input type="hidden" name="save" value="1">');
         });
         $('#submission').click(function(){
             $("#fwrite").append('<input type="hidden" name="save" value="2">');
         });
-        $('#upload00').change(function(){
-            var fileValue = $(this).val().split("\\");
-            var fileName = fileValue[fileValue.length-1]; // 파일명
-            if(fileName != ""){
-                $('#file_label_view0').val(fileName);
-            }
-        })
-        $('#upload01').change(function(){
-            var fileValue = $(this).val().split("\\");
-            var fileName = fileValue[fileValue.length-1]; // 파일명
-            if(fileName != ""){
-                $('#file_label_view1').val(fileName);
-            }  
-        })
-        $('#upload02').change(function(){
-            var fileValue = $(this).val().split("\\");
-            var fileName = fileValue[fileValue.length-1]; // 파일명
-            if(fileName != ""){
-                $('#file_label_view2').val(fileName);
-            }
-        })
-        $('#upload03').change(function(){
-            var fileValue = $(this).val().split("\\");
-            var fileName = fileValue[fileValue.length-1]; // 파일명
-            if(fileName != ""){
-                $('#file_label_view3').val(fileName);
-                $('#form_file3').val(fileName);
-            }
+        
+        var html = '<div class="input-file"><input type="text" id="file_label_view1" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능"/><input type="file" name="bf_file[]" id="upload01" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?> /><button type="button" class="file-label file-del " id="file-del<?= $i ?>" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>" onClick="removeClick(this.id)">삭제</button></div>';
+        $('.bo_class_form').append(html);
+
+        //클릭이벤트 unbind 
+        $("#file-label-btn").unbind("click"); 
+        
+        //클릭이벤트 bind
+        $("#file-label-btn").bind("click",function(){ 
+            $('#upload0'+file_number).change(function(){
+                var fileValue = $(this).val().split("\\");
+                var fileName = fileValue[fileValue.length-1]; // 파일명
+                if($(this).val() != ""){
+                    file_number++;
+                    $(this).prev().val(fileName);
+
+                    var html = '<div class="input-file"><input type="text" id="file_label_view'+file_number+'" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능"/><input type="file" name="bf_file[]" id="upload0'+file_number+'" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?>/><button type="button" class="file-label file-del " id="file-del'+file_number+'" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>">삭제</button></div>';
+                    $('.bo_class_form').append(html);
+
+                    $("#file-label-btn").attr('for', 'upload0'+file_number)
+
+                    event.stopPropagation();
+                }
+            })
         })
 
-        if($row44['report'] != 2){
-            $('#file-del0').click(function(){
-                $('#upload00').val("");
-                $('#file_label_view0').val("");
-            })
-            $('#file-del1').click(function(){
-                $('#upload01').val("");
-                $('#file_label_view1').val("");
-            })
-            $('#file-del2').click(function(){
-                $('#upload02').val("");
-                $('#file_label_view2').val("");
-            })
-            $('#file-del3').click(function(){
-                $('#upload03').val("");
-                $('#file_label_view3').val("");
-            })
-            }
+        $(document).off().on('click','.file-del',function(){
+            var val = $(this).prev().val();
+            var next = $(this).parent().next().find('.file-upload').val();
+
+            if(val != ""){
+                $(this).parent().remove();
+            } else {
+                if(next == ""){
+                    $(this).parent().remove();
+                } 
+            }    
+        })
+
+        $(document).on("keydown", "input[type=file]", function(event) { 
+            return event.key != "Enter";
+        });
     })
 </script>
-
-
-
-
-
-
-

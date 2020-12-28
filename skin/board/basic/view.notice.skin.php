@@ -18,12 +18,23 @@ $result1 = sql_query($sql1);
     <aside id="bo_side">
     <h2 class="aside_nav">공지상항</h2>
     <?php 
+        if($board_user == 1){
+            $board_user_num =9;
+        } else if($board_user == 2){
+            $board_user_num =8;
+        } else if($board_user == 3){
+            $board_user_num =10;
+        }
+
+        // &u_id=1
         for($k=7; $row1=sql_fetch_array($result1); $k++) {
-            $class_get = $_GET['bo_idx'] == $row1['idx']?"aisde_click":"";
-            echo '<a class="aside_nav '.$class_get.'" href="'.G5_BBS_URL .'/board.notice.php?bo_table=notice&bo_idx='.$k.'&page=1&bo_title='.$_GET['bo_title'].'">'.$row1['title'].'</a>';
-           
-            if($_GET['bo_idx'] == $row1['idx']){
-                $category_title =  $row1['title']; 
+            if($k < $board_user_num){
+                $class_get = $_GET['bo_idx'] == $row1['idx']?"aisde_click":"";
+                echo '<a class="aside_nav '.$class_get.'" href="'.G5_BBS_URL .'/board.notice.php?bo_table=notice&bo_idx='.$k.'&page=1&bo_title='.$_GET['bo_title'].'">'.$row1['title'].'</a>';
+               
+                if($_GET['bo_idx'] == $row1['idx']){
+                    $category_title =  $row1['title']; 
+                }
             }
         }
     ?>
@@ -46,20 +57,25 @@ $result1 = sql_query($sql1);
         <div class="profile_info_container">
             <div class="profile_info">
                 <ul class="download_file">
-                    <?php if($cnt) { ?>
-                        <?php
+                    <?php
+                        $cnt = 0;
+                        if ($view['file']['count']) {
+                            for ($i=0; $i<count($view['file']); $i++) {
+                                if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view'])
+                                    $cnt++;
+                            }
+                        }
+                        
+                        if($cnt) {
                         // 가변 파일
-                        for ($i=0; $i<count($view['file']); $i++) {
-                            if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view']) {
+                            for ($i=0; $i< $view['file']['count']; $i++) {
+                                if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view']) {
                         ?>
-                            <li class="">
-                                <i class="fa fa-download" aria-hidden="true"></i>
-                                <span class="view_file_download_text"><?php echo $view['file'][$i]['source'] ?></span> 
-                                <a href="<?php echo $view['file'][$i]['href'];  ?>" class="view_file_download btn_next_prv" >
-                                    다운로드
-                                </a>
-                            
-                            </li>
+                                <li class="">
+                                    <i class="fa fa-download" aria-hidden="true"></i>
+                                    <span class="view_file_download_text"><?php echo $view['file'][$i]['source'] ?></span> 
+                                    <a href="<?php echo $view['file'][$i]['href'];  ?>" class="view_file_download btn_next_prv" >다운로드</a>
+                                </li>
                         <?php
                             }
                         }
@@ -112,17 +128,7 @@ $result1 = sql_query($sql1);
       
     </section>
    
-    <?php
-    $cnt = 0;
-    if ($view['file']['count']) {
-        for ($i=0; $i<count($view['file']); $i++) {
-            if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view'])
-                $cnt++;
-        }
-    }
     
-	?>
-
    
     <!-- 첨부파일 시작 { -->
     <section id="bo_v_files ">
@@ -147,7 +153,7 @@ $result1 = sql_query($sql1);
                     </a>  
                 </li>
             <?php } ?>
-                <li class="btn_next_prv"><a href="<?php echo G5_BBS_URL .'/board.notice.php?bo_table=notice&bo_idx='.$_GET['bo_idx'].'&page=1'; ?>" class="btn_list">목록</a></li>
+                <li class="btn_next_prv"><a  href="<?php echo G5_BBS_URL .'/board.notice.php?bo_table=notice&bo_idx='.$_GET['bo_idx'].'&page=1'; ?>&bo_title=<?= $_GET['bo_title']; ?>"  class="btn_list">목록</a></li>
         </ul>
         <?php } ?>
         

@@ -32,12 +32,9 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
             <?php if ($is_member) {  ?>
             <li><a href=""><?php echo $member['mb_name']; ?>님</a></li>
             <li><a href="<?php echo G5_BBS_URL ?>/mypage_form.php?page=1">마이페이지</a></li>
+            <?php if ($admin_href) { ?><li><li><a href="../adm/member_list.php">관리자</a></li><?php } ?>
             <li><a href="<?php echo G5_BBS_URL ?>/logout.php">로그아웃</a></li>
-            <?php //if ($is_admin) {  ?>
-            <!-- <li class="tnb_admin"><a href="<?php echo correct_goto_url(G5_ADMIN_URL); ?>">관리자</a></li> -->
-            <?php //}  ?>
-            	<?php if ($admin_href) { ?><li><a href="<?php echo $admin_href ?>" class="btn_admin btn" title="관리자"><i class="fa fa-cog fa-spin fa-fw"></i><span class="sound_only">관리자</span></a></li><?php } ?>
-                <!-- /adm/member_list.php -->
+            	
             <?php } else {  ?>
             <li><a href="<?php echo G5_BBS_URL ?>/login.php">로그인</a></li>
             <?php }  ?>
@@ -54,20 +51,34 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                 <li class="board_nav_list <?= $board_notice_border ?>" style="<?= $user == 4? 'border-bottom: 2px solid black;': ''?>"><a href="../bbs/board.notice.php?bo_table=notice&bo_idx=7&bo_title=1" >자료실</a></li>
             <?php } ?>
             
-            
              <?php if($board_user == 2) { ?>
+                <?php 
+                    if (!$is_member)
+                        alert('로그인 후 이용하여 주십시오.', G5_URL);
+        
+                    if($member['mb_level'] < 5){
+                        alert('심사자이상만 접근 가능합니다.');
+                    }    
+                ?>
                 <li class="board_nav_list <?= $board_rater_border ?>" style="<?= $rater == 1? 'border-bottom: 2px solid black;': ''?>"><a href="../bbs/board.rater.php?bo_table=qa&bo_idx=1">심사관리</a></li>
                 <li class="board_nav_list <?= $board_notice_border ?>" style="<?= $rater == 2? 'border-bottom: 2px solid black;': ''?>"><a href="../bbs/board.notice.php?bo_table=notice&bo_idx=7&bo_title=2" >공지사항</a></li>
             <?php } ?>
 
 
             <?php if($board_user == 3 && $_GET['u_id'] == "1") { ?>
+            <?php
+                if (!$is_member)
+                    alert('로그인 후 이용하여 주십시오.', G5_URL);
+
+                if($member['mb_level'] < 10){
+                    alert('관리자이상만 접근 가능합니다.');
+                }
+            ?>
                 <li class="board_nav_list" style="<?= $admin == 1? 'border-bottom: 2px solid black;': ''?>"><a href="../bbs/board.app.php?bo_table=business&bo_idx=1&u_id=1">신청서관리</a></li>
                 <li class="board_nav_list" style="<?= $admin == 2? 'border-bottom: 2px solid black;': ''?>"><a href="../bbs/board.rater.admin.php?bo_table=qa&bo_idx=1&u_id=1">심사 관리</a></li>
                 <li class="board_nav_list" style="<?= $admin == 3? 'border-bottom: 2px solid black;': ''?>"><a href="../bbs/board_admin.php?bo_table=business&bo_idx=1&u_id=1">보고서 관리</a></li>
                 <li class="board_nav_list" style="<?= $admin == 4? 'border-bottom: 2px solid black;': ''?>"><a href="../bbs/board.notice.php?bo_table=notice&bo_idx=7&bo_title=3&u_id=1">자료실</a></li>
             <?php }  ?>
-            
             
             
         </ul>

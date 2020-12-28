@@ -76,7 +76,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         } else if($_GET['bo_idx'] == 2){
             $value = 'report_val_1';
         }
-            $sql2 = " select * from g5_business_propos where mb_id = '{$member['mb_id']}' AND $value = '1' ";
+            $sql2 = " select * from g5_business_propos where mb_id = '{$member['mb_id']}' AND $value = '4' ";
             $sql2 .= " {$sql_order} limit {$from_record}, $page_rows ";
 
             $result2 = sql_query($sql2);

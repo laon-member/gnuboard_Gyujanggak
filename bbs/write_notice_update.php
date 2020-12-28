@@ -10,52 +10,8 @@ $g5['title'] = '게시글 저장';
 
 $msg = array();
 
-if($board['bo_use_category']) {
-    $ca_name = trim($_POST['ca_name']);
-    if(!$ca_name) {
-        $msg[] = '<strong>분류</strong>를 선택하세요.';
-    } else {
-        $categories = array_map('trim', explode("|", $board['bo_category_list'].($is_admin ? '|공지' : '')));
-        if(!empty($categories) && !in_array($ca_name, $categories))
-            $msg[] = '분류를 올바르게 입력하세요.';
-
-        if(empty($categories))
-            $ca_name = '';
-    }
-} else {
-    $ca_name = '';
-}
-
-$wr_subject = '';
-if (isset($_POST['wr_subject'])) {
-    $wr_subject = substr(trim($_POST['wr_subject']),0,255);
-    $wr_subject = preg_replace("#[\\\]+$#", "", $wr_subject);
-}
-if ($wr_subject == '') {
-    $msg[] = '<strong>제목</strong>을 입력하세요.';
-}
-
-$wr_content = '';
-if (isset($_POST['wr_content'])) {
-    $wr_content = substr(trim($_POST['wr_content']),0,65536);
-    $wr_content = preg_replace("#[\\\]+$#", "", $wr_content);
-}
 if ($wr_content == '') {
     $msg[] = '<strong>내용</strong>을 입력하세요.';
-}
-
-$wr_link1 = '';
-if (isset($_POST['wr_link1'])) {
-    $wr_link1 = substr($_POST['wr_link1'],0,1000);
-    $wr_link1 = trim(strip_tags($wr_link1));
-    $wr_link1 = preg_replace("#[\\\]+$#", "", $wr_link1);
-}
-
-$wr_link2 = '';
-if (isset($_POST['wr_link2'])) {
-    $wr_link2 = substr($_POST['wr_link2'],0,1000);
-    $wr_link2 = trim(strip_tags($wr_link2));
-    $wr_link2 = preg_replace("#[\\\]+$#", "", $wr_link2);
 }
 
 $msg = implode('<br>', $msg);
@@ -81,47 +37,6 @@ if ($w == 'u' || $w == 'r') {
     $wr = get_write($write_table, $wr_id);
     if (!$wr['wr_id']) {
         alert("글이 존재하지 않습니다.\\n글이 삭제되었거나 이동하였을 수 있습니다.");
-    }
-}
-
-// 외부에서 글을 등록할 수 있는 버그가 존재하므로 비밀글은 사용일 경우에만 가능해야 함
-if (!$is_admin && !$board['bo_use_secret'] && (stripos($_POST['html'], 'secret') !== false || stripos($_POST['secret'], 'secret') !== false || stripos($_POST['mail'], 'secret') !== false)) {
-	alert('비밀글 미사용 게시판 이므로 비밀글로 등록할 수 없습니다.');
-}
-
-$secret = '';
-if (isset($_POST['secret']) && $_POST['secret']) {
-    if(preg_match('#secret#', strtolower($_POST['secret']), $matches))
-        $secret = $matches[0];
-}
-
-// 외부에서 글을 등록할 수 있는 버그가 존재하므로 비밀글 무조건 사용일때는 관리자를 제외(공지)하고 무조건 비밀글로 등록
-if (!$is_admin && $board['bo_use_secret'] == 2) {
-    $secret = 'secret';
-}
-
-$html = '';
-if (isset($_POST['html']) && $_POST['html']) {
-    if(preg_match('#html(1|2)#', strtolower($_POST['html']), $matches))
-        $html = $matches[0];
-}
-
-$mail = '';
-if (isset($_POST['mail']) && $_POST['mail']) {
-    if(preg_match('#mail#', strtolower($_POST['mail']), $matches))
-        $mail = $matches[0];
-}
-
-$notice = '';
-if (isset($_POST['notice']) && $_POST['notice']) {
-    $notice = $_POST['notice'];
-}
-
-for ($i=1; $i<=10; $i++) {
-    $var = "wr_$i";
-    $$var = "";
-    if (isset($_POST['wr_'.$i]) && settype($_POST['wr_'.$i], 'string')) {
-        $$var = trim($_POST['wr_'.$i]);
     }
 }
 
@@ -280,8 +195,9 @@ if ($w == '' || $w == 'r') {
                      wr_9 = '$wr_9',
                      wr_10 = '$wr_10' ";
     sql_query($sql);
-    echo $sql;
-
+    
+    $row = sql_fetch(" select * from $write_table where wr_num = '$wr_num'");
+    $wr_id = $row['wr_id'];
 
     // 부모 아이디에 UPDATE
     sql_query(" update $write_table set wr_parent = '$wr_id' where wr_id = '$wr_id' ");
@@ -396,6 +312,8 @@ if ($w == '' || $w == 'r') {
                      {$sql_password}
               where wr_id = '{$wr['wr_id']}' ";
     sql_query($sql);
+    $row = sql_fetch(" select * from $write_table where wr_id = '{$wr['wr_id']}'");
+    $wr_id = $row['wr_id'];
 
     // 분류가 수정되는 경우 해당되는 코멘트의 분류명도 모두 수정함
     // 코멘트의 분류를 수정하지 않으면 검색이 제대로 되지 않음
@@ -435,7 +353,6 @@ if (!$group['gr_use_access'] && $board['bo_read_level'] < 2 && !$secret) {
 // 파일개수 체크
 $file_count   = 0;
 $upload_count = (isset($_FILES['bf_file']['name']) && is_array($_FILES['bf_file']['name'])) ? count($_FILES['bf_file']['name']) : 0;
-
 for ($i=0; $i<$upload_count; $i++) {
     if($_FILES['bf_file']['name'][$i] && is_uploaded_file($_FILES['bf_file']['tmp_name'][$i]))
         $file_count++;
@@ -633,6 +550,8 @@ for ($i=0; $i<count($upload); $i++)
                          bf_type = '".(int)$upload[$i]['image'][2]."',
                          bf_datetime = '".G5_TIME_YMDHIS."' ";
         sql_query($sql);
+        echo $sql;
+        echo "<br>";
 
         run_event('write_update_file_insert', $bo_table, $wr_id, $upload[$i], $w);
     }
@@ -654,8 +573,8 @@ for ($i=(int)$row['max_bf_no']; $i>=0; $i--)
 
 // 파일의 개수를 게시물에 업데이트 한다.
 $row = sql_fetch(" select count(*) as cnt from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' ");
-sql_query(" update {$write_table} set wr_file = '{$row['cnt']}' where wr_id = '{$wr_id}' ");
 
+sql_query(" update {$write_table} set wr_file = '{$row['cnt']}' where wr_id = '{$wr_id}' ");
 // 자동저장된 레코드를 삭제한다.
 sql_query(" delete from {$g5['autosave_table']} where as_uid = '{$uid}' ");
 //------------------------------------------------------------------------------
@@ -725,18 +644,18 @@ if (!($w == 'u' || $w == 'cu') && $config['cf_email_use'] && $board['bo_use_emai
     }
 }
 
-// 사용자 코드 실행
-@include_once($board_skin_path.'/write_update.skin.php');
-@include_once($board_skin_path.'/write_update.tail.skin.php');
+// // 사용자 코드 실행
+// @include_once($board_skin_path.'/write_update.skin.php');
+// @include_once($board_skin_path.'/write_update.tail.skin.php');
 
-delete_cache_latest($bo_table);
+// delete_cache_latest($bo_table);
 
-$redirect_url = run_replace('write_update_move_url', short_url_clean(G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr), $board, $wr_id, $w, $qstr, $file_upload_msg);
+// $redirect_url = run_replace('write_update_move_url', short_url_clean(G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr), $board, $wr_id, $w, $qstr, $file_upload_msg);
 
-run_event('write_update_after', $board, $wr_id, $w, $qstr, $redirect_url);
+// run_event('write_update_after', $board, $wr_id, $w, $qstr, $redirect_url);
 
-if ($file_upload_msg)
-    alert($file_upload_msg, $redirect_url);
-else
-    goto_url("../bbs/board.notice.php?bo_table=notice&bo_idx=7&bo_title=1");
+// if ($file_upload_msg)
+//     alert($file_upload_msg, $redirect_url);
+// else
+//     goto_url("../bbs/board.notice.php?bo_table=notice&bo_idx=7&bo_title=1");
 ?>

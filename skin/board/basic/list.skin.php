@@ -124,10 +124,9 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
                 </div>
             </td>
             <td class="td_download td_center">
-                <?php
-                    if (isset($list[$i]['icon_file'])) echo  rtrim($list[$i]['icon_file']);
-                ?>
-
+                <?php if ($list[$i]['wr_file'] > 0) { ?>
+                    <i class="fa fa-download" aria-hidden="true"></i>
+                    <?php } ?>
             </td>
             <td class="td_datetime td_center"><?php echo $list[$i]['datetime2'] ?></td>
             <td class="td_hit td_center"><?php echo $list[$i]['wr_hit'] ?></td>

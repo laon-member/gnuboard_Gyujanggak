@@ -80,7 +80,7 @@ if ($sca || $stx || $stx === '0') {     //검색이면
     //     alert('존재하지 않는 게시판입니다.', G5_URL);
     //  }
 
-    $sql = " SELECT COUNT(DISTINCT `idx`) AS `cnt` FROM g5_business_propos where mb_id = '$member[mb_id]' AND $value = '1'";
+    $sql = " SELECT COUNT(DISTINCT `idx`) AS `cnt` FROM g5_business_propos where mb_id = '$member[mb_id]' AND $value = '4'";
     $row = sql_fetch($sql);
     $total_count = $row['cnt'];
 
@@ -199,7 +199,7 @@ if ($sst) {
 
 // 여기 입니다.
 
-$sql = " select * from g5_business_propos where mb_id = '$member[mb_id]' AND $value = '1'";
+$sql = " select * from g5_business_propos where mb_id = '$member[mb_id]' AND $value = '4'";
 $sql .= " {$sql_order} limit {$from_record}, $page_rows ";
 
 // 페이지의 공지개수가 목록수 보다 작을 때만 실행

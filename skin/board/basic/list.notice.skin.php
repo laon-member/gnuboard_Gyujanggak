@@ -25,17 +25,29 @@ $num = $row['cnt'];
 $sql1 = " SELECT * FROM `g5_write_business_title` where bo_table = '{$_GET['bo_table']}'";
 $result1 = sql_query($sql1);
 
+
 ?>
 <!-- 게시판 목록 시작 { -->
 <aside id="bo_side">
     <h2 class="aside_nav">공지상항</h2>
     <?php 
+        if($board_user == 1){
+            $board_user_num =9;
+        } else if($board_user == 2){
+            $board_user_num =8;
+        } else if($board_user == 3){
+            $board_user_num =10;
+        }
+
+
         for($k=7; $row1=sql_fetch_array($result1); $k++) {
-            $class_get = $_GET['bo_idx'] == $row1['idx']?"aisde_click":"";
-            echo '<a class="aside_nav '.$class_get.'" href="'.G5_BBS_URL .'/board.notice.php?bo_table=notice&bo_idx='.$k.'&page=1&bo_title='.$_GET['bo_title'].'">'.$row1['title'].'</a>';
-           
-            if($_GET['bo_idx'] == $row1['idx']){
-                $category_title =  $row1['title']; 
+            if($k < $board_user_num){
+                $class_get = $_GET['bo_idx'] == $row1['idx']?"aisde_click":"";
+                echo '<a class="aside_nav '.$class_get.'" href="'.G5_BBS_URL .'/board.notice.php?bo_table=notice&bo_idx='.$k.'&page=1&bo_title='.$_GET['bo_title'].($_GET["u_id"] ==1 ?"&u_id=1":"").'">'.$row1['title'].'</a>';
+               
+                if($_GET['bo_idx'] == $row1['idx']){
+                    $category_title =  $row1['title']; 
+                }
             }
         }
     ?>
@@ -121,10 +133,9 @@ $result1 = sql_query($sql1);
                 </div>
             </td>
             <td class="td_download td_center">
-                <?php
-                    if (isset($list[$i]['icon_file'])) echo  rtrim($list[$i]['icon_file']);
-                ?>
-
+                <?php if ($list[$i]['wr_file'] > 0) { ?>
+                    <i class="fa fa-download" aria-hidden="true"></i>
+                    <?php } ?>
             </td>
             <td class="td_datetime td_center"><?php echo $list[$i]['datetime2'] ?></td>
             <td class="td_hit td_center"><?php echo $list[$i]['wr_hit'] ?></td>

@@ -210,8 +210,10 @@ $row=sql_fetch_array($result);
                 <input type="text" name="form_file0" id="form_file0"  class="input_text_100 input_text input_text_end form_file" readonly>
                 <input type="text" name="form_file1" id="form_file1"  class="input_text_100 input_text input_text_end form_file" readonly>
                 <input type="text" name="form_file2" id="form_file2"  class="input_text_100 input_text input_text_end form_file" readonly>
-                <input type="text" name="form_file3" id="form_file3"  class="input_text_100 input_text input_text_end form_file" readonly>
             </div>
+            <?php
+                echo "<script>document.writeln(file_number);</script>";
+            ?>
         </div>
 
         <div class="btn_confirm write_div btn-cont">
@@ -288,87 +290,37 @@ $row=sql_fetch_array($result);
         $('#two_year').change(function(){
             $('#two_year_view').val($(this).val());
         });
-        $('#upload00').change(function(){
-            var fileValue = $(this).val().split("\\");
-            var fileName = fileValue[fileValue.length-1]; // 파일명
-            if(fileName != ""){
-                $('#file_label_view0').val(fileName);
-                $('#form_file0').removeClass('form_file');
-                $('#form_file0').addClass('form_file_view');
-                $('#form_file0').val(fileName);
-            } else {
-                $('#form_file0').removeClass('form_file_view');
-                $('#form_file0').addClass('form_file');
-            }
-        })
-        $('#upload01').change(function(){
-            var fileValue = $(this).val().split("\\");
-            var fileName = fileValue[fileValue.length-1]; // 파일명
-            if(fileName != ""){
-                $('#file_label_view1').val(fileName);
-                $('#form_file1').removeClass('form_file');
-                $('#form_file1').addClass('form_file_view');
-                $('#form_file1').val(fileName);
-            }  else {
-                $('#form_file1').removeClass('form_file_view');
-                $('#form_file1').addClass('form_file');
-            }  
-        })
-        $('#upload02').change(function(){
-            var fileValue = $(this).val().split("\\");
-            var fileName = fileValue[fileValue.length-1]; // 파일명
-            if(fileName != ""){
-                $('#file_label_view2').val(fileName);
-                $('#form_file2').removeClass('form_file');
-                $('#form_file2').addClass('form_file_view');
-                $('#form_file2').val(fileName);
-            } else {
-                $('#form_file2').removeClass('form_file_view');
-                $('#form_file2').addClass('form_file');
-            }   
-        })
-        $('#upload03').change(function(){
-            var fileValue = $(this).val().split("\\");
-            var fileName = fileValue[fileValue.length-1]; // 파일명
-            if(fileName != ""){
-                $('#file_label_view3').val(fileName);
-                $('#form_file3').removeClass('form_file');
-                $('#form_file3').addClass('form_file_view');
-                $('#form_file3').val(fileName);
-            } else {
-                $('#form_file3').removeClass('form_file_view');
-                $('#form_file3').addClass('form_file');
-            }
-        })
+        
+        
+        var html = '<div class="input-file"><input type="text" id="file_label_view1" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능"/><input type="file" name="bf_file[]" id="upload01" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?> /><button type="button" class="file-label file-del " id="file-del<?= $i ?>" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>" onClick="removeClick(this.id)">삭제</button></div>';
+        $('.bo_class').append(html);
 
-            $('#file-del0').click(function(){
-                $('#upload00').val("");
-                $('#file_label_view0').val("");
-                $('#form_file0').removeClass('form_file_view');
-                $('#form_file0').addClass('form_file');
-                $('#form_file0').val("");
+        $(document).off().on('click','.file-label',function(){
+            $('#upload0'+file_number).change(function(){
+                var fileValue = $(this).val().split("\\");
+                var fileName = fileValue[fileValue.length-1]; // 파일명
+                
+                if($(this).val() != ""){
+                    file_number++;
+                    $(this).prev().val(fileName);
+
+                    var html = '<div class="input-file"><input type="text" id="file_label_view'+file_number+'" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능"/><input type="file" name="bf_file[]" id="upload0'+file_number+'" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?> /><button type="button" class="file-label file-del " id="file-del'+file_number+'" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>" onClick="removeClick()">삭제</button></div>';
+                    $('.bo_class').append(html);
+
+                    alert(fileName);
+                    var html = '<input type="text" name="form_file'+file_number+'" id="form_file'+file_number+'"  class="input_text_100 input_text input_text_end form_file" value="'+ fileName+'" readonly>';
+                    $('.input_file_cont').append(html);
+
+                    $("#file-label-btn").attr('for', 'upload0'+file_number)
+                }
             })
-            $('#file-del1').click(function(){
-                $('#upload01').val("");
-                $('#file_label_view1').val("");
-                $('#form_file1').removeClass('form_file_view');
-                $('#form_file1').addClass('form_file');
-                $('#form_file1').val("");
-            })
-            $('#file-del2').click(function(){
-                $('#upload02').val("");
-                $('#file_label_view2').val("");
-                $('#form_file2').removeClass('form_file_view');
-                $('#form_file2').addClass('form_file');
-                $('#form_file2').val("");
-            })
-            $('#file-del3').click(function(){
-                $('#upload03').val("");
-                $('#file_label_view3').val("");
-                $('#form_file3').removeClass("form_file_view");
-                $('#form_file3').addClass('form_file_view');
-                $('#form_file').val("");
-            })
+        })
+        $(document).on('click','.file-del',function(){
+            var val = $(this).prev().val();
+            if(val != ""){
+                $(this).parent().remove();
+            }
+        })
 
     })
 </script>

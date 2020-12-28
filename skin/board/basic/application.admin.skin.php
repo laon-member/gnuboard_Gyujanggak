@@ -214,9 +214,7 @@ jQuery(function($){
 
 
 <script>
-    
     $(function(){
-
             $('#file-del0').click(function(){
                 $('#upload00').val("");
                 $('#file_label_view0').val("");
@@ -245,7 +243,6 @@ jQuery(function($){
                 $('#form_file3').addClass('form_file_view');
                 $('#form_file').val("");
             })
-
     })
 </script>
 

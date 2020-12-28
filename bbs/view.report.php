@@ -142,7 +142,7 @@ if ($board['bo_use_signature'] && $view['mb_id']) {
 }
 
 if($_POST['save'] == '1' || $_POST['save'] == '2'){
-    include_once('../bbs/view.report.update.php');
+    include_once('');
 } else {
     include_once($board_skin_path.'/view.report.skin.php');
 }

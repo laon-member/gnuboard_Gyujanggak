@@ -121,18 +121,12 @@ $row=sql_fetch_array($result);
             <input type="text" name="two_year" id="two_year"  class="input_text input_text_50" placeholder="2차년 연구비">
 
         </div>
-        <div class="bo_w_flie write_div">
-            <p>자료첨부</p>
-            <?php for ($i=0; $is_file && $i<4; $i++) { ?>
-                <div class="input-file">
-                    <input type="text" id="file_label_view<?= $i ?>" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능"/>
-                    <label for="upload0<?php echo $i ?>" class="file-label">찾아보기</label>
-                    <input type="file" name="bf_file[]" id="upload0<?php echo $i ?>" class="file-upload" value=""/>
-                    <button type="button" class="file-label file-del " id="file-del<?= $i ?>">삭제</button>
-                </div>
-            <?php } ?>
-        </div>
-
+            <label for="" id="bo_side"  class="label_text">자료첨부</label>
+            <section id="bo_v"  class="bo_class">
+            <?php echo "<script>var file_number = 1;</script>"; ?> 
+            <?php $file_number = "<script>document.writeln(file_number);</script>"; ?>
+                <label for="upload01" id="file-label-btn" class="file-label" style="background:<?= $row44['report'] ==2? '#ccc': '#3a8afd'; ?>">찾아보기</label>
+            </section>
         <div class="btn_confirm write_div btn-cont">
             <button type="button" id="btn_submit1" accesskey="s" class="btn_cancel btn btn_step1">이전</button>
             <button type="button" id="btn_submit2" accesskey="s" class="btn_submit btn btn_step3">다음</button>
@@ -193,8 +187,8 @@ $row=sql_fetch_array($result);
             
             <p class="">연구정보</p>
             <label for="date_start_view" class="label_text">총 연구 기간</label>
-            <input type="date" name="date_start_view" id="date_start_view"  class="input_text input_text_50 input_text_end" readonly>
-            <input type="date" name="date_end_view" id="date_end_view"  class="input_text input_text_50 input_text_end" readonly>
+            <input type="text" name="date_start_view" id="date_start_view"  class="input_text input_text_50 input_text_end" readonly>
+            <input type="text" name="date_end_view" id="date_end_view"  class="input_text input_text_50 input_text_end" readonly>
             <br>
             <label for="money_view" class="label_text">연구비신청액</label>
             <input type="text" name="money_view" id="money_view"  class="input_text input_text_end" placeholder="연구비신청액" value="<?php echo $value ?>" readonly>
@@ -206,11 +200,7 @@ $row=sql_fetch_array($result);
             <input type="text" name="two_year_view" id="two_year_view"  class="input_text input_text_50 input_text_end" placeholder="2차년 연구비" readonly>
 
             <label for="" class="label_text">자료첨부</label>
-            <div class="input_file_cont">
-                <input type="text" name="form_file0" id="form_file0"  class="input_text_100 input_text input_text_end form_file" readonly>
-                <input type="text" name="form_file1" id="form_file1"  class="input_text_100 input_text input_text_end form_file" readonly>
-                <input type="text" name="form_file2" id="form_file2"  class="input_text_100 input_text input_text_end form_file" readonly>
-                <input type="text" name="form_file3" id="form_file3"  class="input_text_100 input_text input_text_end form_file" readonly>
+            <div class="input_file_cont" id="input_file_cont" onkeydown="return event.key != 'Enter';"> 
             </div>
         </div>
 
@@ -288,87 +278,52 @@ $row=sql_fetch_array($result);
         $('#two_year').change(function(){
             $('#two_year_view').val($(this).val());
         });
-        $('#upload00').change(function(){
-            var fileValue = $(this).val().split("\\");
-            var fileName = fileValue[fileValue.length-1]; // 파일명
-            if(fileName != ""){
-                $('#file_label_view0').val(fileName);
-                $('#form_file0').removeClass('form_file');
-                $('#form_file0').addClass('form_file_view');
-                $('#form_file0').val(fileName);
-            } else {
-                $('#form_file0').removeClass('form_file_view');
-                $('#form_file0').addClass('form_file');
-            }
-        })
-        $('#upload01').change(function(){
-            var fileValue = $(this).val().split("\\");
-            var fileName = fileValue[fileValue.length-1]; // 파일명
-            if(fileName != ""){
-                $('#file_label_view1').val(fileName);
-                $('#form_file1').removeClass('form_file');
-                $('#form_file1').addClass('form_file_view');
-                $('#form_file1').val(fileName);
-            }  else {
-                $('#form_file1').removeClass('form_file_view');
-                $('#form_file1').addClass('form_file');
-            }  
-        })
-        $('#upload02').change(function(){
-            var fileValue = $(this).val().split("\\");
-            var fileName = fileValue[fileValue.length-1]; // 파일명
-            if(fileName != ""){
-                $('#file_label_view2').val(fileName);
-                $('#form_file2').removeClass('form_file');
-                $('#form_file2').addClass('form_file_view');
-                $('#form_file2').val(fileName);
-            } else {
-                $('#form_file2').removeClass('form_file_view');
-                $('#form_file2').addClass('form_file');
-            }   
-        })
-        $('#upload03').change(function(){
-            var fileValue = $(this).val().split("\\");
-            var fileName = fileValue[fileValue.length-1]; // 파일명
-            if(fileName != ""){
-                $('#file_label_view3').val(fileName);
-                $('#form_file3').removeClass('form_file');
-                $('#form_file3').addClass('form_file_view');
-                $('#form_file3').val(fileName);
-            } else {
-                $('#form_file3').removeClass('form_file_view');
-                $('#form_file3').addClass('form_file');
-            }
+        var html = '<div class="input-file"><input type="text" id="file_label_view1" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능"/><input type="file" name="bf_file[]" id="upload01" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?> /><button type="button" class="file-label file-del " id="file-del<?= $i ?>" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>">삭제</button></div>';
+        $('.bo_class').append(html);
+        
+
+        //클릭이벤트 unbind 
+        $("#file-label-btn").unbind("click"); 
+        
+        //클릭이벤트 bind
+        $("#file-label-btn").bind("click",function(){ 
+            $('#upload0'+file_number).change(function(){
+                var fileValue = $(this).val().split("\\");
+                var fileName = fileValue[fileValue.length-1]; // 파일명
+                if($(this).val() != ""){
+                    file_number++;
+                    $(this).prev().val(fileName);
+
+                    var html = '<div class="input-file"><input type="text" id="file_label_view'+file_number+'" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능"/><input type="file" name="bf_file[]" id="upload0'+file_number+'" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?>/><button type="button" class="file-label file-del " id="file-del'+file_number+'" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>">삭제</button></div>';
+                    $('.bo_class').append(html);
+
+                    var html = '<input type="text" name="form_file'+file_number+'" id="form__file'+file_number+'"  class="input_text_100 input_text input_text_end input_form" value="'+ fileName+'" readonly>';
+                    $('#input_file_cont').append(html);
+
+                    $("#file-label-btn").attr('for', 'upload0'+file_number)
+                }
+            })
         })
 
-            $('#file-del0').click(function(){
-                $('#upload00').val("");
-                $('#file_label_view0').val("");
-                $('#form_file0').removeClass('form_file_view');
-                $('#form_file0').addClass('form_file');
-                $('#form_file0').val("");
-            })
-            $('#file-del1').click(function(){
-                $('#upload01').val("");
-                $('#file_label_view1').val("");
-                $('#form_file1').removeClass('form_file_view');
-                $('#form_file1').addClass('form_file');
-                $('#form_file1').val("");
-            })
-            $('#file-del2').click(function(){
-                $('#upload02').val("");
-                $('#file_label_view2').val("");
-                $('#form_file2').removeClass('form_file_view');
-                $('#form_file2').addClass('form_file');
-                $('#form_file2').val("");
-            })
-            $('#file-del3').click(function(){
-                $('#upload03').val("");
-                $('#file_label_view3').val("");
-                $('#form_file3').removeClass("form_file_view");
-                $('#form_file3').addClass('form_file_view');
-                $('#form_file').val("");
-            })
+        $(document).off().on('click','.file-del',function(){
+            var val = $(this).prev().val();
+            var next = $(this).parent().next().find('.file-upload').val();
+            var index_form = $(this).parent().index() -1;
+
+            if(val != ""){
+                $(this).parent().remove();
+                $('.input_form:nth-of-type('+index_form+')').remove();
+            } else {
+                if(next == ""){
+                    $(this).parent().remove();
+                    $('.input_form:nth-of-type('+index_form+')').remove();
+                } 
+            }    
+        })
+
+        $(document).on("keydown", "input[type=file]", function(event) { 
+            return event.key != "Enter";
+        });
 
     })
 </script>

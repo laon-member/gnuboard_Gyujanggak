@@ -42,7 +42,7 @@ $result1 = sql_query($sql1);
         </div>
         <div class="bo_b_tit_container">
             <span class="bo_v_tit">
-                <?php echo cut_str(get_text($view['wr_subject']), 70); echo $view['wr_id']// 글제목 출력 ?>
+                <?php echo cut_str(get_text($view['wr_subject']), 70); // 글제목 출력 ?>
             </span>
         </div>       
         <div class="profile_info_container">
@@ -108,27 +108,33 @@ $result1 = sql_query($sql1);
     <!-- 첨부파일 시작 { -->
     <section id="bo_v_files">
         <ul class="download_file">
-            <?php if($cnt) { ?>
             <?php
-            // 가변 파일
-            for ($i=0; $i<count($view['file']); $i++) {
-                if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view']) {
-            ?>
-                <li class="">
-                    <i class="fa fa-download" aria-hidden="true"></i>
-                    <span class="view_file_download_text"><?php echo $view['file'][$i]['source'] ?></span> 
-                    <a href="<?php echo $view['file'][$i]['href'];  ?>" class="view_file_download btn_next_prv" >
-                        다운로드
-                    </a>
-                
-                </li>
-            <?php
-                        }
+                $cnt = 0;
+                if ($view['file']['count']) {
+                    for ($i=0; $i<count($view['file']); $i++) {
+                        if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view'])
+                            $cnt++;
                     }
                 }
+                
+                if($cnt) {
+                // 가변 파일
+                    for ($i=0; $i< $view['file']['count']; $i++) {
+                        if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view']) {
+                ?>
+                        <li class="">
+                            <i class="fa fa-download" aria-hidden="true"></i>
+                            <span class="view_file_download_text"><?php echo $view['file'][$i]['source'] ?></span> 
+                            <a href="<?php echo $view['file'][$i]['href'];  ?>" class="view_file_download btn_next_prv" >다운로드</a>
+                        </li>
+                <?php
+                    }
+                }
+            }
             ?>
     
         </ul>
+        
         <?php if ($prev_href || $next_href) { ?>
         <ul class="btn_container">
             <?php if ($prev_href) { ?>

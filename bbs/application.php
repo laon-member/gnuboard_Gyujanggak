@@ -407,7 +407,8 @@ $result = sql_query($sql);
 $row=sql_fetch_array($result);
 
 
-
+$board_user =1;
+$user =1;
 
 // 임시 저장된 글 수
 $autosave_count = autosave_count($member['mb_id']);

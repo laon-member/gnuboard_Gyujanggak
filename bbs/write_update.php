@@ -281,6 +281,9 @@ if ($w == '' || $w == 'r') {
                      wr_10 = '$wr_10' ";
     sql_query($sql);
 
+    $row = sql_fetch(" select * from $write_table where wr_num = '$wr_num'");
+    $wr_id = $row['wr_id'];
+
 
     // 부모 아이디에 UPDATE
     sql_query(" update $write_table set wr_parent = '$wr_id' where wr_id = '$wr_id' ");
@@ -395,6 +398,10 @@ if ($w == '' || $w == 'r') {
                      {$sql_password}
               where wr_id = '{$wr['wr_id']}' ";
     sql_query($sql);
+
+    
+    $row = sql_fetch(" select * from $write_table where wr_id = '{$wr['wr_id']}'");
+    $wr_id = $row['wr_id'];
 
     // 분류가 수정되는 경우 해당되는 코멘트의 분류명도 모두 수정함
     // 코멘트의 분류를 수정하지 않으면 검색이 제대로 되지 않음
@@ -638,104 +645,104 @@ for ($i=0; $i<count($upload); $i++)
 }
 
 // 업로드된 파일 내용에서 가장 큰 번호를 얻어 거꾸로 확인해 가면서
-// // 파일 정보가 없다면 테이블의 내용을 삭제합니다.
-// $row = sql_fetch(" select max(bf_no) as max_bf_no from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' ");
-// for ($i=(int)$row['max_bf_no']; $i>=0; $i--)
-// {
-//     $row2 = sql_fetch(" select bf_file from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
+// 파일 정보가 없다면 테이블의 내용을 삭제합니다.
+$row = sql_fetch(" select max(bf_no) as max_bf_no from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' ");
+for ($i=(int)$row['max_bf_no']; $i>=0; $i--)
+{
+    $row2 = sql_fetch(" select bf_file from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
 
-//     // 정보가 있다면 빠집니다.
-//     if ($row2['bf_file']) break;
+    // 정보가 있다면 빠집니다.
+    if ($row2['bf_file']) break;
 
-//     // 그렇지 않다면 정보를 삭제합니다.
-//     sql_query(" delete from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
-// }
+    // 그렇지 않다면 정보를 삭제합니다.
+    sql_query(" delete from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
+}
 
-// // 파일의 개수를 게시물에 업데이트 한다.
-// $row = sql_fetch(" select count(*) as cnt from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' ");
-// sql_query(" update {$write_table} set wr_file = '{$row['cnt']}' where wr_id = '{$wr_id}' ");
+// 파일의 개수를 게시물에 업데이트 한다.
+$row = sql_fetch(" select count(*) as cnt from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' ");
+sql_query(" update {$write_table} set wr_file = '{$row['cnt']}' where wr_id = '{$wr_id}' ");
 
-// // 자동저장된 레코드를 삭제한다.
-// sql_query(" delete from {$g5['autosave_table']} where as_uid = '{$uid}' ");
-// //------------------------------------------------------------------------------
+// 자동저장된 레코드를 삭제한다.
+sql_query(" delete from {$g5['autosave_table']} where as_uid = '{$uid}' ");
+//------------------------------------------------------------------------------
 
-// // 비밀글이라면 세션에 비밀글의 아이디를 저장한다. 자신의 글은 다시 비밀번호를 묻지 않기 위함
-// if ($secret)
-//     set_session("ss_secret_{$bo_table}_{$wr_num}", TRUE);
+// 비밀글이라면 세션에 비밀글의 아이디를 저장한다. 자신의 글은 다시 비밀번호를 묻지 않기 위함
+if ($secret)
+    set_session("ss_secret_{$bo_table}_{$wr_num}", TRUE);
 
-// // 메일발송 사용 (수정글은 발송하지 않음)
-// if (!($w == 'u' || $w == 'cu') && $config['cf_email_use'] && $board['bo_use_email']) {
+// 메일발송 사용 (수정글은 발송하지 않음)
+if (!($w == 'u' || $w == 'cu') && $config['cf_email_use'] && $board['bo_use_email']) {
 
-//     // 관리자의 정보를 얻고
-//     $super_admin = get_admin('super');
-//     $group_admin = get_admin('group');
-//     $board_admin = get_admin('board');
+    // 관리자의 정보를 얻고
+    $super_admin = get_admin('super');
+    $group_admin = get_admin('group');
+    $board_admin = get_admin('board');
 
-//     $wr_subject = get_text(stripslashes($wr_subject));
+    $wr_subject = get_text(stripslashes($wr_subject));
 
-//     $tmp_html = 0;
-//     if (strstr($html, 'html1'))
-//         $tmp_html = 1;
-//     else if (strstr($html, 'html2'))
-//         $tmp_html = 2;
+    $tmp_html = 0;
+    if (strstr($html, 'html1'))
+        $tmp_html = 1;
+    else if (strstr($html, 'html2'))
+        $tmp_html = 2;
 
-//     $wr_content = conv_content(conv_unescape_nl(stripslashes($wr_content)), $tmp_html);
+    $wr_content = conv_content(conv_unescape_nl(stripslashes($wr_content)), $tmp_html);
 
-//     $warr = array( ''=>'입력', 'u'=>'수정', 'r'=>'답변', 'c'=>'코멘트', 'cu'=>'코멘트 수정' );
-//     $str = $warr[$w];
+    $warr = array( ''=>'입력', 'u'=>'수정', 'r'=>'답변', 'c'=>'코멘트', 'cu'=>'코멘트 수정' );
+    $str = $warr[$w];
 
-//     $subject = '['.$config['cf_title'].'] '.$board['bo_subject'].' 게시판에 '.$str.'글이 올라왔습니다.';
+    $subject = '['.$config['cf_title'].'] '.$board['bo_subject'].' 게시판에 '.$str.'글이 올라왔습니다.';
 
-//     $link_url = get_pretty_url($bo_table, $wr_id, $qstr);
+    $link_url = get_pretty_url($bo_table, $wr_id, $qstr);
 
-//     include_once(G5_LIB_PATH.'/mailer.lib.php');
+    include_once(G5_LIB_PATH.'/mailer.lib.php');
 
-//     ob_start();
-//     include_once ('./write_update_mail.php');
-//     $content = ob_get_contents();
-//     ob_end_clean();
+    ob_start();
+    include_once ('./write_update_mail.php');
+    $content = ob_get_contents();
+    ob_end_clean();
 
-//     $array_email = array();
-//     // 게시판관리자에게 보내는 메일
-//     if ($config['cf_email_wr_board_admin']) $array_email[] = $board_admin['mb_email'];
-//     // 게시판그룹관리자에게 보내는 메일
-//     if ($config['cf_email_wr_group_admin']) $array_email[] = $group_admin['mb_email'];
-//     // 최고관리자에게 보내는 메일
-//     if ($config['cf_email_wr_super_admin']) $array_email[] = $super_admin['mb_email'];
+    $array_email = array();
+    // 게시판관리자에게 보내는 메일
+    if ($config['cf_email_wr_board_admin']) $array_email[] = $board_admin['mb_email'];
+    // 게시판그룹관리자에게 보내는 메일
+    if ($config['cf_email_wr_group_admin']) $array_email[] = $group_admin['mb_email'];
+    // 최고관리자에게 보내는 메일
+    if ($config['cf_email_wr_super_admin']) $array_email[] = $super_admin['mb_email'];
 
-//     // 원글게시자에게 보내는 메일
-//     if ($config['cf_email_wr_write']) {
-//         if($w == '')
-//             $wr['wr_email'] = $wr_email;
+    // 원글게시자에게 보내는 메일
+    if ($config['cf_email_wr_write']) {
+        if($w == '')
+            $wr['wr_email'] = $wr_email;
 
-//         $array_email[] = $wr['wr_email'];
-//     }
+        $array_email[] = $wr['wr_email'];
+    }
 
-//     // 옵션에 메일받기가 체크되어 있고, 게시자의 메일이 있다면
-//     if (strstr($wr['wr_option'], 'mail') && $wr['wr_email'])
-//         $array_email[] = $wr['wr_email'];
+    // 옵션에 메일받기가 체크되어 있고, 게시자의 메일이 있다면
+    if (strstr($wr['wr_option'], 'mail') && $wr['wr_email'])
+        $array_email[] = $wr['wr_email'];
 
-//     // 중복된 메일 주소는 제거
-//     $unique_email = array_unique($array_email);
-//     $unique_email = run_replace('write_update_mail_list', array_values($unique_email), $board, $wr_id);
+    // 중복된 메일 주소는 제거
+    $unique_email = array_unique($array_email);
+    $unique_email = run_replace('write_update_mail_list', array_values($unique_email), $board, $wr_id);
 
-//     for ($i=0; $i<count($unique_email); $i++) {
-//         mailer($wr_name, $wr_email, $unique_email[$i], $subject, $content, 1);
-//     }
-// }
+    for ($i=0; $i<count($unique_email); $i++) {
+        mailer($wr_name, $wr_email, $unique_email[$i], $subject, $content, 1);
+    }
+}
 
-// // 사용자 코드 실행
-// @include_once($board_skin_path.'/write_update.skin.php');
-// @include_once($board_skin_path.'/write_update.tail.skin.php');
+// 사용자 코드 실행
+@include_once($board_skin_path.'/write_update.skin.php');
+@include_once($board_skin_path.'/write_update.tail.skin.php');
 
-// delete_cache_latest($bo_table);
+delete_cache_latest($bo_table);
 
-// $redirect_url = run_replace('write_update_move_url', short_url_clean(G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr), $board, $wr_id, $w, $qstr, $file_upload_msg);
+$redirect_url = run_replace('write_update_move_url', short_url_clean(G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr), $board, $wr_id, $w, $qstr, $file_upload_msg);
 
-// run_event('write_update_after', $board, $wr_id, $w, $qstr, $redirect_url);
+run_event('write_update_after', $board, $wr_id, $w, $qstr, $redirect_url);
 
-// if ($file_upload_msg)
-//     alert($file_upload_msg, $redirect_url);
-// else
-//     goto_url($redirect_url);
+if ($file_upload_msg)
+    alert($file_upload_msg, $redirect_url);
+else
+    goto_url($redirect_url);
 ?>

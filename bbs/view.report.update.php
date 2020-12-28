@@ -33,7 +33,7 @@ if ($_POST['save'] == '1') {
             report_file = '0',
             report = '1',
             value = '0'";
-        // echo $sql;
+        echo $sql;
     // sql_query($sql);
 
 } else if ($_POST['save'] == '2') {
@@ -168,11 +168,10 @@ if(isset($_FILES['bf_file']['name']) && is_array($_FILES['bf_file']['name'])) {
         }
     }   // end for
 }   // end if
-
+echo $_POST['save'];
 // 나중에 테이블에 저장하는 이유는 $wr_id 값을 저장해야 하기 때문입니다.
 for ($i=0; $i<count($upload); $i++)
 {
-    echo $upload[$i]['source'];
     if( $upload[$i]['source'] != ""){
         if (!get_magic_quotes_gpc()) {
             $upload[$i]['source'] = addslashes($upload[$i]['source']);

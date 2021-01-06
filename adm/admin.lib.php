@@ -233,47 +233,47 @@ function get_member_id_select($name, $level, $selected="", $event="")
 // 권한 검사
 function auth_check($auth, $attr, $return=false)
 {
-    global $is_admin;
+    // global $is_admin;
 
-    if ($is_admin == 'super') return;
+    // if ($is_admin == 'super') return;
 
-    if (!trim($auth)) {
-        $msg = '이 메뉴에는 접근 권한이 없습니다.\\n\\n접근 권한은 최고관리자만 부여할 수 있습니다.';
-        if($return)
-            return $msg;
-        else
-            alert($msg);
-    }
+    // if (!trim($auth)) {
+    //     $msg = '이 메뉴에는 접근 권한이 없습니다.\\n\\n접근 권한은 최고관리자만 부여할 수 있습니다.';
+    //     if($return)
+    //         return $msg;
+    //     else
+    //         alert($msg);
+    // }
 
-    $attr = strtolower($attr);
+    // $attr = strtolower($attr);
 
-    if (!strstr($auth, $attr)) {
-        if ($attr == 'r') {
-            $msg = '읽을 권한이 없습니다.';
-            if($return)
-                return $msg;
-            else
-                alert($msg);
-        } else if ($attr == 'w') {
-            $msg = '입력, 추가, 생성, 수정 권한이 없습니다.';
-            if($return)
-                return $msg;
-            else
-                alert($msg);
-        } else if ($attr == 'd') {
-            $msg = '삭제 권한이 없습니다.';
-            if($return)
-                return $msg;
-            else
-                alert($msg);
-        } else {
-            $msg = '속성이 잘못 되었습니다.';
-            if($return)
-                return $msg;
-            else
-                alert($msg);
-        }
-    }
+    // if (!strstr($auth, $attr)) {
+    //     if ($attr == 'r') {
+    //         $msg = '읽을 권한이 없습니다.';
+    //         if($return)
+    //             return $msg;
+    //         else
+    //             alert($msg);
+    //     } else if ($attr == 'w') {
+    //         $msg = '입력, 추가, 생성, 수정 권한이 없습니다.';
+    //         if($return)
+    //             return $msg;
+    //         else
+    //             alert($msg);
+    //     } else if ($attr == 'd') {
+    //         $msg = '삭제 권한이 없습니다.';
+    //         if($return)
+    //             return $msg;
+    //         else
+    //             alert($msg);
+    //     } else {
+    //         $msg = '속성이 잘못 되었습니다.';
+    //         if($return)
+    //             return $msg;
+    //         else
+    //             alert($msg);
+    //     }
+    // }
 }
 
 
@@ -532,7 +532,7 @@ else if ($is_admin != 'super')
         $auth[$row['au_menu']] = $row['au_auth'];
     }
 
-    if (!$i)
+    if ($member['mb_level'] < 10)
     {
         alert('최고관리자 또는 관리권한이 있는 회원만 접근 가능합니다.', G5_URL);
     }

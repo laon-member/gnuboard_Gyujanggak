@@ -68,12 +68,12 @@ $row2=sql_fetch_array($result2);
         </thead>
         <tbody>
         <?php
-        $sql = "  select COUNT(DISTINCT `idx`) as cnt from rater where business_idx = '{$_GET['wr_idx']}'";
+        $sql = "  select COUNT(DISTINCT `idx`) as cnt from rater where business_idx = '{$_GET['wr_idx']}' and test_id ='{$_GET['bo_idx']}''";
         $row11 = sql_fetch($sql);
 
 
         
-        $sql = " select * from rater where business_idx = '{$_GET['wr_idx']}'";
+        $sql = " select * from rater where business_idx = '{$_GET['wr_idx']}' and test_id ='{$_GET['bo_idx']}'";
         $result = sql_query($sql);
 
         for ($i=0; $row = sql_fetch_array($result); $i++) {

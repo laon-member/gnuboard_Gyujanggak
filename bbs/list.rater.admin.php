@@ -41,7 +41,7 @@ if ($sca || $stx || $stx === '0') {     //검색이면
     $sql_search = get_sql_search($sca, $sfl, $stx, $sop);
 
     // 가장 작은 번호를 얻어서 변수에 저장 (하단의 페이징에서 사용)
-    $sql = " select MIN(wr_num) as min_wr_num from {$write_table} ";
+    $sql = " select MIN(wr_num) as min_wr_num from g5_write_business ";
     $row = sql_fetch($sql);
     $min_spt = (int)$row['min_wr_num'];
 
@@ -51,10 +51,10 @@ if ($sca || $stx || $stx === '0') {     //검색이면
 
     // 원글만 얻는다. (코멘트의 내용도 검색하기 위함)
     // 라엘님 제안 코드로 대체 http://sir.kr/g5_bug/2922
-    $sql = " SELECT COUNT(DISTINCT `wr_parent`) AS `cnt` FROM {$write_table} WHERE {$sql_search} ";
+    $sql = " SELECT COUNT( `wr_parent`) AS `cnt` FROM g5_write_business WHERE {$sql_search}";
+    $row = sql_fetch($sql);
     $total_count = $row['cnt'];
 
-    echo $total_count;
     $title_text = '검색';
 
     // for($i=1; $row=sql_fetch_array($result); $i++) {
@@ -73,8 +73,7 @@ if ($sca || $stx || $stx === '0') {     //검색이면
     //  }
     // select COUNT(DISTINCT `idx`) as cnt from rater where user_id = '{$member['mb_id']}' and test_id = '{$_GET['bo_idx']}'
 
-        $sql = "select COUNT(DISTINCT `wr_id`) as cnt from g5_write_business";
-   
+        $sql = "select COUNT(`wr_id`) as cnt from g5_write_business";
     $row = sql_fetch($sql);
     $total_count = $row['cnt'];
 
@@ -110,7 +109,7 @@ if (!$is_search_bbs) {
     for ($k=0; $k<$board_notice_count; $k++) {
         if (trim($arr_notice[$k]) == '') continue;
 
-        $row = sql_fetch(" select * from {$write_table} where wr_title_idx = '{$bo_idx}' ");
+        $row = sql_fetch(" select * from g5_write_business where wr_title_idx = '{$bo_idx}' ");
 
         if (!$row['wr_id']) continue;
 
@@ -190,10 +189,21 @@ if ($sst) {
 
 
 // 여기 입니다.
-    $sql = "select * from g5_write_business";
-    if(!empty($notice_array))
-        $sql .= " and wr_id not in (".implode(', ', $notice_array).") ";
-    $sql .= " {$sql_order} limit {$from_record}, $page_rows ";
+    // $sql = "select * from g5_write_business where wr_title_idx ='{$_GET['bo_idx']}'";
+    // if(!empty($notice_array))
+    //     $sql .= " and wr_id not in (".implode(', ', $notice_array).") ";
+    // $sql .= " {$sql_order} limit {$from_record}, $page_rows ";
+
+
+    if ($is_search_bbs) {
+        $sql = " select  * from g5_write_business where {$sql_search} {$sql_order} DESC limit {$from_record}, $page_rows ";
+    } else {
+        $sql = "select * from g5_write_business ";
+        if(!empty($notice_array))
+            $sql .= " and wr_id not in (".implode(', ', $notice_array).") ";
+        $sql .= " {$sql_order} DESC limit {$from_record}, $page_rows ";
+
+    }
 
 // 페이지의 공지개수가 목록수 보다 작을 때만 실행
 if($page_rows > 0) {
@@ -204,13 +214,13 @@ if($page_rows > 0) {
     while ($row = sql_fetch_array($result))
     {
         // 검색일 경우 wr_id만 얻었으므로 다시 한행을 얻는다
-        if ($is_search_bbs)
-            $row = sql_fetch(" select * from {$write_table} where wr_id = '{$row['wr_parent']}' ");
+        // if ($is_search_bbs)
+        //     $row = sql_fetch(" select * from {$write_table} where wr_id = '{$row['wr_parent']}' ");
 
         $list[$i] = get_list($row, $board, $board_skin_url, G5_IS_MOBILE ? $board['bo_mobile_subject_len'] : $board['bo_subject_len']);
-        if (strstr($sfl, 'subject')) {
-            $list[$i]['subject'] = search_font($stx, $list[$i]['subject']);
-        }
+        // if (strstr($sfl, 'subject')) {
+        //     $list[$i]['subject'] = search_font($stx, $list[$i]['subject']);
+        // }
         $list[$i]['is_notice'] = false;
         $list_num = $total_count - ($page - 1) * $list_page_rows - $notice_count;
         $list[$i]['num'] = $list_num - $k;

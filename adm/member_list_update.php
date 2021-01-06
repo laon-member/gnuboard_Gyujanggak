@@ -77,34 +77,67 @@ include_once('./_common.php');
 // goto_url('./member_list.php?'.$qstr);
 
 
-if(isset($_POST['idx']) && $_POST['belong'] !="" && $_POST['degree'] !="" && $_POST['rank'] !="" && $_POST['category'] !=""){
-    $sql = " SELECT * FROM `g5_member` WHERE mb_no ='{$_POST['idx']}'";
-    $row = sql_fetch($sql);
-    if($row['mb_level'] < 5){
-        $sql = " update g5_member
-                set belong = '{$_POST['belong']}',
-                degree = '{$_POST['degree']}',
-                rank = '{$_POST['rank']}',
-                category = '{$_POST['category']}',
-                mb_level = '5'
-                WHERE mb_no = '{$_POST['idx']}'";
-        sql_query($sql);
-        // echo $sql;
-        alert('심사위원을 배정했습니다.');
-    } else if ($row['mb_level'] == 5){
-        $sql = " update g5_member
-                set belong = '{$_POST['belong']}',
-                degree = '{$_POST['degree']}',
-                rank = '{$_POST['rank']}',
-                category = '{$_POST['category']}'
-                WHERE mb_no = '{$_POST['idx']}'";
-        sql_query($sql);
-        alert('심사위원의 정보를 수정했습니다.'); 
+if($_POST['level'] == 1){
+    if(isset($_POST['idx']) && $_POST['belong'] !="" && $_POST['degree'] !="" && $_POST['rank'] !="" && $_POST['category'] !=""){
+        $sql = " SELECT * FROM `g5_member` WHERE mb_no ='{$_POST['idx']}'";
+        $row = sql_fetch($sql);
+        if($row['mb_level'] < 5){
+            $sql = " update g5_member
+                    set belong = '{$_POST['belong']}',
+                    degree = '{$_POST['degree']}',
+                    rank = '{$_POST['rank']}',
+                    category = '{$_POST['category']}',
+                    mb_level = '5'
+                    WHERE mb_no = '{$_POST['idx']}'";
+            sql_query($sql);
+            // echo $sql;
+            alert('심사위원을 배정했습니다.');
+        } else if ($row['mb_level'] == 5){
+            $sql = " update g5_member
+                    set belong = '{$_POST['belong']}',
+                    degree = '{$_POST['degree']}',
+                    rank = '{$_POST['rank']}',
+                    category = '{$_POST['category']}'
+                    WHERE mb_no = '{$_POST['idx']}'";
+            sql_query($sql);
+            alert('심사위원의 정보를 수정했습니다.'); 
+        } else {
+            alert('자신의 권한보다 높은사람은 수정이 불가능합니다.'); 
+        }
     } else {
-        alert('관리자는 수정이 불가능합니다.'); 
+        alert('빈칸 없이 입력해주세요.'); 
+    }
+} else if($_POST['level'] == 2){
+    if(isset($_POST['idx']) && $_POST['belong'] !="" && $_POST['degree'] !="" && $_POST['rank'] !="" && $_POST['category'] !=""){
+        $sql = " SELECT * FROM `g5_member` WHERE mb_no ='{$_POST['idx']}'";
+        $row = sql_fetch($sql);
+        if($row['mb_name'] == '최고관리자'){
+            alert('최고관리자는 수정 불가능 합니다');
+        } else if($row['mb_level'] < 10){
+            $sql = " update g5_member
+                    set belong = '{$_POST['belong']}',
+                    degree = '{$_POST['degree']}',
+                    rank = '{$_POST['rank']}',
+                    category = '{$_POST['category']}',
+                    mb_level = '10'
+                    WHERE mb_no = '{$_POST['idx']}'";
+            sql_query($sql);
+            // echo $sql;
+            alert('관리자를 배정했습니다.');
+        } else if ($row['mb_level'] == 10){
+            $sql = " update g5_member
+                    set belong = '{$_POST['belong']}',
+                    degree = '{$_POST['degree']}',
+                    rank = '{$_POST['rank']}',
+                    category = '{$_POST['category']}'
+                    WHERE mb_no = '{$_POST['idx']}'";
+            sql_query($sql);
+            alert('관리자를 정보를 수정했습니다.'); 
+        }
+    } else {
+        alert('빈칸 없이 입력해주세요.'); 
     }
 } else {
-    alert('빈칸 없이 입력해주세요.'); 
+    alert('권한을 선택해주세요');
 }
-
 ?>

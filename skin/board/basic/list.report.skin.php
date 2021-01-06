@@ -42,18 +42,15 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 
     <!-- 게시판 페이지 정보 및 버튼 시작 { -->
     <div id="bo_btn_top">
-        <h1 id=""><?php echo $bo_title; ?></h1>
-
-        <ul class="btn_bo_user">
-            <li>
-            	<button type="button" class="btn_bo_sch btn_b01 btn" title="게시판 검색"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">게시판 검색</span></button>
-            </li>
-        	<?php if ($is_admin == 'super') {  ?>
-                <li>
-                    <a href="<?php echo $write_href ?>" class="btn_b01 btn" title="글쓰기"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sound_only">글쓰기</span></a>
-                </li>
-        	<?php }  ?>
-        </ul>
+        <h1 id="">
+            <?php
+                if($_GET['bo_idx'] == '1'){
+                    echo "중간보고서";
+                } else if($_GET['bo_idx'] == '2') {
+                    echo "결과(연차)보고서"; 
+                }
+            ?>
+        </h1>
     </div>
     <!-- } 게시판 페이지 정보 및 버튼 끝 -->
         	
@@ -77,7 +74,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             $value = 'report_val_1';
         }
             $sql2 = " select * from g5_business_propos where mb_id = '{$member['mb_id']}' AND $value = '4' ";
-            $sql2 .= " {$sql_order} limit {$from_record}, $page_rows ";
+            $sql2 .= " {$sql_order} DESC limit {$from_record}, $page_rows ";
 
             $result2 = sql_query($sql2);
 

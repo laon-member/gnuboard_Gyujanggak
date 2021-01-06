@@ -396,14 +396,16 @@ $editor_js = '';
 $editor_js .= get_editor_js('wr_content', $is_dhtml_editor);
 $editor_js .= chk_editor_js('wr_content', $is_dhtml_editor);
 
-
+$board_user = "";
+$board_user = $_GET['bo_title'];
+$board_border = "title_border";
 
 // 임시 저장된 글 수
 $autosave_count = autosave_count($member['mb_id']);
 
 include_once(G5_PATH.'/head.sub.php');
 @include_once ($board_skin_path.'/write.head.skin.php');
-include_once('./board_head.php');
+include_once(G5_BBS_PATH.'/board_head.php');
 
 $action_url = https_url(G5_BBS_DIR)."/write_notice_update.php";
 

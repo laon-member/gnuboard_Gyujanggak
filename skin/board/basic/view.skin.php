@@ -155,7 +155,7 @@ $result1 = sql_query($sql1);
                     </a>  
                 </li>
             <?php } ?>
-                <li class="btn_next_prv"><a href="<?php echo G5_BBS_URL .'/board.php?bo_table=business&bo_idx='.$view[wr_title_idx].'&page=1' ?>" class="btn_list">목록</a></li>
+                <li class="btn_next_prv"><a href="<?php echo G5_BBS_URL ?>/board.php?bo_table=business&bo_idx=<?= $view['wr_title_idx'] ?>" >목록</a></li>
         </ul>
         <?php } ?>
     </section>

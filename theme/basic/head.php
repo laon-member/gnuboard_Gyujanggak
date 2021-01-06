@@ -21,7 +21,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
     <h1 id="hd_h1"><?php echo $g5['title'] ?></h1>
     <div id="skip_to_container"><a href="#container">본문 바로가기</a></div>
 
-
+<?php echo $board_user; ?>
     <div id="hd_wrapper">
 
         <div id="logo">
@@ -32,7 +32,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
             <?php if ($is_member) {  ?>
             <li><a href=""><?php echo $member['mb_name']; ?>님</a></li>
             <li><a href="<?php echo G5_BBS_URL ?>/mypage_form.php?page=1">마이페이지</a></li>
-            <?php if ($admin_href) { ?><li><li><a href="../adm/member_list.php">관리자</a></li><?php } ?>
+            <?php if ($member['mb_level'] == 10) { ?><li><li><a href="../adm/member_list.php">관리자</a></li><?php } ?>
             <li><a href="<?php echo G5_BBS_URL ?>/logout.php">로그아웃</a></li>
             	
             <?php } else {  ?>
@@ -45,16 +45,21 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
     <div>
         <ul class="board_nav">
             <?php if($board_user == 1 && $_GET['u_id'] == ""){ ?>
+            <?php  
+                if($member['mb_level'] > 2 && $member['mb_level'] < 10 ){
+                    alert('심사자는 접근이 불가합니다.');
+                }    
+                ?>
                 <li class="board_nav_list <?= $board_border ?> " style="<?= $user == 1? 'border-bottom: 2px solid black;': ''?>"><a href="../bbs/board.php?bo_table=business&bo_idx=1">사업공고</a></li>
-                <li class="board_nav_list <?= $board_report_border ?>" style="<?= $user == 2? 'border-bottom: 2px solid black;': ''?>"><a href="../bbs/board.report.php?bo_table=business&bo_idx=1">보고서 제출</a></li>
                 <li class="board_nav_list <?= $board_value_border ?>" style="<?= $user == 3? 'border-bottom: 2px solid black;': ''?>"><a href="../bbs/board.value.php?bo_table=business&bo_idx=7">지원결과 확인</a></li>
+                <li class="board_nav_list <?= $board_report_border ?>" style="<?= $user == 2? 'border-bottom: 2px solid black;': ''?>"><a href="../bbs/board.report.php?bo_table=business&bo_idx=1">보고서 제출</a></li>
                 <li class="board_nav_list <?= $board_notice_border ?>" style="<?= $user == 4? 'border-bottom: 2px solid black;': ''?>"><a href="../bbs/board.notice.php?bo_table=notice&bo_idx=7&bo_title=1" >자료실</a></li>
             <?php } ?>
             
              <?php if($board_user == 2) { ?>
                 <?php 
                     if (!$is_member)
-                        alert('로그인 후 이용하여 주십시오.', G5_URL);
+                        alert('로그인 후 이용하여 주십시오.', G5_BBS_URL."/login.php");
         
                     if($member['mb_level'] < 5){
                         alert('심사자이상만 접근 가능합니다.');
@@ -68,7 +73,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
             <?php if($board_user == 3 && $_GET['u_id'] == "1") { ?>
             <?php
                 if (!$is_member)
-                    alert('로그인 후 이용하여 주십시오.', G5_URL);
+                    alert('로그인 후 이용하여 주십시오.', G5_BBS_URL."/login.php");
 
                 if($member['mb_level'] < 10){
                     alert('관리자이상만 접근 가능합니다.');

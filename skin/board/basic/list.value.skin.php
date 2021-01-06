@@ -53,8 +53,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         
         <?php
             $sql2 = " select * from g5_business_propos where mb_id = '{$member['mb_id']}'";
-            $sql2 .= " {$sql_order} limit {$from_record}, $page_rows ";
-
+            $sql2 .= " {$sql_order} DESC limit {$from_record}, $page_rows ";
             $result2 = sql_query($sql2);
 
             for($i=0; $row=sql_fetch_array($result2); $i++) {

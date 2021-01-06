@@ -17,38 +17,65 @@ include_once('./_common.php');
 
 //     set_session("ss_datetime", G5_SERVER_TIME);
 // }
-echo $_POST['save_db'];
-// echo $_POST['save'];
-// echo $wr_bo_idx;
+
 // echo $bo_idx;
+
+if($_POST['bo_idx'] == 1){
+    $val = "report_val_1";
+} else if($_POST['bo_idx'] == 2){
+    $val = "report_val_2";
+}
+
+
 if ($_POST['save'] == '1') {
     if($_POST['save_db']){
-        
-    }
-    $sql = " insert into report
+        $sql = " update report
+                set report_idx = '$wr_reply',
+                contents = '{$_POST['contents']}',
+                report_file = '0',
+                report = '1',
+                report_value = '0' where idx = '{$_POST['file_idx']}'";
+        sql_query($sql);
+
+        $sql = " update g5_business_propos
+                set {$val} = '1',
+                where idx = '{$_POST['wr_bo_idx']}'";
+        sql_query($sql);
+
+    } else {
+        $sql = " insert into report
         set business_idx = '$wr_bo_idx',
             mb_id = '$member[mb_id]',
             report_idx = '$bo_idx',
-            contents = '$contents',
+            contents = '{$_POST['contents']}',
             report_file = '0',
             report = '1',
-            value = '0'";
-        echo $sql;
-    // sql_query($sql);
+            report_value = '0'";
+        sql_query($sql);
 
+        $sql = " update g5_business_propos
+                set {$val} = '1',
+                where idx = '{$_POST['wr_bo_idx']}'";
+        sql_query($sql);
+    }
+    
 } else if ($_POST['save'] == '2') {
     $sql = " update report
-                set business_idx = '$wr_num',
-                report_idx = '$wr_reply',
-                contents = 0,
-                report_file = '$ca_name',
+                set report_idx = '1',
+                contents = '{$_POST['contents']}',
+                report_file = '0',
                 report = '2',
-                value = '0'";
-    // sql_query($sql);
-} else {
-    // alert('w 값이 제대로 넘어오지 않았습니다.');
-}
+                report_value = '0' where idx = '{$_POST['file_idx']}'";
+    sql_query($sql);
 
+    $sql = " update g5_business_propos
+        set {$val} = '2'
+        where idx = '{$_POST['wr_bo_idx']}'";
+    sql_query($sql);
+
+} else {
+    alert('w 값이 제대로 넘어오지 않았습니다.');
+}
 
 
 
@@ -89,7 +116,7 @@ if(isset($_FILES['bf_file']['name']) && is_array($_FILES['bf_file']['name'])) {
         if (isset($_POST['bf_file_del'][$i]) && $_POST['bf_file_del'][$i]) {
             $upload[$i]['del_check'] = true;
 
-            $row = sql_fetch(" select * from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
+            $row = sql_fetch(" select * from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$_POST['file_idx']}' and bf_no = '{$i}' ");
 
             $delete_file = run_replace('delete_file_path', G5_DATA_PATH.'/file/'.$bo_table.'/'.str_replace('../', '', $row['bf_file']), $row);
             if( file_exists($delete_file) ){
@@ -168,7 +195,6 @@ if(isset($_FILES['bf_file']['name']) && is_array($_FILES['bf_file']['name'])) {
         }
     }   // end for
 }   // end if
-echo $_POST['save'];
 // 나중에 테이블에 저장하는 이유는 $wr_id 값을 저장해야 하기 때문입니다.
 for ($i=0; $i<count($upload); $i++)
 {
@@ -176,7 +202,7 @@ for ($i=0; $i<count($upload); $i++)
         if (!get_magic_quotes_gpc()) {
             $upload[$i]['source'] = addslashes($upload[$i]['source']);
         }
-        $row = sql_fetch(" select count(*) as cnt from {$g5['board_file_table']} where bo_table = 'report' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
+        $row = sql_fetch(" select count(*) as cnt from {$g5['board_file_table']} where bo_table = 'report' and wr_id = '{$_POST['file_idx']}' and bf_no = '{$i}' ");
         if ($row['cnt'] )
         {
             // 삭제에 체크가 있거나 파일이 있다면 업데이트를 합니다.
@@ -195,26 +221,26 @@ for ($i=0; $i<count($upload); $i++)
                                  bf_height = '".(int)$upload[$i]['image'][1]."',
                                  bf_type = '".(int)$upload[$i]['image'][2]."',
                                  bf_datetime = '".G5_TIME_YMDHIS."'
-                          where bo_table = '{$bo_table}'
-                                    and wr_id = '{$wr_id}'
+                          where bo_table = 'report'
+                                    and wr_id = '{$_POST['file_idx']}'
                                     and bf_no = '{$i}' ";
-                // sql_query($sql);
+                sql_query($sql);
             }
             else
             {
                 $sql = " update {$g5['board_file_table']}
                             set bf_content = '{$bf_content[$i]}'
                             where bo_table = 'report'
-                                      and wr_id = '{$wr_id}'
+                                      and wr_id = '{$_POST['file_idx']}'
                                       and bf_no = '{$i}' ";
-                // sql_query($sql);
+                sql_query($sql);
             }
         }
         else
         {
             $sql = " insert into {$g5['board_file_table']}
                         set bo_table = 'report',
-                             wr_id = '{$wr_id}',
+                             wr_id = '{$_POST['file_idx']}',
                              bf_no = '{$i}',
                              bf_source = '{$upload[$i]['source']}',
                              bf_file = '{$upload[$i]['file']}',
@@ -228,8 +254,7 @@ for ($i=0; $i<count($upload); $i++)
                              bf_height = '".(int)$upload[$i]['image'][1]."',
                              bf_type = '".(int)$upload[$i]['image'][2]."',
                              bf_datetime = '".G5_TIME_YMDHIS."' ";
-            // sql_query($sql);
-    
+            sql_query($sql);
             run_event('write_update_file_insert', $bo_table, $wr_id, $upload[$i], $w);
         }
     }
@@ -251,23 +276,23 @@ for ($i=0; $i<count($upload); $i++)
 // }
 
 // 파일의 개수를 게시물에 업데이트 한다.
-$row = sql_fetch(" select count(*) as cnt from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' ");
+$row = sql_fetch(" select count(*) as cnt from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$_POST['file_idx']}' ");
 // sql_query(" update {$write_table} set wr_file = '{$row['cnt']}' where wr_id = '{$wr_id}' ");
 
 
 
 // // 사용자 코드 실행
-// @include_once($board_skin_path.'/write_update.skin.php');
-// @include_once($board_skin_path.'/write_update.tail.skin.php');
+@include_once($board_skin_path.'/write_update.skin.php');
+@include_once($board_skin_path.'/write_update.tail.skin.php');
 
-// delete_cache_latest($bo_table);
+delete_cache_latest($bo_table);
 
-// $redirect_url = run_replace('write_update_move_url', short_url_clean(G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr), $board, $wr_id, $w, $qstr, $file_upload_msg);
+$redirect_url = run_replace('write_update_move_url', short_url_clean(G5_HTTP_BBS_URL.'/board.report.php?bo_table=business&bo_idx=1'), $board, $wr_id, $w, $qstr, $file_upload_msg);
 
-// run_event('write_update_after', $board, $wr_id, $w, $qstr, $redirect_url);
+run_event('write_update_after', $board, $wr_id, $w, $qstr, $redirect_url);
 
-// if ($file_upload_msg)
-//     alert($file_upload_msg, $redirect_url);
-// else
-//     goto_url($redirect_url);
-// ?>
+if ($file_upload_msg)
+    alert($file_upload_msg, $redirect_url);
+else
+    goto_url($redirect_url);
+?>

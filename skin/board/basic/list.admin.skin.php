@@ -116,7 +116,7 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
                         <?php
                             if (isset($list[$i]['icon_secret'])) echo rtrim($list[$i]['icon_secret']);
                          ?>
-                        <?php echo $list[$i]['subject'] ?>
+                        <?php echo $list[$i]['wr_subject'] ?>
                     </a>
                     
                 </div>
@@ -148,7 +148,7 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
     ?>    
     
     <!-- 총 게시판 -->
-    <?php $total_page  = ceil($num / $page_rows);  ?>
+
     <?php echo get_paging('15', $page, $total_page, $url); ?>
 	<!-- 페이지 -->
 	
@@ -163,6 +163,8 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
             <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
             <input type="hidden" name="sca" value="<?php echo $sca ?>">
             <input type="hidden" name="sop" value="and">
+            <input type="hidden" name="bo_idx" value="<?= $_GET['bo_idx'] ?>">
+            <input type="hidden" name="u_id" value="<?= $_GET['u_id'] ?>">
             <label for="sfl" class="sound_only">검색대상</label>
             <select name="sfl" id="sfl">
                 <?php echo get_board_sfl_select_options($sfl); ?>

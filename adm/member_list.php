@@ -35,6 +35,10 @@ if (!$sst) {
     $sod = "desc";
 }
 
+if($is_admin != 'super'){
+    $admin = "and mb_level < 10";
+}
+
 $sql_order = " order by {$sst} {$sod} ";
 
 $sql = " select count(*) as cnt {$sql_common} {$sql_search} {$sql_order} ";
@@ -61,7 +65,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
 $g5['title'] = '회원관리';
 include_once('./admin.head.php');
 
-$sql = " select * {$sql_common} {$sql_search} {$sql_order} limit {$from_record}, {$rows} ";
+$sql = " select * {$sql_common} {$sql_search} {$admin} {$sql_order} limit {$from_record}, {$rows} ";
 $result = sql_query($sql);
 
 $colspan = 16;
@@ -77,11 +81,17 @@ $colspan = 16;
         <th scope="col" id="mb_list_mailc">학력</th>
         <th scope="col" id="mb_list_open">직책</th>
         <th scope="col" id="mb_list_mailr">분야</th>
+        <th scope="col" id="mb_list_mailr">심사위원</th>
+        <?php if($is_admin == 'super'){ ?>
+        <th scope="col" id="mb_list_mailr">관리자</th>
+        <?php } ?>
         <th scope="col" id="mb_list_auth">선택</th>
     </tr>
     </thead>
     <tbody>
-    <?php for ($i=0; $row=sql_fetch_array($result); $i++) { ?>
+    <?php for ($i=0; $row=sql_fetch_array($result); $i++) { 
+            if ($row['mb_name'] != '최고관리자'){
+        ?> 
         <tr class="<?php echo $bg; ?> form_rater">
             
             <td headers="mb_list_id" class="td_name sv_use"><?php echo $row['mb_id'] ?></td>
@@ -98,6 +108,14 @@ $colspan = 16;
             <td headers="mb_list_mailr">
                 <input type="text" name="category" placeholder="분야" class="category" value="<?= $row['category'] ?>">
             </td>
+            <td headers="mb_list_mailr">
+                <input type="radio" class="level" id="rater<?= $i ?>" name="drone<?= $i ?>" value="1" <?= $row['mb_level'] == 5?"checked": "" ?>>
+            </td>
+            <?php if($is_admin == 'super'){ ?>
+            <td headers="mb_list_mailr">
+                <input type="radio" class="level" id="admin<?= $i ?>" name="drone<?= $i ?>" value="2" <?= $row['mb_level'] == 10?"checked": "" ?>>
+            </td>
+            <?php } ?>
             <td headers="mb_list_auth" class="td_mbstat">
                 <form name="fboardlist" class="form_rater"  method="POST" action="../adm/member_list_update.php">
                     <input type="hidden" name="idx" class="rater_idx" value="<?= $row['mb_no'] ?>">
@@ -105,12 +123,16 @@ $colspan = 16;
                     <input type="hidden" name="degree" class="rater_degree" value="<?= $row['degree']? $row['degree'] : ""?>">
                     <input type="hidden" name="rank" class="rater_rank" value="<?= $row['rank']? $row['rank'] : ""?>">
                     <input type="hidden" name="category" class="rater_category" value="<?= $row['category']? $row['category'] : ""?>">
+                    <input type="hidden" name="level" class="rater_level" value="">
                     <button >수정</button>
                 </form>
             </td>
         </tr>
     <?php
+        }
     }
+    
+
     if ($i == 0)
         echo "<tr><td colspan=\"".$colspan."\" class=\"empty_table\">자료가 없습니다.</td></tr>";
     ?>
@@ -144,6 +166,11 @@ $colspan = 16;
         $('.category').change(function(){
             var category = $(this).val();
             $(this).parents('.form_rater').find('.rater_category').val(category);
+        })
+
+        $('.level').change(function(){
+            var level = $(this).val();
+            $(this).parents('.form_rater').find('.rater_level').val(level);
         })
     })
 </script>

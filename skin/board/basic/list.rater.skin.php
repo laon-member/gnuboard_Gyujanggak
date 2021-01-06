@@ -81,7 +81,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         </thead>
         <tbody>
         <?php
-        $sql = "select * from rater where user_id = '{$member['mb_id']}' AND value = '2' AND test_id = '{$_GET['bo_idx']}'";
+        $sql = "select * from rater where user_id = '{$member['mb_id']}' AND value = '2' AND test_id = '{$_GET['bo_idx']}' ORDER BY idx DESC";
         $result = sql_query($sql);
         for ($i=0; $row11 = sql_fetch_array($result); $i++) {
             
@@ -89,9 +89,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             else $lt_class = "";
             echo $list['business_idx'];
 
-            $sql = " select * from g5_write_business where wr_id= '{$list[$i]['business_idx']}'";
-            $result = sql_query($sql);
-            $row44 = sql_fetch_array($result);
+            $sql44 = " select * from g5_write_business where wr_id= '{$list[$i]['business_idx']}'";
+            $result44 = sql_query($sql44);
+            $row44 = sql_fetch_array($result44);
 		?>
         <tr class="<?php if ($list[$i]['is_notice']) echo "bo_notice"; ?> <?php echo $lt_class ?> tr_hover">
             
@@ -120,9 +120,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             </td>
             <td class="td_datetime td_center">
                 <?php 
-                    $sql = " select COUNT(DISTINCT `idx`) as cnt from rater where value = '2' AND test_id = '{$_GET['bo_idx']}'";
-                    $result = sql_query($sql);
-                    $row55 = sql_fetch_array($result);
+                    $sql55 = " select COUNT(DISTINCT `idx`) as cnt from rater where value = '2' AND test_id = '{$_GET['bo_idx']}' ANd business_idx = '{$row11['business_idx']}'";
+                    $result55 = sql_query($sql55);
+                    $row55 = sql_fetch_array($result55);
                     echo $row55['cnt'];
                  ?>
             </td>

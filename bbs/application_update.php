@@ -85,7 +85,18 @@ if (isset($_POST['notice']) && $_POST['notice']) {
 run_event('write_update_before', $board, $wr_id, $w, $qstr);
 
 
+if( $_POST['ko_title'] == "" || $_POST['en_title'] == "" ){
+    echo '<script> history.back();alert("과제명이 빈칸입니다.");</script>';
+    exit;
+}
 
+$sql = " SELECT * FROM `g5_business_propos` where bo_idx = '{$_POST['wr_id']}' and mb_id = '{$member['mb_id']}' and bo_title_idx = '{$_POST['bo_idx']}'";
+$result = sql_query($sql);
+$row=sql_fetch_array($result);
+if($row != ""){
+    alert('중복신청은 불가합니다.');
+    
+}
 
 if ($w == '' || $w == 'r') {
     if (isset($_SESSION['ss_datetime'])) {
@@ -379,8 +390,5 @@ if ($file_upload_msg)
     alert($file_upload_msg, $redirect_url);
 else
     goto_url($redirect_url);
-
-
-
 
 ?>

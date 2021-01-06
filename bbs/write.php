@@ -396,7 +396,13 @@ $editor_js = '';
 $editor_js .= get_editor_js('wr_content', $is_dhtml_editor);
 $editor_js .= chk_editor_js('wr_content', $is_dhtml_editor);
 
-
+$board_user = "";
+if($_GET['u_id'] == 1){
+    $board_user = 3;
+} else {
+    $board_user = 1;
+}
+$board_border = "title_border";
 
 // 임시 저장된 글 수
 $autosave_count = autosave_count($member['mb_id']);

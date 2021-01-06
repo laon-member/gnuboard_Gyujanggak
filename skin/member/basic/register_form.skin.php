@@ -60,8 +60,8 @@ if(empty($_SESSION['FORM']['mb_id'])){
 	        <ul>
 				<li>
 	                <label for="reg_mb_id">아이디</label>
-					<input type="text" name="mb_id" value="<?php echo $form_id ?>" id="reg_mb_id"  <?php echo $readonly ?> class="frm_input full_input <?php echo $readonly ?>" placeholder="아이디">
-					<input class="btn_submit btn_id_check"  name="rewq1" type="submit" value="중복검사" formaction="../../bbs/register_id_check.php" />
+					<input autocomplete="off" type="text" name="mb_id" value="<?php echo $form_id ?>" id="reg_mb_id"  <?php echo $readonly ?> class="frm_input full_input <?php echo $readonly ?>" placeholder="아이디">
+					<input class="btn_submit btn_id_check" id = "user_mb_id"  name="rewq1" type="button" value="중복검사"/>
 				</li>
 				<li>
 	                <label for="reg_mb_name">이름</label>
@@ -69,21 +69,21 @@ if(empty($_SESSION['FORM']['mb_id'])){
 	            </li>
 				<li>
 	                <label for="reg_mb_password">비밀번호</label>
-					<input type="password" name="mb_password" id="reg_mb_password" <?php echo $form_pw ?> class="frm_input full_input "  placeholder="비밀번호">
+					<input autocomplete="off" type="password" name="mb_password" id="reg_mb_password" <?php echo $form_pw ?> class="frm_input full_input "  placeholder="비밀번호">
 					<p>* 9자 이상의 영문, 숫자, 특수문자를 혼합하여 등록하시기 바랍니다.</p>
 				</li>
 	            <li>
 	                <label for="reg_mb_password_re">비밀번호 확인</label>
-					<input type="password" name="mb_password_re" id="reg_mb_password_re" <?php echo $form_pw_re ?> class="frm_input full_input "  placeholder="비밀번호 확인">
+					<input autocomplete="off" type="password" name="mb_password_re" id="reg_mb_password_re" <?php echo $form_pw_re ?> class="frm_input full_input "  placeholder="비밀번호 확인">
 					<p>* 비밀번호를 한번 더 입력해주세요.</p>
 				</li>
 				<li>
 	                <label for="reg_mb_email">E-mail</label>
-	                <input type="text" name="mb_email" value="<?php echo $form_email ?>" id="reg_mb_email"  class="frm_input  full_input " laceholder="E-mail"  placeholder="E-mail">
+	                <input autocomplete="off" type="text" name="mb_email" value="<?php echo $form_email ?>" id="reg_mb_email"  class="frm_input  full_input " laceholder="E-mail"  placeholder="E-mail">
 	            </li>
 			</ul>
 			<div class="btn_confirm">
-				<input type="submit" id="btn_submit" class="btn_submit" accesskey="s" value="<?php echo $w==''?'회원가입':'정보수정'; ?>" formaction="<?php echo G5_BBS_URL ?>/register_form_update.php"/>
+				<input type="submit" id="btn_submit" style="background:#ccc;" class="btn_submit" accesskey="s" value="<?php echo $w==''?'회원가입':'정보수정'; ?>" formaction="<?php echo G5_BBS_URL ?>/register_form_update.php" disabled/>
 				<a href="<?php echo G5_URL ?>" class="btn_close">취소</a>
 			</div> 
 	    </div>
@@ -94,14 +94,41 @@ if(empty($_SESSION['FORM']['mb_id'])){
 
 <script>
 
-	if(<?php echo $_GET['btn'] == "" ? true : false ;?> ){
-		$("#btn_submit").attr("disabled",true);
-		$(".btn_id_check").removeAttr("disabled");
-		$("#btn_submit").css({background: "#ccc"});
-	} else {
-		$("#btn_submit").removeAttr("disabled");
-		$(".btn_id_check").attr("disabled",true);
-		$("#btn_submit").css({background: "#ccc"});
-	}
+$(function(){
+	
+	$('#user_mb_id').click(function(){
+		var mb_id = $("#reg_mb_id").val();
+		
+		$.ajax({
+			url: "../../bbs/register_id_check.php",
+			method: "POST",
+			data: {
+				mb_id: mb_id
+			},
+			dataType: "text",
+			success: function(data) {
+				var str2 = data.replace(/(\r\n\t|\n|\r\t)/gm,""); 
+				alert(str2);
 
+				if(str2 == "사용가능한 아이디입니다." ){
+					$("#btn_submit").removeAttr("disabled");
+					$("#btn_submit").css({background: "#3a8afd"});
+					value = 1;
+				} else {
+					$("#btn_id_check").attr("disabled",true);
+					$("#btn_submit").css({background: "#ccc"});
+				}
+			}
+		});
+	});
+
+	$('#reg_mb_id').change(function(){
+		if(value == 1){
+			$("#btn_id_check").attr("disabled",true);
+			$("#btn_submit").css({background: "#ccc"});
+		}
+	})
+
+})
+	
 </script>

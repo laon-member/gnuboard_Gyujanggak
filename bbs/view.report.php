@@ -141,11 +141,7 @@ if ($board['bo_use_signature'] && $view['mb_id']) {
     $signature = conv_content($signature, 1);
 }
 
-if($_POST['save'] == '1' || $_POST['save'] == '2'){
-    include_once('');
-} else {
-    include_once($board_skin_path.'/view.report.skin.php');
-}
+include_once($board_skin_path.'/view.report.skin.php');
 
 @include_once($board_skin_path.'/view.tail.skin.php');
 ?>

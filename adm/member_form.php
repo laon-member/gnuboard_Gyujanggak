@@ -412,7 +412,6 @@ this.form.mb_intercept_date.value=this.form.mb_intercept_date.defaultValue; }">
                     url: ajax_url,
                     type: 'POST',
                     data: {
-                        'mp_no': mp_no,
                         'mb_id': mb_id
                     },
                     dataType: 'json',

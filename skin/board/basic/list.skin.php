@@ -20,7 +20,7 @@ $result = sql_query($sql);
 $sql1 = " SELECT * FROM {$write_table} WHERE wr_title_idx = {$bo_idx} ";
 $result1 = sql_query($sql1);
 $num = 0;
-for($j=1; $row=sql_fetch_array($result1); $j++) {
+for($j=1; $row123=sql_fetch_array($result1); $j++) {
     
     $num ++;
 }
@@ -30,10 +30,10 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
 <aside id="bo_side">
     <h2 class="aside_nav">사업 공고</h2>
     <?php 
-        for($k=1; $row=sql_fetch_array($result); $k++) {
-            $class_get =  $_GET['bo_idx'] == $row['idx']?"aisde_click":"";
-            $title_text = $_GET['bo_idx'] == $row['idx']? $row['title'] : "";
-            echo '<a class="aside_nav '.$class_get.'" href="'.G5_BBS_URL .'/board.php?bo_table='.$bo_table.'&bo_idx='.$k.'">'.$row["title"].'</a>';
+        for($k=1; $row34=sql_fetch_array($result); $k++) {
+            $class_get =  $_GET['bo_idx'] == $row34['idx']?"aisde_click":"";
+            $title_text = $_GET['bo_idx'] == $row34['idx']? $row34['title'] : "";
+            echo '<a class="aside_nav '.$class_get.'" href="'.G5_BBS_URL .'/board.php?bo_table='.$bo_table.'&bo_idx='.$k.'">'.$row34["title"].'</a>';
         }
     ?>
 </aside>
@@ -65,10 +65,9 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
             </li>
         	<?php if ($is_admin == 'super') {  ?>
                 <li>
-                    <a href="<?php echo $write_href ?>&bo_idx=<?= $_GET['bo_idx'] ?>" class="btn_b01 btn" title="글쓰기"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sound_only">글쓰기</span></a>
+                    <a href="<?php echo $write_href ?>&bo_idx=<?= $_GET['bo_idx'] ?><?= $_GET['u_id'] == 1?"&u_id=1" : "" ?>" class="btn_b01 btn" title="글쓰기"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sound_only">글쓰기</span></a>
                 </li>
         	<?php }  ?>
-        </ul>
     </div>
     <!-- } 게시판 페이지 정보 및 버튼 끝 -->
         	
@@ -87,7 +86,6 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
         </thead>
         <tbody>
         <?php
-
         for ($i=0; $i<count($list); $i++) {
             
         	if ($i%2==0) $lt_class = "even";
@@ -97,11 +95,6 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
             
             <td class="td_idx td_center">
             <?php
-            if ($list[$i]['is_notice']) // 공지사항
-                echo '<strong class="notice_icon">공지</strong>';
-            else if ($wr_id == $list[$i]['wr_id'])
-                echo "<span class=\"bo_current\">열람중</span>";
-            else
                 echo $list[$i]['num'];
              ?>
             </td>
@@ -118,7 +111,7 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
                         <?php
                             if (isset($list[$i]['icon_secret'])) echo rtrim($list[$i]['icon_secret']);
                          ?>
-                        <?php echo $list[$i]['subject'] ?>
+                        <?php echo $list[$i]['wr_subject'] ?>
                     </a>
                     
                 </div>
@@ -168,7 +161,7 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
     ?>    
     
     <!-- 총 게시판 -->
-    <?php $total_page  = ceil($num / $page_rows);  ?>
+
     <?php echo get_paging('15', $page, $total_page, $url); ?>
 	<!-- 페이지 -->
 	
@@ -183,6 +176,8 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
             <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
             <input type="hidden" name="sca" value="<?php echo $sca ?>">
             <input type="hidden" name="sop" value="and">
+            <input type="hidden" name="sop" value="and">
+            <input type="hidden" name="bo_idx" value="<?= $_GET['bo_idx'] ?>">
             <label for="sfl" class="sound_only">검색대상</label>
             <select name="sfl" id="sfl">
                 <?php echo get_board_sfl_select_options($sfl); ?>
@@ -198,7 +193,7 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
         <div class="bo_sch_bg"></div>
     </div>
     <script>
-    jQuery(function($){
+    jQuery(function($){     
         // 게시판 검색
         $(".btn_bo_sch").on("click", function() {
             $(".bo_sch_wrap").toggle();

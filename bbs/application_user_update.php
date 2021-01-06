@@ -394,7 +394,7 @@ if($value == 1){
     $count_num=0;
     for($i=0; $i<$count; $i++){
         $row = sql_fetch(" select * from g5_member where mb_no = '{$_POST['checkbox'][$i]}'");
-        $row22 = sql_fetch(" select * from rater where user_id = '{$row['mb_id']}' and business_idx = '{$_POST['wr_idx']}'");
+        $row22 = sql_fetch(" select * from rater where user_id = '{$row['mb_id']}' and business_idx = '{$_POST['wr_idx']}' and test_id= '{$_POST['bo_idx']}'");
         
         if($row22['idx'] == ""){
             $sql = " insert into rater

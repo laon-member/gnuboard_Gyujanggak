@@ -53,7 +53,7 @@ $row=sql_fetch_array($result);
 
         <div class="step_con">
             <div class="step_bar">
-            <p class="step_text">step 1</p> 
+            <p class="step_text step_bar1">Step 1</p> 
             </div>
         </div>
 
@@ -61,17 +61,17 @@ $row=sql_fetch_array($result);
             <label for="info_number" class="label_text">접수번호</label>
             <input type="text" name="info_number" id="info_number"  class="input_text input_text_50 " placeholder="접수번호">
             <label for="quest_number" class="label_text">과제번호</label>
-            <input type="text" name="quest_number" id="quest_number"  class="input_text input_text_50" placeholder="과제번호">
+            <input type="text" name="quest_number" id="quest_number"  class="input_text input_text_50" placeholder="과제번호" value="<?= $row['wr_quest_number']; ?>" readonly>
 
             <p>연구과제명</p>
             <label for="ko_title" class="label_text">과제명(국문)</label>
             <input type="text" name="ko_title" id="ko_title"  class="input_text " placeholder="과제명(국문)" >
             <label for="en_title" class="label_text">과제명(영문)</label>
-            <input type="text" name="en_title" id="en_title"  class="input_text " placeholder="과제명(영문)" >
+            <input type="text" name="en_title" id="en_title"  class="input_text " placeholder="과제명(영문)" onkeydown="onlyAlphabet(this)">
     
             <p>연구책임자</p>
             <label for="name" class="label_text">성명</label>
-            <input type="text" name="name" id="name"  class="input_text input_text_50" placeholder="성명" value="<?= $member['mb_name'] ?>">
+            <input type="text" name="name" id="name"  class="input_text input_text_50" placeholder="성명">
             <label for="degree" class="label_text">전공(학위)</label>
             <input type="text" name="degree" id="degree"  class="input_text input_text_50" placeholder="전공(학위)" >
             <label for="belong" class="label_text">소속</label>
@@ -79,7 +79,7 @@ $row=sql_fetch_array($result);
             <label for="rank" class="label_text">직급</label>
             <input type="text" name="rank" id="rank"  class="input_text input_text_50" placeholder="직급" >
             <label for="email" class="label_text">이메일</label>
-            <input type="text" name="email" id="email"  class="input_text input_text_50" placeholder="이메일" value="<?= $member['mb_email'] ?>">
+            <input type="text" name="email" id="email"  class="input_text input_text_50" placeholder="이메일">
             <label for="phone" class="label_text">전화</label>
             <input type="text" name="phone" id="phone"  class="input_text input_text_50" placeholder="전화" > 
         </div>
@@ -97,8 +97,8 @@ $row=sql_fetch_array($result);
         </div>
 
         <div class="step_con">
-            <div class="step_bar">
-            <p class="step_text">step 2</p> 
+            <div class="step_bar step_bar2">
+            <p class="step_text ">Step 2</p> 
             </div>
         </div>
 
@@ -114,7 +114,7 @@ $row=sql_fetch_array($result);
             <input type="date" name="date_end" id="date_end"  class="input_text input_text_50">
             <br>
             <label for="value" class="label_text">연구비신청액</label>
-            <input type="text" name="value" id="value"  class="input_text " placeholder="연구비신청액" >
+            <input type="text" name="money" id="money"  class="input_text " placeholder="연구비신청액" >
             <label for="one_year" class="label_text">1차년 연구비</label>
             <input type="text" name="one_year" id="one_year"  class="input_text input_text_50" placeholder="1차년 연구비">
             <label for="two_year" class="label_text">2차년 연구비</label>
@@ -125,7 +125,7 @@ $row=sql_fetch_array($result);
             <section id="bo_v"  class="bo_class">
             <?php echo "<script>var file_number = 1;</script>"; ?> 
             <?php $file_number = "<script>document.writeln(file_number);</script>"; ?>
-                <label for="upload01" id="file-label-btn" class="file-label" style="background:<?= $row44['report'] ==2? '#ccc': '#3a8afd'; ?>">찾아보기</label>
+                <label for="upload01" id="file-label-btn" class="file-label" style="background:<?= $row44['report'] ==2? '#ccc': '#3a8afd'; ?>">파일 업로드</label>
             </section>
         <div class="btn_confirm write_div btn-cont">
             <button type="button" id="btn_submit1" accesskey="s" class="btn_cancel btn btn_step1">이전</button>
@@ -141,8 +141,8 @@ $row=sql_fetch_array($result);
         </div>
 
         <div class="step_con">
-            <div class="step_bar">
-            <p class="step_text">step 3</p> 
+            <div class="step_bar step_bar3">
+            <p class="step_text ">Step 3</p> 
             </div>
         </div>
 
@@ -213,19 +213,56 @@ $row=sql_fetch_array($result);
 </section>
 
 <script>
-    
+    function onlyAlphabet(ele) {
+        ele.value = ele.value.replace(/[^//a-z]/gi,"");
+    }
     $(function(){
         $('.btn_step1').click(function(){
             $('.step').removeClass('step_view');
             $('.step1').addClass('step_view');
         });
         $('.btn_step2').click(function(){
-            $('.step').removeClass('step_view');
-            $('.step2').addClass('step_view');
+            if($('#info_number').val() != ""){
+                if($('#quest_number').val() != ""){
+                    if($('#ko_title').val() != ""){
+                        if($('#en_title').val() != ""){
+                            if($('#name').val() != ""){
+                                if($('#degree').val() != ""){
+                                    if($('#rank').val() != ""){
+                                        if($('#belong').val() != ""){
+                                            if($('#email').val() != ""){
+                                                if($('#phone').val() != ""){
+                                                    $('.step').removeClass('step_view');
+                                                    $('.step2').addClass('step_view');
+                                                } else {alert("전화번호가 비어있습니다");}
+                                            } else {alert("이메일이 비어있습니다");}
+                                        } else {alert("직급이 비어있습니다");}
+                                    } else {alert("소속이 비어있습니다");}
+                                } else {alert("전공(학위)이 비어있습니다");}
+                            } else {alert("성명이 비어있습니다");}
+                        } else {alert("영문 과제명이 비어있습니다");}
+                    } else {alert("국문 과제명이 비어있습니다");}
+                } else {alert("과제번호가 비어있습니다");}
+            } else {alert("접수번호가 비어있습니다");}
         });
         $('.btn_step3').click(function(){
-            $('.step').removeClass('step_view');
-            $('.step3').addClass('step_view');
+            if($('#main_member').val() != ""){
+                if($('#sub_member').val() != ""){
+                    if($('#date_start').val() != ""){
+                        if($('#date_end').val() != ""){
+                            if($('#value').val() != ""){
+                                if($('#one_year').val() != ""){
+                                    if($('#two_year').val() != ""){
+                                        $('.step').removeClass('step_view');
+                                        $('.step3').addClass('step_view');
+                                    } else {alert("2차년 연구비가 비어있습니다");}
+                                } else {alert("1차년 연구비가 비어있습니다");}
+                            } else {alert("연구비신청액이 비어있습니다");}
+                        } else {alert("총 연구 기간이 비어있습니다");}
+                    } else {alert("총 연구 기간이 비어있습니다");}
+                } else {alert("연구원보조가 비어있습니다");}
+            } else {alert("공동연구원이 비어있습니다");}
+                    
         });
         $('#info_number').change(function(){
             $('#info_number_view').val($(this).val());

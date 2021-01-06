@@ -459,7 +459,7 @@ box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.1)}
 .profile_info:nth-of-type(2) span {margin-left: 50px;}
 .profile_info span {font-size: 16px; }
 
-#bo_v_atc{width: 100%; border: 1px solid #ccc; background-color:}
+#bo_v_atc{width: 100%; border: 1px solid #ccc; }
 
 #bo_v{background-color: #fbfbfb; padding: 10px;}
 .btn_container{text-align: right;}
@@ -485,8 +485,11 @@ box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.1)}
 .bo_w_tit p{font-size: 24px; border: 1px solid #cccccc; padding-left: 10px;}
 
 .step_con{text-align: center;width: 50%; height: 10px; border-radius: 5px; background-color: #ccc; margin: 30px auto; position: relative;}
-.step_bar{width: 33.3333%; height: 10px; background-color: black; border-radius: 5px; }
-.step_text{width: 33.3333%;height: 10px; position: absolute; bottom: 200%; font-weight: bold;}
+.step_bar{position: absolute; text-align: center; width: 33.3333%; height: 10px; background-color: black; border-radius: 5px; }
+.step_bar1{left: 0}
+.step_bar2{left: 50%; transform: translateX(-50%);}
+.step_bar3{right: 0}
+.step_text{width: 100%;height: 10px; position: absolute; bottom: 200%; font-weight: bold;}
 
 .write_div p, .label_text{margin: 20px 0 10px 10px;}
 .label_text{width: 15%; display: inline-block; }

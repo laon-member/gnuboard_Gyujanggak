@@ -27,7 +27,7 @@ if(isset($row)){
                 if($_POST['test_user'] != ""){
                     if(is_numeric($_POST['test_user'])){
                         if($_POST['test_user'] <= 80){
-                            $test_user =  'test_user = '. $_POST['test_user'] .'';
+                            $test_user =  'test_user = "'. $_POST['test_user'] .'"';
                         } else {alert("연구진 점수가 80점이 넘습니다");}
                     } else { alert("연구진 점수를 숫자만 입력해주세요");}
                 } else { $test_user = '';}
@@ -35,7 +35,7 @@ if(isset($row)){
                 if($_POST['test_title'] != ""){
                     if(is_numeric($_POST['test_title'])){
                         if($_POST['test_title'] <= 80){
-                            $test_title =  'test_title = '.$_POST['test_title'].'';
+                            $test_title =  'test_title = "'.$_POST['test_title'].'"';
                         } else {alert("주제 점수가 80점이 넘습니다");}
                     } else { alert("주제 점수를 숫자만 입력해주세요");}
                 } else { $test_title = '';}
@@ -43,17 +43,24 @@ if(isset($row)){
                 if($_POST['test_plan'] != ""){
                     if(is_numeric($_POST['test_user'])){
                         if($_POST['test_user'] <= 80){
-                            $test_plan =  'test_plan = '.$_POST['test_plan'].'';
+                            $test_plan =  'test_plan = "'.$_POST['test_plan'].'"';
                         } else {alert("계획 점수가 80점이 넘습니다");}
                     } else { alert("계획 점수를 숫자만 입력해주세요");}
                 } else { $test_plan = '';}
 
                 if($_POST['test_opinion'] != ""){
-                    $test_opinion =  'test_opinion = '.$_POST['test_opinion'].'';
+                    $test_opinion =  'test_opinion = "'.$_POST['test_opinion'].'"';
                 } else { $test_opinion = '';}
 
-                $sql = " update rater_value set $test_user $test_title $test_plan $test_opinion";
+                if($_POST['test_sum'] != ""){
+                    $test_sum =  'test_sum = "'.$_POST['test_sum'].'"';
+                } else { $test_sum = '';}
+
+                $average = $_POST['test_user'] + $_POST['test_title'] + $_POST['test_plan'];
+
+                $sql = " update rater_value set $test_user, $test_title, $test_plan, $test_opinion, $test_sum,   test_average = '$average' where idx = '{$row22['idx']}'";
                 sql_query($sql);
+                echo $sql;
                 alert('업데이트 완료');
             }
         } else {
@@ -75,8 +82,8 @@ if(isset($row)){
             } else { $test_title = '';}
 
             if($_POST['test_plan'] != ""){
-                if(is_numeric($_POST['test_user'])){
-                    if($_POST['test_user'] <= 80){
+                if(is_numeric($_POST['test_plan'])){
+                    if($_POST['test_plan'] <= 80){
                         $test_plan = $_POST['test_plan'];
                     } else {alert("계획 점수가 80점이 넘습니다");}
                 } else { alert("계획 점수를 숫자만 입력해주세요");}
@@ -85,18 +92,19 @@ if(isset($row)){
             if($_POST['test_opinion'] != ""){
                 $test_opinion = $_POST['test_opinion'];
             } else { $test_opinion = '';}
-
+            $average = $_POST['test_user'] + $_POST['test_title'] + $_POST['test_plan'];
             $sql = " insert into rater_value
                                 set rater_idx = '{$row['idx']}',
                                     report_idx = '{$_POST['us_idx']}',
-                                    test_user = ' $test_user',
-                                    test_title = ' $test_title',
-                                    test_plan = ' $test_plan',
-                                    test_opinion = ' $test_opinion',
+                                    test_user = '$test_user',
+                                    test_title = '$test_title',
+                                    test_plan = '$test_plan',
+                                    test_opinion = '$test_opinion',
+                                    test_sum = '{$_POST['test_sum']}',
+                                    test_average = '$average',
                                     value = '{$_POST['value_id']}'";
             sql_query($sql);
             alert('저장 완료');
-
         }
     } else if ($_POST['value_id'] == 2){
         $row22 = sql_fetch(" select * from rater_value where rater_idx = '{$row['idx']}' and report_idx = '{$_POST['us_idx']}'");

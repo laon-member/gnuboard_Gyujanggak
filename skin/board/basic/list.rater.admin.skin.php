@@ -70,11 +70,18 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         <?php } else if($_GET['bo_idx'] == 3) {?>
             <h1 id="">결과(연차)보고서</h1>
         <?php } ?>
+
+        <ul class="btn_bo_user">
+            <li>
+            	<button type="button" class="btn_bo_sch btn_b01 btn" title="게시판 검색"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">게시판 검색</span></button>
+            </li>
+        </ul>
     </div>
     <!-- } 게시판 페이지 정보 및 버튼 끝 -->
         	
     <div class="tbl_head01 tbl_wrap">
         <table>
+
         <caption><?php echo $board['bo_subject'] ?> 목록</caption>
         <thead>
         <tr>
@@ -96,7 +103,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             $result = sql_query($sql);
        
         
-        for ($i=0; $row=sql_fetch_array($result); $i++) {
+        for ($i=0; $i < count($list); $i++) {
             
         	if ($i%2==0) $lt_class = "even";
             else $lt_class = "";
@@ -104,46 +111,45 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 		?>
         <tr class="<?php if ($list[$i]['is_notice']) echo "bo_notice"; ?> <?php echo $lt_class ?> tr_hover">
             <td class="td_idx td_center td_info" style="display:none">
-                <input type="hidden" id="idx_id" name="us_idx" value ="<?php echo $row['wr_id']; ?>">
+                <input type="hidden" id="idx_id" name="us_idx" value ="<?php echo $list[$i]['wr_id']; ?>">
             </td>
             <td class="td_idx td_center">
             <?php
                 echo $list[$i]['num'];
              ?>
-             <?php echo $row['wr_id']; ?>
             </td>
 
             <td class="td_title td_center">
-                <?= $row['wr_quest_number'] ?>
+                <?= $list[$i]['wr_quest_number'] ?>
             </td>
             <td class="td_download "  style="padding-left:<?php echo $list[$i]['reply'] ? (strlen($list[$i]['wr_reply'])*10) : '0'; ?>px; ">
                
-                <a href="../bbs/board.rater.admin.php?bo_table=<?=$_GET['bo_table']; ?>&wr_idx=<?php echo $row['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&u_id=1">
+                <a href="../bbs/board.rater.admin.php?bo_table=<?=$_GET['bo_table']; ?>&wr_idx=<?php echo $list[$i]['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&u_id=1">
                 <?php
-                    $sql66 = " select * from g5_write_business_title where idx = '{$row['wr_title_idx']}'";
+                    $sql66 = " select * from g5_write_business_title where idx = '{$list[$i]['wr_title_idx']}'";
                     $result66 = sql_query($sql66);
                     $row66 = sql_fetch_array($result66);
                     
                 ?>
-                    [<?= $row66['title'] ?>]  <?= $row['wr_subject'] ?>
+                    [<?= $row66['title'] ?>]  <?= $list[$i]['wr_subject'] ?>
                 </a>
 
             </td>
             
             <td class="td_datetime td_center">
-                <a href="../bbs/board.rater.admin.php?bo_table=<?=$_GET['bo_table']; ?>&wr_idx=<?php echo $row['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&us_idx=<?= $row['wr_id']; ?>&u_id=1&rater=1" class="value_btn" style="display:inline-block">
+                <a href="../bbs/board.rater.admin.php?bo_table=<?=$_GET['bo_table']; ?>&wr_idx=<?php echo $list[$i]['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&us_idx=<?= $list[$i]['wr_id']; ?>&u_id=1&rater=1" class="value_btn" style="display:inline-block">
                   배정
                 </a>
-                <a href="<?= $action_url ?>?value=2&idx=<?= $row['wr_id'] ?>" class="value_btn"  style="display:inline-block">
+                <a href="<?= $action_url ?>?value=2&idx=<?= $list[$i]['wr_id'] ?>" class="value_btn"  style="display:inline-block">
                     의뢰
                 </a>
             </td>
             <td class="td_datetime td_center">
                 <!-- <button type="button" class="value_btn btn_bo_val" style="display:inline-block;vertical-align: top;">선발</button> -->
-                <a href="../bbs/board.rater.admin.php?bo_table=<?=$_GET['bo_table']; ?>&border_idx=<?php echo $row['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&bo_idx=<?= $_GET['bo_idx']?>&u_id=1" class="value_btn" style="display:inline-block">
+                <a href="../bbs/board.rater.admin.php?bo_table=<?=$_GET['bo_table']; ?>&border_idx=<?php echo $list[$i]['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&bo_idx=<?= $_GET['bo_idx']?>&u_id=1" class="value_btn" style="display:inline-block">
                    선발
                 </a>
-                <a href="../bbs/board.rater.php?bo_table=<?=$_GET['bo_table']; ?>&bo_idx=<?php echo $row['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&u_id=1" class="value_btn" style="display:inline-block">
+                <a href="<?= $action_url_value ?>?bo_idx=<?= $list[$i]['wr_id'] ?>" class="value_btn" style="display:inline-block">
                    발표
                 </a>
             </td>
@@ -165,7 +171,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     ?>    
     
     <!-- 총 게시판 -->
-    <?php $total_page  = ceil($total_count / $page_rows);  ?>
+
     <?php echo get_paging('15', $page, $total_page, $url); ?>
 	<!-- 페이지 -->
 	
@@ -173,7 +179,40 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     </form>
 
     <!-- 게시판 검색 시작 { -->
-    
+        <div class="bo_sch_wrap">
+        <fieldset class="bo_sch">
+            <h3>검색</h3>
+            <form name="fsearch" method="get">
+            <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
+            <input type="hidden" name="sca" value="<?php echo $sca ?>">
+            <input type="hidden" name="sop" value="and">
+            <input type="hidden" name="bo_idx" value="<?= $_GET['bo_idx'] ?>">
+            <input type="hidden" name="u_id" value="<?= $_GET['u_id'] ?>">
+            <label for="sfl" class="sound_only">검색대상</label>
+            <select name="sfl" id="sfl">
+                <?php echo get_board_sfl_select_options($sfl); ?>
+            </select>
+            <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+            <div class="sch_bar">
+                <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" required id="stx" class="sch_input" size="25" maxlength="20" placeholder=" 검색어를 입력해주세요">
+                <button type="submit" value="검색" class="sch_btn"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">검색</span></button>
+            </div>
+            <button type="button" class="bo_sch_cls" title="닫기"><i class="fa fa-times" aria-hidden="true"></i><span class="sound_only">닫기</span></button>
+            </form>
+        </fieldset>
+        <div class="bo_sch_bg"></div>
+    </div>
+    <script>
+    jQuery(function($){
+        // 게시판 검색
+        $(".btn_bo_sch").on("click", function() {
+            $(".bo_sch_wrap").toggle();
+        })
+        $('.bo_sch_bg, .bo_sch_cls').click(function(){
+            $('.bo_sch_wrap').hide();
+        });
+    });
+    </script>
     <!-- } 게시판 검색 끝 --> 
 </div>
  

@@ -133,7 +133,13 @@ $result1 = sql_query($sql1);
         <ul class="btn_container">
             <?php if ($prev_href) { ?>
                 <li class=" btn_next_prv" >
-                    <a href="<?php echo $prev_href ?>">
+                    <?php
+                        if( $_GET['u_id']==1){
+                            $u_id = "u_id=1";
+                        }
+                    
+                    ?>
+                    <a href="../bbs/board.app.php?bo_table=business&wr_id=<?php echo $prev_href; ?>&u_id=1">
                         <span class="nb_tit">
                             <i class="fa fa-chevron-up" aria-hidden="true" style="transform: rotate(-90deg);"></i>
                         </span >
@@ -142,14 +148,20 @@ $result1 = sql_query($sql1);
             <?php } ?>
             <?php if ($next_href) { ?>
                 <li class="btn_next btn_next_prv">
-                    <a href="<?php echo $next_href ?>">다음글
+                    <?php
+                        if( $_GET['u_id']==1){
+                            $u_id = "u_id=1";
+                        }
+                    
+                    ?>
+                    <a href="../bbs/board.app.php?bo_table=business&wr_id=<?php echo $next_href; ?>&u_id=1">다음글
                         <span class="nb_tit"> 
                             <i class="fa fa-chevron-down" aria-hidden="true" style="transform: rotate(-90deg);"></i>
                         </span>
                     </a>  
                 </li>
             <?php } ?>
-                <li class="btn_next_prv"><a href="<?php echo G5_BBS_URL .'/board.php?bo_table=business&bo_idx='.$view[wr_title_idx].'&page=1' ?>" class="btn_list">목록</a></li>
+                <li class="btn_next_prv"><a href="<?php echo G5_BBS_URL ?>/board.app.php?bo_table=business&bo_idx=<?= $view['wr_title_idx'] ?>&page=1&u_id=1" class="btn_list">목록</a></li>
         </ul>
         <?php } ?>
     </section>

@@ -47,7 +47,7 @@ if (!$board['bo_use_list_view']) {
 $prev_href = '';
 if (isset($prev['wr_id']) && $prev['wr_id']) {
     $prev_wr_subject = get_text(cut_str($prev['wr_subject'], 255));
-    $prev_href = get_pretty_url($bo_table, $prev['wr_id'], $qstr);
+    $prev_href = $prev['wr_id'];
     $prev_wr_date = $prev['wr_datetime'];
 }
 
@@ -55,7 +55,7 @@ if (isset($prev['wr_id']) && $prev['wr_id']) {
 $next_href = '';
 if (isset($next['wr_id']) && $next['wr_id']) {
     $next_wr_subject = get_text(cut_str($next['wr_subject'], 255));
-    $next_href = get_pretty_url($bo_table, $next['wr_id'], $qstr);
+    $next_href = $next['wr_id'];
     $next_wr_date = $next['wr_datetime'];
 }
 

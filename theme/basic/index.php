@@ -23,3 +23,5 @@ include_once(G5_THEME_PATH.'/head1.php');
     
 include_once(G5_THEME_PATH.'/tail.php');
 ?>
+
+<a href="https://ibb.co/yQs1TXr"><img src="https://i.ibb.co/Jsk4LK9/170614.jpg" alt="170614" border="0"></a>

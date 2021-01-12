@@ -117,14 +117,14 @@ $colspan = 16;
             </td>
             <?php } ?>
             <td headers="mb_list_auth" class="td_mbstat">
-                <form name="fboardlist" class="form_rater"  method="POST" action="../adm/member_list_update.php">
+                <form name="fboardlist" class="form_rater" name="form_rater"  method="POST" action="../adm/member_list_update.php" >
                     <input type="hidden" name="idx" class="rater_idx" value="<?= $row['mb_no'] ?>">
                     <input type="hidden" name="belong" class="rater_belong" value="<?= $row['belong']? $row['belong'] : ""?>">
                     <input type="hidden" name="degree" class="rater_degree" value="<?= $row['degree']? $row['degree'] : ""?>">
                     <input type="hidden" name="rank" class="rater_rank" value="<?= $row['rank']? $row['rank'] : ""?>">
                     <input type="hidden" name="category" class="rater_category" value="<?= $row['category']? $row['category'] : ""?>">
                     <input type="hidden" name="level" class="rater_level" value="">
-                    <button >선발</button>
+                    <button type="submit" class="rater_button">선발</button>
                 </form>
             </td>
         </tr>
@@ -142,12 +142,11 @@ $colspan = 16;
     <?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, '?'.$qstr.'&amp;page='); ?>
 <script>
     $(function(){
-        $('.form_rater').on('submit', function() {
-            if(confirm('Do you really want to submit the form?')) {
+        $('.rater_button').click(function() {
+            if(confirm("진짜로 거래를 삭제하시겠습니까?")){
                 return true;
-            } else {
-                return false;
             }
+            return false;
         });
 
         $('.belong').change(function(){
@@ -173,6 +172,7 @@ $colspan = 16;
             $(this).parents('.form_rater').find('.rater_level').val(level);
         })
     })
+
 </script>
 
 <?php

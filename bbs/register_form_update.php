@@ -103,10 +103,10 @@ if ($w == '' || $w == 'u') {
     //     alert('특수문자를 추가하세요');
     // }
 
-    if(preg_match('/^[a-z0-9A-Z~!@#$%^&*]{9}&/', $mb_password)) {
+    if(!preg_match('/[a-z0-9A-Z~!@#$%^&*]{9,}/', $mb_password)) {
         alert('9자 이상의 영문, 숫자, 특수문자를 혼합만 가능합니다');
     }
-  
+    
     
         if ($msg = empty_mb_name($mb_name))       alert($msg, "", true, true);
     if ($msg = empty_mb_email($mb_email))     alert($msg, "", true, true);

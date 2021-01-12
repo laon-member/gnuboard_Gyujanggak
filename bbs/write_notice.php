@@ -408,7 +408,6 @@ include_once(G5_PATH.'/head.sub.php');
 include_once(G5_BBS_PATH.'/board_head.php');
 
 $action_url = https_url(G5_BBS_DIR)."/write_notice_update.php";
-
 echo '<!-- skin : '.(G5_IS_MOBILE ? $board['bo_mobile_skin'] : $board['bo_skin']).' -->';
 include_once ($board_skin_path.'/write.skin.notice.php');
 

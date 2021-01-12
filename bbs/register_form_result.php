@@ -68,10 +68,10 @@ if ($user == 'id') {
     if(empty($mb_new_password) || empty($mb_new_password_re)){
         alert('정보가 비어있습니다. 다시 입력해주세요');
     } else {
-        if ($w == '' && !$mb_password)
+        if ($w == '' && !$mb_new_password && !$mb_new_password_re)
         alert('비밀번호가 넘어오지 않았습니다.');
 
-        if(preg_match('/^[a-z0-9A-Z~!@#$%^&*]{9}&/', $mb_new_password)) {
+        if(!preg_match('/[a-z0-9A-Z~!@#$%^&*]{9,}/', $mb_new_password)) {
             alert('9자 이상의 영문, 숫자, 특수문자를 혼합만 가능합니다');
         } else {
             if($mb_new_password_re == $mb_new_password){

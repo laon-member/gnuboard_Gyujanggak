@@ -108,8 +108,6 @@ if ($is_member) {
 }
 
 
-
-
 $view = get_view($write, $board, $board_skin_path);
 
 if (strstr($sfl, 'subject'))

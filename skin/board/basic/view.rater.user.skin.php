@@ -29,6 +29,16 @@ $row2=sql_fetch_array($result2);
     
 //     $num ++;
 // }
+$sql33 = "  select * from g5_write_business where wr_id = '{$_GET['us_idx']}'";
+$row33 = sql_fetch($sql33);
+
+if($_GET['bo_idx'] == 1){
+    $admin_val = $row33['value'];
+} else if($_GET['bo_idx'] == 2){
+    $admin_val = $row33['wr_8'];
+} else if($_GET['bo_idx'] == 3){
+    $admin_val = $row33['wr_9'];
+}
 
 ?>
 <!-- 게시판 목록 시작 { -->
@@ -48,7 +58,7 @@ $row2=sql_fetch_array($result2);
     </div>
     <div>
         <span>심사위원 배정 </span>
-        <button class="btn_bo_val"> + 심사위원 추가</button>
+        <button class="btn_bo_val"><?= $admin_val > 0 ? "심사위원 선발 완료" :"+ 심사위원 추가"; ?> </button>
     </div>
     <!-- } 게시판 페이지 정보 및 버튼 끝 -->
         	
@@ -71,6 +81,7 @@ $row2=sql_fetch_array($result2);
         $sql = "  select COUNT(DISTINCT `idx`) as cnt from rater where business_idx = '{$_GET['wr_idx']}' and test_id ='{$_GET['bo_idx']}''";
         $row11 = sql_fetch($sql);
 
+       
 
         
         $sql = " select * from rater where business_idx = '{$_GET['wr_idx']}' and test_id ='{$_GET['bo_idx']}'";
@@ -106,7 +117,9 @@ $row2=sql_fetch_array($result2);
             <td class="td_datetime td_center"><?php echo $row22['degree']; ?></td>
             <td class="td_datetime td_center"><?php echo $row22['rank']; ?></td>
             <td class="td_datetime td_center"><?php echo $row22['category']; ?></td>
-            <td class="td_datetime td_center"><a href="<?= $action_url ?>?value=3&idx=<?= $row['idx'] ?>" class="value_btn">제외</a></td>
+            <td class="td_datetime td_center">
+                <a href="<?= $action_url ?>?value=3&idx=<?= $row['idx'] ?>" class="value_btn value_btn_esc" style="background:<?= $admin_val > 0 ? "#ccc" :"#3a8afd"; ?>" onclick="return <?= $admin_val < 1 ? 'true' :'false'; ?>">제외</a>
+            </td>
         </tr>
       
 
@@ -119,8 +132,7 @@ $row2=sql_fetch_array($result2);
 	<!-- 페이지 -->
 
     <!-- 현재 URL 주소 -->
-    <button type="button" class="value_btn ">목록</button>
-
+    <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=qa&bo_idx=<?= $_GET['bo_idx'] ?>&u_id=1" style="text-align:center;" class="value_btn" >목록</a>
             <!-- 게시판 검색 시작 { -->
 
 </div>
@@ -128,19 +140,20 @@ $row2=sql_fetch_array($result2);
 jQuery(function($){
     // 게시판 검색
     $(".btn_bo_val").on("click", function() {
-        var sql_title_view = $(this).parents('.tr_hover').find('.sql_title').attr('value');
-        $('#sql_title_view').text(sql_title_view);
-        var sql_ko_title = $(this).parents('.tr_hover').find('.sql_ko_title').attr('value')
-        $('#sql_ko_title_view').text(sql_ko_title);
-        var business_idx_form = $(this).parents('.tr_hover').find('#business_idx_form').attr('value');
-        $('#business_idx').text(business_idx_form);
-        var us_idx = $(this).parents('.tr_hover').find('.sql_us_idx').attr('value');
-        $('#us_idx').val(us_idx);
+        if( <?= $admin_val ?> < 1){
+            var sql_title_view = $(this).parents('.tr_hover').find('.sql_title').attr('value');
+            $('#sql_title_view').text(sql_title_view);
+            var sql_ko_title = $(this).parents('.tr_hover').find('.sql_ko_title').attr('value')
+            $('#sql_ko_title_view').text(sql_ko_title);
+            var business_idx_form = $(this).parents('.tr_hover').find('#business_idx_form').attr('value');
+            $('#business_idx').text(business_idx_form);
+            var us_idx = $(this).parents('.tr_hover').find('.sql_us_idx').attr('value');
+            $('#us_idx').val(us_idx);
 
-        $('.bo_sch_wrap').toggle();
-
+            $('.bo_sch_wrap').toggle();
+        }
     })
-    $('.bo_sch_bg, .bo_sch_cls, .btn_esc').click(function(){
+    $('.bo_sch_bg, .bo_sch_cls, .btn_esc, .button_esc').click(function(){
         $('.bo_sch_wrap').hide();
     });
     var test_user = 0;
@@ -189,10 +202,15 @@ jQuery(function($){
             $sql = " select * from g5_member where mb_level > '4'";
             $result = sql_query($sql);
 
+            $count = 0;
                 
-            for ($i=0; $i<$row = sql_fetch_array($result); $i++) {
+            for ($i=0; $row = sql_fetch_array($result); $i++) {
+                $sql2 = " select * from rater where business_idx ='{$_GET['us_idx']}' and test_id = '{$_GET['bo_idx']}' and user_name ='{$row['mb_name']}'";
+                $result2 = sql_query($sql2);
+                $row2 = sql_fetch_array($result2);
+                if($row2['idx'] == ""){
             ?>
-            
+                
             <tr class="<?php echo $lt_class ?> tr_hover">
 
                 <td class="td_center">
@@ -202,31 +220,38 @@ jQuery(function($){
                 <td class="td_datetime td_center"><?php echo $row['degree']; ?></td>
                 <td class="td_datetime td_center"><?php echo $row['rank']; ?></td>
                 <td class="td_datetime td_center"><?php echo $row['category']; ?></td>
-                <td class="td_datetime td_center"><label for="checkbox<?= $i ?>" id="checkbox_label<?= $i ?>" class="value_btn ">선택</label><input type="checkbox" name="checkbox[]" class="checkbox_input" id="checkbox<?= $i ?>" value="<?= $row['mb_no']?>" style="display:none;"></td>
+                <td class="td_datetime td_center"><label for="checkbox<?= $i ?>" id="checkbox_label<?= $i ?>" class="value_btn value_btn_esc">선택</label><input type="checkbox" name="checkbox[]" class="checkbox_input" id="checkbox<?= $i ?>" value="<?= $row['mb_no']?>" style="display:none;"></td>
             </tr>
-        
-
-            <?php } ?>
-            <?php if (count($list) == 0) { echo '<tr><td colspan="6" class="empty_table">선택된 심사위원이 없습니다.</td></tr>'; } ?>
+            
+              
+            <?php 
+                $count ++;
+                }
+            } 
+            if ($count == 0 ) { echo '<tr><td colspan="6" class="empty_table">선택 가능한 심사위원이 없습니다.</td></tr>'; } 
+            ?>
+            
             </tbody>
             </table>
-            <button type="button">  취소</button>
+            <button type="button" class="button_esc">  취소</button>
             <button>저장</button>
         </form>
     </fieldset>
     <div class="bo_sch_bg"></div>
     <script>
     $(document).ready(function(){
-        $('.value_btn').on('click', function (e) {
-            var value = $(this).next().is(':checked');                
-            if (value) {    
-                $(this).text("선택");
-                $(this).css({"background": "#3a8afd"});
+        $('.value_btn_esc').on('click', function (e) {
+            if(<?= $admin_val ?> == 0){
+                var value = $(this).next().is(':checked');                
+                if (value) {    
+                    $(this).text("선택");
+                    $(this).css({"background": "#3a8afd"});
 
-            } else {
-                $(this).text("해제");
-                $(this).css({"background": "#CCC"});
+                } else {
+                    $(this).text("해제");
+                    $(this).css({"background": "#CCC"});
 
+                }
             }
         });
 

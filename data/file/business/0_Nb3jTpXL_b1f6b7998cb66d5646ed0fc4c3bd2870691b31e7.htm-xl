@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>당첨</title>
+    <style>
+        div{
+            margin: 0 auto;
+            margin-top: 100px;
+            text-align: center;
+        }
+        img{
+            width: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <img src="12345.jpg" alt="">
+        <h1>한이 누나 성공했나보네요?</h1>
+    </div> 
+    
+</body>
+</html>

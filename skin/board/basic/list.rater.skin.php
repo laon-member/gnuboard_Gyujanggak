@@ -107,7 +107,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             </td>
             <td class="td_download "  style="padding-left:<?php echo $list[$i]['reply'] ? (strlen($list[$i]['wr_reply'])*10) : '0'; ?>px">
                
-                <a href="../bbs/board.rater.php?bo_table=<?=$_GET['bo_table']; ?>&wr_idx=<?php echo $row44['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>">
+                <a href="<?= G5_BBS_URL ?>/board.rater.php?bo_table=<?=$_GET['bo_table']; ?>&wr_idx=<?php echo $row44['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>">
                     <?php
                         $sql5 = " select * from g5_write_business_title where idx= '{$row44['wr_title_idx']}'";
                         $result5 = sql_query($sql5);
@@ -120,7 +120,13 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             </td>
             <td class="td_datetime td_center">
                 <?php 
-                    $sql55 = " select COUNT(DISTINCT `idx`) as cnt from rater where value = '2' AND test_id = '{$_GET['bo_idx']}' ANd business_idx = '{$row11['business_idx']}'";
+                    if($_GET['bo_idx'] == 1){
+                        $sql55 = " select COUNT(DISTINCT `idx`) as cnt from g5_business_propos where bo_idx = '{$row44['wr_id']}'";
+                    } else if($_GET['bo_idx'] == 2){
+                        $sql55 = " select COUNT(DISTINCT `idx`) as cnt from g5_business_propos where report_val_1 = '2' AND bo_idx = '{$row44['wr_id']}' and report_val_1 = 2";
+                    } else if($_GET['bo_idx'] == 3){
+                        $sql55 = " select COUNT(DISTINCT `idx`) as cnt from g5_business_propos where report_val_2 = '2' AND bo_idx = '{$row44['wr_id']}' and report_val_2 = 2";
+                    }
                     $result55 = sql_query($sql55);
                     $row55 = sql_fetch_array($result55);
                     echo $row55['cnt'];

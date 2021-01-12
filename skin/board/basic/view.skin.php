@@ -97,7 +97,7 @@ $result1 = sql_query($sql1);
     $cnt = 0;
     if ($view['file']['count']) {
         for ($i=0; $i<count($view['file']); $i++) {
-            if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view'])
+            if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] )
                 $cnt++;
         }
     }
@@ -112,7 +112,7 @@ $result1 = sql_query($sql1);
                 $cnt = 0;
                 if ($view['file']['count']) {
                     for ($i=0; $i<count($view['file']); $i++) {
-                        if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view'])
+                        if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] )
                             $cnt++;
                     }
                 }
@@ -120,7 +120,7 @@ $result1 = sql_query($sql1);
                 if($cnt) {
                 // 가변 파일
                     for ($i=0; $i< $view['file']['count']; $i++) {
-                        if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view']) {
+                        if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] ) {
                 ?>
                         <li class="">
                             <i class="fa fa-download" aria-hidden="true"></i>
@@ -163,7 +163,7 @@ $result1 = sql_query($sql1);
     
 
     <section id="bus_btn" >
-        <a href="../bbs/application.php?bo_table=business&bo_idx=<?php echo $view['wr_title_idx']; ?>&wr_id=<?php echo $_GET['wr_id']; ?>" class="btn_next_prv btn_next_prv_link" title="신청하기">신청하기</a>
+        <a href="<?= G5_BBS_URL ?>/application.php?bo_table=business&bo_idx=<?php echo $view['wr_title_idx']; ?>&wr_id=<?php echo $_GET['wr_id']; ?>" class="btn_next_prv btn_next_prv_link" title="신청하기">신청하기</a>
     </section>
 
 

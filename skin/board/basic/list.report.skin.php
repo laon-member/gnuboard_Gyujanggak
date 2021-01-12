@@ -106,7 +106,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                  <?= $row33['title']; ?>
             </td>
             <td class="td_title" style="padding-left:<?php echo $list[$i]['reply'] ? (strlen($list[$i]['wr_reply'])*10) : '0'; ?>px">
-                <a href="../bbs/board.report.php?bo_table=<?=$_GET['bo_table']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&wr_bo_idx=<?php echo $row['idx']; ?>&wr_idx=<?php echo $row['bo_idx']; ?>">
+                <a href="<?= G5_BBS_URL ?>/board.report.php?bo_table=<?=$_GET['bo_table']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&wr_bo_idx=<?php echo $row['idx']; ?>&wr_idx=<?php echo $row['bo_idx']; ?>">
                     <?= $row44['wr_subject']; ?>
                 </a>
             </td>

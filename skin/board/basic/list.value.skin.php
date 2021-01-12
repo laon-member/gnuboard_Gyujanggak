@@ -39,11 +39,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     <div id="bo_btn_top">
         <h1 id="">지원결과 확인</h1>
 
-        <ul class="btn_bo_user">
-            <li>
-            	<button type="button" class="btn_bo_sch btn_b01 btn" title="게시판 검색"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">게시판 검색</span></button>
-            </li>
-        </ul>
     </div>
     <!-- } 게시판 페이지 정보 및 버튼 끝 -->
         	
@@ -54,6 +49,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         <?php
             $sql2 = " select * from g5_business_propos where mb_id = '{$member['mb_id']}'";
             $sql2 .= " {$sql_order} DESC limit {$from_record}, $page_rows ";
+
             $result2 = sql_query($sql2);
 
             for($i=0; $row=sql_fetch_array($result2); $i++) {
@@ -68,12 +64,14 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         <tbody id = "tbody" class="<?= $lt_class ?>" style="">
             <tr> 
                 <td class="" style="border:none; text-align:left; width: 70%">
-                <span >지원사업 제목 : </span>
+                <a href="<?= G5_BBS_URL ?>/board.value.php?bo_table=business&bo_idx=<?= $_GET['bo_idx']?>&us_idx=<?= $row['idx'] ?>">
+                    <span >지원사업 제목 : </span>
                     <?= $row44['wr_subject']; ?>
+                </a>
                 </td>
                 <td class="" style="border:none; text-align:left; width: 30%">
                     <span >지원일자 : </span>
-
+                
                     <?= $row['bf_datetime']; ?>
                 </td>
                 
@@ -83,12 +81,14 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                     <span >지원상태 : </span>
 
                     <?php 
-                        if($row['value'] == 2 || $row22['value'] == 3){
+                        if($row44['value'] == 3){
+                            echo '선발완료';
+                        } else if($row44['value'] == 2){
                             echo '심사완료';
-                        }else if($row['value'] == 1){
+                        }else if($row44['value'] == 1){
                             echo '심사중';
                         }else{
-                            echo '제출완료';
+                            echo '지원중';
                         }
                     ?>
                 </td>
@@ -96,9 +96,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                     <span >지원결과 : </span>
 
                     <?php 
-                        if($row['value'] == 3){
+                        if($row['value'] == 4){
                             echo '합격';
-                        }else if($row['value'] == 2){
+                        }else if($row['value'] == 3){
                             echo '불합격';
                         }else{
                             echo '심사중';

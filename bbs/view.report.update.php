@@ -20,10 +20,10 @@ include_once('./_common.php');
 
 // echo $bo_idx;
 
-if($_POST['bo_idx'] == 1){
-    $val = "report_val_1";
-} else if($_POST['bo_idx'] == 2){
-    $val = "report_val_2";
+if($_GET['bo_idx'] == 1){
+    $val = "report_val_1 =".$_POST['save']."";
+} else if($_GET['bo_idx'] == 2){
+    $val = "report_val_2".$_POST['save']."";
 }
 
 
@@ -38,7 +38,7 @@ if ($_POST['save'] == '1') {
         sql_query($sql);
 
         $sql = " update g5_business_propos
-                set {$val} = '1',
+                set $val
                 where idx = '{$_POST['wr_bo_idx']}'";
         sql_query($sql);
 
@@ -54,7 +54,7 @@ if ($_POST['save'] == '1') {
         sql_query($sql);
 
         $sql = " update g5_business_propos
-                set {$val} = '1',
+                set $val
                 where idx = '{$_POST['wr_bo_idx']}'";
         sql_query($sql);
     }
@@ -69,7 +69,7 @@ if ($_POST['save'] == '1') {
     sql_query($sql);
 
     $sql = " update g5_business_propos
-        set {$val} = '2'
+        set $val
         where idx = '{$_POST['wr_bo_idx']}'";
     sql_query($sql);
 

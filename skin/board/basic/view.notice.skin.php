@@ -61,7 +61,7 @@ $result1 = sql_query($sql1);
                         $cnt = 0;
                         if ($view['file']['count']) {
                             for ($i=0; $i<count($view['file']); $i++) {
-                                if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view'])
+                                if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] )
                                     $cnt++;
                             }
                         }
@@ -69,7 +69,7 @@ $result1 = sql_query($sql1);
                         if($cnt) {
                         // 가변 파일
                             for ($i=0; $i< $view['file']['count']; $i++) {
-                                if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view']) {
+                                if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] ) {
                         ?>
                                 <li class="">
                                     <i class="fa fa-download" aria-hidden="true"></i>
@@ -137,7 +137,7 @@ $result1 = sql_query($sql1);
         <ul class="btn_container">
             <?php if ($prev_href) { ?>
                 <li class=" btn_next_prv" >
-                    <a href="../bbs/board.notice.php?bo_idx=<?=$_GET['bo_idx']; ?>&bo_table=notice&wr_id=<?= $prev['wr_id']; ?>&bo_title=<?= $_GET['bo_title']; ?>">
+                    <a href="<?= G5_BBS_URL ?>/board.notice.php?bo_idx=<?=$_GET['bo_idx']; ?>&bo_table=notice&wr_id=<?= $prev['wr_id']; ?>&bo_title=<?= $_GET['bo_title']; ?>">
                         <span class="nb_tit">
                             <i class="fa fa-chevron-up" aria-hidden="true" style="transform: rotate(-90deg);"></i>
                         </span >
@@ -146,7 +146,7 @@ $result1 = sql_query($sql1);
             <?php } ?>
             <?php if ($next_href) { ?>
                 <li class="btn_next btn_next_prv">
-                <a href="../bbs/board.notice.php?bo_idx=<?=$_GET['bo_idx']; ?>&bo_table=notice&wr_id=<?= $next['wr_id']; ?>&bo_title=<?= $_GET['bo_title']; ?>">다음글
+                <a href="<?= G5_BBS_URL ?>/board.notice.php?bo_idx=<?=$_GET['bo_idx']; ?>&bo_table=notice&wr_id=<?= $next['wr_id']; ?>&bo_title=<?= $_GET['bo_title']; ?>">다음글
                         <span class="nb_tit"> 
                             <i class="fa fa-chevron-down" aria-hidden="true" style="transform: rotate(-90deg);"></i>
                         </span>

@@ -97,7 +97,7 @@ $result1 = sql_query($sql1);
     $cnt = 0;
     if ($view['file']['count']) {
         for ($i=0; $i<count($view['file']); $i++) {
-            if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view'])
+            if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] )
                 $cnt++;
         }
     }
@@ -112,7 +112,7 @@ $result1 = sql_query($sql1);
             <?php
             // 가변 파일
             for ($i=0; $i<count($view['file']); $i++) {
-                if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view']) {
+                if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] ) {
             ?>
                 <li class="">
                     <i class="fa fa-download" aria-hidden="true"></i>
@@ -139,7 +139,7 @@ $result1 = sql_query($sql1);
                         }
                     
                     ?>
-                    <a href="../bbs/board.app.php?bo_table=business&wr_id=<?php echo $prev_href; ?>&u_id=1">
+                    <a href="<?= G5_BBS_URL ?>/board.app.php?bo_table=business&wr_id=<?php echo $prev_href; ?>&u_id=1">
                         <span class="nb_tit">
                             <i class="fa fa-chevron-up" aria-hidden="true" style="transform: rotate(-90deg);"></i>
                         </span >
@@ -154,7 +154,7 @@ $result1 = sql_query($sql1);
                         }
                     
                     ?>
-                    <a href="../bbs/board.app.php?bo_table=business&wr_id=<?php echo $next_href; ?>&u_id=1">다음글
+                    <a href="<?= G5_BBS_URL ?>/board.app.php?bo_table=business&wr_id=<?php echo $next_href; ?>&u_id=1">다음글
                         <span class="nb_tit"> 
                             <i class="fa fa-chevron-down" aria-hidden="true" style="transform: rotate(-90deg);"></i>
                         </span>

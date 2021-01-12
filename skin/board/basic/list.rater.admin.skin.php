@@ -108,6 +108,14 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         	if ($i%2==0) $lt_class = "even";
             else $lt_class = "";
 
+            if($_GET['bo_idx'] == 1){
+                $admin_val = $list[$i]['value'];
+            } else if($_GET['bo_idx'] == 2){
+                $admin_val = $list[$i]['wr_8'];
+            } else if($_GET['bo_idx'] == 3){
+                $admin_val = $list[$i]['wr_9'];
+            }
+
 		?>
         <tr class="<?php if ($list[$i]['is_notice']) echo "bo_notice"; ?> <?php echo $lt_class ?> tr_hover">
             <td class="td_idx td_center td_info" style="display:none">
@@ -124,7 +132,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             </td>
             <td class="td_download "  style="padding-left:<?php echo $list[$i]['reply'] ? (strlen($list[$i]['wr_reply'])*10) : '0'; ?>px; ">
                
-                <a href="../bbs/board.rater.admin.php?bo_table=<?=$_GET['bo_table']; ?>&wr_idx=<?php echo $list[$i]['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&u_id=1">
+                <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=<?=$_GET['bo_table']; ?>&wr_idx=<?php echo $list[$i]['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&u_id=1">
                 <?php
                     $sql66 = " select * from g5_write_business_title where idx = '{$list[$i]['wr_title_idx']}'";
                     $result66 = sql_query($sql66);
@@ -137,19 +145,19 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             </td>
             
             <td class="td_datetime td_center">
-                <a href="../bbs/board.rater.admin.php?bo_table=<?=$_GET['bo_table']; ?>&wr_idx=<?php echo $list[$i]['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&us_idx=<?= $list[$i]['wr_id']; ?>&u_id=1&rater=1" class="value_btn" style="display:inline-block">
+                <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=<?=$_GET['bo_table']; ?>&wr_idx=<?php echo $list[$i]['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&us_idx=<?= $list[$i]['wr_id']; ?>&u_id=1&rater=1" class="value_btn" style="display:inline-block">
                   배정
                 </a>
-                <a href="<?= $action_url ?>?value=2&idx=<?= $list[$i]['wr_id'] ?>" class="value_btn"  style="display:inline-block">
+                <a href="<?= $action_url ?>?value=2&idx=<?= $list[$i]['wr_id'] ?>&bo_idx=<?= $_GET['bo_idx']; ?>" class="value_btn" onclick="return <?= $admin_val > 0 ?'false' : 'true'; ?>" style="display:inline-block; background:<?= $admin_val > 0 ? "#ccc" :"#3a8afd"; ?>" <?= $admin_val > 0? "disabled" :""; ?>>
                     의뢰
                 </a>
             </td>
             <td class="td_datetime td_center">
                 <!-- <button type="button" class="value_btn btn_bo_val" style="display:inline-block;vertical-align: top;">선발</button> -->
-                <a href="../bbs/board.rater.admin.php?bo_table=<?=$_GET['bo_table']; ?>&border_idx=<?php echo $list[$i]['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&bo_idx=<?= $_GET['bo_idx']?>&u_id=1" class="value_btn" style="display:inline-block">
+                <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=<?=$_GET['bo_table']; ?>&border_idx=<?php echo $list[$i]['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&bo_idx=<?= $_GET['bo_idx']?>&u_id=1" class="value_btn" style="display:inline-block">
                    선발
                 </a>
-                <a href="<?= $action_url_value ?>?bo_idx=<?= $list[$i]['wr_id'] ?>" class="value_btn" style="display:inline-block">
+                <a href="<?= $action_url_value ?>?us_idx=<?= $list[$i]['wr_id'] ?>&bo_idx=<?= $_GET['bo_idx']?>" class="value_btn" style="display:inline-block; background:<?= $admin_val > 2 ? "#ccc" :"#3a8afd"; ?>" <?= $admin_val > 2? "disabled" :""; ?>>
                    발표
                 </a>
             </td>

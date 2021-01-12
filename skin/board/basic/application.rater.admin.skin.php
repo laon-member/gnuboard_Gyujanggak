@@ -121,16 +121,58 @@ $row22=sql_fetch_array($result1);
                 <textarea name="" id=""class="input_text input_text_hight" readonly><?= $row66['contents']; ?> </textarea> 
             <?php } ?>
             
-            <label for="" class="label_text">자료첨부</label>
-            <div class="input_file_cont">
-                <input type="text" name="form_file0" id="form_file0"  class="input_text_100 input_text input_text_end form_file" readonly>
-                <input type="text" name="form_file1" id="form_file1"  class="input_text_100 input_text input_text_end form_file" readonly>
-                <input type="text" name="form_file2" id="form_file2"  class="input_text_100 input_text input_text_end form_file" readonly>
-                <input type="text" name="form_file3" id="form_file3"  class="input_text_100 input_text input_text_end form_file" readonly>
-                <?php if(false){ ?>
-                    
-                <?php } ?>
-            </div>
+            <!-- 첨부파일 시작 { -->
+                <section id="bo_v_files" style="text-align:left;">
+                <label for="" class="label_text">자료첨부</label>
+
+                <ul class="download_file download_file_view" style="width: 80%;"> 
+                    <?php
+                        $sql = " select * from g5_board_file where bo_table = 'g5_business_propos' and wr_id = '{$_GET['us_idx']}'";
+                        $result = sql_query($sql);
+                        
+                        // 가변 파일
+                            for ($i=0; $row_list = sql_fetch_array($result); $i++) {
+                                if (isset($row_list['bf_source'][$i])) {
+                        ?>
+                                <li class="" style="text-align:left; margin: 20px 0 10px 10px;">
+                                    <a href="<?= G5_BBS_URL ?>/download.php?bo_table=g5_business_propos&wr_id=<?= $row_list['wr_id'] ?>&no=<?= $row_list['bf_no'] ?>" class="" ><i class="fa fa-download" aria-hidden="true" style="padding:0 10px;"></i><?php echo $row_list['bf_source'] ?></a>
+                                </li>
+                        <?php
+                            }
+                        }
+                    ?>
+
+                    <?php
+                        if($_GET['bo_idx'] == 2){
+                            $sql = " select * from report where business_idx = '{$row['idx']}' and report_idx = '1' and report = '2'";
+                            $result = sql_query($sql);
+                            $row77 = sql_fetch_array($result);
+
+                            $sql2 = " select * from g5_board_file where bo_table = 'report' and wr_id = '{$_GET['us_idx']}'";
+                            $result2 = sql_query($sql2);    
+                        } else if($_GET['bo_idx'] == 3){
+                            $sql = " select * from report where business_idx = '{$row['idx']}' and report_idx = '2' and report = '2'";
+                            $result = sql_query($sql);
+                            $row77 = sql_fetch_array($result);
+
+                            $sql2 = " select * from g5_board_file where bo_table = 'report' and wr_id = '{$row77['idx']}'";
+                            $result2 = sql_query($sql2);    
+                        }
+
+                        // 가변 파일
+                            for ($i=0; $row_list2 = sql_fetch_array($result2); $i++) {
+                                if (isset($row_list2['bf_source'][$i])) {
+                        ?>
+                                <li class="" style="text-align:left; margin: 20px 0 10px 10px;">
+                                    <a href="<?= G5_BBS_URL ?>/download.php?bo_table=g5_business_propos&wr_id=<?= $row_list['wr_id'] ?>&no=<?= $row_list2['bf_no'] ?>" class="" ><i class="fa fa-download" aria-hidden="true" style="padding:0 10px;"></i><?= $row_list2['bf_source'] ?></a>
+                                </li>
+                        <?php
+                            }
+                        }
+                    ?>
+                </ul>
+                
+            </section>
             
         </div>
 
@@ -212,41 +254,7 @@ jQuery(function($){
 
 
 
-<script>
-    
-    $(function(){
 
-            $('#file-del0').click(function(){
-                $('#upload00').val("");
-                $('#file_label_view0').val("");
-                $('#form_file0').removeClass('form_file_view');
-                $('#form_file0').addClass('form_file');
-                $('#form_file0').val("");
-            })
-            $('#file-del1').click(function(){
-                $('#upload01').val("");
-                $('#file_label_view1').val("");
-                $('#form_file1').removeClass('form_file_view');
-                $('#form_file1').addClass('form_file');
-                $('#form_file1').val("");
-            })
-            $('#file-del2').click(function(){
-                $('#upload02').val("");
-                $('#file_label_view2').val("");
-                $('#form_file2').removeClass('form_file_view');
-                $('#form_file2').addClass('form_file');
-                $('#form_file2').val("");
-            })
-            $('#file-del3').click(function(){
-                $('#upload03').val("");
-                $('#file_label_view3').val("");
-                $('#form_file3').removeClass("form_file_view");
-                $('#form_file3').addClass('form_file_view');
-                $('#form_file').val("");
-            })
-
-    })
-</script>
 
 
 <!-- } 게시물 작성/수정 끝 -->

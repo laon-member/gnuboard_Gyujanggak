@@ -121,21 +121,33 @@ for($j=1; $row123=sql_fetch_array($result1); $j++) {
                     <i class="fa fa-download" aria-hidden="true"></i>
                     <?php } ?>
             </td>
-            <td class="td_datetime td_center"><?php echo $list[$i]['datetime2'] ?></td>
+            <td class="td_datetime td_center"><?php echo $list[$i]['datetime'] ?></td>
             <td class="td_hit td_center"><?php echo $list[$i]['wr_hit'] ?></td>
             <td class="td_end td_center">
                 <?php 
                     // echo $list[$i]['name'];
                     $timenow = date("Y-m-d H:i:s"); 
                     $timetarget = $list[$i]['wr_date_end'];
+                    $today = date("Ymd");
+                    
+                    $nDate = date("Y-m-d",time()); // 오늘 날짜를 출력하겠지요?
+                    $valDate = $list[$i]['wr_date_end']; // 폼에서 POST로 넘어온 value 값('yyyy-mm-dd' 형식)
+                    $leftDate = intval((strtotime($valDate) - strtotime($nDate)) / 86400); // 나머지 날짜값이 나옵니다.
+                    
 
-                    $str_now = strtotime($timenow);
-                    $str_target = strtotime($timetarget);
+                    if($list[$i]['wr_date_end'] < $nDate) {
+                        echo "접수마감";
+                        echo "<br>";
+                        echo "D-".$leftDate;
 
-                    if($str_now > $str_target) {
-                        echo "마감";
-                    } else {
+                    } else if($list[$i]['wr_date_end'] > $nDate && $nDate > $list[$i]['wr_date_start']) {
                         echo "접수중";
+                        echo "<br>";
+                        echo "D-".$leftDate;
+                    } else if($list[$i]['wr_date_end'] > $nDate && $nDate  < $list[$i]['wr_date_start']) {
+                        echo "접수예정";
+                        echo "<br>";
+                        echo "D-".$leftDate;
                     }
 
 

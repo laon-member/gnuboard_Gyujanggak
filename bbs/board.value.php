@@ -10,7 +10,7 @@ if (!$board['bo_table']) {
  }
 
  if (!$is_member)
-        alert('로그인 후 이용하여 주십시오.', G5_URL);
+    alert('로그인 후 이용하여 주십시오.', G5_BBS_URL."/login.php");
 
 check_device($board['bo_device']);
 
@@ -240,8 +240,11 @@ $user = 3;
 include_once(G5_BBS_PATH.'/board_head.php');
 $wr_bo_idx = $_GET['wr_bo_idx'];
 
-include_once (G5_BBS_PATH.'/list.value.php');
-
+if($_GET['us_idx'] != ""){
+    include_once (G5_BBS_PATH.'/application.value.php');
+} else{
+    include_once (G5_BBS_PATH.'/list.value.php');
+}
 // 전체목록보이기 사용이 "예" 또는 wr_id 값이 없다면 목록을 보임
 //if ($board['bo_use_list_view'] || empty($wr_id))
 if ($member['mb_level'] >= $board['bo_list_level'] && $board['bo_use_list_view'] || empty($wr_id))

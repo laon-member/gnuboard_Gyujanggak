@@ -35,7 +35,6 @@ $row22=sql_fetch_array($result1);
     <input type="hidden" name="sst" value="<?php echo $sst ?>">
     <input type="hidden" name="sod" value="<?php echo $sod ?>">
     <input type="hidden" name="page" value="<?php echo $page ?>">
-    <input type="hidden" name="bo_idx" value="<?php echo $_GET['bo_idx'] ?>">
     <input type="hidden" name="business_idx" id= "business_idx" value="<?= $_GET['wr_idx'] ?>">
     <input type="hidden" name="test_id"  value="<?= $_GET['bo_idx']?>">
     <input type="hidden" name="value_id"  value="2">
@@ -45,10 +44,13 @@ $row22=sql_fetch_array($result1);
         $sql66 = " select * from rater where user_id = '{$member['mb_id']}' and business_idx = '{$_GET['wr_idx']}' and test_id = '{$_GET['bo_idx']}'";
         $result66 = sql_query($sql66);
         $row66 = sql_fetch_array($result66);
+
+        
     ?>
     
-    <input type="hidden" name="us_idx" id="form_us_idx" value="<?= $_GET['us_idx']; ?>">
+    <input type="hidden" name="us_idx" id="form_us_idx" value="<?= $_GET['bo_idx']; ?>">
     <input type="hidden" name="rater_idx" id="form_rater_idx" value="<?= $row66['idx']; ?>">
+    <input type="hidden" name="bo_idx" id="form_rater_idx" value="<?= $_GET['us_idx']; ?>">
     
     
     <div class =" ">
@@ -56,7 +58,7 @@ $row22=sql_fetch_array($result1);
             <h1>
                 <?php echo $row22['wr_subject']; ?>
             </h1>
-            <p class="ko_title"><?= $row['ko_title']; ?> </p>
+            <p class="ko_title"><?= $row['ko_title']; ?></p>
         </div>
 
         <div class="write_div">
@@ -113,6 +115,7 @@ $row22=sql_fetch_array($result1);
             <input type="text" name="two_year_view" id="two_year_view"  class="input_text input_text_50 input_text_end" placeholder="2차년 연구비" readonly value="<?= $row['two_year']; ?>">
             
             <?php
+            $file_idx = '';
                 if($_GET['bo_idx'] == 1){
                     $sql = " select * from rater where user_id = '{$member['mb_id']}' and business_idx = '{$_GET['wr_idx']}' and test_id = '{$_GET['bo_idx']}'";
                     $result = sql_query($sql);
@@ -120,6 +123,8 @@ $row22=sql_fetch_array($result1);
                     if($row77 == ""){
                         alert("권한이 없습니다");
                     }
+
+                    $file_idx = $row['idx'];
 
                 } else if($_GET['bo_idx'] == 2){
                     $sql = " select * from rater where user_id = '{$member['mb_id']}' and business_idx = '{$_GET['wr_idx']}' and test_id = '{$_GET['bo_idx']}'";
@@ -133,7 +138,7 @@ $row22=sql_fetch_array($result1);
                     $result = sql_query($sql);
                     $row_list = sql_fetch_array($result);
 
-                    
+                    $file_idx = $row_list['idx'];
             ?> 
                 <label for="" id="bo_side" class="label_text" style="text-align:left;vertical-align: top;" >상세설명</label>
                 <textarea name="" id=""class="input_text input_text_hight" readonly><?= $row_list['contents']; ?> </textarea>
@@ -149,6 +154,7 @@ $row22=sql_fetch_array($result1);
                     $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' AND";
                     $result = sql_query($sql);
                     $row_list = sql_fetch_array($result);
+                    $file_idx = $row_list['idx'];
             ?>
                 <label for="" id="bo_side" class="label_text"  style="text-align: left; vertical-align: top;">상세설명</label>
                 <textarea name="" id=""class="input_text input_text_hight" readonly><?= $row_list['contents']; ?> </textarea> 
@@ -156,23 +162,80 @@ $row22=sql_fetch_array($result1);
                 }
             ?>
             
-            <label for="" class="label_text">자료첨부</label>
-            <div class="input_file_cont">
-                <input type="text" name="form_file0" id="form_file0"  class="input_text_100 input_text input_text_end form_file" readonly>
-                <input type="text" name="form_file1" id="form_file1"  class="input_text_100 input_text input_text_end form_file" readonly>
-                <input type="text" name="form_file2" id="form_file2"  class="input_text_100 input_text input_text_end form_file" readonly>
-                <input type="text" name="form_file3" id="form_file3"  class="input_text_100 input_text input_text_end form_file" readonly>
-                <?php if(false){ ?>
-                    
-                <?php } ?>
-            </div>
+
+            <!-- 첨부파일 시작 { -->
+            <section id="bo_v_files" style="text-align:left;">
+                <label for="" class="label_text">자료첨부</label>
+
+                <ul class="download_file download_file_view" style="width: 80%;"> 
+                    <?php
+                        $sql = " select * from g5_board_file where bo_table = 'g5_business_propos' and wr_id = '{$_GET['us_idx']}'";
+                        $result = sql_query($sql);
+                        
+                        // 가변 파일
+                            for ($i=0; $row_list = sql_fetch_array($result); $i++) {
+                                if (isset($row_list['bf_source'][$i])) {
+                        ?>
+                                <li class="" style="text-align:left; margin: 20px 0 10px 10px;">
+                                    <a href="<?= G5_BBS_URL ?>/download.php?bo_table=g5_business_propos&wr_id=<?= $row_list['wr_id'] ?>&no=<?= $row_list['bf_no'] ?>" class="" ><i class="fa fa-download" aria-hidden="true" style="padding:0 10px;"></i><?php echo $row_list['bf_source'] ?></a>
+                                </li>
+                        <?php
+                            }
+                        }
+                    ?>
+
+                    <?php
+                        if($_GET['bo_idx'] == 2){
+                            $sql = " select * from report where business_idx = '{$row['idx']}' and report_idx = '1' and report = '2'";
+                            $result = sql_query($sql);
+                            $row77 = sql_fetch_array($result);
+
+                            $sql2 = " select * from g5_board_file where bo_table = 'report' and wr_id = '{$row77['us_idx']}'";
+                            $result2 = sql_query($sql2);    
+                        } else if($_GET['bo_idx'] == 3){
+                            $sql = " select * from report where business_idx = '{$row['idx']}' and report_idx = '2' and report = '2'";
+                            $result = sql_query($sql);
+                            $row77 = sql_fetch_array($result);
+
+                            $sql2 = " select * from g5_board_file where bo_table = 'report' and wr_id = '{$row77['idx']}'";
+                            $result2 = sql_query($sql2);    
+                        }
+
+                        // 가변 파일
+                            for ($i=0; $row_list2 = sql_fetch_array($result2); $i++) {
+                                if (isset($row_list2['bf_source'][$i])) {
+                        ?>
+                                <li class="" style="text-align:left; margin: 20px 0 10px 10px;">
+                                    <a href="<?= G5_BBS_URL ?>/download.php?bo_table=g5_business_propos&wr_id=<?= $row_list['wr_id'] ?>&no=<?= $row_list2['bf_no'] ?>" class="" ><i class="fa fa-download" aria-hidden="true" style="padding:0 10px;"></i><?= $row_list2['bf_source'] ?></a>
+                                </li>
+                        <?php
+                            }
+                        }
+                    ?>
+                </ul>
+                
+            </section>
             
         </div>
+        <?php
+
+            $sql = " select * from g5_write_business where wr_id = '{$_GET['wr_idx']}'";
+            $result = sql_query($sql);
+            $row = sql_fetch_array($result);
+
+            $sql2 = "select * from rater where business_idx = '{$_GET['wr_idx']}' and user_id ='{$member['mb_id']}' and test_id = '{$_GET['bo_idx']}'";
+            $result2 = sql_query($sql2);
+            $row2 = sql_fetch_array($result2);
+
+            $sql3 = " select * from rater_value where rater_idx = '{$row2['idx']}' and report_idx = '{$_GET['bo_idx']}'";
+            $result3 = sql_query($sql3);
+            $row3 = sql_fetch_array($result3);        
+         ?>
 
         <div class="btn_confirm write_div btn-cont">
-            <button type="button" id="btn_submit1" accesskey="s" class="btn_cancel btn btn_step2">이전</button>
-            <button type="button" id="btn_submit2" accesskey="s" class="btn_submit btn btn_step4 btn_bo_val">평가</button>
-            <button type="submit" id="btn_submit3" accesskey="s" class="btn_submit btn btn_step4">제출</button>
+        <a href="<?= G5_BBS_URL ?>/board.rater.php?bo_table=qa&bo_idx=<?= $_GET['bo_idx'] ?>&wr_idx=<?= $_GET['wr_idx'] ?>" class="btn_cancel btn btn_step2">이전</a>
+            <button type="button" id="btn_submit2" accesskey="s" class="btn_submit btn btn_step4 btn_bo_val"><?= $row3['value']==2? "확인" :"평가"; ?></button>
+            <button type="submit" id="btn_submit3" accesskey="s" class="btn_submit btn btn_step4" <?= $row3['value']==2? "disabled" :""; ?> style="background:<?= $row3['value']==2? "#ccc" :"#3a8afd"; ?>" ><?= $row3['value']==2? "제출완료" :"제출"; ?></button>
         </div>
     </div>
     </form>
@@ -183,6 +246,14 @@ jQuery(function($){
     $('.bo_sch_bg, .bo_sch_cls, .btn_esc').click(function(){
         $('.bo_sch_wrap').hide();
     });
+
+    $('.btn_bo_val').click(function(){
+                var td_title = $('.ko_title').text();
+                $('#sql_ko_title_view').text(td_title);
+                $('.bo_sch_wrap').toggle();
+
+            }) 
+
     var test_user = 0;
     var test_title = 0;
     var test_plan = 0;
@@ -213,7 +284,14 @@ jQuery(function($){
             $result = sql_query($sql);
             $row = sql_fetch_array($result);
 
-            
+            $sql2 = "select * from rater where business_idx = '{$_GET['wr_idx']}' and user_id ='{$member['mb_id']}' and test_id = '{$_GET['bo_idx']}'";
+            $result2 = sql_query($sql2);
+            $row2 = sql_fetch_array($result2);
+
+            $sql3 = " select * from rater_value where rater_idx = '{$row2['idx']}' and report_idx = '{$_GET['bo_idx']}'";
+            $result3 = sql_query($sql3);
+            $row3 = sql_fetch_array($result3);
+
         ?>
         <p id="sql_title_view"><?= $row['wr_subject'] ?></p>
         <h3 id="sql_ko_title_view"></h3>
@@ -221,25 +299,26 @@ jQuery(function($){
         <input type="hidden" name="business_idx" id= "business_idx" value="<?= $_GET['wr_idx'] ?>">
         <input type="hidden" name="test_id"  value="<?= $_GET['bo_idx']?>">
         <input type="hidden" name="value_id"  value="1">
-        <input type="hidden" name="us_idx" id="us_idx"  value="">
         
         <label for="" class="label_text" style="display:block;">항목평가</label>
         <label for="test_user" class="label_text" style="vertical-align: inherit;">연구진</label>
-        <input type="number" name="test_user" id="test_user"  class="input_text input_text_40 input_text_end" placeholder="접수번호" value="" min="0" max="80"> 
+        <input type="number" name="test_user" id="test_user"  class="input_text input_text_40 input_text_end" placeholder="접수번호" value="<?= $row3['test_user'] ?>" min="0" max="80"> 
         <span>/80</span>
         <label for="test_title" class="label_text" style="vertical-align: inherit;">주제</label>
-        <input type="number" name="test_title" id="test_title"  class="input_text input_text_40 input_text_end" placeholder="접수번호" value="" min="0" max="80" > 
+        <input type="number" name="test_title" id="test_title"  class="input_text input_text_40 input_text_end" placeholder="접수번호" value="<?= $row3['test_title'] ?>" min="0" max="80" > 
         <span>/80</span>
         <label for="test_plan" class="label_text" style="vertical-align: inherit;">계획</label>
-        <input type="number" name="test_plan" id="test_plan"  class="input_text input_text_40 input_text_end" placeholder="접수번호" value="" min="0" max="80" > 
+        <input type="number" name="test_plan" id="test_plan"  class="input_text input_text_40 input_text_end" placeholder="접수번호" value="<?= $row3['test_plan'] ?>" min="0" max="80" > 
         <span>/80</span>
         <label for="test_sum" class="label_text" style="vertical-align: inherit;">종합평가</label>
-        <input type="number" name="test_sum" id="test_sum"  class="input_text input_text_40 input_text_end" placeholder="접수번호" readonly> 
+        <input type="number" name="test_sum" id="test_sum"  class="input_text input_text_40 input_text_end" placeholder="접수번호" value="<?= $row3['test_sum'] ?>" readonly > 
         <span>/80</span>
         <label for="test_opinion" class="label_text" style="vertical-align: top;">상세설명</label>
-        <textarea name="test_opinion" id="test_opinion" class="input_text input_text_hight" <?= $row44['report'] ==2? "disabled": ""; ?> cols="20" rows="10"></textarea>
+        <textarea name="test_opinion" id="test_opinion" class="input_text input_text_hight" <?= $row44['report'] ==2? "disabled": ""; ?> cols="20" rows="10"><?= $row3['test_opinion'] ?></textarea>
         <button type="button" class="btn_esc">취소</button>
+        <?php if($row3['value'] != 2){ ?>
         <button type="submit" class="btn_submit" id="value_btn_submit">저장</button>
+        <?php } ?>
         </form>
         
     </fieldset>
@@ -250,32 +329,7 @@ jQuery(function($){
 </div>
 <script>
         $(function(){
-            $('.btn_bo_val').click(function(){
-                var td_title = $('.ko_title').text();
-                $('#sql_ko_title_view').text(td_title);
-
-                var us_idx = $('#form_us_idx').val();
-                var rater_idx = $('#form_rater_idx').val();
-                
-
-                $.ajax({
-                    url: "../bbs/view.report.sql.php",
-                    method: "POST",
-                    data: {
-                        us_idx: us_idx,
-                        rater_idx : rater_idx
-                    },
-                    dataType: "text",
-                    success : function(e){
-                        $('.bo_sch').append(e);
-                    },error:function(request,status,error){
-                        alert('error'); // 실패 시 처리
-                    },
-
-                });
-                $('.bo_sch_wrap').toggle();
-
-            })     
+               
         })
 </script>
             <!-- } 게시판 검색 끝 --> 

@@ -10,8 +10,8 @@ $no = (int)$no;
 
 // 쿠키에 저장된 ID값과 넘어온 ID값을 비교하여 같지 않을 경우 오류 발생
 // 다른곳에서 링크 거는것을 방지하기 위한 코드
-if (!get_session('ss_view_'.$bo_table.'_'.$wr_id))
-    alert('잘못된 접근입니다.');
+// if (!get_session('ss_view_'.$bo_table.'_'.$wr_id))
+//     alert('잘못된 접근입니다.');
 
 
 $sql = " select * from {$g5['board_file_table']} where bo_table = '$bo_table' and wr_id = '$wr_id' and bf_no = '$no' ";
@@ -105,26 +105,67 @@ $original = rawurlencode($file['bf_source']);
 
 run_event('download_file_header', $file, $file_exist_check);
 
-if(preg_match("/msie/i", $_SERVER['HTTP_USER_AGENT']) && preg_match("/5\.5/", $_SERVER['HTTP_USER_AGENT'])) {
-    header("content-type: doesn/matter");
-    header("content-length: ".filesize($filepath));
-    header("content-disposition: attachment; filename=\"$original\"");
-    header("content-transfer-encoding: binary");
-} else if (preg_match("/Firefox/i", $_SERVER['HTTP_USER_AGENT'])){
-    header("content-type: file/unknown");
-    header("content-length: ".filesize($filepath));
-    //header("content-disposition: attachment; filename=\"".basename($file['bf_source'])."\"");
-    header("content-disposition: attachment; filename=\"".$original."\"");
-    header("content-description: php generated data");
-} else {
-    header("content-type: file/unknown");
-    header("content-length: ".filesize($filepath));
-    header("content-disposition: attachment; filename=\"$original\"");
-    header("content-description: php generated data");
+// if(preg_match("/msie/i", $_SERVER['HTTP_USER_AGENT']) && preg_match("/5\.5/", $_SERVER['HTTP_USER_AGENT'])) {
+//     header("content-type: doesn/matter");
+//     header("content-length: ".filesize($filepath));
+//     header("content-disposition: attachment; filename=\"$original\"");
+//     header("content-transfer-encoding: binary");
+// } else if (preg_match("/Firefox/i", $_SERVER['HTTP_USER_AGENT'])){
+//     header("content-type: file/unknown");
+//     header("content-length: ".filesize($filepath));
+//     //header("content-disposition: attachment; filename=\"".basename($file['bf_source'])."\"");
+//     header("content-disposition: attachment; filename=\"".$original."\"");
+//     header("content-description: php generated data");
+// } else {
+//     header("content-type: file/unknown");
+//     header("content-length: ".filesize($filepath));
+//     header("content-disposition: attachment; filename=\"$original\"");
+//     header("content-description: php generated data");
+// }
+// header("pragma: no-cache");
+// header("expires: 0");
+// flush();
+
+// Must be fresh start
+if( headers_sent() )
+die('Headers Already Sent');
+
+// Required for some browsers
+if(ini_get('zlib.output_compression'))
+ini_set('zlib.output_compression', 'Off');
+
+// Parse Info / Get Extension
+$fsize = filesize($filepath);
+$path_parts = pathinfo($filepath);
+$ext = strtolower($path_parts["extension"]);
+
+// Determine Content Type
+switch ($ext)
+{
+  case "pdf": $ctype="application/pdf"; break;
+  case "exe": $ctype="application/octet-stream"; break;
+  case "zip": $ctype="application/zip"; break;
+  case "doc": $ctype="application/msword"; break;
+  case "xls": $ctype="application/vnd.ms-excel"; break;
+  case "ppt": $ctype="application/vnd.ms-powerpoint"; break;
+  case "gif": $ctype="image/gif"; break;
+  case "png": $ctype="image/png"; break;
+  case "jpeg":
+  case "jpg": $ctype="image/jpg"; break;
+  default: $ctype="application/force-download";
 }
-header("pragma: no-cache");
-header("expires: 0");
+
+header("Pragma: public"); // required
+header("Expires: 0");
+header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+header("Cache-Control: private",false); // required for certain browsers
+header("Content-Type: $ctype");
+header("Content-Disposition: attachment; filename=\"".$original."\";" );
+header("Content-Transfer-Encoding: binary");
+header("Content-Length: ".$fsize);
+ob_clean();
 flush();
+
 
 $fp = fopen($filepath, 'rb');
 

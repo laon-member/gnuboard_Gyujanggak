@@ -229,7 +229,7 @@ $result = sql_query($sql);
 
         $(document).off().on('click','.file-label',function(){
             $('#upload0'+file_number).change(function(){
-                alert(file_number)
+               
                 var fileValue = $(this).val().split("\\");
                 var fileName = fileValue[fileValue.length-1]; // 파일명
                 

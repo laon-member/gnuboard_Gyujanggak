@@ -6,19 +6,16 @@ if (G5_IS_MOBILE) {
     include_once(G5_THEME_MOBILE_PATH.'/index.php');
     return;
 }
-unset($_SESSION['FORM']);
-unset($_SESSION['mb_no']);
-unset($_SESSION['id']);
+
 include_once(G5_THEME_PATH.'/head1.php');
 ?>
 
 
 <div class="login_info">
-    <a href="../bbs/board.php?bo_table=business&bo_idx=1" class="login_info_user">지원자</a>
-    <a href="../bbs/board.rater.php?bo_table=qa&bo_idx=1" class="login_info_user">심사자</a>
-    <a href="../bbs/board.app.php?bo_table=business&bo_idx=1&u_id=1" class="login_info_user">관리자</a>
+    <a href="<?= G5_BBS_URL ?>/board.php?bo_table=business&bo_idx=1" class="login_info_user">지원자</a>
+    <a href="<?= G5_BBS_URL ?>/board.rater.php?bo_table=qa&bo_idx=1" class="login_info_user">심사자</a>
+    <a href="<?= G5_BBS_URL ?>/board.app.php?bo_table=business&bo_idx=1&u_id=1" class="login_info_user">관리자</a>
 </div>
-
 
 <?php
 

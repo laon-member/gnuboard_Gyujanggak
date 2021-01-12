@@ -111,7 +111,7 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
                 <a href="<?php echo $list[$i]['ca_name_href'] ?>" class="bo_cate_link"><?php echo $list[$i]['ca_name'] ?></a>
                 <?php } ?>
                 <div class="bo_tit">
-                    <a href="../bbs/board_admin.php?bo_table=business&bo_idx=<?= $_GET['bo_idx']?>&wr_idx=<?= $list[$i]['wr_id'] ?>&u_id=1">
+                    <a href="<?= G5_BBS_URL ?>/board_admin.php?bo_table=business&bo_idx=<?= $_GET['bo_idx']?>&wr_idx=<?= $list[$i]['wr_id'] ?>&u_id=1">
                         <?php echo $list[$i]['icon_reply'] ?>
                         <?php
                             if (isset($list[$i]['icon_secret'])) echo rtrim($list[$i]['icon_secret']);

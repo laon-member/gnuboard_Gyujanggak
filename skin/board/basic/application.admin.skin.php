@@ -136,7 +136,7 @@ $row22=sql_fetch_array($result1);
         </div>
 
         <div class="btn_confirm write_div btn-cont">
-        <a href="../bbs/board_admin.php?bo_table=business&bo_idx=1&u_id=1&page=1" class="value_btn " style="text-align:center">목록</a>
+        <a href="<?= G5_BBS_URL ?>/board_admin.php?bo_table=business&bo_idx=1&u_id=1&page=1" class="value_btn " style="text-align:center">목록</a>
         </div>
     </div>
     </form>

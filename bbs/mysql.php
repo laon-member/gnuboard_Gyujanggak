@@ -4,7 +4,7 @@ $table = $_POST['tbl'];
 $wrid = $_POST['wrid'];
 $wr_idx = $_POST['wr_idx'];
 
-$sql = "SELECT * FROM rater WHERE `business_idx`='{$wr_idx}' AND  test_id = '{$wrid}' AND value = '2'";
+$sql = "SELECT * FROM rater WHERE `business_idx`='{$wr_idx}' AND  test_id = '{$wrid}'";
 $result = sql_query($sql);
 
 for($i=0; $row=sql_fetch_array($result); $i++) {

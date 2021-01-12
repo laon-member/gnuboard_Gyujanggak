@@ -33,7 +33,7 @@ for ($i=0; $i<$ext_cnt; $i++) {
 function g5_path()
 {
     $chroot = substr($_SERVER['SCRIPT_FILENAME'], 0, strpos($_SERVER['SCRIPT_FILENAME'], dirname(__FILE__))); 
-    $result['path'] = str_replace('\\', '/', $chroot.dirname(__FILE__)); 
+    $result['path'] = str_replace('\\', '/', $chroot.dirname(__FILE__));
     $server_script_name = preg_replace('/\/+/', '/', str_replace('\\', '/', $_SERVER['SCRIPT_NAME'])); 
     $server_script_filename = preg_replace('/\/+/', '/', str_replace('\\', '/', $_SERVER['SCRIPT_FILENAME'])); 
     $tilde_remove = preg_replace('/^\/\~[^\/]+(.*)$/', '$1', $server_script_name); 

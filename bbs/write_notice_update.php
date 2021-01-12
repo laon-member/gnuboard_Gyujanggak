@@ -644,18 +644,18 @@ if (!($w == 'u' || $w == 'cu') && $config['cf_email_use'] && $board['bo_use_emai
     }
 }
 
-// // 사용자 코드 실행
-// @include_once($board_skin_path.'/write_update.skin.php');
-// @include_once($board_skin_path.'/write_update.tail.skin.php');
+// 사용자 코드 실행
+@include_once($board_skin_path.'/write_update.skin.php');
+@include_once($board_skin_path.'/write_update.tail.skin.php');
 
-// delete_cache_latest($bo_table);
+delete_cache_latest($bo_table);
 
-// $redirect_url = run_replace('write_update_move_url', short_url_clean(G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr), $board, $wr_id, $w, $qstr, $file_upload_msg);
+$redirect_url = run_replace('write_update_move_url', short_url_clean(G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr), $board, $wr_id, $w, $qstr, $file_upload_msg);
 
-// run_event('write_update_after', $board, $wr_id, $w, $qstr, $redirect_url);
+run_event('write_update_after', $board, $wr_id, $w, $qstr, $redirect_url);
 
-// if ($file_upload_msg)
-//     alert($file_upload_msg, $redirect_url);
-// else
-//     goto_url("../bbs/board.notice.php?bo_table=notice&bo_idx=7&bo_title=1");
+if ($file_upload_msg)
+    alert($file_upload_msg, $redirect_url);
+else
+    goto_url("<?= G5_BBS_URL ?>/board.notice.php?bo_table=notice&bo_idx=7&bo_title=1");
 ?>

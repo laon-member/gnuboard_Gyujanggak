@@ -80,7 +80,7 @@ $result1 = sql_query($sql1);
             </li>
         	<?php if ($is_admin == 'super') {  ?>
                 <li>
-                    <a href="../bbs/write_notice.php?bo_table=notice&bo_idx=<?= $_GET['bo_idx'] ?>&bo_title=3&u_id=1" class="btn_b01 btn" title="글쓰기"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sound_only">글쓰기</span></a>
+                    <a href="<?= G5_BBS_URL ?>/write_notice.php?bo_table=notice&bo_idx=<?= $_GET['bo_idx'] ?>&bo_title=3&u_id=1" class="btn_b01 btn" title="글쓰기"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sound_only">글쓰기</span></a>
                 </li>
         	<?php }  ?>
         </ul>
@@ -122,7 +122,7 @@ $result1 = sql_query($sql1);
                 <a href="<?php echo $list[$i]['ca_name_href'] ?>" class="bo_cate_link"><?php echo $list[$i]['ca_name'] ?></a>
                 <?php } ?>
                 <div class="bo_tit">
-                    <a href="../bbs/board.notice.php?bo_idx=<?= $_GET['bo_idx']; ?>&bo_table=notice&wr_id=<?php echo $list[$i]['wr_id'] ?>&bo_title=<?php echo $_GET['bo_title'] ?>">
+                    <a href="<?= G5_BBS_URL ?>/board.notice.php?bo_idx=<?= $_GET['bo_idx']; ?>&bo_table=notice&wr_id=<?php echo $list[$i]['wr_id'] ?>&bo_title=<?php echo $_GET['bo_title'] ?>">
                         <?php echo $list[$i]['icon_reply'] ?>
                         <?php
                             if (isset($list[$i]['icon_secret'])) echo rtrim($list[$i]['icon_secret']);

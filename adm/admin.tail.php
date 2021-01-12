@@ -12,12 +12,12 @@ $print_version = defined('G5_YOUNGCART_VER') ? 'YoungCart Version '.G5_YOUNGCART
         </noscript>
 
         </div>    
-        <!-- <footer id="ft">
+        <footer id="ft">
             <p>
                 Copyright &copy; <?php echo $_SERVER['HTTP_HOST']; ?>. All rights reserved. <?php echo $print_version; ?><br>
                <button type="button" class="scroll_top"><span class="top_img"></span><span class="top_txt">TOP</span></button>
            </p>
-        </footer> -->
+        </footer>
     </div>
 
 </div>

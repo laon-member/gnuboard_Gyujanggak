@@ -58,9 +58,8 @@ if(isset($row)){
 
                 $average = $_POST['test_user'] + $_POST['test_title'] + $_POST['test_plan'];
 
-                $sql = " update rater_value set $test_user, $test_title, $test_plan, $test_opinion, $test_sum,   test_average = '$average' where idx = '{$row22['idx']}'";
+                $sql = " update rater_value set $test_user, $test_title, $test_plan, $test_opinion, $test_sum,   test_average = '$average' where idx = '{$row22['idx']}' and report_idx = {$_POST['us_idx']}";
                 sql_query($sql);
-                echo $sql;
                 alert('업데이트 완료');
             }
         } else {
@@ -108,14 +107,18 @@ if(isset($row)){
         }
     } else if ($_POST['value_id'] == 2){
         $row22 = sql_fetch(" select * from rater_value where rater_idx = '{$row['idx']}' and report_idx = '{$_POST['us_idx']}'");
+        echo " select * from rater_value where rater_idx = '{$row['idx']}' and report_idx = '{$_POST['us_idx']}'";
         if(isset($row22)){
             // 평가 저장본이 있다면 update
             if($row22['value'] == 2){
                 alert('이미 제출을 완료 했습니다.');
             } else {
-                $sql = " update rater_value set value = '{$_POST['value_id']}' where idx = '{$row22['idx']}'";
+                $sql = " update rater_value set value = '{$_POST['value_id']}' where idx = '{$row22['idx']}' and report_idx = {$_POST['us_idx']}";
                 sql_query($sql);
+
                 alert('제출 완료');
+                echo $sql;
+
             }
         } else {
             //없다면 평가 진행후 다시

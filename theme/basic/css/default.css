@@ -466,3 +466,47 @@ box-sizing:content-box;
   color: #fff;
 }
 
+.menu,
+.menu span {
+display : inline-block;
+}
+.menu {
+position : relative;
+width : 68px !important;
+height : 68px !important;
+background-color: #C4C4C4;
+padding: 0px !important;
+margin: 0 !important;
+}
+.board_nav_list_menu{
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  position: absolute;
+  right: 0;
+  z-index: 20;
+
+}
+.menu span {
+position : absolute;
+left : 0;
+width : 75%;
+height : 4px;
+background-color : #000;
+border-radius : 4px;
+}
+.menu span:nth-child(1) {
+  left : 50%;
+  transform: translateX(-50%);
+  top: 18px;
+ }
+.menu span:nth-child(2) {
+  left : 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.menu span:nth-child(3) {
+  left : 50%;
+  transform: translateX(-50%);
+  bottom: 18px;
+}

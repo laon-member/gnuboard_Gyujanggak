@@ -54,7 +54,6 @@ if ($sca || $stx || $stx === '0') {     //검색이면
     $sql = " SELECT COUNT(DISTINCT `wr_parent`) AS `cnt` FROM {$write_table} WHERE {$sql_search} ";
     $total_count = $row['cnt'];
 
-    echo $total_count;
     $title_text = '검색';
 
     // for($i=1; $row=sql_fetch_array($result); $i++) {

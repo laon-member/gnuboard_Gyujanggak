@@ -119,8 +119,8 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
                     
             </td>
             <td class="td_datetime td_center"><?php echo $row['name']; ?></td>
-            <td class="td_datetime td_center"><a href="../bbs/board_admin.php?bo_table=business&bo_idx=<?= $_GET['bo_idx'] ?>&wr_idx=<?= $_GET['wr_idx'] ?>&us_idx=<?= $list[$i]['idx']; ?>&u_id=1&report=1" class="value_btn btn_bo_val">바로가기</a></td>
-            <td class="td_datetime td_center"><a href="../bbs/board_admin.php?bo_table=business&bo_idx=<?= $_GET['bo_idx'] ?>&wr_idx=<?= $_GET['wr_idx'] ?>&us_idx=<?= $list[$i]['idx']; ?>&u_id=1&report=2" class="value_btn btn_bo_val">바로가기</a></td>
+            <td class="td_datetime td_center"><a href="<?= G5_BBS_URL ?>/board_admin.php?bo_table=business&bo_idx=<?= $_GET['bo_idx'] ?>&wr_idx=<?= $_GET['wr_idx'] ?>&us_idx=<?= $list[$i]['idx']; ?>&u_id=1&report=1" class="value_btn btn_bo_val">바로가기</a></td>
+            <td class="td_datetime td_center"><a href="<?= G5_BBS_URL ?>/board_admin.php?bo_table=business&bo_idx=<?= $_GET['bo_idx'] ?>&wr_idx=<?= $_GET['wr_idx'] ?>&us_idx=<?= $list[$i]['idx']; ?>&u_id=1&report=2" class="value_btn btn_bo_val">바로가기</a></td>
         </tr>
       
 
@@ -133,7 +133,7 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
 	<!-- 페이지 -->
 
     <!-- 현재 URL 주소 -->
-    <a href="../bbs/board_admin.php?bo_table=business&bo_idx=1&u_id=1&page=1" class="value_btn " style="text-align:center">목록</a>
+    <a href="<?= G5_BBS_URL ?>/board_admin.php?bo_table=business&bo_idx=1&u_id=1&page=1" class="value_btn " style="text-align:center">목록</a>
 
             <!-- 게시판 검색 시작 { -->
                 <!-- http://localhost/bbs/board_admin.php?bo_table=business&bo_idx=1&u_id=1 -->

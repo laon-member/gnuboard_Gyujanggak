@@ -416,25 +416,35 @@ if($value == 1){
         alert('심사위원을 추가해주세여');
     } else {
         $row = sql_fetch("UPDATE rater SET value = '2' WHERE business_idx = '{$_GET['idx']}'");
+
+        if($_GET['bo_idx'] == 1){
+            $sql = " update g5_write_business set value = '1' where wr_id = '{$_GET['idx']}'";
+        } else if($_GET['bo_idx'] == 2){
+            $sql = " update g5_write_business set wr_8 = '1' where wr_id = '{$_GET['idx']}'";
+        } else if($_GET['bo_idx'] == 3){
+            $sql = " update g5_write_business set wr_9 = '1' where wr_id = '{$_GET['idx']}'";
+        }
+        sql_query($sql);
+
         alert("심사위원을 의뢰했습니다.");
+
     }
 } else if($value == 3){
     $row = sql_fetch("DELETE FROM rater WHERE idx = {$_GET['idx']}");
     echo "DELETE FROM rater WHERE idx = {$_GET['idx']}";
     alert("삭제했습니다");
 } else if($value == 4){
-    
     if ($_POST['bo_idx_list'] == 1){
         for($i=0; $i<count($_POST['checkbox']); $i++){
             $position = $_POST['checkbox'];
 
-            sql_fetch("UPDATE g5_business_propos SET value = 1 WHERE idx  = '{$position[$i]}'");
+            sql_fetch("UPDATE g5_business_propos SET value = 1 WHERE idx = '{$position[$i]}'");
         }
     } else if ($_POST['bo_idx_list'] == 2){
         for($i=0; $i<count($_POST['checkbox']); $i++){
             $position = $_POST['checkbox'];
 
-            $row = sql_fetch("SELECT * FROM g5_business_propos WHERE idx = '{$_GET['idx']}'");
+            $row = sql_fetch("SELECT * FROM g5_business_propos WHERE idx = '{$position[$i]}'");
             sql_fetch("UPDATE report SET value = '1' WHERE report_idx = 1 AND business_idx = '{$row['idx']}'");
         }
     } else if ($_POST['bo_idx_list'] == 3){
@@ -445,6 +455,16 @@ if($value == 1){
             sql_fetch("UPDATE report SET value = '1' WHERE report_idx = 2 AND business_idx = '{$row['idx']}'");
         }
     }
+
+    if($_POST['sql_bo_idx'] == 1){
+        $sql = " update g5_write_business set value = '2' where wr_id = '{$_POST['wr_id']}'";
+    } else if($_POST['sql_bo_idx'] == 2){
+        $sql = " update g5_write_business set wr_8 = '2' where wr_id = '{$_POST['wr_id']}'";
+    } else if($_POST['sql_bo_idx'] == 3){
+        $sql = " update g5_write_business set wr_9 = '2' where wr_id = '{$_POST['wr_id']}'";
+    }
+    echo $sql;
+    sql_query($sql);
 
     alert('저장했습니다');
     

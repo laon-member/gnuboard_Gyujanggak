@@ -33,7 +33,7 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
         for($k=1; $row=sql_fetch_array($result); $k++) {
             $class_get =  $_GET['bo_idx'] == $row['idx']?"aisde_click":"";
             $title_text = $_GET['bo_idx'] == $row['idx']? $row['title'] : "";
-            echo '<a class="aside_nav '.$class_get.'" href="'.G5_BBS_URL .'/board.php?bo_table='.$bo_table.'&bo_idx='.$k.'">'.$row["title"].'</a>';
+            echo '<a class="aside_nav '.$class_get.'" href="'.G5_BBS_URL .'/board.app.php?bo_table='.$bo_table.'&bo_idx='.$k.'&u_id=1">'.$row["title"].'</a>';
         }
     ?>
 </aside>
@@ -113,7 +113,7 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
                 <a href="<?php echo $list[$i]['ca_name_href'] ?>" class="bo_cate_link"><?php echo $list[$i]['ca_name'] ?></a>
                 <?php } ?>
                 <div class="bo_tit">
-                    <a href="../bbs/board.app.php?bo_table=business&wr_id=<?=$list[$i]['wr_id']?>&u_id=1">
+                    <a href="<?= G5_BBS_URL ?>/board.app.php?bo_table=business&wr_id=<?=$list[$i]['wr_id']?>&u_id=1">
                         <?php echo $list[$i]['icon_reply'] ?>
                         <?php
                             if (isset($list[$i]['icon_secret'])) echo rtrim($list[$i]['icon_secret']);

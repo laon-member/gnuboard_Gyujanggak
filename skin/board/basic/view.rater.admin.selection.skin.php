@@ -32,8 +32,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     <div id="bo_btn_top">
     <?php 
         $sql = " select * from g5_write_business where wr_id = '{$_GET['border_idx']}'";
-        $row11 = sql_fetch($sql);
-        $sql = " select * from g5_write_business_title where idx = '{$row11['wr_title_idx']}'";
+        $row44 = sql_fetch($sql);
+
+        $sql = " select * from g5_write_business_title where idx = '{$row44['wr_title_idx']}'";
         $row22 = sql_fetch($sql)
     ?>
     
@@ -44,7 +45,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     <!-- } 게시판 페이지 정보 및 버튼 끝 -->
      
     <div class="tbl_head01 tbl_wrap">
-    <form action="../bbs/application_user_update.php" id="form_data" method="POST">
+    <form action="<?= G5_BBS_URL ?>/application_user_update.php" id="form_data" method="POST">
         <input type="hidden" name="value" value="4">
         <input type="hidden" name="bo_idx_list" value="<?= $_GET['bo_idx'] ?>">
         <table>
@@ -155,9 +156,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             </tbody>
         </table>
         <div class = "submit_btn_contianer">
-            <a href="../bbs/board.rater.admin.php?bo_table=qa&bo_idx=1&u_id=1" class="value_btn" style="text-align:center;display:inline-block">목록</a>
-            <?php if (count($list) != 0) {  ?>
-                <button type="submit" class="value_btn value_submit" style="display:inline-block"> 저장</button>
+            <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=qa&bo_idx=1&u_id=1" class="value_btn" style="text-align:center;display:inline-block">목록</a>
+            <?php if ( $row44['value'] < 3) {  ?>
+                <button type="submit" class="value_btn value_submit" style="display:inline-block; background:"> 저장 </button>
             <?php } ?>
         </div>
         
@@ -178,10 +179,11 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                 us_idx = $(this).parents('.tr_hover').find('#sql_us_idx').attr('value');
                 bo_idx = $(this).parents('.tr_hover').find('#sql_bo_idx').attr('value');
                 wr_idx = $(this).parents('.tr_hover').find('#sql_wr_idx').attr('value');
+               
                 $('.bo_sch_wrap').toggle();
         
                 $.ajax({
-                    url : "../bbs/mysql.php",
+                    url : "<?= G5_BBS_URL ?>/mysql.php",
                     type : "post",
                     data : {
                         tbl : us_idx,
@@ -203,25 +205,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             $('.bo_sch_bg, .bo_sch_cls, .btn_esc, #top_esc').click(function(){
                 $('.bo_sch_wrap').hide();
             });
-            var test_user = 0;
-            var test_title = 0;
-            var test_plan = 0;
-            var test_sum = 0;
-            $('#test_user').change(function(){
-                test_user = parseFloat ($('#test_user').val());
-                test_sum = (test_user + test_title + test_plan)/3;
-                $('#test_sum').val(test_sum);
-            });
-            $('#test_title').change(function(){
-                test_title = parseFloat ($('#test_title').val());
-                test_sum = (test_user + test_title + test_plan)/3;
-                $('#test_sum').val(test_sum);
-            });
-            $('#test_plan').change(function(){
-                test_plan = parseFloat ($('#test_plan').val());
-                test_sum = (test_user + test_title + test_plan)/3;
-                $('#test_sum').val(test_sum);
-            });
+           
             $('.value_btn_click').on('click', function (e) {
                 var value = $(this).next().is(':checked');                
                 if (value) {    

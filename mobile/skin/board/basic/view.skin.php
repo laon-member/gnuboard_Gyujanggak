@@ -127,7 +127,7 @@ jQuery(function($){
     if ($view['file']['count']) {
         $cnt = 0;
         for ($i=0; $i<count($view['file']); $i++) {
-            if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view'])
+            if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] )
                 $cnt++;
         }
     }
@@ -140,7 +140,7 @@ jQuery(function($){
         <?php
         // 가변 파일
         for ($i=0; $i<count($view['file']); $i++) {
-            if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view']) {
+            if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] ) {
          ?>
             <li>
                 <a href="<?php echo $view['file'][$i]['href'];  ?>" class="view_file_download" download>

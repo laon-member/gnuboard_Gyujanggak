@@ -18,6 +18,8 @@ $page = $_POST['mypage'];
 
 if ($page == "1") {
     $g5['title'] = '회원정보 수정';
+    
+    
 
     $mb_new_password = trim($_POST['mb_new_pw']);
     $mb_new_password_re = trim($_POST['mb_new_pw_re']);
@@ -28,11 +30,23 @@ if ($page == "1") {
     $sql_email= "";
 
 
-    if($mb_new_password_re == $mb_new_password){    
-        if($_POST['mb_new_password'] != "")
+    if($_POST['mb_password'] != "" && $_POST['mb_password_re'] != ""){
+        if($mb_new_password_re == $mb_new_password){    
             $sql_password = " mb_password = '".get_encrypt_string($mb_new_password)."', ";
+        } else {
+            alert('비밀번호가 일치하지 않습니다.');
+        }
+    } else {
+        alert("비밀번호가 비어있습니다.");
     }
-    
+
+    if(preg_match('/^[a-z0-9A-Z~!@#$%^&*]{9}&/', $_POST['mb_password'])) {
+        alert('9자 이상의 영문, 숫자, 특수문자를 혼합만 가능합니다');
+    }
+
+    $mb_new_password = trim($_POST['mb_new_pw']);
+    $mb_new_password_re = trim($_POST['mb_new_pw_re']);
+
     if($_POST['mb_name'] != "")
         $sql_name = " mb_name= '".$_POST['mb_name'] . "',";
 
@@ -50,7 +64,7 @@ if ($page == "1") {
     // sql_query($sql);
 
     if($_POST['mb_password'] != ""){
-        if(check_password($_POST['mb_password'], $member['mb_password'])){
+        if(check_password($_POST['mb_password'])){
             echo "fdsa";
             if ($is_admin == 'super'){
                 alert('최고 관리자는 탈퇴할 수 없습니다');

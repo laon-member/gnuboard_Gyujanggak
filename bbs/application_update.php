@@ -135,7 +135,7 @@ if ($w == '' || $w == 'r') {
                 money = '{$_POST['money']}',
                 one_year = '{$_POST['one_year']}',
                 two_year = '{$_POST['two_year']}',
-                file = '{$_POST['file_count']}',
+                file = 0,
                 wr_hit = 0,
                 report_val_1 = '0',
                 report_val_2 = '0',
@@ -149,21 +149,20 @@ if ($w == '' || $w == 'r') {
 $file_count   = 0;
 $upload_count = (isset($_FILES['bf_file']['name']) && is_array($_FILES['bf_file']['name'])) ? count($_FILES['bf_file']['name']) : 0;
 
-echo $upload_count;
 for ($i=0; $i<$upload_count; $i++) {
     if($_FILES['bf_file']['name'][$i] && is_uploaded_file($_FILES['bf_file']['tmp_name'][$i]))
         $file_count++;
         
 }
 
-if($w == 'u') {
-    $file = get_file($bo_table, $wr_id);
-    if($file_count && (int)$file['count'] > $board['bo_upload_count'])
-        alert('기존 파일을 삭제하신 후 첨부파일을 '.number_format($board['bo_upload_count']).'개 이하로 업로드 해주십시오.');
-} else {
-    if($file_count > $board['bo_upload_count'])
-        alert('첨부파일을 '.number_format($board['bo_upload_count']).'개 이하로 업로드 해주십시오.');
-}
+// if($w == 'u') {
+//     $file = get_file($bo_table, $wr_id);
+//     if($file_count && (int)$file['count'] > $board['bo_upload_count'])
+//         alert('기존 파일을 삭제하신 후 첨부파일을 '.number_format($board['bo_upload_count']).'개 이하로 업로드 해주십시오.');
+// } else {
+//     if($file_count > $board['bo_upload_count'])
+//         alert('첨부파일을 '.number_format($board['bo_upload_count']).'개 이하로 업로드 해주십시오.');
+// }
 
 // 디렉토리가 없다면 생성합니다. (퍼미션도 변경하구요.)
 @mkdir(G5_DATA_PATH.'/file/'.$bo_table, G5_DIR_PERMISSION);
@@ -297,7 +296,9 @@ for ($i=0; $i<count($upload); $i++)
         }
     
         $row = sql_fetch(" select * from g5_business_propos where bo_idx = '{$_POST['wr_id']}' and mb_id = '{$member['mb_id']}'");
-        if ($row['cnt'])
+        $row2 = sql_fetch(" select count(*) as cnt from {$g5['board_file_table']} where bo_table = 'g5_business_propos' and wr_id = '{$row['idx']}' and bf_no = '{$i}' ");
+        
+        if ($row2['cnt'])
         {
             // 삭제에 체크가 있거나 파일이 있다면 업데이트를 합니다.
             // 그렇지 않다면 내용만 업데이트 합니다.
@@ -315,8 +316,8 @@ for ($i=0; $i<count($upload); $i++)
                                  bf_height = '".(int)$upload[$i]['image'][1]."',
                                  bf_type = '".(int)$upload[$i]['image'][2]."',
                                  bf_datetime = '".G5_TIME_YMDHIS."'
-                          where bo_table = '{$bo_table}'
-                                    and wr_id = '{$wr_id}'
+                          where bo_table = 'g5_business_propos'
+                                    and wr_id = '{$row['idx']}'
                                     and bf_no = '{$i}' ";
                 sql_query($sql);
             }
@@ -324,8 +325,8 @@ for ($i=0; $i<count($upload); $i++)
             {
                 $sql = " update {$g5['board_file_table']}
                             set bf_content = '{$bf_content[$i]}'
-                            where bo_table = '{$bo_table}'
-                                      and wr_id = '{$wr_id}'
+                            where bo_table = 'g5_business_propos'
+                                      and wr_id = '{$row['idx']}'
                                       and bf_no = '{$i}' ";
                 sql_query($sql);
             }
@@ -334,7 +335,7 @@ for ($i=0; $i<count($upload); $i++)
         {
             $sql = " insert into {$g5['board_file_table']}
                         set bo_table = 'g5_business_propos',
-                             wr_id = '{$wr_id}',
+                             wr_id = '{$row['idx']}',
                              bf_no = '{$i}',
                              bf_source = '{$upload[$i]['source']}',
                              bf_file = '{$upload[$i]['file']}',
@@ -356,21 +357,25 @@ for ($i=0; $i<count($upload); $i++)
 
 // 업로드된 파일 내용에서 가장 큰 번호를 얻어 거꾸로 확인해 가면서
 // 파일 정보가 없다면 테이블의 내용을 삭제합니다.
-$row = sql_fetch(" select max(bf_no) as max_bf_no from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' ");
+$row = sql_fetch(" select max(bf_no) as max_bf_no from {$g5['board_file_table']} where bo_table = 'g5_business_propos' and wr_id = '{$row2['idx']}' ");
+$row2 = sql_fetch(" select * from g5_business_propos where bo_idx = '{$_POST['wr_id']}' and mb_id = '{$member['mb_id']}'");
 for ($i=(int)$row['max_bf_no']; $i>=0; $i--)
 {
-    $row2 = sql_fetch(" select bf_file from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
+    $row2 = sql_fetch(" select bf_file from {$g5['board_file_table']} where bo_table = 'g5_business_propos' and wr_id = '{$row2['idx']}' and bf_no = '{$i}' ");
 
     // 정보가 있다면 빠집니다.
     if ($row2['bf_file']) break;
 
     // 그렇지 않다면 정보를 삭제합니다.
-    sql_query(" delete from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
+    sql_query(" delete from {$g5['board_file_table']} where bo_table = 'g5_business_propos' and wr_id = '{$row2['idx']}' and bf_no = '{$i}' ");
 }
 
 // 파일의 개수를 게시물에 업데이트 한다.
-$row = sql_fetch(" select count(*) as cnt from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' ");
-sql_query(" update {$write_table} set wr_file = '{$row['cnt']}' where wr_id = '{$wr_id}' ");
+$row2 = sql_fetch(" select * from g5_business_propos where bo_idx = '{$_POST['wr_id']}' and mb_id = '{$member['mb_id']}'");
+$row = sql_fetch(" select count(*) as cnt from {$g5['board_file_table']} where bo_table = 'g5_business_propos' and wr_id = '{$row2['idx']}' ");
+sql_query(" update g5_business_propos set file = '{$file_count}' where idx = '{$row2['idx']}' ");
+
+
 
 // 자동저장된 레코드를 삭제한다.
 sql_query(" delete from {$g5['autosave_table']} where as_uid = '{$uid}' ");

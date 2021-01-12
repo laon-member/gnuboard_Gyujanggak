@@ -79,17 +79,11 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 
         for ($i=0; $i<$row = sql_fetch_array($result); $i++) {
 
-            // if($_GET['bo_idx'] == 2){
-            //     $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}'";
-            //     $result = sql_query($sql);
-            // } else if ($_GET['bo_idx'] == 3) {
-            //     $sql = " select * from rater where user_id = '{$member['mb_id']}' and test_id = '{$_GET['bo_idx']}'";
-            //     $result = sql_query($sql);
-            // }
-            
-        	// $sql55 = " select * from g5_write_business where wr_id = '{$row['business_idx']}'";
-            // $result55 = sql_query($sql55);
-            // $row22 = sql_fetch_array($result55);
+            $sql77 = " select * from rater where business_idx = '{$_GET['wr_idx']}' and user_id = '{$member['mb_id']}' and test_id = '{$_GET['bo_idx']}'";
+            $result77 = sql_query($sql77);
+            $row77 = sql_fetch_array($result77);  
+
+            $row22 = sql_fetch(" select * from rater_value where rater_idx = '{$row77['idx']}' and report_idx = '{$row['idx']}'");
         ?>
         
         <tr class="<?php echo $lt_class ?> tr_hover">
@@ -97,7 +91,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                 <input type="hidden" class="sql_idx" name="sql_idx" value="<?= $_GET['bo_idx'] ?>">
                 <input type="hidden" class="sql_title" name="sql_title" value="<?php echo $row['title']; ?>">
                 <input type="hidden" class="sql_ko_title" name="sql_ko_title" value="<?php echo $row['ko_title']; ?>">
-                <input type="hidden" class="sql_us_idx" name="us_idx" value="<?php echo $row['idx']; ?>">
+                <input type="hidden" class="sql_us_idx" name="sql_us_idx" value="<?php echo $row['idx']; ?>">
 
                 
             </td>
@@ -108,23 +102,24 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                 ?>
             </td>
 
-            <td class="td_center td_title">
+            <td class="td_center ">
                 <?= $row['quest_number'] ?> 
             </td>
-            <td class="td_download "  >
-            <a href="../bbs/board.rater.php?bo_table=qa&bo_idx=<?= $_GET['bo_idx'] ?>&wr_idx=<?= $_GET['wr_idx'] ?>&us_idx=<?= $row['idx']; ?>"><?= $row['ko_title']; ?></a>
+            <td class="td_download td_title"  >
+            <a href="<?= G5_BBS_URL ?>/board.rater.php?bo_table=qa&bo_idx=<?= $_GET['bo_idx'] ?>&wr_idx=<?= $_GET['wr_idx'] ?>&us_idx=<?= $row['idx']; ?>"><?= $row['ko_title']; ?></a>
                     
             </td>
             <td class="td_datetime td_center"><?php echo $row['name']; ?></td>
-            <td class="td_datetime td_center"><button type="button" class="value_btn btn_bo_val"> 평가</button></td>
+            <td class="td_datetime td_center"><button type="button" class="value_btn btn_bo_val"> <?= $row22['value']==2? "확인" :"평가"; ?></button></td>
             <td class="td_datetime td_center" value="<?= $i ?>">
                 <form name="fboardlist" id="fboardlist" action="<?= https_url(G5_BBS_DIR)."/application_rater_update.php"; ?>" method="post">
+                
                     <input type="hidden" name="business_idx" class= "business_idx_form" value="<?php echo $_GET['wr_idx']; ?>">
                     <input type="hidden" name="rater_idx" class= "sql_rater_idx" value="<?php echo $row66['idx']; ?>">
                     <input type="hidden" name="test_id" class="test_id"  value="<?= $_GET['bo_idx']?>">
                     <input type="hidden" name="value_id"  value="2">
                     <input type="hidden" class="sql_us_idx" name="us_idx" value="<?php echo $row['idx']; ?>">
-                    <button type="submit" class="value_btn btn_bo_val_submit value_btn_a">제출</button> 
+                    <button type="submit" class="value_btn btn_bo_val_submit value_btn_a" <?= $row22['value']==2? "disabled" :""; ?> style="background:<?= $row22['value']==2? "#ccc" :"#3a8afd"; ?>" ><?= $row22['value']==2? "제출완료" :"제출"; ?></button> 
                 </form>
             </td>
         </tr>
@@ -138,8 +133,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 	<!-- 페이지 -->
 
     <!-- 현재 URL 주소 -->
-    <button type="button" class="value_btn ">목록</button>
-
+    <a href="<?= G5_BBS_URL ?>/board.rater.php?bo_table=qa&bo_idx=1" class="value_btn" style="text-align:center">목록</a>
             <!-- 게시판 검색 시작 { -->
 
 </div>
@@ -147,6 +141,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 jQuery(function($){
     $('.bo_sch_bg, .bo_sch_cls, .btn_esc').click(function(){
         $('.bo_sch_wrap').hide();
+        location.reload();
     });
     var test_user = 0;
     var test_title = 0;
@@ -157,16 +152,46 @@ jQuery(function($){
         test_user = parseFloat ($('#test_user').val());
         test_sum = (test_user + test_title + test_plan)/3;
         $('#test_sum').val(test_sum);
+        if($('#test_opinion').val() == "" || $('#test_user').val() == "" || $('#test_title').val() == "" || $('#test_plan').val() == ""){
+            $('#value_btn_submit').attr('disabled', true);
+            $('#value_btn_submit').css({"background":"#ccc"});
+        } else {
+            $('#value_btn_submit').attr('disabled', false);
+            $('#value_btn_submit').css({"background":"#3a8afd"});
+        }
     });
     $('#test_title').change(function(){
         test_title = parseFloat ($('#test_title').val());
         test_sum = (test_user + test_title + test_plan)/3;
         $('#test_sum').val(test_sum);
+        if($('#test_opinion').val() == "" || $('#test_user').val() == "" || $('#test_title').val() == "" || $('#test_plan').val() == ""){
+            $('#value_btn_submit').attr('disabled', true);
+            $('#value_btn_submit').css({"background":"#ccc"});
+        } else {
+            $('#value_btn_submit').attr('disabled', false);
+            $('#value_btn_submit').css({"background":"#3a8afd"});
+        }
     });
     $('#test_plan').change(function(){
         test_plan = parseFloat ($('#test_plan').val());
         test_sum = (test_user + test_title + test_plan)/3;
         $('#test_sum').val(test_sum);
+        if($('#test_opinion').val() == "" || $('#test_user').val() == "" || $('#test_title').val() == "" || $('#test_plan').val() == ""){
+            $('#value_btn_submit').attr('disabled', true);
+            $('#value_btn_submit').css({"background":"#ccc"});
+        } else {
+            $('#value_btn_submit').attr('disabled', false);
+            $('#value_btn_submit').css({"background":"#3a8afd"});
+        }
+    });
+    $('#test_opinion').change(function(){
+        if($('#test_opinion').val() == "" || $('#test_user').val() == "" || $('#test_title').val() == "" || $('#test_plan').val() == ""){
+            $('#value_btn_submit').attr('disabled', true);
+            $('#value_btn_submit').css({"background":"#ccc"});
+        } else {
+            $('#value_btn_submit').attr('disabled', false);
+            $('#value_btn_submit').css({"background":"#3a8afd"});
+        }
     });
    
 });
@@ -202,7 +227,7 @@ jQuery(function($){
         <label for="test_opinion" class="label_text" style="vertical-align: top;">상세설명</label>
         <textarea name="test_opinion" id="test_opinion" class="input_text input_text_hight" <?= $row44['report'] ==2? "disabled": ""; ?> cols="20" rows="10"></textarea>
         <button type="button" class="btn_esc">취소</button>
-        <button type="submit" class="btn_submit" id="value_btn_submit">저장</button>
+        <button type="submit" class="btn_submit" id="value_btn_submit" >저장</button>
         </form>
         
     </fieldset>
@@ -213,12 +238,13 @@ jQuery(function($){
             $('.btn_bo_val').click(function(){
                 var td_title = $(this).parent().siblings('.td_title').text();
                 $('#sql_ko_title_view').text(td_title);
-
+                var us_idx_val = $(this).parent().siblings('.hidden').find('.sql_us_idx').val();
+                $('#us_idx').val(us_idx_val);
                 var us_idx = $(this).parent().next().find('.sql_us_idx').val();
                 var rater_idx = $(this).parent().next().find('.sql_rater_idx').val();
                 
                 $.ajax({
-                    url: "../bbs/view.report.sql.php",
+                    url: "<?= G5_BBS_URL ?>/view.report.sql.php",
                     method: "POST",
                     data: {
                         us_idx: us_idx,

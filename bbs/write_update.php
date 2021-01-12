@@ -275,9 +275,9 @@ if ($w == '' || $w == 'r') {
                      wr_date_end = '{$_POST['date_end_act']}',
                      middle_result = '0',
                      final_result = '0',
-                     wr_7 = '$wr_7',
-                     wr_8 = '$wr_8',
-                     wr_9 = '$wr_9',
+                     value = 0,
+                     wr_8 = 0,
+                     wr_9 = 0,
                      wr_10 = '$wr_10' ";
     sql_query($sql);
 

@@ -222,47 +222,36 @@ $row=sql_fetch_array($result);
             $('.step1').addClass('step_view');
         });
         $('.btn_step2').click(function(){
-            if($('#info_number').val() != ""){
-                if($('#quest_number').val() != ""){
-                    if($('#ko_title').val() != ""){
-                        if($('#en_title').val() != ""){
-                            if($('#name').val() != ""){
-                                if($('#degree').val() != ""){
-                                    if($('#rank').val() != ""){
-                                        if($('#belong').val() != ""){
-                                            if($('#email').val() != ""){
-                                                if($('#phone').val() != ""){
-                                                    $('.step').removeClass('step_view');
-                                                    $('.step2').addClass('step_view');
-                                                } else {alert("전화번호가 비어있습니다");}
-                                            } else {alert("이메일이 비어있습니다");}
-                                        } else {alert("직급이 비어있습니다");}
-                                    } else {alert("소속이 비어있습니다");}
-                                } else {alert("전공(학위)이 비어있습니다");}
-                            } else {alert("성명이 비어있습니다");}
-                        } else {alert("영문 과제명이 비어있습니다");}
-                    } else {alert("국문 과제명이 비어있습니다");}
-                } else {alert("과제번호가 비어있습니다");}
-            } else {alert("접수번호가 비어있습니다");}
+            // validation
+            if($('#info_number').val() == "") return alert("접수번호가 비어있습니다");
+            if($('#quest_number').val() == "") return alert("과제번호가 비어있습니다");
+            if($('#ko_title').val() == "") return alert("국문 과제명이 비어있습니다");
+            if($('#en_title').val() == "") return alert("영문 과제명이 비어있습니다");
+            if($('#name').val() == "") return alert("성명이 비어있습니다");
+            if($('#degree').val() == "") return alert("전공(학위)이 비어있습니다");
+            if($('#rank').val() == "") return alert("소속이 비어있습니다");
+            if($('#belong').val() == "") return alert("직급이 비어있습니다");
+            if($('#email').val() == "") return alert("이메일이 비어있습니다");
+            if($('#phone').val() == "") return alert("전화번호가 비어있습니다");
+            
+            // logic
+            $('.step').removeClass('step_view');
+            $('.step2').addClass('step_view');
+                                                
         });
         $('.btn_step3').click(function(){
-            if($('#main_member').val() != ""){
-                if($('#sub_member').val() != ""){
-                    if($('#date_start').val() != ""){
-                        if($('#date_end').val() != ""){
-                            if($('#value').val() != ""){
-                                if($('#one_year').val() != ""){
-                                    if($('#two_year').val() != ""){
-                                        $('.step').removeClass('step_view');
-                                        $('.step3').addClass('step_view');
-                                    } else {alert("2차년 연구비가 비어있습니다");}
-                                } else {alert("1차년 연구비가 비어있습니다");}
-                            } else {alert("연구비신청액이 비어있습니다");}
-                        } else {alert("총 연구 기간이 비어있습니다");}
-                    } else {alert("총 연구 기간이 비어있습니다");}
-                } else {alert("연구원보조가 비어있습니다");}
-            } else {alert("공동연구원이 비어있습니다");}
-                    
+            // validation   
+            if($('#main_member').val() == "") return alert("공동연구원이 비어있습니다");
+            if($('#sub_member').val() == "") return alert("연구원보조가 비어있습니다");
+            if($('#date_start').val() == "") return alert("연구 기간 시작이 비어있습니다");
+            if($('#date_end').val() == "") return alert("연구 기간 끝이 비어있습니다");
+            if($('#value').val() == "") return alert("연구비신청액이 비어있습니다");
+            if($('#one_year').val() == "") return alert("1차년 연구비가 비어있습니다");
+            if($('#two_year').val() == "") return alert("2차년 연구비가 비어있습니다");
+            
+            // logic
+            $('.step').removeClass('step_view');
+            $('.step3').addClass('step_view');
         });
         $('#info_number').change(function(){
             $('#info_number_view').val($(this).val());
@@ -292,13 +281,13 @@ $row=sql_fetch_array($result);
             $('#email_view').val($(this).val());
         });
         $('#phone').change(function(){
-            $('#phone_view').val($(this).val());
+            $('#phone_view').val($(this).val().replace(/\B(?=(\d{4})+(?!\d))/g, "-"));
         });
         $('#main_member').change(function(){
-            $('#main_member_view').val($(this).val());
+            $('#main_member_view').val($(this).val()+"명");
         });
         $('#sub_member').change(function(){
-            $('#sub_member_view').val($(this).val());
+            $('#sub_member_view').val($(this).val()+"명");
         });
         $('#date_start').change(function(){
             $('#date_start_view').val($(this).val());
@@ -307,13 +296,13 @@ $row=sql_fetch_array($result);
             $('#date_end_view').val($(this).val());
         });
         $('#money').change(function(){
-            $('#money_view').val($(this).val());
+            $('#money_view').val($(this).val().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원");
         });
         $('#one_year').change(function(){
-            $('#one_year_view').val($(this).val());
+            $('#one_year_view').val($(this).val().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원");
         });
         $('#two_year').change(function(){
-            $('#two_year_view').val($(this).val());
+            $('#two_year_view').val($(this).val().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원");
         });
         var html = '<div class="input-file"><input type="text" id="file_label_view1" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능"/><input type="file" name="bf_file[]" id="upload01" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?> /><button type="button" class="file-label file-del " id="file-del<?= $i ?>" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>">삭제</button></div>';
         $('.bo_class').append(html);

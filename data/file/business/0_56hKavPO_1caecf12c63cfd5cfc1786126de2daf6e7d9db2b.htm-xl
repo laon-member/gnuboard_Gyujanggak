@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>복불복 이벤트</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        header{
+            text-align: center;
+            background-color: #c5c5c5;
+            padding: 50px;
+        }
+        p{
+            text-align: center;
+            padding: 30px 0;
+            font-size: 25px;
+        }
+        footer{
+            text-align: center;
+            background-color: black;
+            color: white;
+            padding: 20px 0;
+        }
+
+        section section{
+            padding: 250px 0;
+            text-align: center;
+            
+        }
+        a{
+            width: 250px;
+            height: 50px;
+            background-color: thistle;
+            display: inline-block;
+            text-align: center;
+            padding-top: 15px;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>하나만 잘 고르시오</h1>
+    </header>
+    <section>
+        <section>
+            <p>이중에 하나만 고르시오</p>
+            <a href="sub1.html">1</a>
+            <a href="sub2.html">2</a>
+        </section>
+    </section>
+    <footer>
+        copyrightⓒ최민기
+    </footer>
+</body>
+</html>

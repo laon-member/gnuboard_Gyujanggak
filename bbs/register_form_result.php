@@ -68,18 +68,24 @@ if ($user == 'id') {
     if(empty($mb_new_password) || empty($mb_new_password_re)){
         alert('정보가 비어있습니다. 다시 입력해주세요');
     } else {
-        if($mb_new_password_re == $mb_new_password){
-            $sql_password= "";
-            $sql_password = " mb_password = '".get_encrypt_string($mb_new_password)."' ";
-            
-            $sql = "UPDATE `g5_member` set {$sql_password} WHERE mb_no = '{$_SESSION['mb_no']}'";
-            sql_query($sql);
-            $_SESSION['mb_no'] = '';
-            alert('비밀번호를 수정했습니다.', G5_URL);
-        } else {
-            alert('새로운 비밀번호가 일치하지 않습니다.');
-        }
+        if ($w == '' && !$mb_password)
+        alert('비밀번호가 넘어오지 않았습니다.');
 
+        if(preg_match('/^[a-z0-9A-Z~!@#$%^&*]{9}&/', $mb_new_password)) {
+            alert('9자 이상의 영문, 숫자, 특수문자를 혼합만 가능합니다');
+        } else {
+            if($mb_new_password_re == $mb_new_password){
+                $sql_password= "";
+                $sql_password = " mb_password = '".get_encrypt_string($mb_new_password)."' ";
+                
+                $sql = "UPDATE `g5_member` set {$sql_password} WHERE mb_no = '{$_SESSION['mb_no']}'";
+                sql_query($sql);
+                $_SESSION['mb_no'] = '';
+                alert('비밀번호를 수정했습니다.', G5_URL);
+            } else {
+                alert('새로운 비밀번호가 일치하지 않습니다.');
+            }
+        }
     }
 }
 ?>

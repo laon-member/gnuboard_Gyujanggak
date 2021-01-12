@@ -100,7 +100,7 @@ $(function(){
 		var mb_id = $("#reg_mb_id").val();
 		
 		$.ajax({
-			url: "../../bbs/register_id_check.php",
+			url: "<?= G5_BBS_URL ?>/register_id_check.php",
 			method: "POST",
 			data: {
 				mb_id: mb_id

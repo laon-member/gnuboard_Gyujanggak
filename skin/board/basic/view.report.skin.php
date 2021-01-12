@@ -100,9 +100,9 @@ $j=0;
         </section>
 
         <section id="bus_btn" >
-            <button type="submit" formaction="../bbs/view.report.update.php?bo_table=<?= $_GET['bo_table'] ?>&bo_idx=1&wr_bo_idx=<?= $_GET['wr_bo_idx'] ?>" class="btn_next_prv btn_next_prv_link" id="save" title="<?php $row44 == "" ? '저장하기':'수정하기'; ?>" <?= $row44['report'] ==2? "disabled": ""; ?> style="background:<?= $row44['report'] ==2? '#ccc': '#3a8afd'; ?>"><?= $row44 == "" ? '저장하기':'수정하기'; ?></button>
-            <button type="submit" formaction="../bbs/board.report.php?bo_table=business&bo_idx=1" class="btn_next_prv btn_next_prv_link" id="cancel" title="취소">취소</button>
-            <button type="submit" formaction="../bbs/view.report.update.php?bo_table=<?= $_GET['bo_table'] ?>&bo_idx=1&wr_bo_idx=<?= $_GET['wr_bo_idx'] ?>" class="btn_next_prv btn_next_prv_link" id="submission" title="신청하기" <?= $row44['report'] ==2? "disabled": ""; ?> style="background:<?= $row44['report'] ==2? '#ccc': '#3a8afd'; ?>">신청하기</button>
+            <button type="submit" formaction="<?= G5_BBS_URL ?>/view.report.update.php?bo_table=<?= $_GET['bo_table'] ?>&bo_idx=1&wr_bo_idx=<?= $_GET['wr_bo_idx'] ?>" class="btn_next_prv btn_next_prv_link" id="save" title="<?php $row44 == "" ? '저장하기':'수정하기'; ?>" <?= $row44['report'] ==2? "disabled": ""; ?> style="background:<?= $row44['report'] ==2? '#ccc': '#3a8afd'; ?>"><?= $row44 == "" ? '저장하기':'수정하기'; ?></button>
+            <button type="submit" formaction="<?= G5_BBS_URL ?>/board.report.php?bo_table=business&bo_idx=1" class="btn_next_prv btn_next_prv_link" id="cancel" title="취소">취소</button>
+            <button type="submit" formaction="<?= G5_BBS_URL ?>/view.report.update.php?bo_table=<?= $_GET['bo_table'] ?>&bo_idx=1&wr_bo_idx=<?= $_GET['wr_bo_idx'] ?>" class="btn_next_prv btn_next_prv_link" id="submission" title="신청하기" <?= $row44['report'] ==2? "disabled": ""; ?> style="background:<?= $row44['report'] ==2? '#ccc': '#3a8afd'; ?>">신청하기</button>
         </section>
     </form>
 
@@ -184,7 +184,7 @@ $j=0;
             alert(sql_file_id);
             alert(sql_file_no);
             $.ajax({
-                url: "../bbs/file_del.php",
+                url: "<?= G5_BBS_URL ?>/file_del.php",
                 method: "POST",
                 data: {
                     sql_file_tabel: sql_file_tabel,

@@ -5,7 +5,7 @@ $row = sql_fetch("select * from rater_value where report_idx = '{$_POST['us_idx'
 
 if($row == ""){
     $text = "저장";
-} else {
+}else {
     $text = '수정';
 }
 ?>
@@ -19,5 +19,8 @@ if($row == ""){
         $('#us_idx').val('<?= $_POST['us_idx'] ?>');
         $('#rater_idx').val('<?= $_POST['rater_idx'] ?>');
         $('#value_btn_submit').text('<?= $text ?>');
+        if (<?= $row['value']?> == 2){
+            $('#value_btn_submit').remove();
+        } 
     })
 </script>

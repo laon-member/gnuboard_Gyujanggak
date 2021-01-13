@@ -654,8 +654,12 @@ $redirect_url = run_replace('write_update_move_url', short_url_clean(G5_HTTP_BBS
 
 run_event('write_update_after', $board, $wr_id, $w, $qstr, $redirect_url);
 
+if($_POST['bo_title'] == 3){
+    $admin_notice = '&u_id=1';
+}
+
 if ($file_upload_msg)
     alert($file_upload_msg, $redirect_url);
 else
-    goto_url("<?= G5_BBS_URL ?>/board.notice.php?bo_table=notice&bo_idx=7&bo_title=1");
+    alert("작성 완료".G5_BBS_URL."/board.notice.php?bo_table=notice&bo_idx={$_POST['bo_idx']}&bo_title={$_POST['bo_title']}{$admin_notice}");
 ?>

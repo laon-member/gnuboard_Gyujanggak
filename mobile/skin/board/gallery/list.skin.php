@@ -162,7 +162,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 
 <fieldset id="bo_sch">
     <legend>게시물 검색</legend>
-    <form name="fsearch" method="get">
+    <form name="fsearch" method="POST">
     <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
     <input type="hidden" name="sca" value="<?php echo $sca ?>">
     <input type="hidden" name="sop" value="and">

@@ -135,8 +135,8 @@ $result1 = sql_query($sql1);
     
         </ul>
         
-        <?php if ($prev_href || $next_href) { ?>
         <ul class="btn_container">
+        <?php if ($prev_href || $next_href) { ?>
             <?php if ($prev_href) { ?>
                 <li class=" btn_next_prv" >
                     <a href="<?php echo $prev_href ?>">
@@ -155,9 +155,10 @@ $result1 = sql_query($sql1);
                     </a>  
                 </li>
             <?php } ?>
+        <?php } ?>
+
                 <li class="btn_next_prv"><a href="<?php echo G5_BBS_URL ?>/board.php?bo_table=business&bo_idx=<?= $view['wr_title_idx'] ?>" >목록</a></li>
         </ul>
-        <?php } ?>
     </section>
     <!-- } 첨부파일 끝 -->
     

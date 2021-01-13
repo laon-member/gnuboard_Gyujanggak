@@ -16,7 +16,7 @@ $result1 = sql_query($sql1);
 
 <!-- 게시물 읽기 시작 { -->
     <aside id="bo_side">
-    <h2 class="aside_nav">공지상항</h2>
+    <h2 class="aside_nav">공지사항</h2>
     <?php 
         if($board_user == 1){
             $board_user_num =9;
@@ -25,18 +25,18 @@ $result1 = sql_query($sql1);
         } else if($board_user == 3){
             $board_user_num =10;
         }
-
         // &u_id=1
         for($k=7; $row1=sql_fetch_array($result1); $k++) {
             if($k < $board_user_num){
                 $class_get = $_GET['bo_idx'] == $row1['idx']?"aisde_click":"";
-                echo '<a class="aside_nav '.$class_get.'" href="'.G5_BBS_URL .'/board.notice.php?bo_table=notice&bo_idx='.$k.'&page=1&bo_title='.$_GET['bo_title'].'">'.$row1['title'].'</a>';
+                echo '<a class="aside_nav '.$class_get.'" href="'.G5_BBS_URL .'/board.notice.php?bo_table=notice&bo_idx='.$k.'&page=1&bo_title='.$_GET['bo_title'].$admin_notice.'">'.$row1['title'].'</a>';
                
                 if($_GET['bo_idx'] == $row1['idx']){
                     $category_title =  $row1['title']; 
                 }
             }
         }
+
     ?>
 </aside>
 <article id="bo_v">
@@ -133,11 +133,11 @@ $result1 = sql_query($sql1);
     <!-- 첨부파일 시작 { -->
     <section id="bo_v_files ">
         
-        <?php if ($prev_href || $next_href) { ?>
         <ul class="btn_container">
+        <?php if ($prev_href || $next_href) { ?>
             <?php if ($prev_href) { ?>
                 <li class=" btn_next_prv" >
-                    <a href="<?= G5_BBS_URL ?>/board.notice.php?bo_idx=<?=$_GET['bo_idx']; ?>&bo_table=notice&wr_id=<?= $prev['wr_id']; ?>&bo_title=<?= $_GET['bo_title']; ?>">
+                    <a href="<?= G5_BBS_URL ?>/board.notice.php?bo_idx=<?=$_GET['bo_idx']; ?>&bo_table=notice&wr_id=<?= $prev['wr_id']; ?>&bo_title=<?= $_GET['bo_title']; ?><?= $admin_notice ?>">
                         <span class="nb_tit">
                             <i class="fa fa-chevron-up" aria-hidden="true" style="transform: rotate(-90deg);"></i>
                         </span >
@@ -146,22 +146,23 @@ $result1 = sql_query($sql1);
             <?php } ?>
             <?php if ($next_href) { ?>
                 <li class="btn_next btn_next_prv">
-                <a href="<?= G5_BBS_URL ?>/board.notice.php?bo_idx=<?=$_GET['bo_idx']; ?>&bo_table=notice&wr_id=<?= $next['wr_id']; ?>&bo_title=<?= $_GET['bo_title']; ?>">다음글
+                <a href="<?= G5_BBS_URL ?>/board.notice.php?bo_idx=<?=$_GET['bo_idx']; ?>&bo_table=notice&wr_id=<?= $next['wr_id']; ?>&bo_title=<?= $_GET['bo_title']; ?><?= $admin_notice ?>">다음글
                         <span class="nb_tit"> 
                             <i class="fa fa-chevron-down" aria-hidden="true" style="transform: rotate(-90deg);"></i>
                         </span>
                     </a>  
                 </li>
             <?php } ?>
-                <li class="btn_next_prv"><a  href="<?php echo G5_BBS_URL .'/board.notice.php?bo_table=notice&bo_idx='.$_GET['bo_idx'].'&page=1'; ?>&bo_title=<?= $_GET['bo_title']; ?>"  class="btn_list">목록</a></li>
-        </ul>
         <?php } ?>
+
+                <li class="btn_next_prv"><a href="<?php echo G5_BBS_URL .'/board.notice.php?bo_table=notice&bo_idx='.$_GET['bo_idx'].'&page=1'; ?>&bo_title=<?= $_GET['bo_title']; ?><?= $admin_notice ?>" class="">목록</a></li>
+        </ul>
         
     </section>
     <!-- } 첨부파일 끝 -->
 
     <section id="bus_btn">
-        <a href="<?php echo G5_BBS_URL .'/board.notice.php?bo_table=notice&bo_idx='.$_GET['bo_idx'].'&page=1'; ?>&bo_title=<?= $_GET['bo_title']; ?>" class="btn_next_prv btn_next_prv_link">목록보기</a>
+        <a href="<?php echo G5_BBS_URL .'/board.notice.php?bo_table=notice&bo_idx='.$_GET['bo_idx'].'&page=1'; ?>&bo_title=<?= $_GET['bo_title']; ?><?= $admin_notice ?>" class="btn_next_prv btn_next_prv_link">목록보기</a>
     </section>
     
 </article>

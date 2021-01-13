@@ -271,6 +271,10 @@ if (preg_match("/gecko|firefox/i", $_SERVER['HTTP_USER_AGENT'])) {
     $nobr_end   = '</nobr>';
 }
 
+if($_GET['bo_title'] == 3){
+    $admin_notice = '&u_id=1';
+}
+
 // RSS 보기 사용에 체크가 되어 있어야 RSS 보기 가능 061106
 $rss_href = '';
 if ($board['bo_use_rss_view']) {

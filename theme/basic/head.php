@@ -182,7 +182,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                 <ul class="header_notice_nav">
                     <?php for($j=1; $row=sql_fetch_array($result1); $j++) { ?>
                         <li class="header_notice_list">
-                            <a href="http://localhost/bbs/board.notice.php?bo_table=notice&bo_titile=<?= $_GET['bo_title'] ?>&wr_id=<?= $row['wr_id'] ;?>"><?= $row['wr_subject']; ?></a>
+                            <a href="<?= G5_BBS_URL ?>/board.notice.php?bo_idx=<?= $row['notice_table']; ?>&bo_table=notice&wr_id=<?= $row['wr_id'] ;?>&bo_title=<?= $board_user ?>"><?= $row['wr_subject']; ?></a>
                         </li>
                     <?php } ?>
                     
@@ -194,20 +194,21 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
     <style>
         #hd{position: relative;}
         .header_notice_back{position: absolute;top: 100%;width: 100%; }
-        .header_notice_nav, .header_notice_list{list-style:none; height: 50px; padding:15px 0;}
-        .notice_container{overflow:hidden;}
-        .header_notice_nav{ } /* slide를 8초동안 진행하며 무한반복 함 */
+        .notice_container{overflow:hidden; height:100%;}
+        .header_notice_nav, .header_notice_list{list-style:none; height: 50px; }
+        .header_notice_list{padding:15px 0;}
+        .header_notice_nav{ animation: slide 10s infinite linear; } /* slide를 8초동안 진행하며 무한반복 함 */
         @keyframes slide {
         0% {margin-top:0;} /* 0 ~ 10  : 정지 */
         10% {margin-top:0;} /* 10 ~ 25 : 변이 */
-        20% {margin-top:-100%;} /* 25 ~ 35 : 정지 */
-        30% {margin-top:-100%;} /* 35 ~ 50 : 변이 */
-        40% {margin-top:-200%;}
-        50% {margin-top:-200%;}
-        60% {margin-top:-300%;}
-        70% {margin-top:-400%;}
-        80% {margin-top:-500%;}
-        90% {margin-top:-500%;}
+        20% {margin-top: -50px;} /* 25 ~ 35 : 정지 */
+        30% {margin-top: -50px;} /* 35 ~ 50 : 변이 */
+        40% {margin-top:-100px;}
+        50% {margin-top:-100px;}
+        60% {margin-top:-150px;}
+        70% {margin-top:-150px}
+        80% {margin-top:-200px;}
+        90% {margin-top:-200px;}
         100% {margin-top:0;}
         }
     </style>

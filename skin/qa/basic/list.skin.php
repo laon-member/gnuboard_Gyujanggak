@@ -39,7 +39,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
 				    <fieldset class="bo_sch">
 				    	<h3>검색</h3>
 				        <legend>게시물 검색</legend>
-				        <form name="fsearch" method="get">
+				        <form name="fsearch" method="POST">
 				        <input type="hidden" name="sca" value="<?php echo $sca ?>">
 				        <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
 				        <div class="sch_bar">

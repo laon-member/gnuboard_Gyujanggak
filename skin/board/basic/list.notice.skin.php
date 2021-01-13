@@ -29,7 +29,7 @@ $result1 = sql_query($sql1);
 ?>
 <!-- 게시판 목록 시작 { -->
 <aside id="bo_side">
-    <h2 class="aside_nav">공지상항</h2>
+    <h2 class="aside_nav">공지사항</h2>
     <?php 
         if($board_user == 1){
             $board_user_num =9;
@@ -43,7 +43,7 @@ $result1 = sql_query($sql1);
         for($k=7; $row1=sql_fetch_array($result1); $k++) {
             if($k < $board_user_num){
                 $class_get = $_GET['bo_idx'] == $row1['idx']?"aisde_click":"";
-                echo '<a class="aside_nav '.$class_get.'" href="'.G5_BBS_URL .'/board.notice.php?bo_table=notice&bo_idx='.$k.'&page=1&bo_title='.$_GET['bo_title'].($_GET["u_id"] ==1 ?"&u_id=1":"").'">'.$row1['title'].'</a>';
+                echo '<a class="aside_nav '.$class_get.'" href="'.G5_BBS_URL .'/board.notice.php?bo_table=notice&bo_idx='.$k.'&page=1&bo_title='.$_GET['bo_title'].$admin_notice.'">'.$row1['title'].'</a>';
                
                 if($_GET['bo_idx'] == $row1['idx']){
                     $category_title =  $row1['title']; 
@@ -56,17 +56,7 @@ $result1 = sql_query($sql1);
 
    
     
-    <form name="fboardlist" id="fboardlist" action="<?php echo G5_BBS_URL; ?>/board_list_update.php" onsubmit="return fboardlist_submit(this);" method="post">
     
-    <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
-    <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
-    <input type="hidden" name="stx" value="<?php echo $stx ?>">
-    <input type="hidden" name="spt" value="<?php echo $spt ?>">
-    <input type="hidden" name="sca" value="<?php echo $sca ?>">
-    <input type="hidden" name="sst" value="<?php echo $sst ?>">
-    <input type="hidden" name="sod" value="<?php echo $sod ?>">
-    <input type="hidden" name="page" value="<?php echo $page ?>">
-    <input type="hidden" name="sw" value="">
 
     <!-- 게시판 페이지 정보 및 버튼 시작 { -->
     <div id="bo_btn_top">
@@ -76,7 +66,21 @@ $result1 = sql_query($sql1);
 
         <ul class="btn_bo_user">
             <li>
-            	<button type="button" class="btn_bo_sch btn_b01 btn" title="게시판 검색"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">게시판 검색</span></button>
+                <fieldset class="bo_sch">
+                    <form name="fsearch" method="POST">
+                    <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
+                    <input type="hidden" name="sca" value="<?php echo $sca ?>">
+                    <input type="hidden" name="sop" value="and">
+                    <input type="hidden" name="sop" value="and">
+                    <input type="hidden" name="bo_idx" value="<?= $_GET['bo_idx'] ?>">
+                    <input type="hidden" name="sfl" value="wr_subject">
+                    <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+                    <div class="sch_bar">
+                        <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" required id="stx" class="sch_input" size="25" maxlength="20" placeholder=" 검색어를 입력해주세요">
+                        <button type="submit" value="검색" class="sch_btn"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">검색</span></button>
+                    </div>
+                    </form>
+                </fieldset>
             </li>
         	<?php if ($is_admin == 'super') {  ?>
                 <li>
@@ -88,6 +92,20 @@ $result1 = sql_query($sql1);
     <!-- } 게시판 페이지 정보 및 버튼 끝 -->
         	
     <div class="tbl_head01 tbl_wrap">
+        <form name="fboardlist" id="fboardlist" action="<?php echo G5_BBS_URL; ?>/board_list_update.php" onsubmit="return fboardlist_submit(this);" method="post">
+        
+        <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
+        <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
+        <input type="hidden" name="stx" value="<?php echo $stx ?>">
+        <input type="hidden" name="spt" value="<?php echo $spt ?>">
+        <input type="hidden" name="sca" value="<?php echo $sca ?>">
+        <input type="hidden" name="sst" value="<?php echo $sst ?>">
+        <input type="hidden" name="sod" value="<?php echo $sod ?>">
+        <input type="hidden" name="page" value="<?php echo $page ?>">
+        <input type="hidden" name="sw" value="">
+
+
+
         <table>
         <caption><?php echo $board['bo_subject'] ?> 목록</caption>
         <thead>
@@ -122,7 +140,7 @@ $result1 = sql_query($sql1);
                 <a href="<?php echo $list[$i]['ca_name_href'] ?>" class="bo_cate_link"><?php echo $list[$i]['ca_name'] ?></a>
                 <?php } ?>
                 <div class="bo_tit">
-                    <a href="<?= G5_BBS_URL ?>/board.notice.php?bo_idx=<?= $_GET['bo_idx']; ?>&bo_table=notice&wr_id=<?php echo $list[$i]['wr_id'] ?>&bo_title=<?php echo $_GET['bo_title'] ?>">
+                    <a href="<?= G5_BBS_URL ?>/board.notice.php?bo_idx=<?= $_GET['bo_idx']; ?>&bo_table=notice&wr_id=<?php echo $list[$i]['wr_id'] ?>&bo_title=<?php echo $_GET['bo_title'] ?><?= $admin_notice ?>">
                         <?php echo $list[$i]['icon_reply'] ?>
                         <?php
                             if (isset($list[$i]['icon_secret'])) echo rtrim($list[$i]['icon_secret']);
@@ -147,6 +165,8 @@ $result1 = sql_query($sql1);
         <?php if (count($list) == 0) { echo '<tr><td colspan="6" class="empty_table">게시물이 없습니다.</td></tr>'; } ?>
         </tbody>
         </table>
+    </form>
+
     </div>
 
 	<!-- 페이지 -->
@@ -164,48 +184,8 @@ $result1 = sql_query($sql1);
 	<!-- 페이지 -->
 	
     
-    </form>
 
-    <!-- 게시판 검색 시작 { -->
-    <div class="bo_sch_wrap">
-        <fieldset class="bo_sch">
-            <h3>검색</h3>
-            <form name="fsearch" method="get">
-            <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
-            <input type="hidden" name="sca" value="<?php echo $sca ?>">
-            <input type="hidden" name="sop" value="and">
-            <input type="hidden" name="bo_idx" value="<?= $_GET['bo_idx'] ?>">
-            <input type="hidden" name="bo_title" value="<?= $_GET['bo_title'] ?>">
-            <input type="hidden" name="u_id" value="<?= $_GET['u_id'] ?>">
-            <label for="sfl" class="sound_only">검색대상</label>
-            <select name="sfl" id="sfl">
-                <?php echo get_board_sfl_select_options($sfl); ?>
-            </select>
-            <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-            <div class="sch_bar">
-                <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" required id="stx" class="sch_input" size="25" maxlength="20" placeholder=" 검색어를 입력해주세요">
-                <button type="submit" value="검색" class="sch_btn"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">검색</span></button>
-            </div>
-            <button type="button" class="bo_sch_cls" title="닫기"><i class="fa fa-times" aria-hidden="true"></i><span class="sound_only">닫기</span></button>
-            </form>
-        </fieldset>
-        <div class="bo_sch_bg"></div>
-    </div>
-    <script>
-    jQuery(function($){
-        // 게시판 검색
-        $(".btn_bo_sch").on("click", function() {
-            $(".bo_sch_wrap").toggle();
-        })
-        $('.bo_sch_bg, .bo_sch_cls').click(function(){
-            $('.bo_sch_wrap').hide();
-        });
-
-        
-
-    });
-    </script>
-    <!-- } 게시판 검색 끝 --> 
+  
 </div>
 
 <?php if($is_checkbox) { ?>

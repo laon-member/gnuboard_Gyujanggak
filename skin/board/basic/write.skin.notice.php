@@ -9,7 +9,7 @@ $result1 = sql_query($sql1);
 ?>
 
 <aside id="bo_side">
-    <h2 class="aside_nav">공지상항</h2>
+    <h2 class="aside_nav">공지사항</h2>
     <?php 
         for($k=7; $row1=sql_fetch_array($result1); $k++) {
             $class_get = $_GET['bo_idx'] == $row1['idx']?"aisde_click":"";
@@ -22,7 +22,7 @@ $result1 = sql_query($sql1);
     ?>
 </aside>
 <section id="bo_v">
-    <!-- 게시물 작성/수정 시작 { --><?php echo $action_url ?>
+    <!-- 게시물 작성/수정 시작 { -->
     <form name="fwrite" id="fwrite" action="<?php echo $action_url ?>" onsubmit="return fwrite_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off" >
     <input type="hidden" name="uid" value="<?php echo get_uniqid(); ?>">
     <input type="hidden" name="w" value="<?php echo $w ?>">
@@ -36,6 +36,7 @@ $result1 = sql_query($sql1);
     <input type="hidden" name="sod" value="<?php echo $sod ?>">
     <input type="hidden" name="page" value="<?php echo $page ?>">
     <input type="hidden" name="bo_idx" value="<?php echo $_GET['bo_idx'] ?>">
+    <input type="hidden" name="bo_title" value="<?php echo $_GET['bo_title'] ?>">
     <?php
     $option = '';
     $option_hidden = '';
@@ -95,23 +96,6 @@ $result1 = sql_query($sql1);
     </div>
 
   
-
-    <!-- <?php for ($i=0; $i<4; $i++) { ?>
-    <div class="bo_w_flie write_div">
-        <div class="file_wr write_div">
-            <label for="bf_file_<?php echo $i+1 ?>" class="lb_icon"><i class="fa fa-folder-open" aria-hidden="true"></i><span class="sound_only"> 파일 #<?php echo $i+1 ?></span></label>
-            <input type="file" name="bf_file[]" id="bf_file_<?php echo $i+1 ?>" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" class="frm_file ">
-        </div>
-        
-
-        <?php if($w == 'u' && $file[$i]['file']) { ?>
-        <span class="file_del">
-            <input type="checkbox" id="bf_file_del<?php echo $i ?>" name="bf_file_del[<?php echo $i;  ?>]" value="1"> <label for="bf_file_del<?php echo $i ?>"><?php echo $file[$i]['source'].'('.$file[$i]['size'].')';  ?> 파일 삭제</label>
-        </span>
-        <?php } ?>
-        
-    </div>
-    <?php } ?> -->
     <label for="" id="bo_side"  class="label_text">자료첨부</label>
     <section id="bo_v"  class="bo_class">
         <?php echo "<script>var file_number = 1;</script>"; ?> 
@@ -128,10 +112,7 @@ $result1 = sql_query($sql1);
     <script>
     
 
-    // alert(vkvk);
-    // alert("DSaf");
     <?php if($write_min || $write_max) { ?>
-    // 글자수 제한
     var char_min = parseInt(<?php echo $write_min; ?>); // 최소
     var char_max = parseInt(<?php echo $write_max; ?>); // 최대
     check_byte("wr_content", "char_count");

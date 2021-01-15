@@ -84,7 +84,7 @@ $board_user = 3;
 $admin = 2;
 include_once(G5_BBS_PATH.'/board_head.php');
 $action_url = https_url(G5_BBS_DIR)."/application_user_update.php";
-$action_url_value = "<?= G5_BBS_URL ?>/application_value_update.php";
+$action_url_value = G5_BBS_URL."/application_value_update.php";
 // 게시물 아이디가 있다면 게시물 보기를 INCLUDE
 
 if (isset($_GET['wr_idx']) && empty($_GET['us_idx']) && empty($_GET['reater'])) {

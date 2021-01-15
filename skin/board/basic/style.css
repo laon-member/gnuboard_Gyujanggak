@@ -105,10 +105,10 @@
 #bo_list .txt_expired {color:#ccc}
 #bo_list tbody .tr {border-left:2px solid transparent}
 #bo_list tbody .tr_hover:hover {border-left:2px solid #253dbe}
-#bo_list #tbody:hover{border-left:2px solid #253dbe; background-color: #fbfbfb;}
-#bo_list #tbody{border-left:2px solid transparent}
-#bo_list #tbody tr{border: none;}
+tbody{border-left:2px solid transparent}
+.tbody tr{border: none;}
 .title_border{border-bottom: 2px solid black; }
+.tbody:hover tr{border-left:2px solid #253dbe !important; background-color: #fbfbfb;}
 
 
 #bo_cate {margin:25px 0}
@@ -180,21 +180,28 @@ box-shadow:inset 0 2px 5px rgb(33, 135, 202)}
 #bo_list .bo_tit .fa-link {display:inline-block;width:16px;line-height:16px;font-size:0.833em;color:#b451fd;background:#edd3fd;text-align:center;border-radius:2px;margin-left:5px;vertical-align:middle}
 #bo_list_title{font-size: 24px !important;}
 
-/* .bo_sch_wrap {display:none;width:100%;height:100%;position:fixed;top:0;left:0;z-index:999}
+.bo_sch_wrap {display:none;width:100%;height:100%;position:fixed;top:0;left:0;z-index:999}
 .bo_sch {position:absolute;top:50%;left:50%;transform:translate(-50%, -50%); background:#fff;text-align:left;width:300px;height:300px;overflow-y:auto;border-radius:5px;-webkit-box-shadow:1px 1px 18px rgba(0,0,0,0.2);-moz-box-shadow:1px 1px 18px rgba(0,0,0,0.2);box-shadow:1px 1px 18px rgba(0,0,0,0.2);border:1px solid #dde7e9;background:#fff;border-radius:3px}
-.bo_sch:after {display:block;visibility:hidden;clear:both;content:""} */
-/* .bo_sch h3 {padding:15px;border-bottom:1px solid #e8e8e8} */
-/* .bo_sch legend {background:red} */
-/* .bo_sch form {padding:15px;display:block} */
-/* .bo_sch select {border:0;width:100%;height:40px;border:1px solid #d0d3db;border-radius:2px;-webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075);
+.bo_sch:after {display:block;visibility:hidden;clear:both;content:""}
+.bo_sch h3 {padding:15px;border-bottom:1px solid #e8e8e8}
+.bo_sch legend {background:red}
+.bo_sch form {padding:15px;display:block}
+.bo_sch select {border:0;width:100%;height:40px;border:1px solid #d0d3db;border-radius:2px;-webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075);
 -moz-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075);
-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075)} */
-/* .bo_sch .sch_bar {display:inline-block;width:100%;clear:both;margin-top:15px;border:1px solid #d0d3db;border-radius:2px;-webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075);
+box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075)}
+.bo_sch .sch_bar {display:inline-block;width:100%;clear:both;margin-top:15px;border:1px solid #d0d3db;border-radius:2px;-webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075);
 -moz-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075);
-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075)} */
+box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075)}
 .bo_sch .sch_input {width:250px;height:38px;border:0;padding:0;background-color:transparent;}
 .bo_sch .sch_btn {height:38px;color:#656565;background:none;border:0;width:40px;font-size:15px}
 .bo_sch .bo_sch_cls {right:0;top:0;color:#b5b8bb;border:0;padding:12px 15px;font-size:16px;background:#fff}
+.bo_sch_bg {background:#000;background:rgba(0,0,0,0.1);width:100%;height:100%}
+
+
+
+.bo_sch_input .sch_input {width:250px;height:38px;border:0;padding:0;background-color:transparent;}
+.bo_sch_input .sch_btn {height:38px;color:#656565;background:none;border:0;width:40px;font-size:15px}
+.bo_sch_input .bo_sch_cls {right:0;top:0;color:#b5b8bb;border:0;padding:12px 15px;font-size:16px;background:#fff}
 .bo_sch_bg {background:#000;background:rgba(0,0,0,0.1);width:100%;height:100%}
 
 /* 게시판 쓰기 */
@@ -437,8 +444,9 @@ box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.1)}
 #bo_side{
     width: 13%;
     background-color: #fbfbfb;
-    height: fit-content;
+    display: table;
     text-align: center;
+    
 }
 .aside_nav{
     display: block;
@@ -493,8 +501,10 @@ box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.1)}
 .step_text{width: 100%;height: 10px; position: absolute; bottom: 200%; font-weight: bold;}
 
 .write_div p, .label_text{margin: 20px 0 10px 10px;}
-.label_text{width: 15%; display: inline-block; }
+.label_text{width: 15%; display: inline-block !important; text-align: left !important;}
+textarea.input_text {width: 100%;}
 .input_text{ width: 80%; height: 35px; border: 1px solid #ccc; padding: 0 10px;}
+ 
 .input_text_50 {width: 32%;}
 .input_text_40 {width: 28%;}
 .input_text_100{width: 100%;}
@@ -526,6 +536,7 @@ box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.1)}
     margin: 10px 0;
     width: 100%;
 text-align: right;
+border:1px solid #ccc;
     
 }
 
@@ -543,7 +554,7 @@ text-align: right;
 .input-file .file-label {
     display: inline-block;
     min-width: 53px;
-    width: 15%;
+    width: 20%;
     height: 35px;
     line-height: 24px;
     padding: 0 10px;
@@ -555,11 +566,15 @@ text-align: right;
     border: none;
 }
 .input-file .file-name {
-    width: 68%;
+    width: 60%;
     height: 35px;
     line-height: 26px;
     text-indent: 5px;
-    border: 1px solid #bbb;
+    border: none;
+}
+.file-size{
+    width: 20% !important;
+    text-align: center;
 }
 .file-del{
     background-color: crimson !important;
@@ -606,7 +621,8 @@ text-align: right;
 .header_notice p:nth-of-type(3){width: 10%; height: 100%; }
 
 .bo_class{display: inline-block; vertical-align: top;}
-.input_text_hight{height: 300px;}
+.input_text_hight{height: 250px; resize:none; overflow-y: auto;}
+
 
 .value_btn, .value_btn_a{
     width: 100px;
@@ -651,4 +667,70 @@ text-align: right;
     top: 0;
     z-index: 10;
     display: none;
+}
+
+.input_file_text{
+    text-align: center;
+    display: flex;
+}
+
+.input_file_text p{display: inline-block; line-height: 30px;}
+
+#sql_title_view{
+    padding: 10px;
+    font-size: 20px;
+}
+
+#sql_ko_title_view{
+    border: 1px solid #e8e8e8;
+    margin : 10px
+}
+
+#test_opinion{
+    width:80%;
+}
+
+.btn_esc{
+    width: 100px;
+    height: 30px;
+    border: 1px solid #e8e8e8;
+}
+
+#value_btn_submit{
+    width: 100px;
+    height: 30px;
+
+}
+
+.value_btn_submit_save{
+    border:none;
+    background: #3a8afd;
+    color: #fff;
+}
+
+.rater_btn_container{
+    margin: 20px 0;
+}
+
+.rater_value_btn_contianer{
+    text-align: center;
+    margin: 10px;
+}
+
+.btn_bo_val_true{
+    width: 120px;
+    height: 35px;
+    background: #3a8afd;
+    border: none;
+    margin: 0 10px;
+    color: #fff;
+}
+
+.btn_bo_val_false{
+    width: 120px;
+    height: 35px;
+    background: #e8e8e8;
+    border: none;
+    margin: 0 10px;
+    color: #000;
 }

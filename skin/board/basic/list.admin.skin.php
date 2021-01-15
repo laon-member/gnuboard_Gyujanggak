@@ -49,7 +49,7 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
 
         <ul class="btn_bo_user">
             <li>
-                <fieldset class="bo_sch">
+                <fieldset class="bo_sch_input">
                     <form name="fsearch" method="POST">
                     <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
                     <input type="hidden" name="sca" value="<?php echo $sca ?>">

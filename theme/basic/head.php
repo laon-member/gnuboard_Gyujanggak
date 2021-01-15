@@ -30,7 +30,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
     
         <ul class="hd_login">        
             <?php if ($is_member) {  ?>
-            <li><a href=""><?php echo $member['mb_name']; ?>님</a></li>
+            <li><?php echo $member['mb_name']; ?>님</li>
             <li><a href="<?php echo G5_BBS_URL ?>/mypage_form.php?page=1">마이페이지</a></li>
             <?php if ($member['mb_level'] == 10) { ?><li><li><a href="../adm/member_list.php">관리자(원본)</a></li><?php } ?>
             <?php if ($member['mb_level'] == 10) { ?><li><li><a href="../adm/member_list copy.php">관리자</a></li><?php } ?>
@@ -174,7 +174,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
         <div class="header_notice">
 
         <?php
-            $sql1 = " SELECT * FROM g5_write_notice order by wr_id desc limit 0, 5 ";
+            $sql1 = " SELECT * FROM g5_write_notice where notice_table = 7 order by wr_id desc limit 0, 5 ";
             $result1 = sql_query($sql1);
         ?>
             <p>공지사항</p>

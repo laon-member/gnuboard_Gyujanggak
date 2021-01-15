@@ -137,65 +137,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             <!-- 게시판 검색 시작 { -->
 
 </div>
-<script>
-jQuery(function($){
-    $('.bo_sch_bg, .bo_sch_cls, .btn_esc').click(function(){
-        $('.bo_sch_wrap').hide();
-        location.reload();
-    });
-    var test_user = 0;
-    var test_title = 0;
-    var test_plan = 0;
-    var test_sum = 0;
 
-    $('#test_user').change(function(){
-        test_user = parseFloat ($('#test_user').val());
-        test_sum = (test_user + test_title + test_plan)/3;
-        $('#test_sum').val(test_sum);
-        if($('#test_opinion').val() == "" || $('#test_user').val() == "" || $('#test_title').val() == "" || $('#test_plan').val() == ""){
-            $('#value_btn_submit').attr('disabled', true);
-            $('#value_btn_submit').css({"background":"#ccc"});
-        } else {
-            $('#value_btn_submit').attr('disabled', false);
-            $('#value_btn_submit').css({"background":"#3a8afd"});
-        }
-    });
-    $('#test_title').change(function(){
-        test_title = parseFloat ($('#test_title').val());
-        test_sum = (test_user + test_title + test_plan)/3;
-        $('#test_sum').val(test_sum);
-        if($('#test_opinion').val() == "" || $('#test_user').val() == "" || $('#test_title').val() == "" || $('#test_plan').val() == ""){
-            $('#value_btn_submit').attr('disabled', true);
-            $('#value_btn_submit').css({"background":"#ccc"});
-        } else {
-            $('#value_btn_submit').attr('disabled', false);
-            $('#value_btn_submit').css({"background":"#3a8afd"});
-        }
-    });
-    $('#test_plan').change(function(){
-        test_plan = parseFloat ($('#test_plan').val());
-        test_sum = (test_user + test_title + test_plan)/3;
-        $('#test_sum').val(test_sum);
-        if($('#test_opinion').val() == "" || $('#test_user').val() == "" || $('#test_title').val() == "" || $('#test_plan').val() == ""){
-            $('#value_btn_submit').attr('disabled', true);
-            $('#value_btn_submit').css({"background":"#ccc"});
-        } else {
-            $('#value_btn_submit').attr('disabled', false);
-            $('#value_btn_submit').css({"background":"#3a8afd"});
-        }
-    });
-    $('#test_opinion').change(function(){
-        if($('#test_opinion').val() == "" || $('#test_user').val() == "" || $('#test_title').val() == "" || $('#test_plan').val() == ""){
-            $('#value_btn_submit').attr('disabled', true);
-            $('#value_btn_submit').css({"background":"#ccc"});
-        } else {
-            $('#value_btn_submit').attr('disabled', false);
-            $('#value_btn_submit').css({"background":"#3a8afd"});
-        }
-    });
-   
-});
-</script>
 <div class="bo_sch_wrap">
     <fieldset class="bo_sch" style="width:800px; max-height:noen;height:600px;">
         <?php
@@ -211,23 +153,26 @@ jQuery(function($){
         <input type="hidden" name="value_id"  value="1">
         <input type="hidden" name="us_idx" id="us_idx"  value="">
         
-        <label for="" class="label_text" style="display:block;">항목평가</label>
+        <label for="" class="label_text" style="display:block !important;">항목평가</label>
         <label for="test_user" class="label_text" style="vertical-align: inherit;">연구진</label>
-        <input type="number" name="test_user" id="test_user"  class="input_text input_text_40 input_text_end" placeholder="접수번호" value="" min="0" max="80"> 
+        <input type="number" name="test_user" id="test_user"  class="input_text input_text_40 input_text_end" placeholder="연구진"  min="0" max="80"> 
         <span>/80</span>
         <label for="test_title" class="label_text" style="vertical-align: inherit;">주제</label>
-        <input type="number" name="test_title" id="test_title"  class="input_text input_text_40 input_text_end" placeholder="접수번호" value="" min="0" max="80" > 
+        <input type="number" name="test_title" id="test_title"  class="input_text input_text_40 input_text_end" placeholder="주제"  min="0" max="80" > 
         <span>/80</span>
         <label for="test_plan" class="label_text" style="vertical-align: inherit;">계획</label>
-        <input type="number" name="test_plan" id="test_plan"  class="input_text input_text_40 input_text_end" placeholder="접수번호" value="" min="0" max="80" > 
+        <input type="number" name="test_plan" id="test_plan"  class="input_text input_text_40 input_text_end" placeholder="계획"  min="0" max="80" > 
         <span>/80</span>
         <label for="test_sum" class="label_text" style="vertical-align: inherit;">종합평가</label>
-        <input type="number" name="test_sum" id="test_sum"  class="input_text input_text_40 input_text_end" placeholder="접수번호" readonly> 
+        <input type="number" name="test_sum" id="test_sum"  class="input_text input_text_40 input_text_end" placeholder="종합평가" readonly> 
         <span>/80</span>
-        <label for="test_opinion" class="label_text" style="vertical-align: top;">상세설명</label>
+        <label for="test_opinion" class="label_text" style="vertical-align: top;">평가의견</label>
         <textarea name="test_opinion" id="test_opinion" class="input_text input_text_hight" <?= $row44['report'] ==2? "disabled": ""; ?> cols="20" rows="10"></textarea>
-        <button type="button" class="btn_esc">취소</button>
-        <button type="submit" class="btn_submit" id="value_btn_submit" >저장</button>
+        
+        <div class="rater_value_btn_contianer">
+            <button type="button" class="btn_esc">취소</button>
+            <button type="submit" class="btn_submit" id="value_btn_submit" >저장</button>
+        </div>
         </form>
         
     </fieldset>
@@ -258,9 +203,69 @@ jQuery(function($){
 
                 $('.bo_sch_wrap').toggle();
             })     
-        })
-      
 
+            $('.bo_sch_bg, .bo_sch_cls, .btn_esc').click(function(){
+                $('.bo_sch_wrap').hide();
+                location.reload();
+            });
+            var test_user = $('#test_user').val();
+            var test_title = $('#test_title').val();
+            var test_plan = $('#test_plan').val();
+            var test_sum = 0;
+
+            $('#test_user').change(function(){
+                test_user = parseFloat($('#test_user').val());
+                test_sum = Number(test_user) + Number(test_title) + Number(test_plan);
+                test_sum = test_sum/3;
+                test_sum = test_sum.toFixed(2);
+                $('#test_sum').val(test_sum);
+                if($('#test_opinion').val() == "" || $('#test_user').val() == "" || $('#test_title').val() == "" || $('#test_plan').val() == ""){
+                    $('#value_btn_submit').attr('disabled', true);
+                    $('#value_btn_submit').css({"background":"#ccc"});
+                } else {
+                    $('#value_btn_submit').attr('disabled', false);
+                    $('#value_btn_submit').css({"background":"#3a8afd"});
+                }
+            });
+            $('#test_title').change(function(){
+                test_title = parseFloat($('#test_title').val());
+                test_sum = Number(test_user) + Number(test_title) + Number(test_plan);
+                test_sum = test_sum/3;
+                test_sum = test_sum.toFixed(2);
+                $('#test_sum').val(test_sum);
+                if($('#test_opinion').val() == "" || $('#test_user').val() == "" || $('#test_title').val() == "" || $('#test_plan').val() == ""){
+                    $('#value_btn_submit').attr('disabled', true);
+                    $('#value_btn_submit').css({"background":"#ccc"});
+                } else {
+                    $('#value_btn_submit').attr('disabled', false);
+                    $('#value_btn_submit').css({"background":"#3a8afd"});
+                }
+            });
+            $('#test_plan').change(function(){
+                test_plan = parseFloat($('#test_plan').val());
+                test_sum = Number(test_user) + Number(test_title) + Number(test_plan);
+                test_sum = test_sum/3;
+                test_sum = test_sum.toFixed(2);
+                $('#test_sum').val(test_sum);
+                if($('#test_opinion').val() == "" || $('#test_user').val() == "" || $('#test_title').val() == "" || $('#test_plan').val() == ""){
+                    $('#value_btn_submit').attr('disabled', true);
+                    $('#value_btn_submit').css({"background":"#ccc"});
+                } else {
+                    $('#value_btn_submit').attr('disabled', false);
+                    $('#value_btn_submit').css({"background":"#3a8afd"});
+                }
+            });
+            $('#test_opinion').change(function(){
+                if($('#test_opinion').val() == "" || $('#test_user').val() == "" || $('#test_title').val() == "" || $('#test_plan').val() == ""){
+                    $('#value_btn_submit').attr('disabled', true);
+                    $('#value_btn_submit').css({"background":"#ccc"});
+                } else {
+                    $('#value_btn_submit').attr('disabled', false);
+                    $('#value_btn_submit').css({"background":"#3a8afd"});
+                }
+            });
+        
+        });
     </script>
 </div>
             <!-- } 게시판 검색 끝 --> 

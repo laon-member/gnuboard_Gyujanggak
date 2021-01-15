@@ -7,7 +7,7 @@ if (!$board['bo_table']) {
     alert('존재하지 않는 게시판입니다.', G5_URL);
 }
 if (!$is_member)
-        alert('로그인 후 이용하여 주십시오.', G5_URL);
+        alert('로그인 후 이용하여 주십시오.', G5_BBS_URL."/login.php");
 
 
 if (!$bo_table) {

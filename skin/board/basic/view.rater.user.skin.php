@@ -56,9 +56,9 @@ if($_GET['bo_idx'] == 1){
         <h1 id="">[<?= $row2['title'];?>]<?= $row['wr_subject'];?></h1>
         
     </div>
-    <div>
+    <div class="rater_btn_container">
         <span>심사위원 배정 </span>
-        <button class="btn_bo_val"><?= $admin_val > 0 ? "심사위원 선발 완료" :"+ 심사위원 추가"; ?> </button>
+        <button class="<?= $admin_val > 0 ? "btn_bo_val_false" :"btn_bo_val_true"; ?> btn_bo_val"><?= $admin_val > 0 ? "심사위원 선발 완료" :"+ 심사위원 추가"; ?> </button>
     </div>
     <!-- } 게시판 페이지 정보 및 버튼 끝 -->
         	
@@ -86,6 +86,7 @@ if($_GET['bo_idx'] == 1){
         
         $sql = " select * from rater where business_idx = '{$_GET['wr_idx']}' and test_id ='{$_GET['bo_idx']}'";
         $result = sql_query($sql);
+        $count = 0;
 
         for ($i=0; $row = sql_fetch_array($result); $i++) {
             $sql22 = " select * from g5_member where mb_id = '{$row['user_id']}'";
@@ -122,9 +123,9 @@ if($_GET['bo_idx'] == 1){
             </td>
         </tr>
       
-
+            <?php $count++; ?>
         <?php } ?>
-        <?php if (count($list) == 0) { echo '<tr><td colspan="6" class="empty_table">선택된 심사위원이 없습니다.</td></tr>'; } ?>
+        <?php if ($count == 0) { echo '<tr><td colspan="6" class="empty_table">선택된 심사위원이 없습니다.</td></tr>'; } ?>
         </tbody>
         </table>
     </div>
@@ -199,11 +200,10 @@ jQuery(function($){
             </thead>
             <tbody>
             <?php
+            
             $sql = " select * from g5_member where mb_level > '4'";
             $result = sql_query($sql);
-
-            $count = 0;
-                
+            $count_rater = 0;
             for ($i=0; $row = sql_fetch_array($result); $i++) {
                 $sql2 = " select * from rater where business_idx ='{$_GET['us_idx']}' and test_id = '{$_GET['bo_idx']}' and user_name ='{$row['mb_name']}'";
                 $result2 = sql_query($sql2);
@@ -225,18 +225,21 @@ jQuery(function($){
             
               
             <?php 
-                $count ++;
+                $count_rater++;
                 }
             } 
-            if ($count == 0 ) { echo '<tr><td colspan="6" class="empty_table">선택 가능한 심사위원이 없습니다.</td></tr>'; } 
+            if ($count_rater == 0){ echo '<tr><td colspan="6" class="empty_table">선택 가능한 심사위원이 없습니다.</td></tr>'; } 
             ?>
             
             </tbody>
             </table>
-            <button type="button" class="button_esc">  취소</button>
-            <button>저장</button>
+            <div class="rater_value_btn_contianer">
+            <button type="button" class="button_esc btn_esc">  취소</button>
+            <button id="value_btn_submit" class="value_btn_submit_save">저장</button>
+            </div>
         </form>
     </fieldset>
+
     <div class="bo_sch_bg"></div>
     <script>
     $(document).ready(function(){

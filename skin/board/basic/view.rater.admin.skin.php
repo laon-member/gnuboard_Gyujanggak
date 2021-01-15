@@ -118,7 +118,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
       
 
         <?php } ?>
-        <?php if (count($list) == 0) { echo '<tr><td colspan="6" class="empty_table">사업공고 내용이 없습니다.</td></tr>'; } ?>
+        <?php if (count($list) == 0) { echo '<tr><td colspan="6" class="empty_table">신청한 지원자가 없습니다.</td></tr>'; } ?>
         </tbody>
         </table>
     </div>
@@ -184,7 +184,7 @@ jQuery(function($){
         <input type="hidden" name="value_id"  value="1">
         <input type="hidden" name="us_idx" id="us_idx"  value="">
         
-        <label for="" class="label_text" style="display:block;">항목평가</label>
+        <label for="" class="label_text" style="display:block !important;">항목평가</label>
         <label for="test_user" class="label_text" style="vertical-align: inherit;">연구진</label>
         <input type="number" name="test_user" id="test_user"  class="input_text input_text_40 input_text_end" placeholder="접수번호" value="<?= $row['info_number']; ?>"  maxlength="80"> 
         <span>/80</span>
@@ -199,9 +199,10 @@ jQuery(function($){
         <span>/80</span>
         <label for="test_opinion" class="label_text" style="vertical-align: top;">상세설명</label>
         <input type="text" name="test_opinion" id ="test_opinion" class="input_text input_text_hight" value="<?= $row44['contents']; ?>"<?= $row44['report'] ==2? "disabled": ""; ?>> 
-        
-        <button type="button" class="btn_esc">취소</button>
-        <button type="submit" class="btn_submit">저장</button>
+        <div class="rater_value_btn_contianer">
+            <button type="button" class="btn_esc">취소</button>
+            <button type="submit" class="btn_submit">저장</button>
+        </div>
         </form>
         
     </fieldset>

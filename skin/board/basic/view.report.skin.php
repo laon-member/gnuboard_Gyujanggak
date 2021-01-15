@@ -24,7 +24,6 @@ $result = sql_query($sql);
 $row44 = sql_fetch_array($result);
 
 $sql = " select * from g5_board_file where bo_table= 'report' AND wr_id = '{$row44['idx']}'";
-// echo $sql;
 $result = sql_query($sql);
 $il_file = array();
 $j=0;
@@ -76,17 +75,36 @@ $j=0;
             <input type="text" name="contents" class="input_text input_text_hight" value="<?= $row44['contents']; ?>"<?= $row44['report'] ==2? "disabled": ""; ?>> 
         </section>
 
-
-        <section id="bo_v"  class="bo_class_form">
-            <label for="" id="bo_side"  class="label_text">자료첨부</label>
+        <label for="" id="bo_side"  class="label_text">자료첨부</label>
+        <section id="bo_v"  class="bo_class_form bo_class">
             <?php echo "<script>var file_number = 1;</script>"; ?>
             <?php $file_number = "<script>document.writeln(file_number);</script>"; ?>
-            <label for="upload01" id="file-label-btn" class="file-label" style="background:<?= $row44['report'] ==2? '#ccc': '#3a8afd'; ?>">찾아보기</label>
+            <label for="upload01" id="file-label-btn" class="file-label" style="background:<?= $row44['report'] ==2? '#ccc': '#3a8afd'; ?>">파일 업로드</label>
+            <div class="input-file input_file_text">
+                <p class="file-name">파일명</p>
+                <p class="file-name file-size">파일 용량</p>
+                <p class="file-name file-size">파일 삭제</p>
+            </div>
             <?php 
                 while ($row55=sql_fetch_array($result)){
             ?>
             <div class="input-file">
-                <input type="text" id="file_label_view1" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="<?= $row55['bf_source']; ?>"/>
+                <input type="text" id="file_label_view1" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="<?= $row55['bf_source']; ?>" style="margin: 0 -2px;"/>
+                <?php
+                    //MB 단위 이상일때 MB 단위로 환산
+                    if ($row55['bf_filesize'] >= 1024 * 1024) {
+                        $fileSize = $row55['bf_filesize'] / (1024 * 1024);
+                        $convertlastpage = sprintf('%0.2f', $fileSize); // 520 -> 520.00
+                        $str = $convertlastpage . ' MB';
+                    }
+        
+                    else {
+                        $fileSize = $row55['bf_filesize'] / 1024;
+                        $convertlastpage = sprintf('%0.2f', $fileSize); // 520 -> 520.00
+                        $str = $convertlastpage . ' KB';
+                    }
+                ?>
+                <input type="text" id="file-size-'+file_number+'" class="file-name file-size" style="margin: 0 -2px;" value="<?= $str ?>" readonly="readonly"/>
                 <input type="hidden" value="<?= $row55['bo_table']; ?>" id="sql_file_tabel">
                 <input type="hidden" value="<?= $row55['wr_id']; ?>" id="sql_file_id">
                 <input type="hidden" value="<?= $row55['bf_no']; ?>" id="sql_file_no">
@@ -98,7 +116,6 @@ $j=0;
                 }  
             ?>
         </section>
-
         <section id="bus_btn" >
             <button type="submit" formaction="<?= G5_BBS_URL ?>/view.report.update.php?bo_table=<?= $_GET['bo_table'] ?>&bo_idx=1&wr_bo_idx=<?= $_GET['wr_bo_idx'] ?>" class="btn_next_prv btn_next_prv_link" id="save" title="<?php $row44 == "" ? '저장하기':'수정하기'; ?>" <?= $row44['report'] ==2? "disabled": ""; ?> style="background:<?= $row44['report'] ==2? '#ccc': '#3a8afd'; ?>"><?= $row44 == "" ? '저장하기':'수정하기'; ?></button>
             <button type="submit" formaction="<?= G5_BBS_URL ?>/board.report.php?bo_table=business&bo_idx=1" class="btn_next_prv btn_next_prv_link" id="cancel" title="취소">취소</button>
@@ -118,7 +135,8 @@ $j=0;
 
         var disabled = '<?= $row44['report'] == 2? false : true; ?>'
         if(disabled){
-            var html = '<div class="input-file"><input type="text" id="file_label_view1" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능"/><input type="file" name="bf_file[]" id="upload01" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?> /><button type="button" class="file-label file-del " id="file-del<?= $i ?>" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] == 2? '#ccc !important': 'crimson'; ?>" onClick="removeClick(this.id)">삭제</button></div>';
+            var html = '<div class="input-file"><input type="text" style="margin: 0 -2px;" id="file_label_view1" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/> <input type="text" id="file-size-'+file_number+'" class="file-name file-size" style="margin: 0 -2px;" value="용량" readonly="readonly"/><input type="file" name="bf_file[]" id="upload01" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?> /><button type="button" class="file-label file-del " id="file-del<?= $i ?>" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>">삭제</button></div>';
+
             $('.bo_class_form').append(html);
         }
 
@@ -131,20 +149,39 @@ $j=0;
             $('#upload0'+file_number).change(function(){
                 var fileValue = $(this).val().split("\\");
                 var fileName = fileValue[fileValue.length-1]; // 파일명
+                var fileSize = this.files[0].size;
+                var str;
+
+                //MB 단위 이상일때 MB 단위로 환산
+                if (fileSize >= 1024 * 1024) {
+                    fileSize = fileSize / (1024 * 1024);
+                    var convertlastpage = fileSize.toFixed(2);
+                    str = convertlastpage + ' MB';
+                }
+    
+                else {
+                    fileSize = fileSize / 1024;
+                    var convertlastpage = fileSize.toFixed(2);
+                    str = convertlastpage + ' KB';
+                }
+                
                 if($(this).val() != ""){
                     file_number++;
-                    $(this).prev().val(fileName);
-
-                    var html = '<div class="input-file"><input type="text" id="file_label_view'+file_number+'" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능"/><input type="file" name="bf_file[]" id="upload0'+file_number+'" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?>/><button type="button" class="file-label file-del " id="file-del'+file_number+'" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>">삭제</button></div>';
+                    $(this).prev().val(str);
+                    $(this).prev().prev().val(fileName);
+                    // <input type="text" id="file-size-'+file_number+'" value="'.str.'" />
+                    // value="'+fileName+'"
+                    // value="'+str+'" 
+                    var html = '<div class="input-file"><input type="text" id="file_label_view'+file_number+'" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/><input type="text" id="file-size-'+file_number+'" class="file-name file-size" value="용량" readonly="readonly"/><input type="file" name="bf_file[]" id="upload0'+file_number+'" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?>/><button type="button" class="file-label file-del " id="file-del'+file_number+'" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>">삭제</button></div>';
                     $('.bo_class_form').append(html);
 
-                    $("#file-label-btn").attr('for', 'upload0'+file_number)
+                    var html = '<input type="text" name="form_file'+file_number+'" id="form__file'+file_number+'"  class="input_text_100 input_text input_text_end input_form" value="'+ fileName+'" readonly>';
+                    $('#input_file_cont').append(html);
 
-                    event.stopPropagation();
+                    $("#file-label-btn").attr('for', 'upload0'+file_number)
                 }
             })
         })
-
         $(document).off().on('click','.file-del',function(){
             if($(this).hasClass("file-event-none") === true)
                 exit;

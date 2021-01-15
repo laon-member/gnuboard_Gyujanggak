@@ -15,7 +15,7 @@ $row=sql_fetch_array($result1);
     <h2 class="aside_nav">지원결과 확인</h2>
     <?php $class_get =  $_GET['bo_idx'] == '1'?"aisde_click":""; ?>
     <a class="aside_nav aisde_click" href="<?= G5_BBS_URL ?>/board.value.php?bo_table=business&bo_idx=1">지원결과 확인</a>
-</aside>>
+</aside>
 <section id="bo_v" style="width:80%;">
     <h2 class="sound_only"><?php echo $g5['title'] ?></h2>
     <!-- 게시물 작성/수정 시작 { -->
@@ -147,99 +147,6 @@ $row=sql_fetch_array($result1);
     </div>
     </form>
 </section>
-
-<script>
-jQuery(function($){
-    $('.bo_sch_bg, .bo_sch_cls, .btn_esc').click(function(){
-        $('.bo_sch_wrap').hide();
-    });
-
-    $('.btn_bo_val').click(function(){
-                var td_title = $('.ko_title').text();
-                $('#sql_ko_title_view').text(td_title);
-                $('.bo_sch_wrap').toggle();
-
-            }) 
-
-    var test_user = 0;
-    var test_title = 0;
-    var test_plan = 0;
-    var test_sum = 0;
-
-    $('#test_user').change(function(){
-        test_user = parseFloat ($('#test_user').val());
-        test_sum = (test_user + test_title + test_plan)/3;
-        $('#test_sum').val(test_sum);
-    });
-    $('#test_title').change(function(){
-        test_title = parseFloat ($('#test_title').val());
-        test_sum = (test_user + test_title + test_plan)/3;
-        $('#test_sum').val(test_sum);
-    });
-    $('#test_plan').change(function(){
-        test_plan = parseFloat ($('#test_plan').val());
-        test_sum = (test_user + test_title + test_plan)/3;
-        $('#test_sum').val(test_sum);
-    });
-   
-});
-</script>
-<div class="bo_sch_wrap">
-<fieldset class="bo_sch" style="width:800px; max-height:noen;height:600px;">
-        <?php
-            $sql = " select * from g5_write_business where wr_id = '{$_GET['wr_idx']}'";
-            $result = sql_query($sql);
-            $row = sql_fetch_array($result);
-
-            $sql2 = "select * from rater where business_idx = '{$_GET['wr_idx']}' and user_id ='{$member['mb_id']}' and test_id = '{$_GET['bo_idx']}'";
-            $result2 = sql_query($sql2);
-            $row2 = sql_fetch_array($result2);
-
-            $sql3 = " select * from rater_value where rater_idx = '{$row2['idx']}' and report_idx = '{$_GET['bo_idx']}'";
-            $result3 = sql_query($sql3);
-            $row3 = sql_fetch_array($result3);
-
-        ?>
-        <p id="sql_title_view"><?= $row['wr_subject'] ?></p>
-        <h3 id="sql_ko_title_view"></h3>
-        <form name="fsearch" method="POST" action="<?= https_url(G5_BBS_DIR)."/application_rater_update.php" ?>">
-        <input type="hidden" name="business_idx" id= "business_idx" value="<?= $_GET['wr_idx'] ?>">
-        <input type="hidden" name="test_id"  value="<?= $_GET['bo_idx']?>">
-        <input type="hidden" name="value_id"  value="1">
-        
-        <label for="" class="label_text" style="display:block;">항목평가</label>
-        <label for="test_user" class="label_text" style="vertical-align: inherit;">연구진</label>
-        <input type="number" name="test_user" id="test_user"  class="input_text input_text_40 input_text_end" placeholder="접수번호" value="<?= $row3['test_user'] ?>" min="0" max="80"> 
-        <span>/80</span>
-        <label for="test_title" class="label_text" style="vertical-align: inherit;">주제</label>
-        <input type="number" name="test_title" id="test_title"  class="input_text input_text_40 input_text_end" placeholder="접수번호" value="<?= $row3['test_title'] ?>" min="0" max="80" > 
-        <span>/80</span>
-        <label for="test_plan" class="label_text" style="vertical-align: inherit;">계획</label>
-        <input type="number" name="test_plan" id="test_plan"  class="input_text input_text_40 input_text_end" placeholder="접수번호" value="<?= $row3['test_plan'] ?>" min="0" max="80" > 
-        <span>/80</span>
-        <label for="test_sum" class="label_text" style="vertical-align: inherit;">종합평가</label>
-        <input type="number" name="test_sum" id="test_sum"  class="input_text input_text_40 input_text_end" placeholder="접수번호" value="<?= $row3['test_sum'] ?>" readonly > 
-        <span>/80</span>
-        <label for="test_opinion" class="label_text" style="vertical-align: top;">상세설명</label>
-        <textarea name="test_opinion" id="test_opinion" class="input_text input_text_hight" <?= $row44['report'] ==2? "disabled": ""; ?> cols="20" rows="10"><?= $row3['test_opinion'] ?></textarea>
-        <button type="button" class="btn_esc">취소</button>
-        <?php if($row3['value'] != 2){ ?>
-        <button type="submit" class="btn_submit" id="value_btn_submit">저장</button>
-        <?php } ?>
-        </form>
-        
-    </fieldset>
-    <div class="bo_sch_bg"></div>
-
-   
-   
-</div>
-<script>
-        $(function(){
-               
-        })
-</script>
-            <!-- } 게시판 검색 끝 --> 
 
 
 <?php if($is_checkbox) { ?>

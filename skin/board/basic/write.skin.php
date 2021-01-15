@@ -98,37 +98,22 @@ $result = sql_query($sql);
             <div id="char_count_wrap"><span id="char_count"></span>글자</div>
             <?php } ?>
         </div>
-        
     </div>
-
-  
-
-    <!-- <?php for ($i=0; $i<4; $i++) { ?>
-    <div class="bo_w_flie write_div">
-        <div class="file_wr write_div">
-            <label for="bf_file_<?php echo $i+1 ?>" class="lb_icon"><i class="fa fa-folder-open" aria-hidden="true"></i><span class="sound_only"> 파일 #<?php echo $i+1 ?></span></label>
-            <input type="file" name="bf_file[]" id="bf_file_<?php echo $i+1 ?>" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" class="frm_file ">
+ 
+    <label for="" id="bo_side"  class="label_text" style="text-align:left">자료첨부</label>
+    <section id="bo_v"  class="bo_class">
+    <?php echo "<script>var file_number = 1;</script>"; ?> 
+    <?php $file_number = "<script>document.writeln(file_number);</script>"; ?>
+        <label for="upload01" id="file-label-btn" class="file-label" style="background:<?= $row44['report'] ==2? '#ccc': '#3a8afd'; ?>">파일 업로드</label>
+        <div class="input-file input_file_text">
+            <p class="file-name">파일명</p>
+            <p class="file-name file-size">파일 용량</p>
+            <p class="file-name file-size">파일 삭제</p>
         </div>
-        
+    </section>
 
-        <?php if($w == 'u' && $file[$i]['file']) { ?>
-        <span class="file_del">
-            <input type="checkbox" id="bf_file_del<?php echo $i ?>" name="bf_file_del[<?php echo $i;  ?>]" value="1"> <label for="bf_file_del<?php echo $i ?>"><?php echo $file[$i]['source'].'('.$file[$i]['size'].')';  ?> 파일 삭제</label>
-        </span>
-        <?php } ?>
-        
-    </div>
-    <?php } ?> -->
-    <label for="" id="bo_side"  class="label_text">자료첨부</label>
-        <section id="bo_v"  class="bo_class">
-        <?php echo "<script>var file_number = 1;</script>"; ?> 
-        <?php $file_number = "<script>document.writeln(file_number);</script>"; ?>
-            <label for="upload01" id="file-label-btn" class="file-label" style="background:<?= $row44['report'] ==2? '#ccc': '#3a8afd'; ?>">찾아보기</label>
-            
-        </section>
-
-    <div class="btn_confirm write_div">
-        <a href="<?php echo get_pretty_url($bo_table); ?>" class="btn_cancel btn">취소</a>
+    <div class="btn_confirm write_div" style="text-align:center">
+        <a href="<?php echo get_pretty_url($bo_table); ?>&bo_idx=<?= $_GET['bo_idx'] ?>" class="btn_cancel btn">취소</a>
         <button type="submit" id="btn_submit" accesskey="s" class="btn_submit btn">작성완료</button>
     </div>
     </form>
@@ -224,21 +209,47 @@ $result = sql_query($sql);
     }
 
     $(function(){
-        var html = '<div class="input-file"><input type="text" id="file_label_view1" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능"/><input type="file" name="bf_file[]" id="upload01" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?> /><button type="button" class="file-label file-del " id="file-del<?= $i ?>" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>" onClick="removeClick(this.id)">삭제</button></div>';
-        $('.bo_class').append(html);
+        var html = '<div class="input-file"><input type="text" style="margin: 0 -2px;" id="file_label_view1" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/> <input type="text" id="file-size-'+file_number+'" class="file-name file-size" style="margin: 0 -2px;" value="용량" readonly="readonly"/><input type="file" name="bf_file[]" id="upload01" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?> /><button type="button" class="file-label file-del " id="file-del<?= $i ?>" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>">삭제</button></div>';
 
-        $(document).off().on('click','.file-label',function(){
+        $('.bo_class').append(html);
+        
+
+        //클릭이벤트 unbind 
+        $("#file-label-btn").unbind("click"); 
+        
+        //클릭이벤트 bind
+        $("#file-label-btn").bind("click",function(){ 
             $('#upload0'+file_number).change(function(){
-               
                 var fileValue = $(this).val().split("\\");
                 var fileName = fileValue[fileValue.length-1]; // 파일명
+                var fileSize = this.files[0].size;
+                var str;
+
+                //MB 단위 이상일때 MB 단위로 환산
+                if (fileSize >= 1024 * 1024) {
+                    fileSize = fileSize / (1024 * 1024);
+                    var convertlastpage = fileSize.toFixed(2);
+                    str = convertlastpage + ' MB';
+                }
+    
+                else {
+                    fileSize = fileSize / 1024;
+                    var convertlastpage = fileSize.toFixed(2);
+                    str = convertlastpage + ' KB';
+                }
                 
                 if($(this).val() != ""){
                     file_number++;
-                    $(this).prev().val(fileName);
-
-                    var html = '<div class="input-file"><input type="text" id="file_label_view'+file_number+'" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능"/><input type="file" name="bf_file[]" id="upload0'+file_number+'" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?> /><button type="button" class="file-label file-del " id="file-del'+file_number+'" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>" onClick="removeClick()">삭제</button></div>';
+                    $(this).prev().val(str);
+                    $(this).prev().prev().val(fileName);
+                    // <input type="text" id="file-size-'+file_number+'" value="'.str.'" />
+                    // value="'+fileName+'"
+                    // value="'+str+'" 
+                    var html = '<div class="input-file"><input type="text" id="file_label_view'+file_number+'" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/><input type="text" id="file-size-'+file_number+'" class="file-name file-size" value="용량" readonly="readonly"/><input type="file" name="bf_file[]" id="upload0'+file_number+'" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?>/><button type="button" class="file-label file-del " id="file-del'+file_number+'" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>">삭제</button></div>';
                     $('.bo_class').append(html);
+
+                    var html = '<input type="text" name="form_file'+file_number+'" id="form__file'+file_number+'"  class="input_text_100 input_text input_text_end input_form" value="'+ fileName+'" readonly>';
+                    $('#input_file_cont').append(html);
 
                     $("#file-label-btn").attr('for', 'upload0'+file_number)
                 }

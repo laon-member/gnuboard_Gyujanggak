@@ -61,7 +61,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                 $result = sql_query($sql);
                 $row44 = sql_fetch_array($result);
 		?>
-        <tbody id = "tbody" class="<?= $lt_class ?>" style="">
+        <tbody class="<?= $lt_class ?> tbody" style="">
             <tr> 
                 <td class="" style="border:none; text-align:left; width: 70%">
                 <a href="<?= G5_BBS_URL ?>/board.value.php?bo_table=business&bo_idx=<?= $_GET['bo_idx']?>&us_idx=<?= $row['idx'] ?>">

@@ -227,7 +227,7 @@ jQuery(function($){
         <input type="hidden" name="value_id"  value="1">
         <input type="hidden" name="us_idx"  value="<?= $_GET['us_idx'] ?>">
         
-        <label for="" class="label_text" style="display:block;">항목평가</label>
+        <label for="" class="label_text" style="display:block !important;">항목평가</label>
         <label for="test_user" class="label_text" style="vertical-align: inherit;">연구진</label>
         <input type="number" name="test_user" id="test_user"  class="input_text input_text_40 input_text_end" placeholder="연구진" value="<?= $row['info_number']; ?>"  maxlength="80"> 
         <span>/80</span>
@@ -242,9 +242,10 @@ jQuery(function($){
         <span>/80</span>
         <label for="test_opinion" class="label_text" style="vertical-align: top;">상세설명</label>
         <input type="text" name="test_opinion" id ="test_opinion" class="input_text input_text_hight" value="<?= $row44['contents']; ?>"<?= $row44['report'] ==2? "disabled": ""; ?>> 
-        
-        <button type="button" class="btn_esc">취소</button>
-        <button type="submit" class="btn_submit">저장</button>
+        <div class="rater_value_btn_contianer">
+            <button type="button" class="btn_esc">취소</button>
+            <button type="submit" class="btn_submit">저장</button>
+        </div>
         </form>
         
     </fieldset>

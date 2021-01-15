@@ -51,7 +51,7 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
 
         <ul class="btn_bo_user">
             <li>
-                <fieldset class="bo_sch">
+                <fieldset class="bo_sch_input">
                     <form name="fsearch" method="POST">
                     <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
                     <input type="hidden" name="sca" value="<?php echo $sca ?>">
@@ -151,15 +151,30 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
                     // echo $list[$i]['name'];
                     $timenow = date("Y-m-d H:i:s"); 
                     $timetarget = $list[$i]['wr_date_end'];
+                    $today = date("Ymd");
+                    
+                    $nDate = date("Y-m-d",time()); // 오늘 날짜를 출력하겠지요?
+                    $valDate = $list[$i]['wr_date_end']; // 폼에서 POST로 넘어온 value 값('yyyy-mm-dd' 형식)
+                    $leftDate = intval((strtotime($valDate) - strtotime($nDate)) / 86400); // 나머지 날짜값이 나옵니다.
+                    
 
-                    $str_now = strtotime($timenow);
-                    $str_target = strtotime($timetarget);
+                    if($list[$i]['wr_date_end'] < $nDate) {
+                        echo "접수마감";
+                        echo "<br>";
+                        echo "D-".$leftDate;
 
-                    if($str_now > $str_target) {
-                        echo "마감";
-                    } else {
+                    } else if($list[$i]['wr_date_end'] > $nDate && $nDate > $list[$i]['wr_date_start']) {
                         echo "접수중";
+                        echo "<br>";
+                        echo "D-".$leftDate;
+                    } else if($list[$i]['wr_date_end'] > $nDate && $nDate  < $list[$i]['wr_date_start']) {
+                        echo "접수예정";
+                        echo "<br>";
+                        echo "D-".$leftDate;
                     }
+
+
+
                 ?>
             </td>
             

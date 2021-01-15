@@ -550,8 +550,6 @@ for ($i=0; $i<count($upload); $i++)
                          bf_type = '".(int)$upload[$i]['image'][2]."',
                          bf_datetime = '".G5_TIME_YMDHIS."' ";
         sql_query($sql);
-        echo $sql;
-        echo "<br>";
 
         run_event('write_update_file_insert', $bo_table, $wr_id, $upload[$i], $w);
     }
@@ -661,5 +659,5 @@ if($_POST['bo_title'] == 3){
 if ($file_upload_msg)
     alert($file_upload_msg, $redirect_url);
 else
-    alert("작성 완료".G5_BBS_URL."/board.notice.php?bo_table=notice&bo_idx={$_POST['bo_idx']}&bo_title={$_POST['bo_title']}{$admin_notice}");
+    alert("작성 완료", G5_BBS_URL."/board.notice.php?bo_table=notice&bo_idx={$_POST['bo_idx']}&bo_title={$_POST['bo_title']}{$admin_notice}");
 ?>

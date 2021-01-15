@@ -52,7 +52,7 @@ for($j=1; $row123=sql_fetch_array($result1); $j++) {
         <ul class="btn_bo_user">
             
             <li>
-                <fieldset class="bo_sch">
+                <fieldset class="bo_sch_input">
                     <form name="fsearch" method="POST">
                     <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
                     <input type="hidden" name="sca" value="<?php echo $sca ?>">
@@ -68,11 +68,6 @@ for($j=1; $row123=sql_fetch_array($result1); $j++) {
                     </form>
                 </fieldset>
             </li>
-        	<?php if ($is_admin == 'super') {  ?>
-                <li>
-                    <a href="<?php echo $write_href ?>&bo_idx=<?= $_GET['bo_idx'] ?><?= $_GET['u_id'] == 1?"&u_id=1" : "" ?>" class="btn_b01 btn" title="글쓰기"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sound_only">글쓰기</span></a>
-                </li>
-        	<?php }  ?>
     </div>
     <!-- } 게시판 페이지 정보 및 버튼 끝 -->
         	

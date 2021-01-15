@@ -94,10 +94,10 @@ border:1px solid #558ab7 !important;
 #hd_qnb .visit .visit-num {display:inline-block;line-height:16px;padding:0 5px;margin-left:5px;border-radius:10px;background:#da22f5;color:#fff;font-size:10px}
 
 
-.hd_login {position:absolute;right:0;top:60px}
+.hd_login {position:absolute;right:0;top:60px;cursor: pointer;}
 .hd_login li {color:#fff;float:left;margin:0 5px;border-left:1px solid #616161;padding-left:10px;line-height:13px}
 .hd_login li:first-child {border-left:0}
-.hd_login a {color:#fff}
+.hd_login a {color:#fff;}
 
 
 /* 메인메뉴 */
@@ -509,4 +509,8 @@ border-radius : 4px;
   left : 50%;
   transform: translateX(-50%);
   bottom: 18px;
+}
+
+.bo_sch{
+  border: 1px solid #ecf0f1;
 }

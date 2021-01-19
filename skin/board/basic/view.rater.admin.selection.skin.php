@@ -94,9 +94,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                         <td class="td_center"><?= $row['quest_number'] ?> </td>
                         <td class="td_download ko_title" ><?= $row['ko_title']; ?></td>
                         <td class="td_datetime td_center"><?php echo $row['name'];  ?></td>
-                        <td class="td_center">
+                        <td class="td_center wr_average">
                             <?php
-                            $average = 0;
+                                $average = 0;
                                 $sql333 = " select count(*) as cnt from rater where business_idx = '{$_GET['border_idx']}'";
                                 $result333 = sql_query($sql333);
                                 $row333 = sql_fetch_array($result333);
@@ -116,13 +116,13 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                             ?>
                             <?= $average ?>/80
                         </td>
-                        <td class="td_center">
+                        <td class="td_center wr_average_max_min">
                             <?php
                             $average_max_min_not = 0;
                                 $sql333 = " select count(*) as cnt from rater where business_idx = '{$_GET['border_idx']}'";
                                 $result333 = sql_query($sql333);
                                 $row333 = sql_fetch_array($result333);
-                                if($row333['cnt'] > 2){
+                                if($row333['cnt'] < 2){
                                     $sql = " select * from rater where business_idx = '{$_GET['border_idx']}'";
                                     $result = sql_query($sql);
                                     $sum = 0;
@@ -145,7 +145,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                                     $average_max_min_not = $sql_test_sum/$rater_user;
                                 } else {
                                     $sql = " select * from rater where business_idx = '{$_GET['border_idx']}'";
-                                    echo $sql;
                                     $result = sql_query($sql);
                                     $sum = 0;
 
@@ -218,12 +217,16 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             var wr_idx;
             var bo_idx;
             $(".ko_title").on("click", function() {
+                $('.bo_sch_wrap').toggle();
+
+                $('#ko_title').text($(this).text());
+                $('#wr_average').text($(this).next().next().text());
+                $('#wr_average_max_min').text($(this).next().next().next().text());
+        
                 us_idx = $(this).parents('.tr_hover').find('#sql_us_idx').attr('value');
                 bo_idx = $(this).parents('.tr_hover').find('#sql_bo_idx').attr('value');
                 wr_idx = $(this).parents('.tr_hover').find('#sql_wr_idx').attr('value');
-               
-                $('.bo_sch_wrap').toggle();
-        
+
                 $.ajax({
                     url : "<?= G5_BBS_URL ?>/mysql.php",
                     type : "post",
@@ -243,6 +246,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                         }
                     }
                 });
+                
             });
             $('.bo_sch_bg, .bo_sch_cls, .btn_esc, #top_esc').click(function(){
                 $('.bo_sch_wrap').hide();
@@ -268,6 +272,14 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                 
                 <table>
                 <thead>
+                <tr>
+                    <td style="width:5%" >과제명</td>
+                    <th style="width:30%" id="ko_title">지원자의 과제명</th>
+                    <td style="width:5%">평점평균<br>(단순)</td>
+                    <th style="width:5%" id="wr_average">70 / 80</th>
+                    <td style="width:10%">평점평균<br>(최고/최저점 제외)</td>
+                    <th style="width:5%" id="wr_average_max_min">70 / 80</th>
+                </tr>
                 <tr>
                     <th scope="col" style="width:10%" class=" td_center">심사위원</th>
                     <th scope="col" style="width:20%" class=" td_center">연구진 평가점수</th>

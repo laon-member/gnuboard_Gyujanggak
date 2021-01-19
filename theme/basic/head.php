@@ -51,7 +51,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                     alert('심사자는 접근이 불가합니다.');
                 }    
                 ?>
-                <li class="board_nav_list ">
+                <li class="board_nav_list board_nav_list_hover">
                     <a href="<?= G5_BBS_URL ?>/board.php?bo_table=business&bo_idx=1" class="<?= $board_border ?> " style="<?= $user == 1? 'border-bottom: 2px solid black;': ''?>">사업공고</a>
                     <ul class="sub_menu">
                         <li><a href="<?= G5_BBS_URL ?>/board.php?bo_table=business&bo_idx=1">한국학 연구용역</a> </li>
@@ -62,20 +62,20 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                         <li><a href="<?= G5_BBS_URL ?>/board.php?bo_table=business&bo_idx=6">신진학자 초청 초류</a></li>
                     </ul>
                 </li>
-                <li class="board_nav_list ">
+                <li class="board_nav_list board_nav_list_hover">
                     <a href="<?= G5_BBS_URL ?>/board.value.php?bo_table=business&bo_idx=7" class="<?= $board_value_border ?>" style="<?= $user == 3? 'border-bottom: 2px solid black;': ''?>">지원결과 확인</a>
                     <ul class="sub_menu">
                         <li><a href="<?= G5_BBS_URL ?>/board.value.php?bo_table=business&bo_idx=7">지원결과 확인</a></li>
                     </ul>
                 </li>
-                <li class="board_nav_list">
+                <li class="board_nav_list board_nav_list_hover" >
                     <a href="<?= G5_BBS_URL ?>/board.report.php?bo_table=business&bo_idx=1" class=" <?= $board_report_border ?>" style="<?= $user == 2? 'border-bottom: 2px solid black;': ''?>">보고서 제출</a>
                     <ul class="sub_menu">
                         <li><a href="<?= G5_BBS_URL ?>/board.report.php?bo_table=business&bo_idx=1">중간보고서</a></li>
                         <li><a href="<?= G5_BBS_URL ?>/board.report.php?bo_table=business&bo_idx=2">결과(연차)보고서</a></li>
                     </ul>
                 </li>
-                <li class="board_nav_list">
+                <li class="board_nav_list board_nav_list_hover">
                     <a href="<?= G5_BBS_URL ?>/board.notice.php?bo_table=notice&bo_idx=7&bo_title=1" class=" <?= $board_notice_border ?>" style="<?= $user == 4? 'border-bottom: 2px solid black;': ''?>" >자료실</a>
                     <ul class="sub_menu">
                         <li><a href="<?= G5_BBS_URL ?>/board.notice.php?bo_table=notice&bo_idx=7&bo_title=1">공지사항</a></li>
@@ -94,7 +94,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                         alert('심사자이상만 접근 가능합니다.');
                     }    
                 ?>
-                <li class="board_nav_list">
+                <li class="board_nav_list board_nav_list_hover">
                     <a href="<?= G5_BBS_URL ?>/board.rater.php?bo_table=qa&bo_idx=1" class=" <?= $board_rater_border ?>" style="<?= $rater == 1? 'border-bottom: 2px solid black;': ''?>">심사관리</a>
                     <ul class="sub_menu">
                         <li><a href="<?= G5_BBS_URL ?>/board.rater.php?bo_table=qa&bo_idx=1">지원자 선발</a></li>
@@ -102,10 +102,10 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                         <li><a href="<?= G5_BBS_URL ?>/board.rater.php?bo_table=qa&bo_idx=3">결과(연차)보고서</a></li>
                     </ul>
                 </li>
-                <li class="board_nav_list">
+                <li class="board_nav_list board_nav_list_hover">
                     <a href="<?= G5_BBS_URL ?>/board.notice.php?bo_table=notice&bo_idx=7&bo_title=2" class=" <?= $board_notice_border ?>" style="<?= $rater == 2? 'border-bottom: 2px solid black;': ''?>" >공지사항</a>
                     <ul class="sub_menu">
-                        <li><a href="/bbs/board.notice.php?bo_table=notice&bo_idx=7&bo_title=2">공지사항</a></li>
+                        <li><a href="<?= G5_BBS_URL ?>/board.notice.php?bo_table=notice&bo_idx=7&bo_title=2">공지사항</a></li>
                     </ul>
                 </li>
             <?php } ?>
@@ -120,7 +120,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                     alert('관리자이상만 접근 가능합니다.');
                 }
             ?>
-                <li class="board_nav_list">
+                <li class="board_nav_list board_nav_list_hover">
                     <a href="<?= G5_BBS_URL ?>/board.app.php?bo_table=business&bo_idx=1&u_id=1"  style="<?= $admin == 1? 'border-bottom: 2px solid black;': ''?>">신청서관리</a>
                     <ul class="sub_menu">
                         <li><a href="<?= G5_BBS_URL ?>/board.app.php?bo_table=business&bo_idx=1&u_id=1">한국학 연구용역</a> </li>
@@ -131,7 +131,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                         <li><a href="<?= G5_BBS_URL ?>/board.app.php?bo_table=business&bo_idx=6&u_id=1">신진학자 초청 초류</a></li>
                     </ul>
                 </li>
-                <li class="board_nav_list">
+                <li class="board_nav_list board_nav_list_hover">
                     <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=qa&bo_idx=1&u_id=1" style="<?= $admin == 2? 'border-bottom: 2px solid black;': ''?>">심사 관리</a>
                     <ul class="sub_menu">
                         <li><a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=qa&bo_idx=1&u_id=1">지원자 선발</a></li>
@@ -139,7 +139,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                         <li><a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=qa&bo_idx=3&u_id=1">결과(연차)보고서</a></li>
                     </ul>
                 </li>
-                <li class="board_nav_list">
+                <li class="board_nav_list board_nav_list_hover">
                     <a href="<?= G5_BBS_URL ?>/board_admin.php?bo_table=business&bo_idx=1&u_id=1" style="<?= $admin == 3? 'border-bottom: 2px solid black;': ''?>">보고서 관리</a>
                     <ul class="sub_menu">
                         <li><a href="<?= G5_BBS_URL ?>/board_admin.php?bo_table=business&bo_idx=1&u_id=1">한국학 연구용역</a> </li>
@@ -150,7 +150,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                         <li><a href="<?= G5_BBS_URL ?>/board_admin.php?bo_table=business&bo_idx=6&u_id=1">신진학자 초청 초류</a></li>
                     </ul>
                 </li>
-                <li class="board_nav_list">
+                <li class="board_nav_list board_nav_list_hover">
                     <a href="<?= G5_BBS_URL ?>/board.notice.php?bo_table=notice&bo_idx=7&bo_title=3&u_id=1" style="<?= $admin == 4? 'border-bottom: 2px solid black;': ''?>">자료실</a>
                     <ul class="sub_menu">
                         <li><a href="<?= G5_BBS_URL ?>/board.notice.php?bo_table=notice&bo_idx=7&bo_title=3&u_id=1">공지사항</a></li>
@@ -192,7 +192,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
         </div>
     </div>
     <script>
-        jQuery(function($){
+    jQuery(function($){
         // 게시판 검색
         
         $('.header_esc').click(function(){
@@ -201,32 +201,40 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 
         
         $('.board_nav_list_menu').on('click', function(){
-
-            if($(this).attr('id') != 'slide'){
+            
+          if($(this).attr('id') != 'slide'){
                 $(this).attr('id', 'slide');
-                $('.sub_menu').slideDown(500); 
+                $('.board_nav_list').removeClass("board_nav_list_hover");
+                $('.sub_menu').slideDown();
                 $('.board_nav_list_menu_back').css({'display':'block'});
 
 
-                $(' .menu span:nth-child(1)').css({'left':'50%', 'top':'50%','transform':'translate(-50%, -50%) rotate(45deg)'});
-                $(' .menu span:nth-child(2)').css({'display':'none'});
-                $(' .menu span:nth-child(3)').css({'left':'50%', 'top':'50%','transform':'translate(-50%, -50%) rotate(-45deg)'});
-
-
+                $('.menu span:nth-child(1)').css({'left':'50%', 'top':'50%','transform':'translate(-50%, -50%) rotate(45deg)'});
+                $('.menu span:nth-child(2)').css({'display':'none'});
+                $('.menu span:nth-child(3)').css({'left':'50%', 'top':'50%','transform':'translate(-50%, -50%) rotate(-45deg)'});
             } else {
-                $(this).removeAttr('id');
-                $('.sub_menu').slideUp(500);
+
+                $(this).removeAttr('id', 'slide');
+                $('.board_nav_list').addClass("board_nav_list_hover");
+                $('.sub_menu').slideUp();
+
+                
                 $('.board_nav_list_menu_back').css({'display':'none'});
 
-                $(' .menu span:nth-child(1)').css({'left':'50%', 'top':'18px','transform':'translateX(-50%) rotate(0)'});
-                $(' .menu span:nth-child(2)').css({'left':'50%', 'top':'50%','transform':'translate(-50%, -50%) rotate(0)','display':'block'});
-                $(' .menu span:nth-child(3)').css({'left':'50%', 'top':'47px','transform':'translateX(-50%) rotate(0)'});
+                $('.menu span:nth-child(1)').css({'left':'50%', 'top':'18px','transform':'translateX(-50%) rotate(0)'});
+                $('.menu span:nth-child(2)').css({'left':'50%', 'top':'50%','transform':'translate(-50%, -50%) rotate(0)','display':'block'});
+                $('.menu span:nth-child(3)').css({'left':'50%', 'top':'47px','transform':'translateX(-50%) rotate(0)'});
             }
-
         })
-        $('.board_nav_list').hover(function(){
+        
+        
+
+        $('.board_nav_list_hover').hover(function(){
+            if($(".board_nav_list_hover").is(".board_nav_list_hover")){
                 $(this).find('.sub_menu').slideToggle();
-            }); 
+            }
+        }); 
+         
 
         $('#showDatesCheckbox').click(function(){
             $('#ajaxgif').fadeIn();

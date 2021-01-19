@@ -24,11 +24,12 @@ $sql1 = "select count(*) as cnt from g5_business_propos where bo_idx = '{$_GET['
 $result1 = sql_query($sql1);
 $row1=sql_fetch_array($result1);
 
-
+echo $row1['cnt'];
 if($row1['cnt'] > 0){
     $sql2 = "select * from g5_business_propos where bo_idx = '{$_GET['us_idx']}'";
     $result2 = sql_query($sql2);
     for($j=1; $row2=sql_fetch_array($result2); $j++) {
+        echo $row2['value'];
         if($_GET['bo_idx'] == 1){
             if($row2['value'] == 4 || $row2['value'] == 3){
                 alert("이미 발표를 했습니다.");
@@ -40,7 +41,7 @@ if($row1['cnt'] > 0){
                 sql_query($sql2);
 
                 alert('평가완료'); 
-            } else if($row1['value'] == 1) {
+            } else if($row2['value'] == 1) {
                 $sql = " UPDATE g5_business_propos set value = '4' where bo_idx = '{$_GET['us_idx']}'";
                 sql_query($sql);
                 
@@ -59,7 +60,7 @@ if($row1['cnt'] > 0){
                 sql_query($sql2);
 
                 alert('평가완료'); 
-            } else if($row1['wr_8'] == 1) {
+            } else if($row2['wr_8'] == 1) {
                 $sql = " UPDATE g5_business_propos set value = '4' where bo_idx = '{$_GET['us_idx']}'";
                 sql_query($sql);
                 
@@ -79,7 +80,7 @@ if($row1['cnt'] > 0){
                 sql_query($sql2);
 
                 alert('평가완료'); 
-            } else if($row1['wr_9'] == 1) {
+            } else if($row2['wr_9'] == 1) {
                 $sql = " UPDATE g5_business_propos set value = '4' where bo_idx = '{$_GET['us_idx']}'";
                 sql_query($sql);
                 

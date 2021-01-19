@@ -77,13 +77,13 @@ $result = sql_query($sql);
 
     <div>
         <label for="quest_number_view" class="label_text">과제번호</label>
-        <input type="text" name="quest_number_view" id="quest_number_view"  class="input_text input_text_50 input_text_end" placeholder="과제번호" value="<?= $row['quest_number']; ?>">
+        <input type="text" name="quest_number_view" id="quest_number_view"  class="input_text input_text_50 input_text_end" placeholder="과제번호" value="<?= $row['quest_number']; ?>" required>
     </div>
     
     
     <label for="date_start_view" class="label_text">총 연구 기간</label>
-    <input type="date" name="date_start_act" id="date_start_view"  class="frm_input required full_input input_text_50 input_text_end" value='yyyy-mm-dd' max="9999-12-31">
-    <input type="date" name="date_end_act" id="date_end_view"  class="frm_input required full_input input_text_50 input_text_end"  value='yyyy-mm-dd' max="9999-12-31">
+    <input type="date" name="date_start_act" id="date_start_view"  class="frm_input required full_input input_text_50 input_text_end" value='yyyy-mm-dd' max="9999-12-31" required>
+    <input type="date" name="date_end_act" id="date_end_view"  class="frm_input required full_input input_text_50 input_text_end"  value='yyyy-mm-dd' max="9999-12-31" required>
 
     <div class="write_div">
         <label for="wr_content" class="sound_only">내용<strong>필수</strong></label>

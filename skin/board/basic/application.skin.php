@@ -4,17 +4,18 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
     
-$sql1 = " select * from g5_write_business_title where bo_table = '{$_GET['bo_table']}'";
-$result1 = sql_query($sql1);
 
 $sql = " SELECT * FROM `g5_write_business` where wr_id = {$_GET['wr_id']} ";
 $result = sql_query($sql);
 $row=sql_fetch_array($result);
+
+$sql = " select * from g5_write_business_title where bo_table = '{$_GET['bo_table']}'";
+$result = sql_query($sql);
 ?>
 <aside id="bo_side">
     <h2 class="aside_nav">사업 공고</h2>
     <?php 
-        for($k=1; $row1=sql_fetch_array($result1); $k++) {
+        for($k=1; $row1=sql_fetch_array($result); $k++) {
             $class_get = $_GET['bo_idx'] == $row1['idx']?"aisde_click":"";
             echo '<a class="aside_nav '.$class_get.'" href="'.G5_BBS_URL .'/board.php?bo_table=business&bo_idx='.$k.'&page=1">'.$row1['title'].'</a>';
            
@@ -110,8 +111,8 @@ $row=sql_fetch_array($result);
             <p class="sub_text">* 연구책임자 제외</p>
 
             <label for="date_start" class="label_text">총 연구 기간</label>
-            <input type="date" name="date_start" id="date_start"  class="input_text input_text_50">
-            <input type="date" name="date_end" id="date_end"  class="input_text input_text_50">
+            <input type="date" name="date_start" id="date_start"  class="input_text input_text_50" max="9999-12-31" >
+            <input type="date" name="date_end" id="date_end"  class="input_text input_text_50" max="9999-12-31">
             <br>
             <label for="value" class="label_text">연구비신청액</label>
             <input type="text" name="money" id="money"  class="input_text " placeholder="연구비신청액" >
@@ -211,7 +212,7 @@ $row=sql_fetch_array($result);
 
         <div class="btn_confirm write_div btn-cont">
             <button type="button" id="btn_submit1" accesskey="s" class="btn_cancel btn btn_step2">이전</button>
-            <button type="submit" id="btn_submit2" accesskey="s" class="btn_submit btn btn_step4">다음</button>
+            <button type="submit" id="btn_submit2" accesskey="s" class="btn_submit btn btn_step4">완료</button>
         </div>
     </div>
     </form>
@@ -242,6 +243,7 @@ $row=sql_fetch_array($result);
             // logic
             $('.step').removeClass('step_view');
             $('.step2').addClass('step_view');
+
                                                 
         });
         $('.btn_step3').click(function(){
@@ -253,7 +255,13 @@ $row=sql_fetch_array($result);
             if($('#value').val() == "") return alert("연구비신청액이 비어있습니다");
             if($('#one_year').val() == "") return alert("1차년 연구비가 비어있습니다");
             if($('#two_year').val() == "") return alert("2차년 연구비가 비어있습니다");
-            
+
+            IsValidDateStart = Date.parse($('#date_start').val());
+            if (isNaN(IsValidDateStart)) return alert('총 연구기간 시작 날짜가 유효하지 않습니다.');
+                
+            IsValidDateEnd = Date.parse($('#date_end').val());
+            if (isNaN(IsValidDateEnd)) return alert('총 연구기간 끝나는 날짜가 유효하지 않습니다.');
+
             // logic
             $('.step').removeClass('step_view');
             $('.step3').addClass('step_view');
@@ -340,31 +348,32 @@ $row=sql_fetch_array($result);
                 }
                 
                 if($(this).val() != ""){
-                    file_number++;
                     $(this).prev().val(str);
                     $(this).prev().prev().val(fileName);
-                    // <input type="text" id="file-size-'+file_number+'" value="'.str.'" />
-                    // value="'+fileName+'"
-                    // value="'+str+'" 
-                    var html = '<div class="input-file"><input type="text" id="file_label_view'+file_number+'" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/><input type="text" id="file-size-'+file_number+'" class="file-name file-size" value="용량" readonly="readonly"/><input type="file" name="bf_file[]" id="upload0'+file_number+'" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?>/><button type="button" class="file-label file-del " id="file-del'+file_number+'" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>">삭제</button></div>';
-                    $('.bo_class').append(html);
 
                     var html = '<input type="text" name="form_file'+file_number+'" id="form__file'+file_number+'"  class="input_text_100 input_text input_text_end input_form" value="'+ fileName+'" readonly>';
                     $('#input_file_cont').append(html);
 
-                    $("#file-label-btn").attr('for', 'upload0'+file_number)
+                    file_number++;
+
+                    var html = '<div class="input-file"><input type="text" id="file_label_view'+file_number+'" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/><input type="text" id="file-size-'+file_number+'" class="file-name file-size" value="용량" readonly="readonly"/><input type="file" name="bf_file[]" id="upload0'+file_number+'" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?>/><button type="button" class="file-label file-del " id="file-del'+file_number+'" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>">삭제</button></div>';
+                    $('.bo_class').append(html);
+
+                    $("#file-label-btn").attr('for', 'upload0'+file_number);
+
                 }
             })
         })
 
         $(document).off().on('click','.file-del',function(){
             var val = $(this).prev().val();
-            var next = $(this).parent().next().find('.file-upload').val();
-            var index_form = $(this).parent().index() -1;
+            var next = $(this).parent().next('.input-file').val();
+            var index_form = $(this).parent().index() -2;
 
             if(val != ""){
                 $(this).parent().remove();
                 $('.input_form:nth-of-type('+index_form+')').remove();
+                
             } else {
                 if(next == ""){
                     $(this).parent().remove();
@@ -378,6 +387,8 @@ $row=sql_fetch_array($result);
         });
 
     })
+
+
 </script>
 
 

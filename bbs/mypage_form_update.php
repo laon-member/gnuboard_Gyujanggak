@@ -64,14 +64,22 @@ if ($page == "1") {
 
     if($_POST['mb_password'] != ""){
         if(check_password($_POST['mb_password'], $member['mb_password'])){
-            echo "fdsa";
             if ($is_admin == 'super'){
                 alert('최고 관리자는 탈퇴할 수 없습니다');
             } else {
-                // DELETE FROM [테이블] WHERE [조건]
-                $sql = "DELETE FROM `g5_member` WHERE mb_id = '{$member['mb_id']}'";
+                // UPDATE [테이블] SET [열] = '변경할값' WHERE [조건]
+                $date = date("Ymd", G5_SERVER_TIME);
+                $sql = "UPDATE `g5_member` set mb_leave_date = '{$date}'  WHERE mb_id = '{$member['mb_id']}'";
                 sql_query($sql);
-                alert('회원탈퇴 완료', G5_URL);     
+                // 이호경님 제안 코드
+                session_unset(); // 모든 세션변수를 언레지스터 시켜줌
+                session_destroy(); // 세션해제함
+
+                // 자동로그인 해제 --------------------------------
+                set_cookie('ck_mb_id', '', 0);
+                set_cookie('ck_auto', '', 0);
+                // 자동로그인 해제 end --------------------------------   
+                alert('회원탈퇴 완료', G5_URL);
             }
 
         } else {

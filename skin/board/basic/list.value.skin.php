@@ -21,7 +21,34 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 </aside>
 <!-- $bo_title -->
 <div id="bo_list" >
-
+ <!-- 게시판 페이지 정보 및 버튼 시작 { -->
+    
+    <div id="bo_btn_top">
+        <h1 id="">지원결과 확인</h1>
+        <ul class="btn_bo_user">
+            
+            <li>
+                <fieldset class="bo_sch_input">
+                    <form name="fsearch" method="POST">
+                    <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
+                    <input type="hidden" name="sca" value="<?php echo $sca ?>">
+                    <input type="hidden" name="sop" value="and">
+                    <input type="hidden" name="sop" value="and">
+                    <input type="hidden" name="bo_idx" value="<?= $_GET['bo_idx'] ?>">
+                    <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+                    <select name="sfl" id="sfl">
+                        <option value="ko_title">제목</option>
+                    </select>
+                    <div class="sch_bar">
+                        <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" required id="stx" class="sch_input" size="25" maxlength="20" placeholder=" 검색어를 입력해주세요">
+                        <button type="submit" value="검색" class="sch_btn"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">검색</span></button>
+                    </div>
+                    </form>
+                </fieldset>
+            </li>
+        </ul>     
+    </div>
+    <!-- } 게시판 페이지 정보 및 버튼 끝 -->
     
     <form name="fboardlist" id="fboardlist" action="<?php echo G5_BBS_URL; ?>/board_list_update.php" onsubmit="return fboardlist_submit(this);" method="post">
     
@@ -35,24 +62,18 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     <input type="hidden" name="page" value="<?php echo $page ?>">
     <input type="hidden" name="sw" value="">
 
-    <!-- 게시판 페이지 정보 및 버튼 시작 { -->
-    <div id="bo_btn_top">
-        <h1 id="">지원결과 확인</h1>
-
-    </div>
-    <!-- } 게시판 페이지 정보 및 버튼 끝 -->
+   
         	
     <div class="tbl_head01 tbl_wrap">
         <table>
         <caption><?php echo $board['bo_subject'] ?> 목록</caption>
         
         <?php
-            $sql2 = " select * from g5_business_propos where mb_id = '{$member['mb_id']}'";
-            $sql2 .= " {$sql_order} DESC limit {$from_record}, $page_rows ";
-
-            $result2 = sql_query($sql2);
-
-            for($i=0; $row=sql_fetch_array($result2); $i++) {
+            
+            echo $sql2;
+            // $result2 = sql_query($sql2);
+            // $row=sql_fetch_array($result2);
+            for($i=0;$i<count($list); $i++) {
                 
                 if ($i%2==0) $lt_class = "even";
                 else $lt_class = "";
@@ -66,13 +87,13 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                 <td class="" style="border:none; text-align:left; width: 70%">
                 <a href="<?= G5_BBS_URL ?>/board.value.php?bo_table=business&bo_idx=<?= $_GET['bo_idx']?>&us_idx=<?= $row['idx'] ?>">
                     <span >지원사업 제목 : </span>
-                    <?= $row44['wr_subject']; ?>
+                    <?= $list[$i]['ko_title']; ?>
                 </a>
                 </td>
                 <td class="" style="border:none; text-align:left; width: 30%">
                     <span >지원일자 : </span>
                 
-                    <?= $row['bf_datetime']; ?>
+                    <?= $list[$i]['bf_datetime']; ?>
                 </td>
                 
             </tr>
@@ -126,7 +147,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     <!-- 총 게시판 -->
     <?php $total_page  = ceil($total_count / $page_rows);  ?>
     
-    <?php echo get_paging('15', $page, $total_page, $url); ?>
+    <?php echo get_paging('10', 1, $total_page, $url); ?>
 	<!-- 페이지 -->
 	
     

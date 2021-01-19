@@ -52,20 +52,22 @@ for($j=1; $row123=sql_fetch_array($result1); $j++) {
         <ul class="btn_bo_user">
             
             <li>
+                <?php
+                    $http_host = $_SERVER['HTTP_HOST'];
+                    $request_uri = $_SERVER['REQUEST_URI'];
+                    $url = 'http://' . $http_host . $request_uri;
+                
+                    $url = preg_replace('#&page=[0-9]*#', '', $url);
+                ?>
                 <fieldset class="bo_sch_input">
-                    <form name="fsearch" method="POST">
+                    <form name="fsearch" method="POST" action="<?= $url?>">
                     <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
                     <input type="hidden" name="sca" value="<?php echo $sca ?>">
                     <input type="hidden" name="sop" value="and">
-                    <input type="hidden" name="sop" value="and">
                     <input type="hidden" name="bo_idx" value="<?= $_GET['bo_idx'] ?>">
-                    <!-- <input type="hidden" name="sfl" value="wr_subject"> -->
                     <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
                     <select name="sfl" id="sfl">
                         <?php echo get_board_sfl_select_options($sfl); ?>
-                        <!-- <option value="wr_subject||wr_content">전체</option>
-                        <option value="wr_subject">제목</option>
-                        <option value="wr_content">내용</option> -->
                     </select>
                     <div class="sch_bar">
                         <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" required id="stx" class="sch_input" size="25" maxlength="20" placeholder=" 검색어를 입력해주세요">
@@ -74,6 +76,7 @@ for($j=1; $row123=sql_fetch_array($result1); $j++) {
                     </form>
                 </fieldset>
             </li>
+        </ul>
     </div>
     <!-- } 게시판 페이지 정보 및 버튼 끝 -->
         	
@@ -83,6 +86,8 @@ for($j=1; $row123=sql_fetch_array($result1); $j++) {
     <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
     <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
     <input type="hidden" name="stx" value="<?php echo $stx ?>">
+   
+
     <input type="hidden" name="spt" value="<?php echo $spt ?>">
     <input type="hidden" name="sca" value="<?php echo $sca ?>">
     <input type="hidden" name="sst" value="<?php echo $sst ?>">
@@ -113,7 +118,7 @@ for($j=1; $row123=sql_fetch_array($result1); $j++) {
             <td class="td_idx td_center">
             <?php
                 echo $list[$i]['num'];
-             ?>
+             ?> 
             </td>
 
             <td class="td_title" style="padding-left:<?php echo $list[$i]['reply'] ? (strlen($list[$i]['wr_reply'])*10) : '0'; ?>px">
@@ -136,7 +141,7 @@ for($j=1; $row123=sql_fetch_array($result1); $j++) {
             <td class="td_download td_center">
                 <?php if ($list[$i]['wr_file'] > 0) { ?>
                     <i class="fa fa-download" aria-hidden="true"></i>
-                    <?php } ?>
+                <?php } ?>
             </td>
             <td class="td_datetime td_center"><?php echo $list[$i]['datetime'] ?></td>
             <td class="td_hit td_center"><?php echo $list[$i]['wr_hit'] ?></td>
@@ -185,15 +190,10 @@ for($j=1; $row123=sql_fetch_array($result1); $j++) {
 	<!-- 페이지 -->
 
     <!-- 현재 URL 주소 -->
-    <?php
-        $http_host = $_SERVER['HTTP_HOST'];
-        $request_uri = $_SERVER['REQUEST_URI'];
-        $url = 'http://' . $http_host . $request_uri;
-    ?>    
+      
     
     <!-- 총 게시판 -->
-
-    <?php echo get_paging('15', $page, $total_page, $url); ?>
+    <?php echo $write_pages ?>
 	<!-- 페이지 -->
 	
 </div>

@@ -39,7 +39,6 @@ $is_search_bbs = false;
 if ($sca || $stx || $stx === '0') {     //검색이면
     $is_search_bbs = true;      //검색구분변수 true 지정
     $sql_search = get_sql_search($sca, $sfl, $stx, $sop);
-    
 
     $sql = " select MIN(wr_num) as min_wr_num from {$write_table} ";
     $row = sql_fetch($sql);
@@ -48,7 +47,6 @@ if ($sca || $stx || $stx === '0') {     //검색이면
     if (!$spt) $spt = $min_spt;
 
     $sql_search .= " and (wr_num between {$spt} and ({$spt} + {$config['cf_search_part']})) ";
-
 
     // 원글만 얻는다. (코멘트의 내용도 검색하기 위함)
     // 라엘님 제안 코드로 대체 http://sir.kr/g5_bug/2922
@@ -91,9 +89,7 @@ if(G5_IS_MOBILE) {
     $page_rows = $board['bo_page_rows'];
     $list_page_rows = $board['bo_page_rows'];
 }
-
-if ($page < 1) { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
-
+if ($page < 2) { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 // 년도 2자리
 $today2 = G5_TIME_YMD;
 
@@ -121,7 +117,7 @@ if (!$is_search_bbs) {
 
         if($k < $from_notice_idx) continue;
 
-        $list[$i] = get_list($row, $board, $board_skin_url, G5_IS_MOBILE ? $board['bo_mobile_subject_len'] : $board['bo_subject_len']);
+        $list[$i] =     get_list($row, $board, $board_skin_url, G5_IS_MOBILE ? $board['bo_mobile_subject_len'] : $board['bo_subject_len']);
         $list[$i]['is_notice'] = true;
 
         $i++;
@@ -131,7 +127,7 @@ if (!$is_search_bbs) {
             break;
     }
 }
-
+// G5_BBS_URL.'/bbs/board.rater.admin.php?bo_table=qa&bo_idx=1&u_id=1&page=2'
 $total_page  = ceil($total_count / $page_rows);  // 전체 페이지 계산
 $from_record = ($page - 1) * $page_rows; // 시작 열을 구함
 
@@ -201,7 +197,6 @@ if ($is_search_bbs) {
     $sql .= " {$sql_order} limit {$from_record}, $page_rows ";
 }
 
-
 // 페이지의 공지개수가 목록수 보다 작을 때만 실행
 if($page_rows > 0) {
     $result = sql_query($sql);
@@ -213,7 +208,6 @@ if($page_rows > 0) {
         // 검색일 경우 wr_id만 얻었으므로 다시 한행을 얻는다
         // if ($is_search_bbs)
         //     $row = sql_fetch(" select * from {$write_table} where wr_id = '{$row['wr_parent']}' and wr_title_idx = '{$_GET['bo_idx']}'");
-
         $list[$i] = get_list($row, $board, $board_skin_url, G5_IS_MOBILE ? $board['bo_mobile_subject_len'] : $board['bo_subject_len']);
         // if (strstr($sfl, 'subject')) {
         //     $list[$i]['subject'] = search_font($stx, $list[$i]['subject']);
@@ -221,7 +215,6 @@ if($page_rows > 0) {
         $list[$i]['is_notice'] = false;
         $list_num = $total_count - ($page - 1) * $list_page_rows - $notice_count;
         $list[$i]['num'] = $list_num - $k;
-        
         
         $i++;
         $k++;
@@ -234,17 +227,19 @@ g5_latest_cache_data($board['bo_table'], $list);
 $http_host = $_SERVER['HTTP_HOST'];
 $request_uri = $_SERVER['REQUEST_URI'];
 $url = 'http://' . $http_host . $request_uri;
+$url .= '&sfl=mb_1&stx=';
+// $write_pages = get_paging(15, $page, $total_page, './member_list.php?sfl=mb_1&stx=');
+echo $write_pages;
 
-
-$write_pages = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page,$url);
-
+echo $stx;
+$write_pages = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, G5_BBS_URL.'/board.php?bo_table=business&bo_idx=1&stx='.$stx,$add);
 $list_href = '';
 $prev_part_href = '';
 $next_part_href = '';
 if ($is_search_bbs) {
     $list_href = get_pretty_url($bo_table);
-
     $patterns = array('#&amp;page=[0-9]*#', '#&amp;spt=[0-9\-]*#');
+   
 
     //if ($prev_spt >= $min_spt)
     $prev_spt = $spt - $config['cf_search_part'];
@@ -260,6 +255,7 @@ if ($is_search_bbs) {
         $next_part_href = get_pretty_url($bo_table,0,$qstr1.'&amp;spt='.$next_spt.'&amp;page=1');
         $write_pages = page_insertafter($write_pages, '<a href="'.$next_part_href.'" class="pg_page pg_end">다음검색</a>');
     }
+
 }
 
 

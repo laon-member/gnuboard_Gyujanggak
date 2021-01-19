@@ -28,7 +28,7 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
 ?>
 <!-- 게시판 목록 시작 { -->
 <aside id="bo_side">
-    <h2 class="aside_nav">사업 공고</h2>
+    <h2 class="aside_nav">사업공고 관리</h2>
     <?php 
         for($k=1; $row=sql_fetch_array($result); $k++) {
             $class_get =  $_GET['bo_idx'] == $row['idx']?"aisde_click":"";
@@ -51,15 +51,17 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
 
         <ul class="btn_bo_user">
             <li>
-                <fieldset class="bo_sch_input">
+            <fieldset class="bo_sch_input">
                     <form name="fsearch" method="POST">
                     <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
                     <input type="hidden" name="sca" value="<?php echo $sca ?>">
                     <input type="hidden" name="sop" value="and">
                     <input type="hidden" name="sop" value="and">
                     <input type="hidden" name="bo_idx" value="<?= $_GET['bo_idx'] ?>">
-                    <input type="hidden" name="sfl" value="wr_subject">
                     <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+                    <select name="sfl" id="sfl">
+                        <?php echo get_board_sfl_select_options($sfl); ?>
+                    </select>
                     <div class="sch_bar">
                         <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" required id="stx" class="sch_input" size="25" maxlength="20" placeholder=" 검색어를 입력해주세요">
                         <button type="submit" value="검색" class="sch_btn"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">검색</span></button>
@@ -139,23 +141,23 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
                 </div>
             </td>
             <td class="td_download td_center">
-                <?php
-                    if (isset($list[$i]['icon_file'])) echo  rtrim($list[$i]['icon_file']);
-                ?>
+            <?php if ($list[$i]['wr_file'] > 0) { ?>
+                    <i class="fa fa-download" aria-hidden="true"></i>
+                <?php } ?>
 
             </td>
             <td class="td_datetime td_center"><?php echo $list[$i]['datetime2'] ?></td>
             <td class="td_hit td_center"><?php echo $list[$i]['wr_hit'] ?></td>
             <td class="td_end td_center">
                 <?php 
-                    // echo $list[$i]['name'];
+                    
                     $timenow = date("Y-m-d H:i:s"); 
                     $timetarget = $list[$i]['wr_date_end'];
                     $today = date("Ymd");
                     
-                    $nDate = date("Y-m-d",time()); // 오늘 날짜를 출력하겠지요?
-                    $valDate = $list[$i]['wr_date_end']; // 폼에서 POST로 넘어온 value 값('yyyy-mm-dd' 형식)
-                    $leftDate = intval((strtotime($valDate) - strtotime($nDate)) / 86400); // 나머지 날짜값이 나옵니다.
+                    $nDate = date("Y-m-d",time());
+                    $valDate = $list[$i]['wr_date_end'];
+                    $leftDate = intval((strtotime($valDate) - strtotime($nDate)) / 86400);
                     
 
                     if($list[$i]['wr_date_end'] < $nDate) {

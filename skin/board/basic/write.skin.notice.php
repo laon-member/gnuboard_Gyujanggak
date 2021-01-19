@@ -122,7 +122,6 @@ $result1 = sql_query($sql1);
 
         ?>
         <a href="<?= G5_BBS_URL ?>/board.notice.php?bo_table=notice&bo_idx=<?= $_GET['bo_idx']; ?>&bo_title=<?= $_GET['bo_title'] ?><?= $lilnk_admin ?>" class="btn_cancel btn">취소</a>
-        <!-- http://localhost/bbs/board.notice.php?bo_table=notice&bo_idx=7&bo_title=3&u_id=1 -->
         <button type="submit" id="btn_submit" accesskey="s" class="btn_submit btn">작성완료</button>
     </div>
     </form>
@@ -139,6 +138,14 @@ $result1 = sql_query($sql1);
         $("#wr_content").on("keyup", function() {
             check_byte("wr_content", "char_count");
         });
+
+        // $('#btn_submit').click(function(){
+        //     IsValidDateStart = Date.parse($('#date_start').val());
+        //     if (isNaN(IsValidDateStart)) return alert('총 연구기간 시작 날짜가 유효하지 않습니다.');
+                
+        //     IsValidDateEnd = Date.parse($('#date_end').val());
+        //     if (isNaN(IsValidDateEnd)) return alert('총 연구기간 끝나는 날짜가 유효하지 않습니다.');
+        // })
     });
     <?php } ?>
 
@@ -277,6 +284,8 @@ $result1 = sql_query($sql1);
         $(document).on("keydown", "input[type=file]", function(event) { 
             return event.key != "Enter";
         });
+
+       
     })
     </script>
 </section>

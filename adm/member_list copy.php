@@ -143,7 +143,7 @@ $colspan = 16;
 <script>
     $(function(){
         $('.rater_button').click(function() {
-            if(confirm("진짜로 거래를 삭제하시겠습니까?")){
+            if(confirm("선발 하시겠습니까?")){
                 return true;
             }
             return false;

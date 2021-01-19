@@ -42,27 +42,32 @@ if( $_GET['bo_idx'] == 1) {
 } else if($_GET['bo_idx'] == 2){
     $value = 'report_val_1';
 }
-
 if ($sca || $stx || $stx === '0') {     //검색이면
     $is_search_bbs = true;      //검색구분변수 true 지정
     $sql_search = get_sql_search($sca, $sfl, $stx, $sop);
 
     // 가장 작은 번호를 얻어서 변수에 저장 (하단의 페이징에서 사용)
-    $sql = " select MIN(wr_num) as min_wr_num from {$write_table} ";
+    $sql = " select MIN(idx) as min_wr_num from g5_business_propos ";
     $row = sql_fetch($sql);
     $min_spt = (int)$row['min_wr_num'];
 
     if (!$spt) $spt = $min_spt;
 
-    $sql_search .= " and (wr_num between {$spt} and ({$spt} + {$config['cf_search_part']})) ";
+    $sql_search .= " and (idx between {$spt} and ({$spt} + {$config['cf_search_part']})) ";
+    // ((INSTR(LOWER(wr_subject), LOWER('as'))) ) and (wr_num between -56 and (-56 + 10000))
+   
+    // ((INSTR(LOWER(ko_title), LOWER('as'))) ) and (wr_num between 0 and (0 + 10000))
 
+
+    
     // 원글만 얻는다. (코멘트의 내용도 검색하기 위함)
     // 라엘님 제안 코드로 대체 http://sir.kr/g5_bug/2922
-    $sql = " SELECT COUNT(DISTINCT `idx`) AS `cnt` FROMreport where mb_id = '$member[mb_id]' AND report_idx = '{$_GET['bo_idx']}' ";
-
-
+    $sql = " SELECT COUNT(DISTINCT `idx`) AS `cnt` FROM g5_business_propos where mb_id = '$member[mb_id]' AND {$sql_search} ";
+    // echo $sql;
+    $row = sql_fetch($sql);
     $total_count = $row['cnt'];
-    
+
+
     $title_text = '검색';
 
     // for($i=1; $row=sql_fetch_array($result); $i++) {
@@ -85,13 +90,9 @@ if ($sca || $stx || $stx === '0') {     //검색이면
     $total_count = $row['cnt'];
  }
 
-if(G5_IS_MOBILE) {
-    $page_rows = $board['bo_mobile_page_rows'];
-    $list_page_rows = $board['bo_mobile_page_rows'];
-} else {
-    $page_rows = $board['bo_page_rows'];
+
+    $page_rows =10;
     $list_page_rows = $board['bo_page_rows'];
-}
 
 
 // for($i = 0; $i < 10; $i++){
@@ -146,8 +147,8 @@ $notice_array = array();
 // }
 
 $total_page  = ceil($total_count / $page_rows);  // 전체 페이지 계산
-$total_page;
-$from_record = ($page - 1) * $page_rows; // 시작 열을 구함
+
+$from_record = 0; // 시작 열을 구함
 
 // 공지글이 있으면 변수에 반영
 if(!empty($notice_array)) {
@@ -178,83 +179,73 @@ $td_width = (int)(100 / $bo_gallery_cols);
 // 정렬
 // 인덱스 필드가 아니면 정렬에 사용하지 않음
 //if (!$sst || ($sst && !(strstr($sst, 'wr_id') || strstr($sst, "wr_datetime")))) {
-if (!$sst) {
-    if ($board['bo_sort_field']) {
-        $sst = $board['bo_sort_field'];
-    } else {
-        $sst  = "wr_num, wr_reply";
-        $sod = "";
-    }
-} else {
-    $board_sort_fields = get_board_sort_fields($board, 1);
-    if (!$sod && array_key_exists($sst, $board_sort_fields)) {
-        $sst = $board_sort_fields[$sst];
-    } else {
-        // 게시물 리스트의 정렬 대상 필드가 아니라면 공백으로 (nasca 님 09.06.16)
-        // 리스트에서 다른 필드로 정렬을 하려면 아래의 코드에 해당 필드를 추가하세요.
-        // $sst = preg_match("/^(wr_subject|wr_datetime|wr_hit|wr_good|wr_nogood)$/i", $sst) ? $sst : "";
-        $sst = preg_match("/^(wr_datetime|wr_hit|wr_good|wr_nogood)$/i", $sst) ? $sst : "";
-    }
-}
+// if (!$sst) {
+//     if ($board['bo_sort_field']) {
+//         $sst = $board['bo_sort_field'];
+//     } else {
+//         $sst  = "wr_num, wr_reply";
+//         $sod = "";
+//     }
+// } else {
+//     $board_sort_fields = get_board_sort_fields($board, 1);
+//     if (!$sod && array_key_exists($sst, $board_sort_fields)) {
+//         $sst = $board_sort_fields[$sst];
+//     } else {
+//         // 게시물 리스트의 정렬 대상 필드가 아니라면 공백으로 (nasca 님 09.06.16)
+//         // 리스트에서 다른 필드로 정렬을 하려면 아래의 코드에 해당 필드를 추가하세요.
+//         // $sst = preg_match("/^(wr_subject|wr_datetime|wr_hit|wr_good|wr_nogood)$/i", $sst) ? $sst : "";
+//         $sst = preg_match("/^(wr_datetime|wr_hit|wr_good|wr_nogood)$/i", $sst) ? $sst : "";
+//     }
+// }
 
 if(!$sst)
-    $sst  = "wr_num, wr_reply";
+    $sst  = "idx";
 
 if ($sst) {
-    $sql_order = " order by idx ";
+    $sql_order = " order by {$sst} {$sod} ";
 }
 
 
 // 여기 입니다.
+if ($is_search_bbs) {
+    $sql = " select  * from g5_business_propos where {$sql_search} and mb_id = '{$member['mb_id']}' {$sql_order} limit {$from_record}, $page_rows ";
+    
+} else {
+    // $sql = " select * from g5_business_propos where wr_title_idx = '$bo_idx' ";
+    // if(!empty($notice_array))
+    //     $sql .= " and wr_id not in (".implode(', ', $notice_array).") ";
+    // $sql .= " {$sql_order} limit {$from_record}, $page_rows ";
 
-$sql = " select * from g5_business_propos where mb_id = '$member[mb_id]' AND $value = '1'";
-$sql .= " {$sql_order} limit {$from_record}, $page_rows ";
+    $sql = " select * from g5_business_propos where mb_id = '{$member['mb_id']}'";
+    $sql .= " {$sql_order} DESC limit {$from_record}, $page_rows ";
+}
+echo $sql;
+// echo $member['mb_id'];
 
 // 페이지의 공지개수가 목록수 보다 작을 때만 실행
-$j = 0;
-if($page_rows > 0) {
+if($total_page > 0) {
     $result = sql_query($sql);
 
     $k = 0;
+
     while ($row = sql_fetch_array($result))
     {
-
         // 검색일 경우 wr_id만 얻었으므로 다시 한행을 얻는다
+        // if ($is_search_bbs)
+        //     $row = sql_fetch(" select * from {$write_table} where wr_id = '{$row['wr_parent']}' and wr_title_idx = '{$_GET['bo_idx']}'");
+
+        $list[$i] = get_list($row, $board, $board_skin_url, G5_IS_MOBILE ? $board['bo_mobile_subject_len'] : $board['bo_subject_len']);
         // if (strstr($sfl, 'subject')) {
         //     $list[$i]['subject'] = search_font($stx, $list[$i]['subject']);
         // }
-        // $list[$i]['is_notice'] = false;
-        
-        if (strstr($sfl, 'subject')) {
-            $list[$i]['subject'] = search_font($stx, $list[$i]['subject']);
-        }
         $list[$i]['is_notice'] = false;
         $list_num = $total_count - ($page - 1) * $list_page_rows - $notice_count;
         $list[$i]['num'] = $list_num - $k;
+        
+        
         $i++;
         $k++;
-
     }
-
-    // while ($row = sql_fetch_array($result))
-    // {
-    //     // 검색일 경우 wr_id만 얻었으므로 다시 한행을 얻는다
-    //     if ($is_search_bbs)
-    //         $row = sql_fetch(" select * from {$write_table} where wr_id = '{$row['wr_parent']}' ");
-
-    //     $list[$i] = get_list($row, $board, $board_skin_url, G5_IS_MOBILE ? $board['bo_mobile_subject_len'] : $board['bo_subject_len']);
-    //     if (strstr($sfl, 'subject')) {
-    //         $list[$i]['subject'] = search_font($stx, $list[$i]['subject']);
-    //     }
-    //     $list[$i]['is_notice'] = false;
-    //     $list_num = $total_count - ($page - 1) * $list_page_rows - $notice_count;
-    //     $list[$i]['num'] = $list_num - $k;
-
-    //     $i++;
-    //     $k++;
-    // }
-
-    
 }
 g5_latest_cache_data($board['bo_table'], $list);
 
@@ -263,8 +254,8 @@ $http_host = $_SERVER['HTTP_HOST'];
 $request_uri = $_SERVER['REQUEST_URI'];
 $url = 'http://' . $http_host . $request_uri;
 
-
-$write_pages = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page,$url);
+echo $total_page;
+$write_pages = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, $url);
 
 $list_href = '';
 $prev_part_href = '';

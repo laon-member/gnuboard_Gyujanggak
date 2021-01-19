@@ -100,7 +100,7 @@ $row22=sql_fetch_array($result1);
             <input type="date" name="date_end_view" id="date_end_view"  class="input_text input_text_50 input_text_end" readonly value="<?= $row['date_end']; ?>">
             <br>
             <label for="money_view" class="label_text">연구비신청액</label>
-            <input type="text" name="money_view" id="money_view"  class="input_text input_text_end" placeholder="연구비신청액" value="<?php echo $value ?>" readonly value="<?= $row['money']; ?>">
+            <input type="text" name="money_view" id="money_view"  class="input_text input_text_end" placeholder="연구비신청액" readonly value="<?= $row['money']; ?>">
             
             <label for="one_year_view" class="label_text">1차년 연구비</label>
             <input type="text" name="one_year_view" id="one_year_view"  class="input_text input_text_50 input_text_end" placeholder="1차년 연구비" readonly value="<?= $row['one_year']; ?>">
@@ -116,27 +116,78 @@ $row22=sql_fetch_array($result1);
                 $sql = " select * from report where business_idx = '{$row['idx']}' and report_idx = '1' and report = '2' and report_idx = '2'";
                 $result = sql_query($sql);
             }
-                
                 $row_list = sql_fetch_array($result);
             ?> 
                 <label for="" id="bo_side" class="label_text" style="text-align:left;vertical-align: top;" >상세설명</label>
                 <textarea name="" id=""class="input_text input_text_hight" readonly><?= $row_list['contents']; ?> </textarea>
             
-            <label for="" class="label_text">자료첨부</label>
-            <div class="input_file_cont">
-                <input type="text" name="form_file0" id="form_file0"  class="input_text_100 input_text input_text_end form_file" readonly>
-                <input type="text" name="form_file1" id="form_file1"  class="input_text_100 input_text input_text_end form_file" readonly>
-                <input type="text" name="form_file2" id="form_file2"  class="input_text_100 input_text input_text_end form_file" readonly>
-                <input type="text" name="form_file3" id="form_file3"  class="input_text_100 input_text input_text_end form_file" readonly>
-                <?php if(false){ ?>
+            <!-- 첨부파일 시작 { -->
+            <section id="bo_v_files" style="text-align:left;">
+                <label for="" class="label_text">자료첨부</label>
+
+                <ul class="download_file download_file_view" style="width: 80%;"> 
+                    <?php
+                        $sql = " select * from g5_board_file where bo_table = 'g5_business_propos' and wr_id = '{$_GET['us_idx']}'";
+                        $result = sql_query($sql);
+                        
+                        // 가변 파일
+                            for ($i=0; $row_list = sql_fetch_array($result); $i++) {
+                                if (isset($row_list['bf_source'][$i])) {
+                        ?>
+                                <li class="" style="text-align:left; margin: 20px 0 10px 10px;">
+                                    <a href="<?= G5_BBS_URL ?>/download.php?bo_table=g5_business_propos&wr_id=<?= $row_list['wr_id'] ?>&no=<?= $row_list['bf_no'] ?>" class="" ><i class="fa fa-download" aria-hidden="true" style="padding:0 10px;"></i><?php echo $row_list['bf_source'] ?></a>
+                                </li>
+                        <?php
+                            }
+                        }
+                    ?>
+                    <?php if($_GET['report'] ==1){ ?>
+                        <?php 
+                            $sql66 = " select * from report where business_idx = '{$_GET['us_idx']}' and report_idx = '1' and report = '2'";
+                            $result66 = sql_query($sql66);
+                            $row66=sql_fetch_array($result66);
+
+                            $sql = " select * from g5_board_file where bo_table = 'report' and wr_id = '{$row66['idx']}'";
+                            $result = sql_query($sql);
+                            // 가변 파일
+                                for ($i=0; $row_list = sql_fetch_array($result); $i++) {
+                                    if (isset($row_list['bf_source'][$i])) {
+                            ?>
+                                    <li class="" style="text-align:left; margin: 20px 0 10px 10px;">
+                                        <a href="<?= G5_BBS_URL ?>/download.php?bo_table=g5_business_propos&wr_id=<?= $row_list['wr_id'] ?>&no=<?= $row_list['bf_no'] ?>" class="" ><i class="fa fa-download" aria-hidden="true" style="padding:0 10px;"></i><?php echo $row_list['bf_source'] ?></a>
+                                    </li>
+                            <?php
+                                }
+                            }
+                    } else if($_GET['report'] ==2){ ?>
+                        <?php 
+                        $sql66 = " select * from report where business_idx = '{$_GET['us_idx']}' and report_idx = '2' and report = '2'";
+                        $result66 = sql_query($sql66);
+                        $row66=sql_fetch_array($result66);
+                        $sql = " select * from g5_board_file where bo_table = 'report' and wr_id = '{$row66['idx']}'";
+                            $result = sql_query($sql);
+                            // 가변 파일
+                                for ($i=0; $row_list = sql_fetch_array($result); $i++) {
+                                    if (isset($row_list['bf_source'][$i])) {
+                            ?>
+                                    <li class="" style="text-align:left; margin: 20px 0 10px 10px;">
+                                        <a href="<?= G5_BBS_URL ?>/download.php?bo_table=g5_business_propos&wr_id=<?= $row_list['wr_id'] ?>&no=<?= $row_list['bf_no'] ?>" class="" ><i class="fa fa-download" aria-hidden="true" style="padding:0 10px;"></i><?php echo $row_list['bf_source'] ?></a>
+                                    </li>
+                            <?php
+                                }
+                            }
+                     } ?>
+
+
                     
-                <?php } ?>
-            </div>
+                </ul>
+                
+            </section>
             
         </div>
 
         <div class="btn_confirm write_div btn-cont">
-        <a href="<?= G5_BBS_URL ?>/board_admin.php?bo_table=business&bo_idx=1&u_id=1&page=1" class="value_btn " style="text-align:center">목록</a>
+        <a href="<?= G5_BBS_URL ?>/board_admin.php?bo_table=business&bo_idx=1&u_id=1&page=1" class="value_btn " style="text-align:center">확인</a>
         </div>
     </div>
     </form>

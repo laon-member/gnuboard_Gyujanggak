@@ -203,6 +203,9 @@ for ($i=0; $i<count($upload); $i++)
             $upload[$i]['source'] = addslashes($upload[$i]['source']);
         }
         $row = sql_fetch(" select count(*) as cnt from {$g5['board_file_table']} where bo_table = 'report' and wr_id = '{$_POST['file_idx']}' and bf_no = '{$i}' ");
+        $row22 = sql_fetch(" select * from report where business_idx = '{$wr_bo_idx}'");
+        echo " select * from report where business_idx = '{$wr_bo_idx}'";
+        echo $row22['idx'];
         if ($row['cnt'] )
         {
             // 삭제에 체크가 있거나 파일이 있다면 업데이트를 합니다.
@@ -222,7 +225,7 @@ for ($i=0; $i<count($upload); $i++)
                                  bf_type = '".(int)$upload[$i]['image'][2]."',
                                  bf_datetime = '".G5_TIME_YMDHIS."'
                           where bo_table = 'report'
-                                    and wr_id = '{$_POST['file_idx']}'
+                                    and wr_id = '{$row22['idx']}'
                                     and bf_no = '{$i}' ";
                 sql_query($sql);
             }
@@ -231,7 +234,7 @@ for ($i=0; $i<count($upload); $i++)
                 $sql = " update {$g5['board_file_table']}
                             set bf_content = '{$bf_content[$i]}'
                             where bo_table = 'report'
-                                      and wr_id = '{$_POST['file_idx']}'
+                                      and wr_id = '{$row22['idx']}'
                                       and bf_no = '{$i}' ";
                 sql_query($sql);
             }
@@ -240,7 +243,7 @@ for ($i=0; $i<count($upload); $i++)
         {
             $sql = " insert into {$g5['board_file_table']}
                         set bo_table = 'report',
-                             wr_id = '{$_POST['file_idx']}',
+                             wr_id = '{$row22['idx']}',
                              bf_no = '{$i}',
                              bf_source = '{$upload[$i]['source']}',
                              bf_file = '{$upload[$i]['file']}',
@@ -281,18 +284,18 @@ $row = sql_fetch(" select count(*) as cnt from {$g5['board_file_table']} where b
 
 
 
-// // 사용자 코드 실행
-@include_once($board_skin_path.'/write_update.skin.php');
-@include_once($board_skin_path.'/write_update.tail.skin.php');
+// // // 사용자 코드 실행
+// @include_once($board_skin_path.'/write_update.skin.php');
+// @include_once($board_skin_path.'/write_update.tail.skin.php');
 
-delete_cache_latest($bo_table);
+// delete_cache_latest($bo_table);
 
-$redirect_url = run_replace('write_update_move_url', short_url_clean(G5_HTTP_BBS_URL.'/board.report.php?bo_table=business&bo_idx=1'), $board, $wr_id, $w, $qstr, $file_upload_msg);
+// $redirect_url = run_replace('write_update_move_url', short_url_clean(G5_HTTP_BBS_URL.'/board.report.php?bo_table=business&bo_idx=1'), $board, $wr_id, $w, $qstr, $file_upload_msg);
 
-run_event('write_update_after', $board, $wr_id, $w, $qstr, $redirect_url);
+// run_event('write_update_after', $board, $wr_id, $w, $qstr, $redirect_url);
 
-if ($file_upload_msg)
-    alert($file_upload_msg, $redirect_url);
-else
-    goto_url($redirect_url);
+// if ($file_upload_msg)
+//     alert($file_upload_msg, $redirect_url);
+// else
+//     goto_url($redirect_url);
 ?>

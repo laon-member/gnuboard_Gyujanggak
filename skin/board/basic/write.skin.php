@@ -82,8 +82,8 @@ $result = sql_query($sql);
     
     
     <label for="date_start_view" class="label_text">총 연구 기간</label>
-    <input type="date" name="date_start_act" id="date_start_view"  class="frm_input required full_input input_text_50 input_text_end" value='yyyy-mm-dd'>
-    <input type="date" name="date_end_act" id="date_end_view"  class="frm_input required full_input input_text_50 input_text_end"  value='yyyy-mm-dd' >
+    <input type="date" name="date_start_act" id="date_start_view"  class="frm_input required full_input input_text_50 input_text_end" value='yyyy-mm-dd' max="9999-12-31">
+    <input type="date" name="date_end_act" id="date_end_view"  class="frm_input required full_input input_text_50 input_text_end"  value='yyyy-mm-dd' max="9999-12-31">
 
     <div class="write_div">
         <label for="wr_content" class="sound_only">내용<strong>필수</strong></label>

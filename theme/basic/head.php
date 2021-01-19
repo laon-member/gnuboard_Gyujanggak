@@ -191,27 +191,6 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
             <p class="header_esc">X</p>
         </div>
     </div>
-    <style>
-        #hd{position: relative;}
-        .header_notice_back{position: absolute;top: 100%;width: 100%; }
-        .notice_container{overflow:hidden; height:100%;}
-        .header_notice_nav, .header_notice_list{list-style:none; height: 50px; }
-        .header_notice_list{padding:15px 0;}
-        .header_notice_nav{ animation: slide 10s infinite linear; } /* slide를 8초동안 진행하며 무한반복 함 */
-        @keyframes slide {
-        0% {margin-top:0;} /* 0 ~ 10  : 정지 */
-        10% {margin-top:0;} /* 10 ~ 25 : 변이 */
-        20% {margin-top: -50px;} /* 25 ~ 35 : 정지 */
-        30% {margin-top: -50px;} /* 35 ~ 50 : 변이 */
-        40% {margin-top:-100px;}
-        50% {margin-top:-100px;}
-        60% {margin-top:-150px;}
-        70% {margin-top:-150px}
-        80% {margin-top:-200px;}
-        90% {margin-top:-200px;}
-        100% {margin-top:0;}
-        }
-    </style>
     <script>
         jQuery(function($){
         // 게시판 검색
@@ -227,10 +206,21 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                 $(this).attr('id', 'slide');
                 $('.sub_menu').slideDown(500); 
                 $('.board_nav_list_menu_back').css({'display':'block'});
+
+
+                $(' .menu span:nth-child(1)').css({'left':'50%', 'top':'50%','transform':'translate(-50%, -50%) rotate(45deg)'});
+                $(' .menu span:nth-child(2)').css({'display':'none'});
+                $(' .menu span:nth-child(3)').css({'left':'50%', 'top':'50%','transform':'translate(-50%, -50%) rotate(-45deg)'});
+
+
             } else {
                 $(this).removeAttr('id');
                 $('.sub_menu').slideUp(500);
                 $('.board_nav_list_menu_back').css({'display':'none'});
+
+                $(' .menu span:nth-child(1)').css({'left':'50%', 'top':'18px','transform':'translateX(-50%) rotate(0)'});
+                $(' .menu span:nth-child(2)').css({'left':'50%', 'top':'50%','transform':'translate(-50%, -50%) rotate(0)','display':'block'});
+                $(' .menu span:nth-child(3)').css({'left':'50%', 'top':'47px','transform':'translateX(-50%) rotate(0)'});
             }
 
         })

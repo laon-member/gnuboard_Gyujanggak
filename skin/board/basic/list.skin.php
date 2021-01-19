@@ -59,8 +59,14 @@ for($j=1; $row123=sql_fetch_array($result1); $j++) {
                     <input type="hidden" name="sop" value="and">
                     <input type="hidden" name="sop" value="and">
                     <input type="hidden" name="bo_idx" value="<?= $_GET['bo_idx'] ?>">
-                    <input type="hidden" name="sfl" value="wr_subject">
+                    <!-- <input type="hidden" name="sfl" value="wr_subject"> -->
                     <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+                    <select name="sfl" id="sfl">
+                        <?php echo get_board_sfl_select_options($sfl); ?>
+                        <!-- <option value="wr_subject||wr_content">전체</option>
+                        <option value="wr_subject">제목</option>
+                        <option value="wr_content">내용</option> -->
+                    </select>
                     <div class="sch_bar">
                         <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" required id="stx" class="sch_input" size="25" maxlength="20" placeholder=" 검색어를 입력해주세요">
                         <button type="submit" value="검색" class="sch_btn"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">검색</span></button>

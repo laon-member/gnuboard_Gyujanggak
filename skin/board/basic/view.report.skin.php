@@ -68,7 +68,6 @@ $j=0;
             <input type="hidden" name="save_db" value="1">
         <?php } ?>
         <input type="hidden" name="file_idx" value="<?= $row44['idx']; ?>">
-        
         <label for="" id="bo_side" class="label_text">상세설명</label>
         <section id="bo_v" class="bo_class">
             <h2 id="bo_v_atc_title">본문</h2>

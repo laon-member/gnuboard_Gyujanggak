@@ -122,6 +122,7 @@ $result1 = sql_query($sql1);
 
         ?>
         <a href="<?= G5_BBS_URL ?>/board.notice.php?bo_table=notice&bo_idx=<?= $_GET['bo_idx']; ?>&bo_title=<?= $_GET['bo_title'] ?><?= $lilnk_admin ?>" class="btn_cancel btn">취소</a>
+        <!-- http://localhost/bbs/board.notice.php?bo_table=notice&bo_idx=7&bo_title=3&u_id=1 -->
         <button type="submit" id="btn_submit" accesskey="s" class="btn_submit btn">작성완료</button>
     </div>
     </form>

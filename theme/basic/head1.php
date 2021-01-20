@@ -1,11 +1,6 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
-if (G5_IS_MOBILE) {
-    include_once(G5_THEME_MOBILE_PATH.'/head.php');
-    return;
-}
-
 include_once(G5_THEME_PATH.'/head.sub.php');
 include_once(G5_LIB_PATH.'/latest.lib.php');
 include_once(G5_LIB_PATH.'/outlogin.lib.php');
@@ -17,31 +12,26 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 
 <!-- 상단 시작 { -->
 <div id="hd">
-    <h1 id="hd_h1"><?php echo $g5['title'] ?></h1>
-    <div id="skip_to_container"><a href="#container">본문 바로가기</a></div>
-
-    <?php
-    if(defined('_INDEX_')) { // index에서만 실행
-        include G5_BBS_PATH.'/newwin.inc.php'; // 팝업레이어
-    }
-    ?>
-
     <div id="hd_wrapper">
-
         <div id="logo">
-            <a href="<?php echo G5_URL ?>"><img src="<?php echo G5_IMG_URL ?>/logo.png" alt="<?php echo $config['cf_title']; ?>"></a>
+            <a href="<?php echo G5_URL ?>">
+                <img src="<?php echo G5_IMG_URL ?>/main_logo.png" alt="logo">
+                <img src="<?php echo G5_IMG_URL ?>/main_logo_text.png" alt="logo_text">
+                <!-- <p>21세기 신규장각 자료구축사업 <span>과제관리시스템</span></p>  -->
+            </a>
         </div>
     </div>
 </div>
 <!-- } 상단 끝 -->
 
-
 <hr>
 
 <!-- 콘텐츠 시작 { -->
 <div id="wrapper">
+<img src="<?=G5_THEME_URL ?>/img/main_background.png" alt="user_icon" class="main_back">
+<div class="main_back_filter"></div>
     <div id="container_wr">
    
-    <div id="container">
+    <div id="container_layout">
         
 

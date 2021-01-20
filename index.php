@@ -23,6 +23,8 @@ include_once(G5_PATH.'/head.php');
 	echo latest('pic_list', 'qa', 4, 23);			// 최소설치시 자동생성되는 질문답변게시판
 	echo latest('pic_list', 'notice', 4, 23);		// 최소설치시 자동생성되는 공지사항게시판
     ?>
+    
+<img src="<?= G5_THEME_PATH ?>/img/rater_icon.png" alt="user_icon">
 </div>
 <div class="latest_wr">
     <!-- 사진 최신글2 { -->
@@ -65,5 +67,5 @@ include_once(G5_PATH.'/head.php');
     <!-- } 최신글 끝 -->
 </div>
 <?php
-include_once(G5_PATH.'/tail.php');
+include_once(G5_PATH.'/tail1.php');
 ?>

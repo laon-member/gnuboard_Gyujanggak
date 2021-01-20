@@ -107,7 +107,6 @@
 #bo_list tbody .tr_hover:hover {border-left:2px solid #253dbe}
 tbody{border-left:2px solid transparent}
 .tbody tr{border: none;}
-.title_border{border-bottom: 2px solid black; }
 .tbody:hover tr{border-left:2px solid #253dbe !important; background-color: #fbfbfb;}
 
 
@@ -592,17 +591,19 @@ border:1px solid #ccc;
 .step, .form_file{display: none;}
 .form_file_view {display: inline-block;} 
 .step_view{display: block !important;}
-.board_nav_container{background-color: #fff; width: 100%;}
-.board_nav{background-color: #fff; text-align: center; position: relative; margin: 0 10%; display: block;}
+.board_nav_container{    display: flex; justify-content: space-between; }
+.board_nav_container a{padding-top: 20px; }
+.board_nav{background-color: #fff; display: inline-block;padding-top: 5x; }
+.board_nav_list{font-size: 20px; display: inline-block; padding: 15px 40px 20px 40px; vertical-align: top; position: relative;}
+.board_nav_list a{ display: block; width: 100%; height: 100%; padding-bottom: 10px; }
 
-.board_nav_list{font-size: 20px; display: inline-block; margin: 10px 60px; vertical-align: top; position: relative;}
-.board_nav_list_check{ border-bottom: 3px solid black;}
-.board_nav_list a{padding: 10px 20px; display: block; width: 100%; height: 100%;}
-
+.title_border a{color: #1D2E58;border-bottom: 4px solid #1D2E58; font-weight: bold;}
 .sub_menu{
     display: none;
     position: absolute;
     top: 100%;
+    left: 0;
+    text-align: center;
     z-index: 10;
     background-color: #1D2E58;
     width: 100%;
@@ -629,24 +630,23 @@ border:1px solid #ccc;
 
 .header_notice_back{
     width: 100%;
-    background-color: #ccc;
+    background-color: #F7F7F7;
     padding: 0 ;
     text-align: center;
 }
 
 .header_notice{
-    width: 80%;
-    height: 50px;
+    width: 60%;
+    height: 70px;
     /* padding: 15px 0; */
     margin: 0 auto;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 }
-.header_notice p{ vertical-align: middle; height: 100%; padding: 15px 0;} 
-.header_notice p:nth-of-type(1){width: 20%;}
-.notice_container{width: 70%;text-align: left; height: 100%;}
-.header_notice p:nth-of-type(3){width: 10%; height: 100%; }
+.header_notice p{ vertical-align: middle; height: 100%; padding: 25px 0;} 
+.header_notice p:nth-of-type(1){font-size: 18px; color: #333333;}
+.notice_container{width: 85%;text-align: left; height: 100%;}
 
 .bo_class{display: inline-block; vertical-align: top;}
 .input_text_hight{height: 250px; resize:none; overflow-y: auto;}

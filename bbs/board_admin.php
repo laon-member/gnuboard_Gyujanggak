@@ -27,7 +27,7 @@ $g5['board_title'] = ((G5_IS_MOBILE && $board['bo_mobile_subject']) ? $board['bo
 
 $board_user = "";
 $board_user == 1;
-$board_border = "title_border";
+$board_rater_admin = "title_border";
 
 include_once(G5_PATH.'/head.sub.php');
 

@@ -184,7 +184,7 @@ if ((isset($wr_id) && $wr_id) || (isset($wr_seo_title) && $wr_seo_title)) {
 }
 $board_user = "";
 $board_user == 1;
-$board_border = "title_border";
+$board_app_border = "title_border";
 
 include_once(G5_PATH.'/head.sub.php');
 

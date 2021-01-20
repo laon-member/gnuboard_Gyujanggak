@@ -33,7 +33,7 @@ if ($url) {
 } else {
     $link = G5_URL;
 }
-
+set_session('notice', ''); 
 run_event('member_logout', $link);
 
 goto_url($link);

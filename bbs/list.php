@@ -82,13 +82,9 @@ if ($sca || $stx || $stx === '0') {     //검색이면
 
 
 
-if(G5_IS_MOBILE) {
-    $page_rows = $board['bo_mobile_page_rows'];
-    $list_page_rows = $board['bo_mobile_page_rows'];
-} else {
-    $page_rows = $board['bo_page_rows'];
-    $list_page_rows = $board['bo_page_rows'];
-}
+$page_rows = 10;
+$list_page_rows = 10;
+   
 if ($page < 2) { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 // 년도 2자리
 $today2 = G5_TIME_YMD;
@@ -127,7 +123,6 @@ if (!$is_search_bbs) {
             break;
     }
 }
-// G5_BBS_URL.'/bbs/board.rater.admin.php?bo_table=qa&bo_idx=1&u_id=1&page=2'
 $total_page  = ceil($total_count / $page_rows);  // 전체 페이지 계산
 $from_record = ($page - 1) * $page_rows; // 시작 열을 구함
 
@@ -228,11 +223,15 @@ $http_host = $_SERVER['HTTP_HOST'];
 $request_uri = $_SERVER['REQUEST_URI'];
 $url = 'http://' . $http_host . $request_uri;
 $url .= '&sfl=mb_1&stx=';
-// $write_pages = get_paging(15, $page, $total_page, './member_list.php?sfl=mb_1&stx=');
-echo $write_pages;
 
-echo $stx;
-$write_pages = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, G5_BBS_URL.'/board.php?bo_table=business&bo_idx=1&stx='.$stx,$add);
+if($stx == ""){
+    $stx_text = "";
+} else {
+    $stx_text = '&stx='.$stx;
+}
+
+$bo_idx_text = '&bo_idx='.$_GET['bo_idx'];
+$write_pages = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, G5_BBS_URL.'/board.php?bo_table=business'.$bo_idx_text.$stx_text);
 $list_href = '';
 $prev_part_href = '';
 $next_part_href = '';

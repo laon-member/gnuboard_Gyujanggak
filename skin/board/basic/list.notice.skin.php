@@ -72,14 +72,14 @@ if($board_user == 1){
         <ul class="btn_bo_user">
             <li>
             <?php
-                    // $http_host = $_SERVER['HTTP_HOST'];
-                    // $request_uri = $_SERVER['REQUEST_URI'];
-                    // $url = 'http://' . $http_host . $request_uri;
+                    $http_host = $_SERVER['HTTP_HOST'];
+                    $request_uri = $_SERVER['REQUEST_URI'];
+                    $url = 'http://' . $http_host . $request_uri;
                 
-                    // $url = preg_replace('#&page=[0-9]*#', '&page=1', $url);
+                    $url = preg_replace('#&page=[0-9]*#', '', $url);
                 ?>
             <fieldset class="bo_sch_input">
-                    <form name="fsearch" method="POST" >
+                    <form name="fsearch" method="POST" action="<?= $url ?>" >
                     <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
                     <input type="hidden" name="sca" value="<?php echo $sca ?>">
                     <input type="hidden" name="sop" value="and">
@@ -190,12 +190,11 @@ if($board_user == 1){
         // $http_host = $_SERVER['HTTP_HOST'];
         // $request_uri = $_SERVER['REQUEST_URI'];
         // $url = 'http://' . $http_host . $request_uri;
-        echo $url;
     ?>    
     
     <!-- 총 게시판 -->
 
-    <?php echo get_paging('15', $page, $total_page, $url); ?>
+    <?php echo $write_pages; ?>
 	<!-- 페이지 -->
 	
     

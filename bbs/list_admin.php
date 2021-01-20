@@ -232,14 +232,14 @@ if($page_rows > 0) {
 
 g5_latest_cache_data($board['bo_table'], $list);
 
-
-$http_host = $_SERVER['HTTP_HOST'];
-$request_uri = $_SERVER['REQUEST_URI'];
-$url = 'http://' . $http_host . $request_uri;
-
-
-$write_pages = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page,$url);
-
+if($stx == ""){
+    $stx_text = "";
+} else {
+    $stx_text = '&stx='.$stx;
+}
+$bo_idx_text = '&bo_idx='.$_GET['bo_idx'].'&u_id=1';
+$write_pages = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, G5_BBS_URL.'/board_admin.php?bo_table=business'.$bo_idx_text.$stx_text);
+http://localhost/bbs/board_admin.php?bo_table=business&bo_idx=1&u_id=1&page=2
 $list_href = '';
 $prev_part_href = '';
 $next_part_href = '';

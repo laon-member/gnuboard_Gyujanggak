@@ -46,16 +46,24 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
     
 
     <!-- 게시판 페이지 정보 및 버튼 시작 { -->
+   <!-- 게시판 페이지 정보 및 버튼 시작 { -->
     <div id="bo_btn_top">
         <h1 id=""><?php  echo $row['title']; ?></h1>
 
         <ul class="btn_bo_user">
+            
             <li>
-            <fieldset class="bo_sch_input">
-                    <form name="fsearch" method="POST">
+                <?php
+                    $http_host = $_SERVER['HTTP_HOST'];
+                    $request_uri = $_SERVER['REQUEST_URI'];
+                    $url = 'http://' . $http_host . $request_uri;
+                
+                    $url = preg_replace('#&page=[0-9]*#', '', $url);
+                ?>
+                <fieldset class="bo_sch_input">
+                    <form name="fsearch" method="POST" action="<?= $url?>">
                     <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
                     <input type="hidden" name="sca" value="<?php echo $sca ?>">
-                    <input type="hidden" name="sop" value="and">
                     <input type="hidden" name="sop" value="and">
                     <input type="hidden" name="bo_idx" value="<?= $_GET['bo_idx'] ?>">
                     <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
@@ -69,11 +77,6 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
                     </form>
                 </fieldset>
             </li>
-        	<?php if ($is_admin == 'super') {  ?>
-                <li>
-                    <a href="<?php echo $write_href ?>&bo_idx=<?= $_GET['bo_idx'] ?><?= $_GET['u_id'] == 1?"&u_id=1" : "" ?>" class="btn_b01 btn" title="글쓰기"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sound_only">글쓰기</span></a>
-                </li>
-        	<?php }  ?>
         </ul>
     </div>
     <!-- } 게시판 페이지 정보 및 버튼 끝 -->
@@ -192,15 +195,10 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
 
 	<!-- 페이지 -->
 
-    <!-- 현재 URL 주소 -->
-    <?php
-        $http_host = $_SERVER['HTTP_HOST'];
-        $request_uri = $_SERVER['REQUEST_URI'];
-        $url = 'http://' . $http_host . $request_uri;
-    ?>    
+    
     
     <!-- 총 게시판 -->
-    <?php echo get_paging('15', $page, $total_page, $url); ?>
+    <?php echo $write_pages ?>
     
 	<!-- 페이지 -->
 	

@@ -28,8 +28,15 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         <ul class="btn_bo_user">
             
             <li>
+                <?php
+                    $http_host = $_SERVER['HTTP_HOST'];
+                    $request_uri = $_SERVER['REQUEST_URI'];
+                    $url = 'http://' . $http_host . $request_uri;
+                
+                    $url = preg_replace('#&page=[0-9]*#', '', $url);
+                ?>
                 <fieldset class="bo_sch_input">
-                    <form name="fsearch" method="POST">
+                    <form name="fsearch" method="POST" action="<?= $url?>">
                     <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
                     <input type="hidden" name="sca" value="<?php echo $sca ?>">
                     <input type="hidden" name="sop" value="and">
@@ -45,6 +52,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                     </div>
                     </form>
                 </fieldset>
+                    
             </li>
         </ul>     
     </div>
@@ -145,9 +153,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     ?>    
     
     <!-- 총 게시판 -->
-    <?php $total_page  = ceil($total_count / $page_rows);  ?>
     
-    <?php echo get_paging('10', 1, $total_page, $url); ?>
+    <?php echo $write_pages; ?>
 	<!-- 페이지 -->
 	
     

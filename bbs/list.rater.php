@@ -248,7 +248,7 @@ if ($is_search_bbs) {
     if ($next_spt < 0) {
         $qstr1 = preg_replace($patterns, '', $qstr);
         $next_part_href = get_pretty_url($bo_table,0,$qstr1.'&amp;spt='.$next_spt.'&amp;page=1');
-        $write_pages = page_insertafter($write_pages, '<a href="'.$next_part_href.'" class="pg_page pg_end">다음검색</a>');
+        $write_pages = page_insertafter($write_pages, '<a href="'.$next_part_href.'" class="pg_page ">다음검색</a>');
     }
 }
 

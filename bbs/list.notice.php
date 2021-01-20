@@ -84,13 +84,8 @@ if ($sca || $stx || $stx === '0') {     //검색이면
 
 echo $total_count1 ."<br>";
 
-if(G5_IS_MOBILE) {
-    $page_rows = $board['bo_mobile_page_rows'];
-    $list_page_rows = $board['bo_mobile_page_rows'];
-} else {
-    $page_rows = $board['bo_page_rows'];
-    $list_page_rows = $board['bo_page_rows'];
-}
+$page_rows = 10;
+$list_page_rows = 10;
 
 if ($page < 1) { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 
@@ -227,13 +222,32 @@ if($page_rows > 0) {
 
 g5_latest_cache_data($board['bo_table'], $list);
 
+if($stx == ""){
+    $stx_text = "";
+} else {
+    $stx_text = '&stx='.$stx;
+}
 
 $http_host = $_SERVER['HTTP_HOST'];
 $request_uri = $_SERVER['REQUEST_URI'];
 $url = 'http://' . $http_host . $request_uri;
+$url = preg_replace('#&page=[0-9]*#', '', $url);
+if($stx == ""){
+    $stx_text = "";
+} else {
+    $stx_text = '&stx='.$stx;
+}
+
+if($_GET['bo_title'] == 1){
+    $bo_title_text = '&bo_title='.$_GET['bo_title'];
+} else if ($_GET['bo_title'] == 2){
+    $bo_title_text = '&bo_title='.$_GET['bo_title'];
+} else if($_GET['bo_title'] == 3){
+    $bo_title_text = '&bo_title='.$_GET['bo_title'].'&u_id=1';
+}
 
 
-$write_pages = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page,$url);
+$write_pages = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, G5_BBS_URL.'/board.notice.php?bo_table=notice&bo_idx='.$_GET['bo_idx'].$bo_title_text.$stx_text);
 
 $list_href = '';
 $prev_part_href = '';

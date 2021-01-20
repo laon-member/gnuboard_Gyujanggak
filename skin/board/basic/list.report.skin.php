@@ -26,7 +26,52 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 </aside>
 <!-- $bo_title -->
 <div id="bo_list" >
-
+<!-- 게시판 페이지 정보 및 버튼 시작 { -->
+    <div id="bo_btn_top">
+        <h1 id="">
+            <?php
+                if($_GET['bo_idx'] == '1'){
+                    echo "중간보고서";
+                } else if($_GET['bo_idx'] == '2') {
+                    echo "결과(연차)보고서"; 
+                }
+            ?>
+        </h1>
+        <ul class="btn_bo_user">
+            <li>
+                <?php
+                    $http_host = $_SERVER['HTTP_HOST'];
+                    $request_uri = $_SERVER['REQUEST_URI'];
+                    $url = 'http://' . $http_host . $request_uri;
+                
+                    $url = preg_replace('#&page=[0-9]*#', '', $url);
+                ?>
+                <fieldset class="bo_sch_input">
+                    <form name="fsearch" method="POST" action="<?= $url?>">
+                    <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
+                    <input type="hidden" name="sca" value="<?php echo $sca ?>">
+                    <input type="hidden" name="sop" value="and">
+                    <input type="hidden" name="sop" value="and">
+                    <input type="hidden" name="bo_idx" value="<?= $_GET['bo_idx'] ?>">
+                    <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+                    <select name="sfl" id="sfl">
+                    <option value="wr_subject">제목</option>
+                    </select>
+                    <div class="sch_bar">
+                        <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" required id="stx" class="sch_input" size="25" maxlength="20" placeholder=" 검색어를 입력해주세요">
+                        <button type="submit" value="검색" class="sch_btn"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">검색</span></button>
+                    </div>
+                    </form>
+                </fieldset>
+            </li>
+        	<?php if ($is_admin == 'super') {  ?>
+                <li>
+                    <a href="<?php echo $write_href ?>&bo_idx=<?= $_GET['bo_idx'] ?><?= $_GET['u_id'] == 1?"&u_id=1" : "" ?>" class="btn_b01 btn" title="글쓰기"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sound_only">글쓰기</span></a>
+                </li>
+        	<?php }  ?>
+        </ul>
+    </div>
+    <!-- } 게시판 페이지 정보 및 버튼 끝 -->
     
     <form name="fboardlist" id="fboardlist" action="<?php echo G5_BBS_URL; ?>/board_list_update.php" onsubmit="return fboardlist_submit(this);" method="post">
     
@@ -40,19 +85,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     <input type="hidden" name="page" value="<?php echo $page ?>">
     <input type="hidden" name="sw" value="">
 
-    <!-- 게시판 페이지 정보 및 버튼 시작 { -->
-    <div id="bo_btn_top">
-        <h1 id="">
-            <?php
-                if($_GET['bo_idx'] == '1'){
-                    echo "중간보고서";
-                } else if($_GET['bo_idx'] == '2') {
-                    echo "결과(연차)보고서"; 
-                }
-            ?>
-        </h1>
-    </div>
-    <!-- } 게시판 페이지 정보 및 버튼 끝 -->
+    
         	
     <div class="tbl_head01 tbl_wrap">
         <table>
@@ -68,30 +101,22 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         </thead>
         <tbody>
         <?php
-        if( $_GET['bo_idx'] == 1) {
-            $value = 'value';
-        } else if($_GET['bo_idx'] == 2){
-            $value = 'report_val_1';
-        }
-            $sql2 = " select * from g5_business_propos where mb_id = '{$member['mb_id']}' AND $value = '4' ";
-            $sql2 .= " {$sql_order} DESC limit {$from_record}, $page_rows ";
 
-            $result2 = sql_query($sql2);
-
-            for($i=0; $row=sql_fetch_array($result2); $i++) {
-                
+            for ($i=0; $i<count($list); $i++) {
                 if ($i%2==0) $lt_class = "even";
                 else $lt_class = "";
 
-                $sql = " select * from report where mb_id= '{$member['mb_id']}' AND business_idx = '{$row['idx']}'";
+                $sql = " select * from report where mb_id= '{$member['mb_id']}' AND business_idx = '{$list[$i]['idx']}'";
                 $result = sql_query($sql);
                 $row22 = sql_fetch_array($result);
-               
-                $sql = " select * from g5_write_business_title where idx= '{$row['bo_title_idx']}'";
+
+                $bo_text_idx = $list[$i]['wr_title_idx'] == "" ? $list[$i]['bo_title_idx'] : $list[$i]['wr_title_idx'];
+
+                $sql = " select * from g5_write_business_title where idx= '$bo_text_idx'";
                 $result = sql_query($sql);
                 $row33 = sql_fetch_array($result);
 
-                $sql = " select * from g5_write_business where wr_id= '{$row['bo_idx']}'";
+                $sql = " select * from g5_write_business where wr_id= '{$list[$i]['bo_idx']}'";
                 $result = sql_query($sql);
                 $row44 = sql_fetch_array($result);
 		?>
@@ -106,11 +131,11 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                  <?= $row33['title']; ?>
             </td>
             <td class="td_title" style="padding-left:<?php echo $list[$i]['reply'] ? (strlen($list[$i]['wr_reply'])*10) : '0'; ?>px">
-                <a href="<?= G5_BBS_URL ?>/board.report.php?bo_table=<?=$_GET['bo_table']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&wr_bo_idx=<?php echo $row['idx']; ?>&wr_idx=<?php echo $row['bo_idx']; ?>">
-                    <?= $row44['wr_subject']; ?>
+                <a href="<?= G5_BBS_URL ?>/board.report.php?bo_table=<?=$_GET['bo_table']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&wr_bo_idx=<?php echo $list[$i]['idx']; ?>&wr_idx=<?= $list[$i]['wr_id'] == ""? $list[$i]['bo_idx']:$list[$i]['wr_id']; ?>">
+                    <?= $row44['wr_subject'] == ""? $list[$i]['wr_subject']:$row44['wr_subject']; ?>
                 </a>
             </td>
-            <td class="td_datetime td_center"><?php echo $row44['wr_date_end'] ?></td>
+            <td class="td_datetime td_center"><?= $row44['wr_date_end'] == ""? $list[$i]['wr_date_end']:$row44['wr_date_end']; ?></td>
             <td class="td_end td_center">
                 <?php  
                     if($row22['report'] == 2){
@@ -129,25 +154,14 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 
         
 
-        <?php if ($total_count == 0) { echo '<tr><td colspan="6" class="empty_table">게시물이 없습니다.</td></tr>'; } ?>
+        <?php if (count($list) == 0) { echo '<tr><td colspan="6" class="empty_table">게시물이 없습니다.</td></tr>'; } ?>
 
         </tbody>
         </table>
     </div>
 
 	<!-- 페이지 -->
-
-    <!-- 현재 URL 주소 -->
-    <?php
-        $http_host = $_SERVER['HTTP_HOST'];
-        $request_uri = $_SERVER['REQUEST_URI'];
-        $url = 'http://' . $http_host . $request_uri;
-    ?>    
-    
-    <!-- 총 게시판 -->
-    <?php $total_page  = ceil($total_count / $page_rows);  ?>
-    
-    <?php echo get_paging('15', $page, $total_page, $url); ?>
+    <?php echo $write_pages ?>
 	<!-- 페이지 -->
 	
     

@@ -237,7 +237,13 @@ $request_uri = $_SERVER['REQUEST_URI'];
 $url = 'http://' . $http_host . $request_uri;
 
 
-$write_pages = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page,$url);
+if($stx == ""){
+    $stx_text = "";
+} else {
+    $stx_text = '&stx='.$stx;
+}
+$bo_idx_text = '&bo_idx='.$_GET['bo_idx'].'&u_id=1';
+$write_pages = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, G5_BBS_URL.'/board.rater.admin.php?bo_table=qa'.$bo_idx_text.$stx_text);
 
 $list_href = '';
 $prev_part_href = '';

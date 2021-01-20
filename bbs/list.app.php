@@ -40,7 +40,6 @@ if ($sca || $stx || $stx === '0') {     //검색이면
     $is_search_bbs = true;      //검색구분변수 true 지정
     $sql_search = get_sql_search($sca, $sfl, $stx, $sop);
 
-    // 가장 작은 번호를 얻어서 변수에 저장 (하단의 페이징에서 사용)
     $sql = " select MIN(wr_num) as min_wr_num from {$write_table} ";
     $row = sql_fetch($sql);
     $min_spt = (int)$row['min_wr_num'];
@@ -48,15 +47,6 @@ if ($sca || $stx || $stx === '0') {     //검색이면
     if (!$spt) $spt = $min_spt;
 
     $sql_search .= " and (wr_num between {$spt} and ({$spt} + {$config['cf_search_part']})) ";
-
-    // 원글만 얻는다. (코멘트의 내용도 검색하기 위함)
-    // 라엘님 제안 코드로 대체 http://sir.kr/g5_bug/2922
-    // $sql = " SELECT COUNT(DISTINCT `wr_parent`) AS `cnt` FROM {$write_table} WHERE {$sql_search} ";
-    // // echo   $sql;
-    // $total_count = $row['cnt'];
-
-    // echo $total_count;
-    // $title_text = '검색';
 
     // 원글만 얻는다. (코멘트의 내용도 검색하기 위함)
     // 라엘님 제안 코드로 대체 http://sir.kr/g5_bug/2922
@@ -85,22 +75,16 @@ if ($sca || $stx || $stx === '0') {     //검색이면
     $row = sql_fetch($sql);
     $title_text = $row['title'];
 
-
     $sql1 = " SELECT COUNT(DISTINCT `wr_id`) AS `cnt` FROM {$write_table} WHERE wr_title_idx = $_GET[bo_idx]";
-$row = sql_fetch($sql1);
-
-$total_count = $row['cnt'];
+    $row = sql_fetch($sql1);
+    $total_count = $row['cnt'];
 }
 
 
 
-if(G5_IS_MOBILE) {
-    $page_rows = $board['bo_mobile_page_rows'];
-    $list_page_rows = $board['bo_mobile_page_rows'];
-} else {
-    $page_rows = $board['bo_page_rows'];
-    $list_page_rows = $board['bo_page_rows'];
-}
+
+$page_rows = 10;
+$list_page_rows = 10;
 
 if ($page < 1) { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 
@@ -244,8 +228,15 @@ $http_host = $_SERVER['HTTP_HOST'];
 $request_uri = $_SERVER['REQUEST_URI'];
 $url = 'http://' . $http_host . $request_uri;
 
+if($stx == ""){
+    $stx_text = "";
+} else {
+    $stx_text = '&stx='.$stx;
+}
 
-$write_pages = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page,$url);
+$bo_idx_text = '&bo_idx='.$_GET['bo_idx'].'&u_id=1';
+
+$write_pages = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page,G5_BBS_URL.'/board.app.php?bo_table=business'.$bo_idx_text.$stx_text);
 
 $list_href = '';
 $prev_part_href = '';

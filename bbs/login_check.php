@@ -63,6 +63,7 @@ set_session('ss_mb_id', $mb['mb_id']);
 // FLASH XSS 공격에 대응하기 위하여 회원의 고유키를 생성해 놓는다. 관리자에서 검사함 - 110106
 set_session('ss_mb_key', md5($mb['mb_datetime'] . get_real_client_ip() . $_SERVER['HTTP_USER_AGENT']));
 
+set_session('notice', ''); 
 // 포인트 체크
 if($config['cf_use_point']) {
     $sum_point = get_point_sum($mb['mb_id']);
@@ -127,5 +128,16 @@ if(function_exists('social_login_success_after')){
 
 run_event('member_login_check', $mb, $link, $is_social_login);
 
-goto_url($link);
+if($mb['mb_level'] >= 10) {
+    // 관리자
+    goto_url(G5_BBS_URL."/board.app.php?bo_table=business&bo_idx=1&u_id=1");
+} else if ($mb['mb_level'] >= 5) {
+    //심사자
+    goto_url(G5_BBS_URL."/board.rater.php?bo_table=qa&bo_idx=1");
+} else if ($mb['mb_level'] >= 0) {
+    //지원자
+    goto_url(G5_BBS_URL."/board.php?bo_table=business&bo_idx=1");
+}
+
+
 ?>

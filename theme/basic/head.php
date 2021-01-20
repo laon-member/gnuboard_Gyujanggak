@@ -2,10 +2,8 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 include_once('./_common.php');
 
-if (G5_IS_MOBILE) {
-    include_once(G5_THEME_MOBILE_PATH.'/head.php');
-    return;
-}
+session_start();
+
 
 include_once(G5_THEME_PATH.'/head.sub.php');
 include_once(G5_LIB_PATH.'/latest.lib.php');
@@ -14,6 +12,11 @@ include_once(G5_LIB_PATH.'/poll.lib.php');
 include_once(G5_LIB_PATH.'/visit.lib.php');
 include_once(G5_LIB_PATH.'/connect.lib.php');
 include_once(G5_LIB_PATH.'/popular.lib.php');
+echo $_GET['no_alt'];
+if($_GET['no_alt'] == 'yes'){
+    $_SESSION['notice'] = "header_esc_end";
+}
+
 ?>
 
 <!-- 상단 시작 { -->
@@ -21,7 +24,6 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
     <h1 id="hd_h1"><?php echo $g5['title'] ?></h1>
     <div id="skip_to_container"><a href="#container">본문 바로가기</a></div>
 
-<?php echo $board_user; ?>
     <div id="hd_wrapper">
 
         <div id="logo">
@@ -170,14 +172,14 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
             <div class="board_nav_list_menu_back"></div>
         </ul>
     </div>
-    <div class="header_notice_back">
+    <div class="header_notice_back <?=  $_SESSION['notice'] ?>">
         <div class="header_notice">
 
         <?php
             $sql1 = " SELECT * FROM g5_write_notice where notice_table = 7 order by wr_id desc limit 0, 5 ";
             $result1 = sql_query($sql1);
         ?>
-            <p>공지사항</p>
+            <p>공지사항 </p>
             <div class="notice_container">
                 <ul class="header_notice_nav">
                     <?php for($j=1; $row=sql_fetch_array($result1); $j++) { ?>
@@ -188,16 +190,21 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                     
                 </ul>
             </div>
-            <p class="header_esc">X</p>
+            <?php
+                $http_host = $_SERVER['HTTP_HOST'];
+                $request_uri = $_SERVER['REQUEST_URI'];
+                $url = 'http://' . $http_host . $request_uri;
+                $url .= '&no_alt=yes';
+            ?>
+            <a href="<?= $url ?>" class="header_esc">X</a>
+
         </div>
     </div>
+
     <script>
     jQuery(function($){
         // 게시판 검색
-        
-        $('.header_esc').click(function(){
-            $('.header_notice_back').hide();
-        });
+      
 
         
         $('.board_nav_list_menu').on('click', function(){

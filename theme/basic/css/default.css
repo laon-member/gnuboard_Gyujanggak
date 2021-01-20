@@ -534,3 +534,11 @@ border-radius : 4px;
 90% {margin-top:-200px;}
 100% {margin-top:0;}
 }
+
+.header_esc_start{
+  display: block !important;
+}
+
+.header_esc_end{
+  display: none !important;
+}

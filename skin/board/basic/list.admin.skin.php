@@ -49,15 +49,23 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
 
         <ul class="btn_bo_user">
             <li>
+                <?php
+                    $http_host = $_SERVER['HTTP_HOST'];
+                    $request_uri = $_SERVER['REQUEST_URI'];
+                    $url = 'http://' . $http_host . $request_uri;
+                
+                    $url = preg_replace('#&page=[0-9]*#', '', $url);
+                ?>
                 <fieldset class="bo_sch_input">
-                    <form name="fsearch" method="POST">
+                    <form name="fsearch" method="POST" action="<?= $url?>">
                     <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
                     <input type="hidden" name="sca" value="<?php echo $sca ?>">
                     <input type="hidden" name="sop" value="and">
-                    <input type="hidden" name="sop" value="and">
                     <input type="hidden" name="bo_idx" value="<?= $_GET['bo_idx'] ?>">
-                    <input type="hidden" name="sfl" value="wr_subject">
                     <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+                    <select name="sfl" id="sfl">
+                        <?php echo get_board_sfl_select_options($sfl); ?>
+                    </select>
                     <div class="sch_bar">
                         <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" required id="stx" class="sch_input" size="25" maxlength="20" placeholder=" 검색어를 입력해주세요">
                         <button type="submit" value="검색" class="sch_btn"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">검색</span></button>
@@ -153,16 +161,7 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
 
 	<!-- 페이지 -->
 
-    <!-- 현재 URL 주소 -->
-    <?php
-        $http_host = $_SERVER['HTTP_HOST'];
-        $request_uri = $_SERVER['REQUEST_URI'];
-        $url = 'http://' . $http_host . $request_uri;
-    ?>    
-    
-    <!-- 총 게시판 -->
-
-    <?php echo get_paging('15', $page, $total_page, $url); ?>
+    <?php echo $write_pages ?>
 	<!-- 페이지 -->
 	
 

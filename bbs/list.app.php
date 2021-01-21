@@ -127,8 +127,8 @@ if (!$is_search_bbs) {
 }
 
 
-$total_page  = ceil($total_count / $page_rows);  // 전체 페이지 계산
-$from_record = ($page - 1) * $page_rows; // 시작 열을 구함
+$total_page  = 10;  // 전체 페이지 계산
+$from_record = 10; // 시작 열을 구함
 
 // 공지글이 있으면 변수에 반영
 if(!empty($notice_array)) {
@@ -204,14 +204,7 @@ if($page_rows > 0) {
 
     while ($row = sql_fetch_array($result))
     {
-        // 검색일 경우 wr_id만 얻었으므로 다시 한행을 얻는다
-        // if ($is_search_bbs)
-        //     $row = sql_fetch(" select * from {$write_table} where wr_id = '{$row['wr_parent']}' ");
-
         $list[$i] = get_list($row, $board, $board_skin_url, G5_IS_MOBILE ? $board['bo_mobile_subject_len'] : $board['bo_subject_len']);
-        // if (strstr($sfl, 'subject')) {
-        //     $list[$i]['subject'] = search_font($stx, $list[$i]['subject']);
-        // }
         $list[$i]['is_notice'] = false;
         $list_num = $total_count - ($page - 1) * $list_page_rows - $notice_count;
         $list[$i]['num'] = $list_num - $k;
@@ -231,9 +224,12 @@ $url = 'http://' . $http_host . $request_uri;
 if($stx == ""){
     $stx_text = "";
 } else {
-    $stx_text = '&stx='.$stx;
+    if($sfl != ""){
+        $stx_text = '&stx='.$stx.'&sfl='.$sfl;    
+    } else {
+        $stx_text = '&stx='.$stx;
+    }
 }
-
 $bo_idx_text = '&bo_idx='.$_GET['bo_idx'].'&u_id=1';
 
 $write_pages = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page,G5_BBS_URL.'/board.app.php?bo_table=business'.$bo_idx_text.$stx_text);

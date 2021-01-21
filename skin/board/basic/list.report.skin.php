@@ -11,15 +11,10 @@ if ($is_nogood) $colspan++;
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
 
-  
-
-
-
-
 ?>
 <!-- 게시판 목록 시작 { -->
 <aside id="bo_side">
-    <h2 class="aside_nav">보고서 제출</h2>
+    <h1 class="aside_nav_title">보고서 제출</h1>
     <?php $class_get =  $_GET['bo_idx'] == '1'?"aisde_click":""; ?>
     <a class="aside_nav <?php echo $class_get =  $_GET['bo_idx'] == '1'?"aisde_click":""; ?>" href="<?= G5_BBS_URL ?>/board.report.php?bo_table=business&bo_idx=1">중간보고서</a>
     <a class="aside_nav <?php echo $class_get =  $_GET['bo_idx'] == '2'?"aisde_click":""; ?>" href="<?= G5_BBS_URL ?>/board.report.php?bo_table=business&bo_idx=2">결과(연차)보고서</a>
@@ -92,19 +87,18 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         <caption><?php echo $board['bo_subject'] ?> 목록</caption>
         <thead>
         <tr>
-            <th scope="col">번호</th>
-            <th scope="col">지원사업 분야</th>
-            <th scope="col">제목</th>
-            <th scope="col">마감일</th>
-            <th scope="col">상태</th>
+            <th scope="col" style="width:8%">번호</th>
+            <th scope="col" style="width:30%">지원사업 분야</th>
+            <th scope="col" style="width:40%">제목</th>
+            <th scope="col" style="width:12%">마감일</th>
+            <th scope="col" style="width:10%">상태</th>
         </tr>
         </thead>
         <tbody>
         <?php
 
             for ($i=0; $i<count($list); $i++) {
-                if ($i%2==0) $lt_class = "even";
-                else $lt_class = "";
+                
 
                 $sql = " select * from report where mb_id= '{$member['mb_id']}' AND business_idx = '{$list[$i]['idx']}'";
                 $result = sql_query($sql);
@@ -130,7 +124,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             <td class="td_download td_center">
                  <?= $row33['title']; ?>
             </td>
-            <td class="td_title" style="padding-left:<?php echo $list[$i]['reply'] ? (strlen($list[$i]['wr_reply'])*10) : '0'; ?>px">
+            <td class="td_title">
                 <a href="<?= G5_BBS_URL ?>/board.report.php?bo_table=<?=$_GET['bo_table']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&wr_bo_idx=<?php echo $list[$i]['idx']; ?>&wr_idx=<?= $list[$i]['wr_id'] == ""? $list[$i]['bo_idx']:$list[$i]['wr_id']; ?>">
                     <?= $row44['wr_subject'] == ""? $list[$i]['wr_subject']:$row44['wr_subject']; ?>
                 </a>
@@ -159,16 +153,12 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         </tbody>
         </table>
     </div>
-
-	<!-- 페이지 -->
-    <?php echo $write_pages ?>
-	<!-- 페이지 -->
-	
-    
     </form>
-
-    
 </div>
+
+<!-- 페이지 -->
+<?php echo $write_pages ?>
+<!-- 페이지 -->
 
 <?php if($is_checkbox) { ?>
 <noscript>

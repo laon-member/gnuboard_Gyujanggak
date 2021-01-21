@@ -27,7 +27,7 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
 ?>
 <!-- 게시판 목록 시작 { -->
 <aside id="bo_side">
-    <h2 class="aside_nav">보고서 관리</h2>
+    <h2 class="aside_nav_title">보고서 관리</h2>
     <?php 
         for($k=1; $row=sql_fetch_array($result); $k++) {
             $class_get =  $_GET['bo_idx'] == $row['idx']?"aisde_click":"";
@@ -106,8 +106,7 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
 
         for ($i=0; $i<count($list); $i++) {
             
-        	if ($i%2==0) $lt_class = "even";
-            else $lt_class = "";
+        	
 		?>
         <tr class="<?php if ($list[$i]['is_notice']) echo "bo_notice"; ?> <?php echo $lt_class ?> tr_hover">
             
@@ -159,14 +158,13 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
 
     </div>
 
-	<!-- 페이지 -->
-
-    <?php echo $write_pages ?>
-	<!-- 페이지 -->
+	
 	
 
 </div>
-
+<!-- 페이지 -->
+<?php echo $write_pages ?>
+<!-- 페이지 -->
 <?php if($is_checkbox) { ?>
 <noscript>
 <p>자바스크립트를 사용하지 않는 경우<br>별도의 확인 절차 없이 바로 선택삭제 처리하므로 주의하시기 바랍니다.</p>

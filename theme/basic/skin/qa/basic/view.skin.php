@@ -106,7 +106,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
             for ($i=0; $i<$view['download_count']; $i++) {
              ?>
                 <li>
-                    <i class="fa fa-download" aria-hidden="true"></i>
+                    <img src="<?php echo G5_IMG_URL ?>/download_icon.png" alt="download_icon">
                     <a href="<?php echo $view['download_href'][$i];  ?>" class="view_file_download" download>
                         <strong><?php echo $view['download_source'][$i] ?></strong>
                     </a>

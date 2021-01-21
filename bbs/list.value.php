@@ -74,7 +74,7 @@ if ($sca || $stx || $stx === '0') {     //검색이면
 
 
     $page_rows =10;
-    $list_page_rows = $board['bo_page_rows'];
+    $list_page_rows =10;
 
 
 
@@ -130,7 +130,7 @@ if ($sst) {
 
 // 여기 입니다.
 if ($is_search_bbs) {
-    $sql = " select  * from g5_business_propos where {$sql_search} and mb_id = '{$member['mb_id']}' {$sql_order} limit {$from_record}, $page_rows ";
+    $sql = " select  * from g5_business_propos where {$sql_search} and mb_id = '{$member['mb_id']}' {$sql_order} DESC limit {$from_record}, $page_rows ";
 } else {
     $sql = " select * from g5_business_propos where mb_id = '{$member['mb_id']}'";
     $sql .= " {$sql_order} DESC limit {$from_record}, $page_rows ";
@@ -141,16 +141,12 @@ if($total_page > 0) {
     $result = sql_query($sql);
 
     $k = 0;
-
     while ($row = sql_fetch_array($result))
     {
-      
-
-        $list[$i] = get_list($row, $board, $board_skin_url, 10);
+        $list[$i] = get_list($row, $board, $board['bo_subject_len']);
         $list[$i]['is_notice'] = false;
         $list_num = $total_count - ($page - 1) * $list_page_rows - $notice_count;
         $list[$i]['num'] = $list_num - $k;
-        
         
         $i++;
         $k++;

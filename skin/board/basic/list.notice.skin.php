@@ -42,7 +42,7 @@ if($board_user == 1){
 ?>
 <!-- 게시판 목록 시작 { -->
 <aside id="bo_side">
-    <h2 class="aside_nav"><?= $aside_nav_title ?></h2>
+    <h2 class="aside_nav_title"><?= $aside_nav_title ?></h2>
     <?php 
 
         for($k=7; $row1=sql_fetch_array($result1); $k++) {
@@ -65,10 +65,7 @@ if($board_user == 1){
 
     <!-- 게시판 페이지 정보 및 버튼 시작 { -->
     <div id="bo_btn_top">
-    <h1 class="category_title"><?php
-                echo $category_title;
-             ?></h1>
-
+    <h1 class="category_title"><?php echo $category_title; ?></h1>
         <ul class="btn_bo_user">
             <li>
             <?php
@@ -136,8 +133,7 @@ if($board_user == 1){
 
         for ($i=0; $i<count($list); $i++) {
             
-        	if ($i%2==0) $lt_class = "even";
-            else $lt_class = "";
+        	
 		?>
         <tr class="<?php if ($list[$i]['is_notice']) echo "bo_notice"; ?> <?php echo $lt_class ?> tr_hover">
             
@@ -147,7 +143,7 @@ if($board_user == 1){
              ?>
             </td>
 
-            <td class="td_title" style="padding-left:<?php echo $list[$i]['reply'] ? (strlen($list[$i]['wr_reply'])*10) : '0'; ?>px">
+            <td class="td_title">
                 <?php
                 if ($is_category && $list[$i]['ca_name']) {
 				?>
@@ -166,7 +162,7 @@ if($board_user == 1){
             </td>
             <td class="td_download td_center">
                 <?php if ($list[$i]['wr_file'] > 0) { ?>
-                    <i class="fa fa-download" aria-hidden="true"></i>
+                    <img src="<?php echo G5_IMG_URL ?>/download_icon.png" alt="download_icon">
                     <?php } ?>
             </td>
             <td class="td_datetime td_center"><?php echo $list[$i]['datetime2'] ?></td>
@@ -183,25 +179,15 @@ if($board_user == 1){
 
     </div>
 
-	<!-- 페이지 -->
 
-    <!-- 현재 URL 주소 -->
-    <?php
-        // $http_host = $_SERVER['HTTP_HOST'];
-        // $request_uri = $_SERVER['REQUEST_URI'];
-        // $url = 'http://' . $http_host . $request_uri;
-    ?>    
-    
-    <!-- 총 게시판 -->
-
-    <?php echo $write_pages; ?>
-	<!-- 페이지 -->
-	
     
 
   
 </div>
-
+<!-- 페이지 -->
+<?php echo $write_pages; ?>
+<!-- 페이지 -->
+	
 <?php if($is_checkbox) { ?>
 <noscript>
 <p>자바스크립트를 사용하지 않는 경우<br>별도의 확인 절차 없이 바로 선택삭제 처리하므로 주의하시기 바랍니다.</p>
@@ -210,14 +196,6 @@ if($board_user == 1){
 
 <?php if ($is_checkbox) { ?>
 <script>
-function all_checked(sw) {
-    var f = document.fboardlist;
-
-    for (var i=0; i<f.length; i++) {
-        if (f.elements[i].name == "chk_wr_id[]")
-            f.elements[i].checked = sw;
-    }
-}
 
 function fboardlist_submit(f) {
     var chk_count = 0;
@@ -252,46 +230,6 @@ function fboardlist_submit(f) {
 
     return true;
 }
-
-// 선택한 게시물 복사 및 이동
-function select_copy(sw) {
-    var f = document.fboardlist;
-
-    if (sw == "copy")
-        str = "복사";
-    else
-        str = "이동";
-
-    var sub_win = window.open("", "move", "left=50, top=50, width=500, height=550, scrollbars=1");
-
-    f.sw.value = sw;
-    f.target = "move";
-    f.action = g5_bbs_url+"/move.php";
-    f.submit();
-}
-
-// 게시판 리스트 관리자 옵션
-jQuery(function($){
-    $(".btn_more_opt.is_list_btn").on("click", function(e) {
-        e.stopPropagation();
-        $(".more_opt.is_list_btn").toggle();
-    });
-    $(document).on("click", function (e) {
-        if(!$(e.target).closest('.is_list_btn').length) {
-            $(".more_opt.is_list_btn").hide();
-        }
-    });
-
-    // if(<?php echo $_GET['bo_idx'] == 1? true : false ?> ){
-    //     alert('fdsa');
-    // }
-
-    // $('.aside_nav').click(function(){
-    //     $('.aside_nav').removeClass('.aisde_click');
-    //     $(this).addClass('.aisde_click');
-    // });
-
-});
 </script>
 <?php } ?>
 <!-- } 게시판 목록 끝 -->

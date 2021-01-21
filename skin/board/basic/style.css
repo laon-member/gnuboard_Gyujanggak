@@ -104,10 +104,8 @@
 #bo_list .txt_active {color:#5d910b}
 #bo_list .txt_expired {color:#ccc}
 #bo_list tbody .tr {border-left:2px solid transparent}
-#bo_list tbody .tr_hover:hover {border-left:2px solid #253dbe}
-tbody{border-left:2px solid transparent}
+tbody{}
 .tbody tr{border: none;}
-.tbody:hover tr{border-left:2px solid #253dbe !important; background-color: #fbfbfb;}
 
 
 #bo_cate {margin:25px 0}
@@ -135,7 +133,9 @@ box-shadow:inset 0 2px 5px rgb(33, 135, 202)}
 .chk_box input[type="checkbox"]:checked + label span {background:url(./img/chk.png) no-repeat 50% 50% #3a8afd;border-color:#1471f6;border-radius:3px}
 
 
-#bo_btn_top {margin:10px 0; display: flex; justify-content: space-between;}
+#bo_btn_top {margin: 40px 0; display: flex; justify-content: space-between;align-items: flex-start;}
+#bo_btn_top h1{display: inline-block;}
+.bo_sch_input{display: inline-block;}
 .bo_fx {margin-bottom:5px;float:right;zoom:1}
 .bo_fx:after {display:block;visibility:hidden;clear:both;content:""}
 .bo_fx ul {margin:0;padding:0;list-style:none}
@@ -145,6 +145,7 @@ box-shadow:inset 0 2px 5px rgb(33, 135, 202)}
 .btn_bo_user li {float:left;text-align:center;margin-left:5px;background:#fff}
 .btn_bo_user > li {position:relative}
 .btn_bo_adm {float:left}
+.sch_bar{display: flex; width: 380px; height: 40px; border: 1px solid #DDDDDD;}
 .btn_bo_adm li {float:left;margin-right:5px}
 .btn_bo_adm input {padding:0 8px;border:0;background:#d4d4d4;color:#666;text-decoration:none;vertical-align:middle}
 .bo_notice td {background:#fff6fa !important;border-bottom:1px solid #f8e6ee}
@@ -165,6 +166,7 @@ box-shadow:inset 0 2px 5px rgb(33, 135, 202)}
 .bo_cate_link {float:left;display:inline-block;margin-right:10px;background:#e2eaf6;color:#3a8afd;font-weight:normal !important;height:20px;line-height:10px;padding:5px 8px;border-radius:5px;font-size:0.95em} /* 글제목줄 분류스타일 */
 .bo_cate_link:hover {text-decoration:none}
 .bo_tit {display:block;color:#000;font-weight:bold}
+.bo_tit a{color: #333333; font-size: 14px; font-weight: lighter;}
 .bo_current {color:#e8180c}
 #bo_list .profile_img img {border-radius:50%}
 #bo_list .cnt_cmt {background:#e9eff5;color:#3a8afd;font-size:11px;height:16px;line-height:16px;padding:0 5px;border-radius:3px;vertical-align:middle}
@@ -198,9 +200,11 @@ box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075)}
 
 
 
-.bo_sch_input .sch_input {width:250px;height:38px;border:0;padding:0;background-color:transparent;}
-.bo_sch_input .sch_btn {height:38px;color:#656565;background:none;border:0;width:40px;font-size:15px}
+.bo_sch_input .sch_input {width:90%;height:38px;border:0;padding:0;background-color:transparent;}
+.bo_sch_input .sch_btn {height:38px;color:#656565;background:none;border:0;width:10%;font-size:15px}
 .bo_sch_input .bo_sch_cls {right:0;top:0;color:#b5b8bb;border:0;padding:12px 15px;font-size:16px;background:#fff}
+.bo_sch_input form{ display: flex;}
+#sfl{border: 1px solid #DDDDDD; margin-right: 10px;}
 .bo_sch_bg {background:#000;background:rgba(0,0,0,0.1);width:100%;height:100%}
 
 /* 게시판 쓰기 */
@@ -315,7 +319,7 @@ box-shadow:1px 1px 5px 0px hsl(232, 36%, 96%)}
 #bo_v_img a.view_image {display:block}
 #bo_v_img img {margin-bottom:20px;max-width:100%;height:auto}
 
-#bo_v_con {margin:10px 0 30px;width:100%;line-height:1.7em;min-height:200px;word-break:break-all;overflow:hidden }
+#bo_v_con {margin:20px 0 30px; padding: 20px; width:100%;line-height:30px;min-height:450px;word-break:break-all;overflow:hidden; border: 1px solid #DDDDDD; font-size: 16px;}
 #bo_v_con a {color:#000;text-decoration:underline}
 #bo_v_con img {max-width:100%;height:auto}
 
@@ -440,21 +444,13 @@ box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.1)}
     line-height: 30px;
     color: white;}
 
-#bo_side{
-    width: 13%;
-    background-color: #fbfbfb;
-    display: table;
-    text-align: center;
-    
-}
-.aside_nav{
-    display: block;
-}
+
 
 #bo_v{width: 80%;}
-.td_center{text-align: center; }
+.td_center{ text-align: center;}
+.td_title{padding-left: 20px; }
 
-.pg_wrap{width: 100%; text-align: center;}
+.pg_wrap{text-align: center; padding-top: 20px; padding-bottom: 50px; position: absolute; bottom:100px; left: 56%; transform: translateX(-56%);}
 
 
 #bo_v_top{ display: flex; justify-content: space-between;}
@@ -466,21 +462,24 @@ box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.1)}
 .profile_info:nth-of-type(2) span {margin-left: 50px;}
 .profile_info span {font-size: 16px; }
 
-#bo_v_atc{width: 100%; border: 1px solid #ccc; }
+#bo_v_atc{width: 100%;}
 
-#bo_v{background-color: #fbfbfb; padding: 10px;}
 .btn_container{text-align: right;}
 .btn_next_prv{margin:10px 0 10px 20px;  display: inline-block;
-    background: #3a8afd;
+    background: #fff;
+    border: 1px solid #DDDDDD;
     cursor: pointer;
-    border-radius: 3px;}
-.btn_next_prv a{width: 100%; height: 100%; font-size: 16px; color: #fff;padding: 10px; display: block;}
-#bo_side{width: 15%;}
-.aside_nav{ margin-bottom: 10px;}
-.aisde_click{font-weight: bold; }
+    width: 80px;
+    text-align: center;
+    }
+.btn_next_prv a{width: 100%; height: 100%; font-size: 16px; color: #000;padding: 10px; display: block;}
+#bo_side{width: 15%;background-color: #EEEEEE;display: table;text-align: center;border: 1px solid #DDDDDD;}
+.aside_nav_title{height: 100px; background-color: #1D2E58; color: #ffffff;padding-top: 60px;padding-left: 20px;text-align: left;}
+.aside_nav{display: block;font-size: 16px;padding: 13px 0;border-left: 4px solid transparent;}
+.aisde_click{font-weight: bold; color: #4A9FDD; border-left: 4px solid #4A9FDD;background-color: #fff;}
 
-#bus_btn{text-align: center;margin-top: 30px;}
-.btn_next_prv_link{ font-size: 16px; color: #fff;padding: 10px; border: none;}
+#bus_btn{text-align: center;}
+.btn_next_prv_link{ font-size: 16px; width: 180px; color: #fff;padding: 10px; border: 1px solid #DDDDDD; background-color: #1D2E58;}
 
 #bo_v_files{display: flex; justify-content: space-between; text-align: right;}
 .download_file{display: inline-block; }
@@ -595,9 +594,9 @@ border:1px solid #ccc;
 .board_nav_container a{padding-top: 20px; }
 .board_nav{background-color: #fff; display: inline-block;padding-top: 5x; }
 .board_nav_list{font-size: 20px; display: inline-block; padding: 15px 40px 20px 40px; vertical-align: top; position: relative;}
-.board_nav_list a{ display: block; width: 100%; height: 100%; padding-bottom: 10px; }
+.board_nav_list > a{ display: block; width: 100%; height: 100%; padding-bottom: 10px; border-bottom: 4px solid transparent;}
 
-.title_border a{color: #1D2E58;border-bottom: 4px solid #1D2E58; font-weight: bold;}
+.title_border > a{color: #1D2E58;border-bottom: 4px solid #1D2E58; font-weight: bold;}
 .sub_menu{
     display: none;
     position: absolute;
@@ -607,6 +606,7 @@ border:1px solid #ccc;
     z-index: 10;
     background-color: #1D2E58;
     width: 100%;
+    height: 0%;
 }
 
 .sub_menu a {
@@ -617,22 +617,16 @@ border:1px solid #ccc;
     color: #fff;
 }
 
+.board_nav_list_hover:hover .sub_menu{display: block !important; height: 180% !important;transition-property: height; transition-duration: 0.5s !important; }
 
-.board_nav_list_menu_back{
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
-    z-index: 5;
-    display: none;
-}
+#hd_wrapper_contianer{box-shadow: 0px 1px 4px 1px rgba(0,0,0,0.1)}
 
 .header_notice_back{
     width: 100%;
     background-color: #F7F7F7;
     padding: 0 ;
     text-align: center;
+    box-shadow: 0px 1px 4px 1px rgba(0,0,0,0.1);
 }
 
 .header_notice{
@@ -647,7 +641,6 @@ border:1px solid #ccc;
 .header_notice p{ vertical-align: middle; height: 100%; padding: 25px 0;} 
 .header_notice p:nth-of-type(1){font-size: 18px; color: #333333;}
 .notice_container{width: 85%;text-align: left; height: 100%;}
-
 .bo_class{display: inline-block; vertical-align: top;}
 .input_text_hight{height: 250px; resize:none; overflow-y: auto;}
 
@@ -746,3 +739,9 @@ border:1px solid #ccc;
 }
 
 input:focus {outline:none !important;}
+
+#view_table{width: 100%; border-spacing: 0px;border-collapse:collapse;}
+#view_table th, #view_table td{height: 40px;border: 1px solid #DDDDDD;}
+#view_table th{background-color: #F7F7F7;}
+.view_table_text{text-align: center;}
+.view_title{font-size: 30px;}

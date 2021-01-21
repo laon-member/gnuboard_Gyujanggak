@@ -13,33 +13,10 @@ if ($is_nogood) $colspan++;
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
 
-
-
-
-// $sql = "  select COUNT(DISTINCT `idx`) as cnt from rater where user_id = '{$member['mb_id']}' and test_id = '{$_GET['bo_idx']}'";
-// echo $sql;
-// $row11 = sql_fetch($sql);
-// $total_count = $row11['cnt'];
-
-// $sql = " select * from rater where user_id = '{$member['mb_id']}' and test_id = '{$_GET['bo_idx']}'";
-// $result = sql_query($sql);
-
-
-
-// for ($i=0; $i<$row = sql_fetch_array($result); $i++) {
-
-// $sql1 = " SELECT * FROM {$write_table} WHERE wr_title_idx = {$bo_idx} ";
-// $result1 = sql_query($sql1);
-// $num = 0;
-// for($j=1; $row=sql_fetch_array($result1); $j++) {
-    
-//     $num ++;
-// }
-
 ?>
 <!-- 게시판 목록 시작 { -->
 <aside id="bo_side">
-    <h2 class="aside_nav">심사관리</h2>
+    <h2 class="aside_nav_title">심사관리</h2>
    
     <a class="aside_nav <?= $_GET['bo_idx'] == 1?"aisde_click":""; ?>" href="<?= G5_BBS_URL ?>/board.rater.php?bo_table=<?= $bo_table ?>&bo_idx=1">지원자 선발</a>
     <a class="aside_nav <?= $_GET['bo_idx'] == 2?"aisde_click":""; ?>" href="<?= G5_BBS_URL ?>/board.rater.php?bo_table=<?= $bo_table ?>&bo_idx=2">중간보고서</a>
@@ -63,8 +40,13 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 
     <!-- 게시판 페이지 정보 및 버튼 시작 { -->
     <div id="bo_btn_top">
-        <h1 id="">심사관리</h1>
-
+        <?php if($_GET['bo_idx'] == 1){ ?>
+            <h1 id="">지원자 선발</h1>
+        <?php } else if($_GET['bo_idx'] == 2){ ?>
+            <h1 id="">중간보고서</h1>
+        <?php } else if($_GET['bo_idx'] == 3){ ?>
+            <h1 id="">결과(연차)보고서</h1>
+        <?php } ?>
     </div>
     <!-- } 게시판 페이지 정보 및 버튼 끝 -->
         	
@@ -74,20 +56,17 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         <thead>
         <tr>
             <th scope="col" style="width:10%">번호</th>
-            <th scope="col" style="width:10%">과제번호</th>
+            <th scope="col" style="width:15%">과제번호</th>
             <th scope="col" style="width:60%">제목</th>
-            <th scope="col" style="width:20%">심사대상</th>
+            <th scope="col" style="width:15%">심사대상</th>
         </tr>
         </thead>
         <tbody>
         <?php
         $sql = "select * from rater where user_id = '{$member['mb_id']}' AND value = '2' AND test_id = '{$_GET['bo_idx']}' ORDER BY idx DESC";
         $result = sql_query($sql);
-        for ($i=0; $row11 = sql_fetch_array($result); $i++) {
-            
-        	if ($i%2==0) $lt_class = "even";
-            else $lt_class = "";
-            echo $list['business_idx'];
+        for ($i=0; $i<count($list); $i++) {
+        	
 
             $sql44 = " select * from g5_write_business where wr_id= '{$list[$i]['business_idx']}'";
             $result44 = sql_query($sql44);
@@ -96,16 +75,13 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         <tr class="<?php if ($list[$i]['is_notice']) echo "bo_notice"; ?> <?php echo $lt_class ?> tr_hover">
             
             <td class="td_idx td_center">
-            <?php
-                echo $list[$i]['num'];
-             ?>
+            <?php echo $list[$i]['num']; ?>
             </td>
 
-            <td class="td_title td_center">
-            
+            <td class="td_center">
                 <?= $row44['wr_quest_number'] ?> 
             </td>
-            <td class="td_download "  style="padding-left:<?php echo $list[$i]['reply'] ? (strlen($list[$i]['wr_reply'])*10) : '0'; ?>px">
+            <td class="td_title ">
                
                 <a href="<?= G5_BBS_URL ?>/board.rater.php?bo_table=<?=$_GET['bo_table']; ?>&wr_idx=<?php echo $row44['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>">
                     <?php
@@ -139,27 +115,16 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         </table>
     </div>
 
-	<!-- 페이지 -->
-
-    <!-- 현재 URL 주소 -->
-    <?php
-        $http_host = $_SERVER['HTTP_HOST'];
-        $request_uri = $_SERVER['REQUEST_URI'];
-        $url = 'http://' . $http_host . $request_uri;
-    ?>    
-    
-    <!-- 총 게시판 -->
-    <?php $total_page  = ceil($num / $page_rows);  ?>
-
-    <?php echo get_paging('15', $page, $total_page, $url); ?>
-	<!-- 페이지 -->
+	
 	
     
     </form>
 
   
 </div>
- 
+ <!-- 페이지 -->
+ <?php echo $write_pages; ?>
+	<!-- 페이지 -->
 <?php if($is_checkbox) { ?>
 <noscript>
 <p>자바스크립트를 사용하지 않는 경우<br>별도의 확인 절차 없이 바로 선택삭제 처리하므로 주의하시기 바랍니다.</p>
@@ -168,14 +133,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 
 <?php if ($is_checkbox) { ?>
 <script>
-function all_checked(sw) {
-    var f = document.fboardlist;
-
-    for (var i=0; i<f.length; i++) {
-        if (f.elements[i].name == "chk_wr_id[]")
-            f.elements[i].checked = sw;
-    }
-}
 
 function fboardlist_submit(f) {
     var chk_count = 0;
@@ -211,45 +168,8 @@ function fboardlist_submit(f) {
     return true;
 }
 
-// 선택한 게시물 복사 및 이동
-function select_copy(sw) {
-    var f = document.fboardlist;
 
-    if (sw == "copy")
-        str = "복사";
-    else
-        str = "이동";
 
-    var sub_win = window.open("", "move", "left=50, top=50, width=500, height=550, scrollbars=1");
-
-    f.sw.value = sw;
-    f.target = "move";
-    f.action = g5_bbs_url+"/move.php";
-    f.submit();
-}
-
-// 게시판 리스트 관리자 옵션
-jQuery(function($){
-    $(".btn_more_opt.is_list_btn").on("click", function(e) {
-        e.stopPropagation();
-        $(".more_opt.is_list_btn").toggle();
-    });
-    $(document).on("click", function (e) {
-        if(!$(e.target).closest('.is_list_btn').length) {
-            $(".more_opt.is_list_btn").hide();
-        }
-    });
-
-    // if(<?php echo $_GET['bo_idx'] == 1? true : false ?> ){
-    //     alert('fdsa');
-    // }
-
-    // $('.aside_nav').click(function(){
-    //     $('.aside_nav').removeClass('.aisde_click');
-    //     $(this).addClass('.aisde_click');
-    // });
-
-});
 </script>
 <?php } ?>
 <!-- } 게시판 목록 끝 -->

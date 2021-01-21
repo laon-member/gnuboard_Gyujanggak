@@ -7,8 +7,6 @@ session_start();
 include_once('./_common.php');
 add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 0);
 
-include_once(G5_THEME_PATH.'/head1.php');
-
 if(empty($_SESSION['FORM']['mb_id'])){
 // 세션값이 없으면..
 	$form_result = "";
@@ -41,15 +39,9 @@ if(empty($_SESSION['FORM']['mb_id'])){
 	<input type="hidden" name="mb_nick_default" value="<?php echo get_text($member['mb_nick']) ?>">
 	<input type="hidden" name="mb_nick" value="<?php echo get_text($member['mb_nick']) ?>">
 	<?php }  ?>
-	<aside class="register_form_aside">
-		<h2 class="aisde_title">로그인 정보</h2>
-		<a class="aside_nav" href="<?php echo G5_BBS_URL ?>/register_form.php">회원가입</a>
-		<a class="aside_nav" href="<?php echo G5_BBS_URL ?>/id_pw_check_form.php?title=id">아이디 찾기</a>
-		<a class="aside_nav aisde_click" href="<?php echo G5_BBS_URL ?>/id_pw_check_form.php?title=pw">비밀번호 찾기</a>
-	</aside>
 	<div id="register_form" class="form_01">   
 	    <div class="register_form_inner">
-	        <h2>비밀번호 찾기</h2>
+	        <h1>비밀번호 찾기</h1>
 	        <ul>
 				<li>
 	                <label for="reg_mb_pw">새로운 비밀번호</label>
@@ -61,8 +53,8 @@ if(empty($_SESSION['FORM']['mb_id'])){
 	            </li>
 			</ul>
 			<div class="btn_confirm">
-				<input type="submit" id="btn_submit" class="btn_submit" accesskey="s" value="비밀번호 찾기" formaction="<?php echo G5_BBS_URL ?>/register_form_result.php"/>
 				<a href="<?php echo G5_URL ?>" class="btn_close">취소</a>
+				<input type="submit" id="btn_submit" class="btn_submit" accesskey="s" value="비밀번호 변경" formaction="<?php echo G5_BBS_URL ?>/register_form_result.php"/>
 			</div> 
 	    </div>
 	</div>

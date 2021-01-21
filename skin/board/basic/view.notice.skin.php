@@ -72,7 +72,7 @@ $result1 = sql_query($sql1);
                                 if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] ) {
                         ?>
                                 <li class="">
-                                    <i class="fa fa-download" aria-hidden="true"></i>
+                                    <img src="<?php echo G5_IMG_URL ?>/download_icon.png" alt="download_icon">
                                     <span class="view_file_download_text"><?php echo $view['file'][$i]['source'] ?></span> 
                                     <a href="<?php echo $view['file'][$i]['href'];  ?>" class="view_file_download btn_next_prv" >다운로드</a>
                                 </li>

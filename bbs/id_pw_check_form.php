@@ -20,7 +20,7 @@ if( $provider && function_exists('social_nonce_is_valid') ){   //모바일로 �
         $is_social_login_modify = true;
     }
 }
-include_once(G5_THEME_PATH.'/head1.php');
+include_once(G5_THEME_PATH.'/head2.php');
 if ($_GET['title'] == "id") {
     include_once($member_skin_path.'/register_form_id.skin.php');
     run_event('register_form_after', $w, $agree, $agree2);
@@ -35,6 +35,6 @@ if ($_GET['title'] == "id") {
 } else {
     alert('제대로 된 주소로 들어오세요');
 }
-include_once('./_tail.php');
+include_once('./_tail.sub.php');
 
 ?>

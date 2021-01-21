@@ -176,7 +176,6 @@ if (!$sst) {
 
 if(!$sst)
     $sst  = "wr_num, wr_reply";
-
 if ($sst) {
     $sql_order = " order by {$sst} {$sod} ";
 }
@@ -195,18 +194,10 @@ if ($is_search_bbs) {
 // 페이지의 공지개수가 목록수 보다 작을 때만 실행
 if($page_rows > 0) {
     $result = sql_query($sql);
-
     $k = 0;
-
     while ($row = sql_fetch_array($result))
     {
-        // 검색일 경우 wr_id만 얻었으므로 다시 한행을 얻는다
-        // if ($is_search_bbs)
-        //     $row = sql_fetch(" select * from {$write_table} where wr_id = '{$row['wr_parent']}' and wr_title_idx = '{$_GET['bo_idx']}'");
         $list[$i] = get_list($row, $board, $board_skin_url, G5_IS_MOBILE ? $board['bo_mobile_subject_len'] : $board['bo_subject_len']);
-        // if (strstr($sfl, 'subject')) {
-        //     $list[$i]['subject'] = search_font($stx, $list[$i]['subject']);
-        // }
         $list[$i]['is_notice'] = false;
         $list_num = $total_count - ($page - 1) * $list_page_rows - $notice_count;
         $list[$i]['num'] = $list_num - $k;
@@ -227,7 +218,11 @@ $url .= '&sfl=mb_1&stx=';
 if($stx == ""){
     $stx_text = "";
 } else {
-    $stx_text = '&stx='.$stx;
+    if($sfl != ""){
+        $stx_text = '&stx='.$stx.'&sfl='.$sfl;    
+    } else {
+        $stx_text = '&stx='.$stx;
+    }
 }
 
 $bo_idx_text = '&bo_idx='.$_GET['bo_idx'];

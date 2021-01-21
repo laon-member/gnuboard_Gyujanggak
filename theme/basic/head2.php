@@ -14,12 +14,8 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 <div id="hd">
     <div id="hd_wrapper_contianer">
         <div id="hd_wrapper">
-            <div id="logo">
-                <a href="<?php echo G5_URL ?>">
-                    <img src="<?php echo G5_IMG_URL ?>/main_logo.png" alt="logo">
-                    <img src="<?php echo G5_IMG_URL ?>/main_logo_text.png" alt="logo_text">
-                    <!-- <p>21세기 신규장각 자료구축사업 <span>과제관리시스템</span></p>  -->
-                </a>
+            <div id="login_logo">
+                <a href="<?php echo G5_URL ?>"><img src="<?php echo G5_IMG_URL ?>/logo.png" alt="<?php echo $config['cf_title']; ?>"></a>
             </div>
         </div>
     </div>
@@ -30,8 +26,6 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 
 <!-- 콘텐츠 시작 { -->
 <div id="wrapper_main">
-<img src="<?=G5_THEME_URL ?>/img/main_background.png" alt="user_icon" class="main_back">
-<div class="main_back_filter"></div>
     <div id="container_wr">
    
     <div id="container_layout">

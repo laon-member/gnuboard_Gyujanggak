@@ -144,7 +144,7 @@ jQuery(function($){
          ?>
             <li>
                 <a href="<?php echo $view['file'][$i]['href'];  ?>" class="view_file_download" download>
-                    <i class="fa fa-download" aria-hidden="true"></i>
+                    <img src="<?php echo G5_IMG_URL ?>/download_icon.png" alt="download_icon">
                     <strong><?php echo $view['file'][$i]['source'] ?></strong>
                     <?php echo $view['file'][$i]['content'] ?> (<?php echo $view['file'][$i]['size'] ?>)
                 </a>

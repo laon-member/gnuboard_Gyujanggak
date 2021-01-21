@@ -7,7 +7,6 @@ session_start();
 include_once('./_common.php');
 add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 0);
 
-include_once(G5_THEME_PATH.'/head1.php');
 
 if(empty($_SESSION['FORM']['mb_id'])){
 // 세션값이 없으면..
@@ -48,43 +47,36 @@ if(empty($_SESSION['FORM']['mb_id'])){
 	<input type="hidden" name="mb_nick_default" value="<?php echo get_text($member['mb_nick']) ?>">
 	<input type="hidden" name="mb_nick" value="<?php echo get_text($member['mb_nick']) ?>">
 	<?php }  ?>
-	<aside class="register_form_aside">
-		<h2 class="aisde_title">로그인 정보</h2>
-		<a class="aside_nav aisde_click" href="<?php echo G5_BBS_URL ?>/register_form.php">회원가입</a>
-		<a class="aside_nav" href="<?php echo G5_BBS_URL ?>/id_pw_check_form.php?title=id">아이디 찾기</a>
-		<a class="aside_nav" href="<?php echo G5_BBS_URL ?>/id_pw_check_form.php?title=pw">비밀번호 찾기</a>
-	</aside>
+	
 	<div id="register_form" class="form_01">   
 	    <div class="register_form_inner">
-	        <h2>로그인 정보</h2>
-	        <ul>
+	        <h1>정보 입력</h1>
+	        <ul class="register_form_inner_ul"> 
 				<li>
 	                <label for="reg_mb_id">아이디</label>
-					<input autocomplete="off" type="text" name="mb_id" value="<?php echo $form_id ?>" id="reg_mb_id"  <?php echo $readonly ?> class="frm_input full_input <?php echo $readonly ?>" placeholder="아이디">
-					<input class="btn_submit btn_id_check" id = "user_mb_id"  name="rewq1" type="button" value="중복검사"/>
+					<input autocomplete="off" type="text" name="mb_id" value="<?php echo $form_id ?>" id="reg_mb_id"  <?php echo $readonly ?> class="frm_input full_input <?php echo $readonly ?>" placeholder="아이디를 입력해주세요.">
+					<input class="btn_submit btn_id_check" id = "user_mb_id"  name="rewq1" type="button" value="아이디 중복확인"/>
 				</li>
 				<li>
 	                <label for="reg_mb_name">이름</label>
-	                <input type="text" id="reg_mb_name" name="mb_name" value="<?php echo $form_name ?>" <?php echo $readonly; ?> class="frm_input full_input <?php echo $readonly ?>" placeholder="이름">
+	                <input type="text" id="reg_mb_name" name="mb_name" value="<?php echo $form_name ?>" <?php echo $readonly; ?> class="frm_input full_input <?php echo $readonly ?>" placeholder="이름을 입력해주세요.">
 	            </li>
 				<li>
 	                <label for="reg_mb_password">비밀번호</label>
-					<input autocomplete="off" type="password" name="mb_password" id="reg_mb_password" <?php echo $form_pw ?> class="frm_input full_input "  placeholder="비밀번호">
-					<p>* 9자 이상의 영문, 숫자, 특수문자를 혼합하여 등록하시기 바랍니다.</p>
+					<input autocomplete="off" type="password" name="mb_password" id="reg_mb_password" <?php echo $form_pw ?> class="frm_input full_input "  placeholder="* 9자 이상의 영문, 숫자, 특수문자를 혼합하여 등록하시기 바랍니다.">
 				</li>
 	            <li>
 	                <label for="reg_mb_password_re">비밀번호 확인</label>
-					<input autocomplete="off" type="password" name="mb_password_re" id="reg_mb_password_re" <?php echo $form_pw_re ?> class="frm_input full_input "  placeholder="비밀번호 확인">
-					<p>* 비밀번호를 한번 더 입력해주세요.</p>
+					<input autocomplete="off" type="password" name="mb_password_re" id="reg_mb_password_re" <?php echo $form_pw_re ?> class="frm_input full_input "  placeholder="* 비밀번호를 한번 더 입력해주세요.">
 				</li>
 				<li>
-	                <label for="reg_mb_email">E-mail</label>
-	                <input autocomplete="off" type="text" name="mb_email" value="<?php echo $form_email ?>" id="reg_mb_email"  class="frm_input  full_input " laceholder="E-mail"  placeholder="E-mail">
+	                <label for="reg_mb_email">이메일</label>
+	                <input autocomplete="off" type="text" name="mb_email" value="<?php echo $form_email ?>" id="reg_mb_email"  class="frm_input  full_input " laceholder="E-mail"  placeholder="이메일을 입력해주세요.">
 	            </li>
 			</ul>
 			<div class="btn_confirm">
-				<input type="submit" id="btn_submit" style="background:#ccc;" class="btn_submit" accesskey="s" value="<?php echo $w==''?'회원가입':'정보수정'; ?>" formaction="<?php echo G5_BBS_URL ?>/register_form_update.php" disabled/>
 				<a href="<?php echo G5_URL ?>" class="btn_close">취소</a>
+				<input type="submit" id="btn_submit" style="background:#ccc;" class="btn_submit" accesskey="s" value="<?php echo $w==''?'회원가입':'정보수정'; ?>" formaction="<?php echo G5_BBS_URL ?>/register_form_update.php" disabled/>
 			</div> 
 	    </div>
 	</div>
@@ -112,11 +104,11 @@ $(function(){
 
 				if(str2 == "사용가능한 아이디입니다." ){
 					$("#btn_submit").removeAttr("disabled");
-					$("#btn_submit").css({background: "#3a8afd"});
+					$("#btn_submit").css({background: "#1D2E58", color: "#fff"});
 					value = 1;
 				} else {
 					$("#btn_id_check").attr("disabled",true);
-					$("#btn_submit").css({background: "#ccc"});
+					$("#btn_submit").css({background: "#ccc" , color: "#000"});
 				}
 			}
 		});

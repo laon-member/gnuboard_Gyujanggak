@@ -121,7 +121,7 @@ if ($w == "") {
     alert('w 값이 제대로 넘어오지 않았습니다.');
 }
 
-include_once(G5_THEME_PATH.'/head1.php');
+include_once(G5_THEME_PATH.'/head2.php');
 
 
 // 회원아이콘 경로
@@ -148,5 +148,5 @@ include_once($member_skin_path.'/register_form.skin.php');
 
 run_event('register_form_after', $w, $agree, $agree2);
 
-include_once('./_tail.php');
+include_once('./_tail.sub.php');
 ?>

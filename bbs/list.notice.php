@@ -57,22 +57,8 @@ if ($sca || $stx || $stx === '0') {     //검색이면
     $total_count = $row['cnt'];
     $title_text = '검색';
 
-    // for($i=1; $row=sql_fetch_array($result); $i++) {
-    //     $total_count 
-    // }
-    /*
-    $sql = " select distinct wr_parent from {$write_table} where {$sql_search} ";
-    $result = sql_query($sql);
-    $total_count = sql_num_rows($result);
-    */
 } else {
     $sql_search = "";
-
-    // if (!$bo_idx) {
-    //     alert('존재하지 않는 게시판입니다.', G5_URL);
-    //  }
-
-  
 
     $total_count = $board['bo_count_write'];
 
@@ -81,8 +67,6 @@ if ($sca || $stx || $stx === '0') {     //검색이면
     $total_count = $row['cnt'];
 }
 
-
-echo $total_count1 ."<br>";
 
 $page_rows = 10;
 $list_page_rows = 10;
@@ -198,19 +182,10 @@ if ($is_search_bbs) {
 // 페이지의 공지개수가 목록수 보다 작을 때만 실행
 if($page_rows > 0) {
     $result = sql_query($sql);
-
     $k = 0;
 
-    while ($row = sql_fetch_array($result))
-    {
-        // 검색일 경우 wr_id만 얻었으므로 다시 한행을 얻는다
-        // if ($is_search_bbs)
-        //     $row = sql_fetch(" select * from {$write_table} where wr_id = '{$row['wr_parent']}' ");
-
+    while ($row = sql_fetch_array($result)){
         $list[$i] = get_list($row, $board, $board_skin_url, G5_IS_MOBILE ? $board['bo_mobile_subject_len'] : $board['bo_subject_len']);
-        // if (strstr($sfl, 'subject')) {
-        //     $list[$i]['subject'] = search_font($stx, $list[$i]['subject']);
-        // }
         $list[$i]['is_notice'] = false;
         $list_num = $total_count - ($page - 1) * $list_page_rows - $notice_count;
         $list[$i]['num'] = $list_num - $k;
@@ -235,9 +210,12 @@ $url = preg_replace('#&page=[0-9]*#', '', $url);
 if($stx == ""){
     $stx_text = "";
 } else {
-    $stx_text = '&stx='.$stx;
+    if($sfl != ""){
+        $stx_text = '&stx='.$stx.'&sfl='.$sfl;    
+    } else {
+        $stx_text = '&stx='.$stx;
+    }
 }
-
 if($_GET['bo_title'] == 1){
     $bo_title_text = '&bo_title='.$_GET['bo_title'];
 } else if ($_GET['bo_title'] == 2){

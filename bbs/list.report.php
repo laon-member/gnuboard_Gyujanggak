@@ -216,8 +216,8 @@ if($page_rows > 0) {
 g5_latest_cache_data($board['bo_table'], $list);
 
 
-$http_host = $_SERVER['HTTP_HOST'];
-$request_uri = $_SERVER['REQUEST_URI'];
+$http_host = 10;
+$request_uri = 10;
 $url = 'http://' . $http_host . $request_uri;
 
 if($stx == ""){

@@ -15,7 +15,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 ?>
 <!-- 게시판 목록 시작 { -->
 <aside id="bo_side">
-    <h2 class="aside_nav">지원결과 확인</h2>
+    <h2 class="aside_nav_title">지원결과 확인</h2>
     <?php $class_get =  $_GET['bo_idx'] == '1'?"aisde_click":""; ?>
     <a class="aside_nav aisde_click" href="<?= G5_BBS_URL ?>/board.value.php?bo_table=business&bo_idx=1">지원결과 확인</a>
 </aside>
@@ -75,6 +75,16 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     <div class="tbl_head01 tbl_wrap">
         <table>
         <caption><?php echo $board['bo_subject'] ?> 목록</caption>
+
+        <thead>
+        <tr>
+            <th scope="col" style="width:7%;">번호</th>
+            <th scope="col" style="width:45%;">제목</th>
+            <th scope="col" style="width:16%;">지원일자</th>
+            <th scope="col" style="width:16%;">지원상태</th>
+            <th scope="col" style="width:16%;">지원결과</th>
+        </tr>
+        </thead>
         
         <?php
             
@@ -83,32 +93,28 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             // $row=sql_fetch_array($result2);
             for($i=0;$i<count($list); $i++) {
                 
-                if ($i%2==0) $lt_class = "even";
-                else $lt_class = "";
+                
 
-                $sql = " select * from g5_write_business where wr_id= '{$row['bo_idx']}'";
+                $sql = " select * from g5_write_business where wr_id= '{$list[$i]['bo_idx']}'";
                 $result = sql_query($sql);
                 $row44 = sql_fetch_array($result);
 		?>
         <tbody class="<?= $lt_class ?> tbody" style="">
             <tr> 
-                <td class="" style="border:none; text-align:left; width: 70%">
-                <a href="<?= G5_BBS_URL ?>/board.value.php?bo_table=business&bo_idx=<?= $_GET['bo_idx']?>&us_idx=<?= $row['idx'] ?>">
-                    <span >지원사업 제목 : </span>
+            <td class="td_center">
+            <?php
+                echo $list[$i]['num'];
+             ?> 
+            </td>
+            <td class="td_title">
+                <a href="<?= G5_BBS_URL ?>/board.value.php?bo_table=business&bo_idx=<?= $_GET['bo_idx']?>&us_idx=<?= $list[$i]['idx'] ?>">
                     <?= $list[$i]['ko_title']; ?>
                 </a>
                 </td>
-                <td class="" style="border:none; text-align:left; width: 30%">
-                    <span >지원일자 : </span>
-                
+                <td class="td_center">
                     <?= $list[$i]['bf_datetime']; ?>
                 </td>
-                
-            </tr>
-            <tr>
-                <td class="" style="border:none; text-align:left; width: 70%">
-                    <span >지원상태 : </span>
-
+                <td class="td_center">
                     <?php 
                         if($row44['value'] == 3){
                             echo '선발완료';
@@ -121,20 +127,17 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                         }
                     ?>
                 </td>
-                <td class="" style="border:none; text-align:left; width: 30%">
-                    <span >지원결과 : </span>
-
+                <td class="td_center">
                     <?php 
-                        if($row['value'] == 4){
+                        if($list[$i]['value'] == 4){
                             echo '합격';
-                        }else if($row['value'] == 3){
+                        }else if($list[$i]['value'] == 3){
                             echo '불합격';
                         }else{
-                            echo '심사중';
+                            echo '-';
                         }
                     ?>
                 </td>
-                
             </tr>
         </tbody>
         <?php }?>
@@ -143,26 +146,11 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         </table>
     </div>
 
-	<!-- 페이지 -->
-
-    <!-- 현재 URL 주소 -->
-    <?php
-        $http_host = $_SERVER['HTTP_HOST'];
-        $request_uri = $_SERVER['REQUEST_URI'];
-        $url = 'http://' . $http_host . $request_uri;
-    ?>    
-    
-    <!-- 총 게시판 -->
-    
+    </form>
+</div>
+    <!-- 페이지 -->
     <?php echo $write_pages; ?>
 	<!-- 페이지 -->
-	
-    
-    </form>
-
-    
-</div>
-
 <?php if($is_checkbox) { ?>
 <noscript>
 <p>자바스크립트를 사용하지 않는 경우<br>별도의 확인 절차 없이 바로 선택삭제 처리하므로 주의하시기 바랍니다.</p>

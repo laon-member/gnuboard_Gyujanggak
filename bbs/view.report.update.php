@@ -264,38 +264,46 @@ for ($i=0; $i<count($upload); $i++)
     
 }
 
-// // 업로드된 파일 내용에서 가장 큰 번호를 얻어 거꾸로 확인해 가면서
-// // 파일 정보가 없다면 테이블의 내용을 삭제합니다.
-// $row = sql_fetch(" select max(bf_no) as max_bf_no from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' ");
-// for ($i=(int)$row['max_bf_no']; $i>=0; $i--)
-// {
-//     $row2 = sql_fetch(" select bf_file from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
+// 업로드된 파일 내용에서 가장 큰 번호를 얻어 거꾸로 확인해 가면서
+// 파일 정보가 없다면 테이블의 내용을 삭제합니다.
+$row = sql_fetch(" select max(bf_no) as max_bf_no from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' ");
+for ($i=(int)$row['max_bf_no']; $i>=0; $i--)
+{
+    $row2 = sql_fetch(" select bf_file from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
 
-//     // 정보가 있다면 빠집니다.
-//     if ($row2['bf_file']) break;
+    // 정보가 있다면 빠집니다.
+    if ($row2['bf_file']) break;
 
-//     // 그렇지 않다면 정보를 삭제합니다.
-//     sql_query(" delete from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
-// }
+    // 그렇지 않다면 정보를 삭제합니다.
+    sql_query(" delete from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
+}
 
 // 파일의 개수를 게시물에 업데이트 한다.
-$row = sql_fetch(" select count(*) as cnt from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$_POST['file_idx']}' ");
-// sql_query(" update {$write_table} set wr_file = '{$row['cnt']}' where wr_id = '{$wr_id}' ");
+$row = sql_fetch(" select count(*) as cnt from {$g5['board_file_table']} where bo_table = 'report' and wr_id = '{$_POST['file_idx']}' ");
+sql_query(" update report set wr_file = '{$row['cnt']}' where idx = '{$_POST['file_idx']}' ");
 
 
 
-// // // 사용자 코드 실행
-// @include_once($board_skin_path.'/write_update.skin.php');
-// @include_once($board_skin_path.'/write_update.tail.skin.php');
+// update report
+//                 set report_idx = '1',
+//                 contents = '{$_POST['contents']}',
+//                 report_file = '0',
+//                 report = '2',
+//                 report_value = '0' where idx = '{$_POST['file_idx']}'";
 
-// delete_cache_latest($bo_table);
 
-// $redirect_url = run_replace('write_update_move_url', short_url_clean(G5_HTTP_BBS_URL.'/board.report.php?bo_table=business&bo_idx=1'), $board, $wr_id, $w, $qstr, $file_upload_msg);
+// 사용자 코드 실행
+@include_once($board_skin_path.'/write_update.skin.php');
+@include_once($board_skin_path.'/write_update.tail.skin.php');
 
-// run_event('write_update_after', $board, $wr_id, $w, $qstr, $redirect_url);
+delete_cache_latest($bo_table);
 
-// if ($file_upload_msg)
-//     alert($file_upload_msg, $redirect_url);
-// else
-//     goto_url($redirect_url);
+$redirect_url = run_replace('write_update_move_url', short_url_clean(G5_HTTP_BBS_URL.'/board.report.php?bo_table=business&bo_idx=1'), $board, $wr_id, $w, $qstr, $file_upload_msg);
+
+run_event('write_update_after', $board, $wr_id, $w, $qstr, $redirect_url);
+
+if ($file_upload_msg)
+    alert($file_upload_msg, $redirect_url);
+else
+    goto_url($redirect_url);
 ?>

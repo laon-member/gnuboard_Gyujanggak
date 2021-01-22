@@ -134,7 +134,8 @@ box-shadow:inset 0 2px 5px rgb(33, 135, 202)}
 
 
 #bo_btn_top {margin: 40px 0; display: flex; justify-content: space-between;align-items: flex-start;}
-#bo_btn_top h1{display: inline-block;}
+#bo_btn_top_app{margin:20px 0}
+#bo_btn_top h1{display: inline-block; font-size: 35px;}
 .bo_sch_input{display: inline-block;}
 .bo_fx {margin-bottom:5px;float:right;zoom:1}
 .bo_fx:after {display:block;visibility:hidden;clear:both;content:""}
@@ -437,12 +438,17 @@ box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.1)}
 #bo_w .bo_w_flie .file_del {position:absolute;top:10px;right:10px;font-size:0.92em;color:#7d7d7d}
 #bo_w .bo_w_select select {border:1px solid #d0d3db;width:100%;height:40px;border-radius:3px}
 #wr_content, #wr_subject{margin: 10px 0;}
-#file-label-btn{width: 90px;
+#file-label-btn{width: 20%;
     display: inline-block;
-    height: 30px;
+    height: 48px;
     text-align: center;
-    line-height: 30px;
-    color: white;}
+    line-height: 48px;
+    color: #333333;
+    float: left;
+    background: #ffffff;
+    border: 1px solid #DDDDDD;
+    font-size: 18px;
+}
 
 
 
@@ -465,12 +471,15 @@ box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.1)}
 #bo_v_atc{width: 100%;}
 
 .btn_container{text-align: right;}
-.btn_next_prv{margin:10px 0 10px 20px;  display: inline-block;
+.btn_next_prv{
+    margin:10px 20px 10px 0px;  
+    display: inline-block;
     background: #fff;
     border: 1px solid #DDDDDD;
     cursor: pointer;
     width: 80px;
     text-align: center;
+    font-size: 18px;
     }
 .btn_next_prv a{width: 100%; height: 100%; font-size: 16px; color: #000;padding: 10px; display: block;}
 #bo_side{width: 15%;background-color: #EEEEEE;display: table;text-align: center;border: 1px solid #DDDDDD;}
@@ -479,7 +488,8 @@ box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.1)}
 .aisde_click{font-weight: bold; color: #4A9FDD; border-left: 4px solid #4A9FDD;background-color: #fff;}
 
 #bus_btn{text-align: center;}
-.btn_next_prv_link{ font-size: 16px; width: 180px; color: #fff;padding: 10px; border: 1px solid #DDDDDD; background-color: #1D2E58;}
+.btn_next_prv_link{ font-size: 16px; width: 180px; color: #fff;padding: 10px; border: 1px solid #DDDDDD; background-color: #1D2E58; margin:10px 0px 10px 20px;}
+.btn_color_white{font-size: 16px; height: 40px; line-height: 20px; width: 180px; color: #333333;padding: 10px; border: 1px solid #DDDDDD; background-color: #ffff; margin:10px 0px 10px 20px;}
 
 #bo_v_files{display: flex; justify-content: space-between; text-align: right;}
 .download_file{display: inline-block; }
@@ -491,24 +501,28 @@ box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.1)}
 .bo_w_tit h1{margin: 20px 0;}
 .bo_w_tit p{font-size: 24px; border: 1px solid #cccccc; padding-left: 10px;}
 
-.step_con{text-align: center;width: 50%; height: 10px; border-radius: 5px; background-color: #ccc; margin: 30px auto; position: relative;}
-.step_bar{position: absolute; text-align: center; width: 33.3333%; height: 10px; background-color: black; border-radius: 5px; }
-.step_bar1{left: 0}
-.step_bar2{left: 50%; transform: translateX(-50%);}
-.step_bar3{right: 0}
-.step_text{width: 100%;height: 10px; position: absolute; bottom: 200%; font-weight: bold;}
+.step_con{width:50%; margin:0 auto;display: flex; justify-content: space-between; margin-bottom: 20px;}
+.step_bar{width: 120px; height: 120px; border-radius: 50%; background-color: #EEEEEE; text-align: center; color: #fff;}
+.step_bar1{background-color: #4A9FDD;}
+.step_bar2{background-color: #4A9FDD;}
+.step_bar3{background-color: #4A9FDD;}
+.step_text{height: 10px; font-size: 17px; padding-top: 45px;}
+
+.step_bar1 .step_text{padding-top: 30px;}
+.step_bar2 .step_text{padding-top: 30px;}
+.step_bar3 .step_text{padding-top: 30px;}
 
 .write_div p, .label_text{margin: 20px 0 10px 10px;}
 .label_text{width: 15%; display: inline-block !important; text-align: left !important;}
 textarea.input_text {width: 100%;}
-.input_text{ width: 80%; height: 35px; border: 1px solid #ccc; padding: 0 10px;}
+.input_text{ width: 100%; height: 35px; border: none; padding: 0 10px;}
  
 .input_text_50 {width: 32%;}
 .input_text_40 {width: 28%;}
 .input_text_100{width: 100%;}
 .input_text_right{text-align: right;}
 
-.btn-cont{text-align: center; padding: 40px 0;}
+.btn-cont{text-align: right; padding: 40px 0;}
 .btn_cancel{width: 20%;}
 .btn_submit {margin: 0 auto;  width:20%;}
 .sub_text{margin: 0  0 20px 17% !important; color: #999999;}
@@ -552,7 +566,7 @@ border:1px solid #ccc;
 .input-file .file-label {
     display: inline-block;
     min-width: 53px;
-    width: 20%;
+
     height: 35px;
     line-height: 24px;
     padding: 0 10px;
@@ -564,19 +578,25 @@ border:1px solid #ccc;
     border: none;
 }
 .input-file .file-name {
-    width: 60%;
     height: 35px;
     line-height: 26px;
     text-indent: 5px;
     border: none;
 }
 .file-size{
-    width: 20% !important;
     text-align: center;
 }
 .file-del{
     background-color: crimson !important;
 }
+
+.input-file_list input {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+.input-file_list .file-upload{ display: none;}
+.input-file_list .file-del{ background-color: transparent !important; color: #FF4343; text-decoration: 1px; border:none; border-bottom: 1px solid #FF4343;}
 
 /* 접근성 탭 포커스 스타일 */
 .file-focus {
@@ -641,7 +661,6 @@ border:1px solid #ccc;
 .header_notice p{ vertical-align: middle; height: 100%; padding: 25px 0;} 
 .header_notice p:nth-of-type(1){font-size: 18px; color: #333333;}
 .notice_container{width: 85%;text-align: left; height: 100%;}
-.bo_class{display: inline-block; vertical-align: top;}
 .input_text_hight{height: 250px; resize:none; overflow-y: auto;}
 
 
@@ -744,4 +763,12 @@ input:focus {outline:none !important;}
 #view_table th, #view_table td{height: 40px;border: 1px solid #DDDDDD;}
 #view_table th{background-color: #F7F7F7;}
 .view_table_text{text-align: center;}
-.view_title{font-size: 30px;}
+.view_table_text_name{text-align: left; padding-left: 10px;}
+.view_title{font-size: 35px;}
+.view_table_header_table {height: 20px; }
+
+.view_table_app{width: 100%; border-spacing: 0px;border-collapse:collapse;}
+.view_table_app th, .view_table_app td{height: 56px;border: 1px solid #DDDDDD;}
+.view_table_app th{background-color: #F7F7F7;}
+
+

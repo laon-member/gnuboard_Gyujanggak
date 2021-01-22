@@ -13,7 +13,7 @@ $sql = " select * from g5_write_business_title where bo_table = '{$_GET['bo_tabl
 $result = sql_query($sql);
 ?>
 <aside id="bo_side">
-    <h2 class="aside_nav">사업 공고</h2>
+    <h2 class="aside_nav_title">사업 공고</h2>
     <?php 
         for($k=1; $row1=sql_fetch_array($result); $k++) {
             $class_get = $_GET['bo_idx'] == $row1['idx']?"aisde_click":"";
@@ -46,169 +46,315 @@ $result = sql_query($sql);
     
     <div class ="step step1 step_view">
         <div class="bo_w_tit write_div">
-            <h1>
-                <?php echo $category_title; ?>
-            </h1>
-            <p><?php echo $row['wr_subject']; ?></p>
-        </div>
-
-        <div class="step_con">
-            <div class="step_bar">
-            <p class="step_text step_bar1">Step 1</p> 
+            <div id="bo_btn_top_app">
+                <h1 class="view_title"><?=  $category_title ?></h1>
             </div>
         </div>
 
-        <div class="write_div">
-            <label for="info_number" class="label_text">접수번호</label>
-            <input type="text" name="info_number" id="info_number"  class="input_text input_text_50 " placeholder="접수번호">
-            <label for="quest_number" class="label_text">과제번호</label>
-            <input type="text" name="quest_number" id="quest_number"  class="input_text input_text_50" placeholder="과제번호" value="<?= $row['wr_quest_number']; ?>" readonly>
-
-            <p>연구과제명</p>
-            <label for="ko_title" class="label_text">과제명(국문)</label>
-            <input type="text" name="ko_title" id="ko_title"  class="input_text " placeholder="과제명(국문)" >
-            <label for="en_title" class="label_text">과제명(영문)</label>
-            <input type="text" name="en_title" id="en_title"  class="input_text " placeholder="과제명(영문)" onkeydown="onlyAlphabet(this)">
-    
-            <p>연구책임자</p>
-            <label for="name" class="label_text">성명</label>
-            <input type="text" name="name" id="name"  class="input_text input_text_50" placeholder="성명">
-            <label for="degree" class="label_text">전공(학위)</label>
-            <input type="text" name="degree" id="degree"  class="input_text input_text_50" placeholder="전공(학위)" >
-            <label for="belong" class="label_text">소속</label>
-            <input type="text" name="belong" id="belong"  class="input_text input_text_50" placeholder="소속"  >
-            <label for="rank" class="label_text">직급</label>
-            <input type="text" name="rank" id="rank"  class="input_text input_text_50" placeholder="직급" >
-            <label for="email" class="label_text">이메일</label>
-            <input type="text" name="email" id="email"  class="input_text input_text_50" placeholder="이메일">
-            <label for="phone" class="label_text">전화</label>
-            <input type="text" name="phone" id="phone"  class="input_text input_text_50" placeholder="전화" > 
+        <div class="step_con">
+            <div class="step_bar step_bar1">
+                <p class="step_text">Step 1</p>
+                <p class="step_text">기본정보 입력</p>
+            </div>
+            <div class="step_bar ">
+                <p class="step_text">Step 2</p> 
+            </div>
+            <div class="step_bar ">
+                <p class="step_text">Step 3</p> 
+            </div>
         </div>
 
+        <table class="view_table_app">
+            <thead>
+                <tr>
+                    <th scope="col" class="view_table_header"colspan="1" style="width:10%;">제목</th>
+                    <td scope="col" class="view_table_title" colspan="7" style="width:90%;">
+                        <input type="text" name="title_view" id="title_view"  class="input_text " placeholder="제목" value="<?= $row['wr_subject']; ?>"  readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="col" class="view_table_header" style="width:10%;">접수번호</th>
+                    <td scope="col" class="view_table_text" colspan="3" style="width:40%;">
+                        <input type="text" name="info_number" id="info_number"  class="input_text " placeholder="접수번호">
+                    </td>
+                    <th scope="col" class="view_table_header" style="width:10%;">과제번호</th>
+                    <td scope="col" class="view_table_text" colspan="3" style="width:40%;">
+                        <input type="text" name="quest_number" id="quest_number"  class="input_text" placeholder="과제번호" value="<?= $row['wr_quest_number']; ?>" readonly>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="view_table_header_table"></tr>
+                <tr>
+                    <th scope="col" class="view_table_header " colspan="8">연구과제명</th>
+                </tr>
+                <tr>
+                    <th scope="col" class="view_table_header" style="width:10%;" colspan="1">과제명(국문)</th>
+                    <td scope="col" class="view_table_text" colspan="7" style="width:90%;">
+                        <input type="text" name="ko_title" id="ko_title"  class="input_text " placeholder="과제명(국문)"  >
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="col" class="view_table_header" colspan="1" style="width:10%;">과제명(영문)</th>
+                    <td scope="col" class="view_table_text" colspan="7" style="width:90%;">
+                        <input type="text" name="en_title" id="en_title"  class="input_text " placeholder="과제명(영문)" onkeydown="onlyAlphabet(this)">
+                    </td>
+                </tr>
+                <tr class="view_table_header_table"></tr>
+                <tr>
+                    <th scope="col" class="view_table_header " colspan="8">연구책임자</th>
+                </tr>
+                <tr>
+                    <th scope="col" class="view_table_header" colspan="1"style="width:10%;">성명</th>
+                    <td scope="col" class="view_table_text" colspan="3" style="width:40%;">
+                        <input type="text" name="name" id="name"  class="input_text " placeholder="성명">
+                    </td>
+                    <th scope="col" class="view_table_header" colspan="1"style="width:10%;">전공(학위)</th>
+                    <td scope="col" class="view_table_text" colspan="3" style="width:40%;">
+                        <input type="text" name="degree" id="degree"  class="input_text " placeholder="전공(학위)" >
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="col" class="view_table_header" colspan="1" style="width:10%;">소속</th>
+                    <td scope="col" class="view_table_text" colspan="3" style="width:40%;">
+                        <input type="text" name="belong" id="belong"  class="input_text " placeholder="소속"  >
+                    </td>
+                    <th scope="col" class="view_table_header" colspan="1" style="width:10%;">직급</th>
+                    <td scope="col" class="view_table_text" colspan="3" style="width:40%;">
+                        <input type="text" name="rank" id="rank"  class="input_text " placeholder="직급" >
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="col" class="view_table_header" colspan="1" style="width:10%;">이메일</th>
+                    <td scope="col" class="view_table_text" colspan="3" style="width:40%;">
+                        <input type="text" name="email" id="email"  class="input_text " placeholder="이메일">
+                    </td>
+                    <th scope="col" class="view_table_header" colspan="1" style="width:10%;">전화</th>
+                    <td scope="col" class="view_table_text" colspan="3" style="width:40%;">
+                    <input type="text" name="phone" id="phone"  class="input_text " placeholder="전화" > 
+                    </td>
+                </tr>
+            </tbody>
+        </table>
         <div class="btn_confirm write_div btn-cont">
             <button type="button" id="btn_submit" accesskey="s" class="btn_submit btn btn_step2">다음</button>
         </div>
     </div>
     <div class ="step step2 ">
         <div class="bo_w_tit write_div">
-            <h1>
-                <?php echo $category_title; ?>
-            </h1>
-            <p><?php echo $row['wr_subject']; ?></p>
-        </div>
-
-        <div class="step_con">
-            <div class="step_bar step_bar2">
-            <p class="step_text ">Step 2</p> 
+            <div id="bo_btn_top_app">
+                <h1 class="view_title"><?=  $category_title ?></h1>
             </div>
         </div>
 
-        <div class="write_div">
-            <label for="main_member" class="label_text">공동연구원</label>
-            <input type="text" name="main_member" id="main_member"  class="input_text input_text_50 input_text_right" placeholder="명">
-            <label for="sub_member" class="label_text">연구원보조</label>
-            <input type="text" name="sub_member" id="sub_member"  class="input_text input_text_50 input_text_right" placeholder="명">
-            <p class="sub_text">* 연구책임자 제외</p>
 
-            <label for="date_start" class="label_text">총 연구 기간</label>
-            <input type="date" name="date_start" id="date_start"  class="input_text input_text_50" max="9999-12-31" >
-            <input type="date" name="date_end" id="date_end"  class="input_text input_text_50" max="9999-12-31">
-            <br>
-            <label for="value" class="label_text">연구비신청액</label>
-            <input type="text" name="money" id="money"  class="input_text " placeholder="연구비신청액" >
-            <label for="one_year" class="label_text">1차년 연구비</label>
-            <input type="text" name="one_year" id="one_year"  class="input_text input_text_50" placeholder="1차년 연구비">
-            <label for="two_year" class="label_text">2차년 연구비</label>
-            <input type="text" name="two_year" id="two_year"  class="input_text input_text_50" placeholder="2차년 연구비">
-
+        <div class="step_con">
+            <div class="step_bar ">
+                <p class="step_text">Step 1</p>
+            </div>
+            <div class="step_bar step_bar2">
+                <p class="step_text">Step 2</p> 
+                <p class="step_text">상세정보 입력</p>
+            </div>
+            <div class="step_bar ">
+                <p class="step_text">Step 3</p> 
+            </div>
         </div>
-            <label for="" id="bo_side"  class="label_text" style="text-align:left">자료첨부</label>
-            <section id="bo_v"  class="bo_class">
-            <?php echo "<script>var file_number = 1;</script>"; ?> 
-            <?php $file_number = "<script>document.writeln(file_number);</script>"; ?>
-                <label for="upload01" id="file-label-btn" class="file-label" style="background:<?= $row44['report'] ==2? '#ccc': '#3a8afd'; ?>">파일 업로드</label>
-                <div class="input-file input_file_text">
-                    <p class="file-name">파일명</p>
-                    <p class="file-name file-size">파일 용량</p>
-                    <p class="file-name file-size">파일 삭제</p>
-                </div>
-            </section>
-        <div class="btn_confirm write_div btn-cont">
-            <button type="button" id="btn_submit1" accesskey="s" class="btn_cancel btn btn_step1">이전</button>
-            <button type="button" id="btn_submit2" accesskey="s" class="btn_submit btn btn_step3">다음</button>
+
+        <table class="view_table_app">
+            <tbody class="bo_class">
+                <tr>
+                    <th scope="col" class="view_table_header"colspan="1" style="">제목</th>
+                    <td scope="col" class="view_table_title" colspan="5" style="">
+                        <input type="text" name="title_view" id="title_view"  class="input_text " placeholder="제목" value="<?= $row['wr_subject']; ?>"  readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="col" class="view_table_header" style="">공동연구원</th>
+                    <td scope="col" class="view_table_text" colspan="2" style="">
+                        <input type="text" name="main_member" id="main_member"  class="input_text " placeholder="* 연구책임자 제외">
+                    </td>
+                    <th scope="col" class="view_table_header" style="">연구원보조</th>
+                    <td scope="col" class="view_table_text" colspan="2" style="">
+                        <input type="text" name="sub_member" id="sub_member"  class="input_text" placeholder="명">
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="col" class="view_table_header" colspan="1" style="">총 연구 기간</th>
+                    <td scope="col" class="view_table_text" colspan="2" style="">
+                        <input type="date" name="date_start" id="date_start"  class="input_text" max="9999-12-31" >
+                    </td>
+                    <td scope="col" class="view_table_text" colspan="3" style="">
+                        <input type="date" name="date_end" id="date_end"  class="input_text" max="9999-12-31">
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="col" class="view_table_header" colspan="1">연구비신청액</th>
+                    <td scope="col" class="view_table_text" colspan="5" style="">
+                        <input type="text" name="money" id="money"  class="input_text " placeholder="연구비신청액" >
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="col" class="view_table_header" colspan="1">1차년 연구비</th>
+                    <td scope="col" class="view_table_text" colspan="1" style="">
+                        <input type="text" name="one_year" id="one_year"  class="input_text " placeholder="1차년 연구비">
+                    </td>
+                    <th scope="col" class="view_table_header" colspan="1">2차년 연구비</th>
+                    <td scope="col" class="view_table_text" colspan="3" style="">
+                        <input type="text" name="two_year" id="two_year"  class="input_text " placeholder="2차년 연구비">
+                    </td>
+                </tr>
+                
+            </tbody>
+        </table>
+    
+
+        <div class ="btn_confirm write_div btn-cont">
+            <div class="next_prev_bar">
+            <label for="upload01" id="file-label-btn" class="file-label"><img src="<?= G5_IMG_URL ?>/upload.png" alt=""> 파일 업로드</label>
+
+                <button type="button" id="btn_submit1" accesskey="s" class="btn_cancel btn btn_step1">이전</button>
+                <button type="button" id="btn_submit2" accesskey="s" class="btn_submit btn btn_step3">다음</button>
+            </div>
         </div>
     </div>
     <div class ="step step3">
         <div class="bo_w_tit write_div">
-            <h1>
-                <?php echo $category_title; ?>
-            </h1>
-            <p><?php echo $row['wr_subject']; ?></p>
+            <div id="bo_btn_top_app">
+                <h1 class="view_title"><?=  $category_title ?></h1>
+            </div>
         </div>
 
         <div class="step_con">
+            <div class="step_bar ">
+                <p class="step_text">Step 1</p>
+            </div>
+            <div class="step_bar ">
+                <p class="step_text">Step 2</p> 
+            </div>
             <div class="step_bar step_bar3">
-            <p class="step_text ">Step 3</p> 
+                <p class="step_text">Step 3</p> 
+                <p class="step_text">제출확인</p>
             </div>
         </div>
 
-        <div class="write_div">
-            <label for="info_number_view" class="label_text">접수번호</label>
-            <input type="text" name="info_number_view" id="info_number_view"  class="input_text input_text_50 input_text_end" placeholder="접수번호"  readonly>
 
-            <label for="quest_number_view" class="label_text">과제번호</label>
-            <input type="text" name="quest_number_view" id="quest_number_view"  class="input_text input_text_50 input_text_end" placeholder="과제번호" value="<?php echo $quest_number ?>" readonly>
-
-            <p>연구과제명</p>
-            <label for="ko_title_view" class="label_text">과제명(국문)</label>
-            <input type="text" name="ko_title_view" id="ko_title_view"  class="input_text input_text_end" placeholder="과제명(국문)"readonly>
+        <table class="view_table_app">
+            <thead>
+                <tr>
+                    <th scope="col" class="view_table_header"colspan="1" style="width: 10%;">제목</th>
+                    <td scope="col" class="view_table_title" colspan="8" style="">
+                        <input type="text" name="title_view" id="title_view"  class="input_text " placeholder="제목" value="<?= $row['wr_subject']; ?>"  readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="col" class="view_table_header" style="">접수번호</th>
+                    <td scope="col" class="view_table_text" colspan="4" style="">
+                    <input type="text" name="info_number_view" id="info_number_view"  class="input_text" placeholder="접수번호"  readonly>
+                    </td>
+                    <th scope="col" class="view_table_header" style="">과제번호</th>
+                    <td scope="col" class="view_table_text" colspan="4" style="">
+                    <input type="text" name="quest_number_view" id="quest_number_view"  class="input_text" placeholder="과제번호" value="<?php echo $quest_number ?>" readonly>
+                    </td>
+                </tr>
+            </thead>
+            <tbody id="input_file_cont">
+                <tr class="view_table_header_table"></tr>
+                <tr>
+                    <th scope="col" class="view_table_header " colspan="9">연구과제명</th>
+                </tr>
+                <tr>
+                    <th scope="col" class="view_table_header" colspan="1" style="">과제명(국문)</th>
+                    <td scope="col" class="view_table_text" colspan="8" style="">
+                    <input type="text" name="ko_title_view" id="ko_title_view"  class="input_text" placeholder="과제명(국문)"readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="col" class="view_table_header" colspan="1" style="">과제명(영문)</th>
+                    <td scope="col" class="view_table_text" colspan="8" style="">
+                    <input type="text" name="en_title_view" id="en_title_view"  class="input_text" placeholder="과제명(영문)" readonly>
+                    </td>
+                </tr>
+                <tr class="view_table_header_table"></tr>
+                <tr>
+                    <th scope="col" class="view_table_header " colspan="9">연구책임자</th>
+                </tr>
+                <tr>
+                    <th scope="col" class="view_table_header" colspan="1" style="">성명</th>
+                    <td scope="col" class="view_table_text" colspan="4" style="">
+                    <input type="text" name="name_view" id="name_view"  class="input_text" placeholder="성명" readonly>
+                    </td>
+                    <th scope="col" class="view_table_header" colspan="1" style="">전공(학위)</th>
+                    <td scope="col" class="view_table_text" colspan="3" style="">
+                    <input type="text" name="degree_view" id="degree_view"  class="input_text" placeholder="전공(학위)" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="col" class="view_table_header" colspan="1" style="">소속</th>
+                    <td scope="col" class="view_table_text" colspan="4" style="">
+                    <input type="text" name="belong_view" id="belong_view"  class="input_text" placeholder="소속" readonly>
+                    </td>
+                    <th scope="col" class="view_table_header" colspan="1" style="">직급</th>
+                    <td scope="col" class="view_table_text" colspan="3" style="">
+                    <input type="text" name="rank_view" id="rank_view"  class="input_text" placeholder="직급" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="col" class="view_table_header" colspan="1" style="">이메일</th>
+                    <td scope="col" class="view_table_text" colspan="4" style="">
+                    <input type="text" name="email_view" id="email_view"  class="input_text" placeholder="이메일" readonly>
+                    </td>
+                    <th scope="col" class="view_table_header" colspan="1" style="">전화</th>
+                    <td scope="col" class="view_table_text" colspan="3" style="">
+                    <input type="text" name="phone_view" id="phone_view"  class="input_text" placeholder="전화" readonly>
+                    </td>
+                </tr>
             
-            <label for="en_title_view" class="label_text">과제명(영문)</label>
-            <input type="text" name="en_title_view" id="en_title_view"  class="input_text input_text_end" placeholder="과제명(영문)" readonly>
-    
-            <p>연구책임자</p>
-            <label for="name_view" class="label_text">성명</label>
-            <input type="text" name="name_view" id="name_view"  class="input_text input_text_50 input_text_end" placeholder="성명" readonly>
-            
-            <label for="degree_view" class="label_text">전공(학위)</label>
-            <input type="text" name="degree_view" id="degree_view"  class="input_text input_text_50 input_text_end" placeholder="전공(학위)" readonly>
-
-            <label for="belong_view" class="label_text">소속</label>
-            <input type="text" name="belong_view" id="belong_view"  class="input_text input_text_50 input_text_end" placeholder="소속" readonly>
-
-            <label for="rank_view" class="label_text">직급</label>
-            <input type="text" name="rank_view" id="rank_view"  class="input_text input_text_50 input_text_end" placeholder="직급" readonly>
-
-            <label for="email_view" class="label_text">이메일</label>
-            <input type="text" name="email_view" id="email_view"  class="input_text input_text_50 input_text_end" placeholder="이메일" readonly>
-
-            <label for="phone_view" class="label_text">전화</label>
-            <input type="text" name="phone_view" id="phone_view"  class="input_text input_text_50 input_text_end" placeholder="전화" readonly>
-
-            <label for="main_member_view" class="label_text">공동연구원</label>
-            <input type="text" name="main_member_view" id="main_member_view"  class="input_text input_text_50  input_text_end" placeholder="명" readonly>
-
-            <label for="sub_member_view" class="label_text">연구원보조</label>
-            <input type="text" name="sub_member_view" id="sub_member_view"  class="input_text input_text_50  input_text_end" placeholder="명" readonly>
-            
-            <p class="">연구정보</p>
-            <label for="date_start_view" class="label_text">총 연구 기간</label>
-            <input type="text" name="date_start_view" id="date_start_view"  class="input_text input_text_50 input_text_end" readonly>
-            <input type="text" name="date_end_view" id="date_end_view"  class="input_text input_text_50 input_text_end" readonly>
-            <br>
-            <label for="money_view" class="label_text">연구비신청액</label>
-            <input type="text" name="money_view" id="money_view"  class="input_text input_text_end" placeholder="연구비신청액" value="<?php echo $value ?>" readonly>
-            
-            <label for="one_year_view" class="label_text">1차년 연구비</label>
-            <input type="text" name="one_year_view" id="one_year_view"  class="input_text input_text_50 input_text_end" placeholder="1차년 연구비" readonly>
-
-            <label for="two_year_view" class="label_text">2차년 연구비</label>
-            <input type="text" name="two_year_view" id="two_year_view"  class="input_text input_text_50 input_text_end" placeholder="2차년 연구비" readonly>
-
-            <label for="" class="label_text">자료첨부</label>
-            <div class="input_file_cont" id="input_file_cont" onkeydown="return event.key != 'Enter';"> 
-            </div>
-        </div>
+                <tr>
+                    <th scope="col" class="view_table_header" style="">공동연구원</th>
+                    <td scope="col" class="view_table_text" colspan="4" style="">
+                    <input type="text" name="main_member_view" id="main_member_view"  class="input_text" placeholder="명" readonly>
+                    </td>
+                    <th scope="col" class="view_table_header" style="">연구원보조</th>
+                    <td scope="col" class="view_table_text" colspan="3" style="">
+                    <input type="text" name="sub_member_view" id="sub_member_view"  class="input_text" placeholder="명" readonly>
+                    </td>
+                </tr>
+                <tr class="view_table_header_table"></tr>
+                <tr>
+                    <th scope="col" class="view_table_header " colspan="9">연구정보</th>
+                </tr>
+                <tr>
+                    <th scope="col" class="view_table_header" colspan="1"style="">총 연구 기간</th>
+                    <td scope="col" class="view_table_text" colspan="8" style="">
+                        <input type="text" name="date_start_view" id="date_start_view" placeholder="총 연구 기간"  class="input_text" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="col" class="view_table_header" colspan="1" style="">연구비신청액</th>
+                    <td scope="col" class="view_table_text" colspan="8" style="">
+                    <input type="text" name="money_view" id="money_view"  class="input_text" placeholder="연구비신청액" value="<?php echo $value ?>" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="col" class="view_table_header" colspan="1" style="">1차년 연구비</th>
+                    <td scope="col" class="view_table_text" colspan="4" style=" width:40%">
+                    <input type="text" name="one_year_view" id="one_year_view"  class="input_text" placeholder="1차년 연구비" readonly>
+                    </td>
+                    <th scope="col" class="view_table_header" colspan="1" style="">2차년 연구비</th>
+                    <td scope="col" class="view_table_text" colspan="3" style="">
+                        <input type="text" name="two_year_view" id="two_year_view"  class="input_text" placeholder="2차년 연구비" readonly>
+                    </td>
+                </tr>
+                <tr class="view_table_header_table"></tr>
+                <tr>
+                    <th scope="col" class="view_table_header " colspan="9">자료 첨부</th>
+                </tr>
+            </tbody>
+            <tbody id="view_table_upload">
+                
+            </tbody>
+        </table>
 
         <div class="btn_confirm write_div btn-cont">
             <button type="button" id="btn_submit1" accesskey="s" class="btn_cancel btn btn_step2">이전</button>
@@ -317,8 +463,23 @@ $result = sql_query($sql);
         $('#two_year').change(function(){
             $('#two_year_view').val($(this).val().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원");
         });
-    
-        var html = '<div class="input-file"><input type="text" style="margin: 0 -2px;" id="file_label_view1" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/> <input type="text" id="file-size-'+file_number+'" class="file-name file-size" style="margin: 0 -2px;" value="용량" readonly="readonly"/><input type="file" name="bf_file[]" id="upload01" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?> /><button type="button" class="file-label file-del " id="file-del<?= $i ?>" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>">삭제</button></div>';
+        var file_number = 1;
+        var html = '<tr class="input-file_list">'
+                    +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일명</th>'
+                    +'<td scope="col" class="view_table_text" colspan="1" style="width:40%">'
+                    +'    <input type="text" style="margin: 0 -2px;" id="file_label_view1" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/> '
+                    +'</td>'
+                    +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 사이즈</th>'
+                    +'<td scope="col" class="view_table_text" colspan="1" style="width:20%">'
+                    +'    <input type="text" id="file-size-'+file_number+'" class="file-name file-size" style="margin: 0 -2px;" value="용량" readonly="readonly"/>'
+                    +'    <input type="file" name="bf_file[]" id="upload01" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?> />'
+                    +'</td>'
+                    +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 삭제</th>'
+                    +'<td scope="col" class="view_table_text" colspan="1" style="width:10%">'
+                    +'<button type="button" class="file-label file-del " id="file-del<?= $i ?>" <?= $row44['report'] ==2? "disabled": ""; ?>">삭제</button>'
+                    +'</td>'
+                    +'</tr>';
+        
 
         $('.bo_class').append(html);
         
@@ -332,7 +493,7 @@ $result = sql_query($sql);
                 var fileValue = $(this).val().split("\\");
                 var fileName = fileValue[fileValue.length-1]; // 파일명
                 var fileSize = this.files[0].size;
-                var str;
+                var str ="";
 
                 //MB 단위 이상일때 MB 단위로 환산
                 if (fileSize >= 1024 * 1024) {
@@ -346,17 +507,41 @@ $result = sql_query($sql);
                     var convertlastpage = fileSize.toFixed(2);
                     str = convertlastpage + ' KB';
                 }
-                
-                if($(this).val() != ""){
-                    $(this).prev().val(str);
-                    $(this).prev().prev().val(fileName);
 
-                    var html = '<input type="text" name="form_file'+file_number+'" id="form__file'+file_number+'"  class="input_text_100 input_text input_text_end input_form" value="'+ fileName+'" readonly>';
-                    $('#input_file_cont').append(html);
+                if($(this).val() != ""){
+                  
+                    $(this).prev().val(str);
+                    $(this).parent().prev().prev().children().val(fileName);
+
+                    var html = '<tr class="input_form_info">'
+                    +'    <th scope="col" class="view_table_header " colspan="1" style="width:10%">첨부파일</th>'
+                    +'    <td scope="col" class="view_table_text " colspan="1" style="width:10%">'
+                    +'       <img src="<?php echo G5_IMG_URL ?>/download_icon.png" alt="<?php echo $config['cf_title']; ?>">'
+                    +'    </th>'
+                    +'    <td scope="col" class="view_table_text_name " colspan="7">'+ fileName+'</th>'
+                    +'</tr>';
+
+
+                    $('#view_table_upload').append(html);
 
                     file_number++;
 
-                    var html = '<div class="input-file"><input type="text" id="file_label_view'+file_number+'" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/><input type="text" id="file-size-'+file_number+'" class="file-name file-size" value="용량" readonly="readonly"/><input type="file" name="bf_file[]" id="upload0'+file_number+'" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?>/><button type="button" class="file-label file-del " id="file-del'+file_number+'" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>">삭제</button></div>';
+                    // var html = '<div class="input-file"><input type="text" id="file_label_view'+file_number+'" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/><input type="text" id="file-size-'+file_number+'" class="file-name file-size" value="용량" readonly="readonly"/><input type="file" name="bf_file[]" id="upload0'+file_number+'" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?>/><button type="button" class="file-label file-del " id="file-del'+file_number+'" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>">삭제</button></div>';
+                    var html ='<tr class="input-file_list">'
+                    +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일명</th>'
+                    +'<td scope="col" class="view_table_text" colspan="1" style="width:40%">'
+                    +'    <input type="text" id="file_label_view'+file_number+'" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/>'
+                    +'</td>'
+                    +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 사이즈</th>'
+                    +'<td scope="col" class="view_table_text" colspan="1" style="width:20%">'
+                    +'    <input type="text" id="file-size-'+file_number+'" class="file-name file-size" value="용량" readonly="readonly"/>'
+                    +'    <input type="file" name="bf_file[]" id="upload0'+file_number+'" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?>/>'
+                    +'</td>'
+                    +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 삭제</th>'
+                    +'<td scope="col" class="view_table_text" colspan="1" style="width:10%">'
+                    +'<button type="button" class="file-label file-del " id="file-del'+file_number+'" <?= $row44['report'] ==2? "disabled": ""; ?>>삭제</button>'
+                    +'</td>'
+                    +'</tr>';
                     $('.bo_class').append(html);
 
                     $("#file-label-btn").attr('for', 'upload0'+file_number);
@@ -366,18 +551,17 @@ $result = sql_query($sql);
         })
 
         $(document).off().on('click','.file-del',function(){
-            var val = $(this).prev().val();
-            var next = $(this).parent().next('.input-file').val();
-            var index_form = $(this).parent().index() -2;
-
-            if(val != ""){
-                $(this).parent().remove();
-                $('.input_form:nth-of-type('+index_form+')').remove();
+            var val = $(this).parent().find('.file-upload').prev().val();
+            var next = $(this).parent().parent().next('tr').val();
+            var index_form = $(this).parent().parent().index('.input-file_list')+1;
+            if(val != undefined){
+                $(this).parent().parent().remove();
+                $('#view_table_upload tr:nth-child('+index_form+')').remove();
                 
             } else {
                 if(next == ""){
-                    $(this).parent().remove();
-                    $('.input_form:nth-of-type('+index_form+')').remove();
+                    $(this).parent().parent().remove();
+                $('#view_table_upload tr:nth-child('+index_form+')').remove();
                 } 
             }    
         })

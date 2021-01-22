@@ -31,24 +31,25 @@ $result1 = sql_query($sql1);
 <article id="bo_v">
     <header>
         <div id="bo_btn_top">
-            <h1 class="view_title"><?=  $category_title ?></h1>
+            <h1 class="view_title"><?= $category_title ?></h1>
         </div>
 
         <?php ob_start(); ?>
         <table id="view_table">
             <thead>
-            <tr>
-                <th scope="col" class="view_table_header"colspan="1" style="width:10%;">번호</th>
-                <td scope="col" class="view_table_title" colspan="6" style="width:90%;"> <?php echo cut_str(get_text($view['wr_subject']), 70); // 글제목 출력 ?></td>
-            </tr>
-            <tr>
-                <th scope="col" class="view_table_header" style="width:10%;">지원기간</th>
-                <td scope="col" class="view_table_text" colspan="2" style="width:40%;"><?php echo $view['wr_date_start']; ?> ~ <?php echo $view['wr_date_end']; ?></td>
-                <th scope="col" class="view_table_header" style="width:10%;">등록일</th>
-                <td scope="col" class="view_table_text" style="width:20%;"><?php echo date("y.m.d", strtotime($view['wr_datetime'])) ?></td>
-                <th scope="col" class="view_table_header" style="width:10%;">조회</th>
-                <td scope="col" class="view_table_text" style="width:10%;"><?php echo number_format($view['wr_hit']) ?></td>
-            </tr>
+                <tr>
+                    <th scope="col" class="view_table_header"colspan="1" style="width:10%;">제목</th>
+                    <td scope="col" class="view_table_title" colspan="6" style="width:90%;"> <?php echo cut_str(get_text($view['wr_subject']), 70); // 글제목 출력 ?></td>
+                </tr>
+                <tr>
+                    <th scope="col" class="view_table_header" style="width:10%;">지원기간</th>
+                    <td scope="col" class="view_table_text" colspan="2" style="width:40%;"><?php echo $view['wr_date_start']; ?> ~ <?php echo $view['wr_date_end']; ?></td>
+                    <th scope="col" class="view_table_header" style="width:10%;">등록일</th>
+                    <td scope="col" class="view_table_text" style="width:20%;"><?php echo date("y.m.d", strtotime($view['wr_datetime'])) ?></td>
+                    <th scope="col" class="view_table_header" style="width:10%;">조회</th>
+                    <td scope="col" class="view_table_text" style="width:10%;"><?php echo number_format($view['wr_hit']) ?></td>
+                </tr>
+
             <?php
                 $cnt = 0;
                 if ($view['file']['count']) {
@@ -58,23 +59,26 @@ $result1 = sql_query($sql1);
                     }
                 }
                 
-                if($cnt) {
+            if($cnt) {
                 // 가변 파일
-                    for ($i=0; $i< $view['file']['count']; $i++) {
-                        if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] ) {
+                for ($i=0; $i< $view['file']['count']; $i++) {
+                    if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] ) {
                 ?>
-                        <tr>
-                            <th scope="col" class="view_table_header" style="width:10%;">첨부파일</th>
-                            <td scope="col" class="view_table_text" style="width:10%;"> <img src="<?php echo G5_IMG_URL ?>/download_icon.png" alt="download_icon"></td>
-                            <td scope="col" class="view_table_title" colspan="5" style="width:80%;"> 
-                                <a href="<?php echo $view['file'][$i]['href'];  ?>" class="view_file_download_text" ><?php echo $view['file'][$i]['source'] ?></a>
-                            </td>
-                        </tr>
-                    <?php
-                        }
+                    <tr class="">
+                        <th scope="col" colspan="1" class="view_table_header" style="width:10%;">첨부파일</th>
+                        <td scope="col" colspan="1" class="view_table_text" style="width:10%;">
+                            <img src="<?php echo G5_IMG_URL ?>/download_icon.png" alt="<?php echo $config['cf_title']; ?>">
+                        </td>
+                        <td scope="col" colspan="5" class="view_table_text" style="width:80%;">
+                            <a href="<?php echo $view['file'][$i]['href']; ?>" class=""><?= $view['file'][$i]['source'] ?></a>
+                        </td>
+                    </tr>
+                <?php
                     }
                 }
+            }
             ?>
+    
             </thead>
         </table>
         <?php
@@ -105,7 +109,7 @@ $result1 = sql_query($sql1);
 	?>
     <!-- 첨부파일 시작 { -->
     <section id="bo_v_files">
-        
+    
         
         <ul class="btn_container">
         <?php if ($prev_href || $next_href) { ?>

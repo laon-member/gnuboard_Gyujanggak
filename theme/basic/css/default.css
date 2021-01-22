@@ -252,7 +252,7 @@ box-shadow:0 2px 5px rgba(0,0,0,0.2)}
 #bo_v_con li {display:list-item}
 
 /* 버튼 */
-a.btn,.btn {line-height:35px;height:35px;padding:0 10px;text-align:center;font-weight:bold;border:0;font-size:1.4em;
+a.btn,.btn {line-height:48px;height:48px;padding:0 10px;text-align:center;font-weight:bold;border:0;font-size:1.4em;
 -webkit-transition:background-color 0.3s ease-out;
 -moz-transition:background-color 0.3s ease-out;
 -o-transition:background-color 0.3s ease-out;
@@ -272,9 +272,8 @@ button.btn02 {display:inline-block;margin:0;padding:7px;border:1px solid #3b3c3f
 .btn_close {border:1px solid #DDDDDD;cursor:pointer;background:#fff}
 a.btn_close {text-align:center;line-height:50px}
 
-a.btn_cancel {display:inline-block;background:#969696;color:#fff;text-decoration:none;vertical-align:middle}
-button.btn_cancel {display:inline-block;background:#969696;color:#fff;text-decoration:none;vertical-align:middle}
-.btn_cancel:hover {background:#aaa}
+a.btn_cancel {display:inline-block;background:#1D2E58 ;color:#fff;text-decoration:none;vertical-align:middle; height: 40px; text-align: center; line-height: 40px;}
+button.btn_cancel {display:inline-block;background:#FFF;color:#333333;text-decoration:none;vertical-align:middle;border: 1px solid #DDDDDD;}
 a.btn_frmline, button.btn_frmline {display:inline-block;width:128px;padding:0 5px;height:40px;border:0;background:#434a54;border-radius:3px;color:#fff;text-decoration:none;vertical-align:top} /* 우편번호검색버튼 등 */
 a.btn_frmline {}
 button.btn_frmline {font-size:1em}
@@ -531,7 +530,7 @@ border-radius : 4px;
 
 #hd{position: relative;}
 #hd_wrapper_contianer{box-shadow: 0px 1px 4px 1px rgba(0,0,0,0.1)}
-.header_notice_back{width: 100%; position: absolute;top: 100%;left: 0;z-index: -5;}
+.header_notice_back{width: 100%; position: absolute;top: 100%;left: 0;z-index: 5;}
 .notice_container{overflow:hidden; height:100%;}
 .header_notice_nav, .header_notice_list{list-style:none; height: 70px; }
 .header_notice_list{padding:25px 0;}
@@ -583,3 +582,7 @@ border-radius : 4px;
 
 
 
+
+.input_form:nth-of-type(0){
+  background-color: red;
+}

@@ -19,7 +19,7 @@ $sql = " select * from g5_write_business_title where idx= '{$row22['bo_title_idx
 $result = sql_query($sql);
 $row33 = sql_fetch_array($result);
 
-$sql = " select * from report where business_idx= '{$row22['idx']}' ";
+$sql = " select * from report where business_idx= '{$_GET['wr_bo_idx']}' ";
 $result = sql_query($sql);
 $row44 = sql_fetch_array($result);
 
@@ -33,7 +33,7 @@ $j=0;
 
 <!-- 게시물 읽기 시작 { -->
 <aside id="bo_side">
-    <h2 class="aside_nav">보고서 제출</h2>
+    <h2 class="aside_nav_title">보고서 제출</h2>
     <a class="aside_nav <?= $_GET['bo_idx'] ==1 ? "aisde_click" : "" ?>" href="<?= G5_BBS_URL ?>/board.report.php?bo_table=<?= $bo_table ?>&bo_idx=1">중간보고서</a>
     <a class="aside_nav <?= $_GET['bo_idx'] ==2 ? "aisde_click" : "" ?>" href="<?= G5_BBS_URL ?>/board.report.php?bo_table=<?= $bo_table ?>&bo_idx=2">결과(연차)보고서</a>
 </aside>
@@ -41,18 +41,19 @@ $j=0;
     <header>
         <?php ob_start(); ?>
         <!-- 게시물 상단 버튼 시작 { -->
-        <div id="bo_v_top">
-            <h1 class="category_title">
-                <?= $row33['title']; ?>
-            </h1>
-            
+        <div class="bo_w_tit write_div">
+            <div id="bo_btn_top_app">
+                <h1 class="view_title">
+                    <?php
+                        if( $_GET['bo_idx'] ==1){
+                            echo '중간보고서';
+                        } else if( $_GET['bo_idx'] ==2){
+                            echo '결과(연차)보고서';
+                        }
+                    ?>
+                </h1>
+            </div>
         </div>
-        <div class="bo_b_tit_container">
-            <span clasos="bo_v_tit">
-            [<?= $row33['title']; ?>]<?= $row['wr_subject']; ?>
-            </span>
-        </div>
-
         <?php
             $link_buttons = ob_get_contents();
             ob_end_flush();
@@ -64,63 +65,74 @@ $j=0;
     <?php // echo $action_url; ?>
     <form name="fwrite" id="fwrite" action="" onsubmit="return fwrite_submit(this);" method="POST" enctype="multipart/form-data" autocomplete="off" style="width:<?php echo $width; ?>">
     <input type="hidden" name="wr_bo_idx" value="<?= $_GET['wr_bo_idx']?>"> 
-        <?php  if(isset($row44)) { ?>
-            <input type="hidden" name="save_db" value="1">
-        <?php } ?>
-        <input type="hidden" name="file_idx" value="<?= $row44['idx']; ?>">
-        <label for="" id="bo_side" class="label_text">상세설명</label>
-        <section id="bo_v" class="bo_class">
-            <h2 id="bo_v_atc_title">본문</h2>
-            <input type="text" name="contents" class="input_text input_text_hight" value="<?= $row44['contents']; ?>"<?= $row44['report'] ==2? "disabled": ""; ?>> 
-        </section>
 
-        <label for="" id="bo_side"  class="label_text">자료첨부</label>
-        <section id="bo_v"  class="bo_class_form bo_class">
-            <?php echo "<script>var file_number = 1;</script>"; ?>
-            <?php $file_number = "<script>document.writeln(file_number);</script>"; ?>
-            <label for="upload01" id="file-label-btn" class="file-label" style="background:<?= $row44['report'] ==2? '#ccc': '#3a8afd'; ?>">파일 업로드</label>
-            <div class="input-file input_file_text">
-                <p class="file-name">파일명</p>
-                <p class="file-name file-size">파일 용량</p>
-                <p class="file-name file-size">파일 삭제</p>
-            </div>
-            <?php 
-                while ($row55=sql_fetch_array($result)){
-            ?>
-            <div class="input-file">
-                <input type="text" id="file_label_view1" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="<?= $row55['bf_source']; ?>" style="margin: 0 -2px;"/>
+    <table class="view_table_app">
+        <thead>
+            <tr>
+                <th scope="col" class="view_table_header"colspan="1" style="width: 10%;">제목</th>
+                <td scope="col" class="view_table_title" colspan="8" style="">[<?= $row33['title']; ?>]<?= $row['wr_subject']; ?></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="view_table_header_table"></tr>
+            <tr>
+                <td scope="col" class="view_table_title" colspan="8" style="">
+                    <h2 id="bo_v_atc_title">본문</h2>
+                    <input type="text" name="contents" class="input_text input_text_hight" placeholder="설명을 입력해주세요." value="<?= $row44['contents']; ?>"<?= $row44['report'] ==2? "disabled": ""; ?>> 
+                </td>
+            </tr>
+        </tbody> 
+        <tbody id="view_table_upload">
+                
+                <?php while ($row55=sql_fetch_array($result)){ ?>
+                    <tr class="input-file_list">
+                        <?php
+                            //MB 단위 이상일때 MB 단위로 환산
+                            if ($row55['bf_filesize'] >= 1024 * 1024) {
+                                $fileSize = $row55['bf_filesize'] / (1024 * 1024);
+                                $convertlastpage = sprintf('%0.2f', $fileSize); // 520 -> 520.00
+                                $str = $convertlastpage . ' MB';
+                            }
+                
+                            else {
+                                $fileSize = $row55['bf_filesize'] / 1024;
+                                $convertlastpage = sprintf('%0.2f', $fileSize); // 520 -> 520.00
+                                $str = $convertlastpage . ' KB';
+                            }
+                        ?>
+                        <th scope="col" class="view_table_header" colspan="1" style="width:10%">파일명</th>
+                        <td scope="col" class="view_table_text" colspan="1" style="width:40%">
+                        <input type="text" id="file_label_view1" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="<?= $row55['bf_source']; ?>" style="margin: 0 -2px;"/>
+                        </td>
+                        <th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 사이즈</th>
+                        <td scope="col" class="view_table_text" colspan="1" style="width:20%">
+                            <input type="hidden" value="<?= $row55['bo_table']; ?>" id="sql_file_tabel">
+                            <input type="hidden" value="<?= $row55['wr_id']; ?>" id="sql_file_id">
+                            <input type="hidden" value="<?= $row55['bf_no']; ?>" id="sql_file_no">
+                            <input type="text" id="file-size-'+file_number+'" class="file-name file-size" style="margin: 0 -2px;" value="<?= $str ?>" readonly="readonly"/>
+                            <input type="file" name="bf_file[]" id="upload00" class="file-upload file_sql_upload" <?= $row44['report'] ==2? "disabled": ""; ?> />
+                        </td>
+                        <th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 삭제</th>
+                        <td scope="col" class="view_table_text" colspan="1" style="width:10%">
+                        <button type="button" class="file-label file-del " id="file-del<?= $i ?>" <?= $row44['report'] ==2? "disabled": ""; ?>>삭제</button>
+                        </td>
+                    </tr>
                 <?php
-                    //MB 단위 이상일때 MB 단위로 환산
-                    if ($row55['bf_filesize'] >= 1024 * 1024) {
-                        $fileSize = $row55['bf_filesize'] / (1024 * 1024);
-                        $convertlastpage = sprintf('%0.2f', $fileSize); // 520 -> 520.00
-                        $str = $convertlastpage . ' MB';
-                    }
-        
-                    else {
-                        $fileSize = $row55['bf_filesize'] / 1024;
-                        $convertlastpage = sprintf('%0.2f', $fileSize); // 520 -> 520.00
-                        $str = $convertlastpage . ' KB';
-                    }
+                        $j ++;
+                    }  
                 ?>
-                <input type="text" id="file-size-'+file_number+'" class="file-name file-size" style="margin: 0 -2px;" value="<?= $str ?>" readonly="readonly"/>
-                <input type="hidden" value="<?= $row55['bo_table']; ?>" id="sql_file_tabel">
-                <input type="hidden" value="<?= $row55['wr_id']; ?>" id="sql_file_id">
-                <input type="hidden" value="<?= $row55['bf_no']; ?>" id="sql_file_no">
-                <input type="file" name="bf_file[]" id="upload00" class="file-upload file_sql_upload" <?= $row44['report'] ==2? "disabled": ""; ?> />
-                <button type="button" class="file-label file-del file-event-none" id="file-del-sql-<?= $j ?>" <?= $row44['report'] ==2? "disabled": ""; ?> style="<?= $row44['report'] ==2? 'background:#ccc !important': 'background:crimson'; ?>;margin-left:-4px;">삭제</button>
+        </tbody>        
+    </table>
+        <div class ="btn_confirm write_div btn-cont">
+            <div class="next_prev_bar">
+            <label for="upload01" id="file-label-btn" class="file-label"><img src="<?= G5_IMG_URL ?>/upload.png" alt=""> 파일 업로드</label>
+
+            <button type="submit" formaction="<?= G5_BBS_URL ?>/view.report.update.php?bo_table=<?= $_GET['bo_table'] ?>&bo_idx=1&wr_bo_idx=<?= $_GET['wr_bo_idx'] ?>" class="btn_next_prv btn_color_white" id="save" title="<?php $row44 == "" ? '저장하기':'수정하기'; ?>" <?= $row44['report'] ==2? "disabled": ""; ?> ><?= $row44 == "" ? '저장':'수정'; ?></button>
+            <button type="submit" formaction="<?= G5_BBS_URL ?>/board.report.php?bo_table=business&bo_idx=1" class="btn_next_prv  btn_color_white" id="cancel" title="취소">취소하기</button>
+            <button type="submit" formaction="<?= G5_BBS_URL ?>/view.report.update.php?bo_table=<?= $_GET['bo_table'] ?>&bo_idx=1&wr_bo_idx=<?= $_GET['wr_bo_idx'] ?>" class="btn_next_prv btn_next_prv_link" id="submission" title="신청하기" <?= $row44['report'] ==2? "disabled": ""; ?> style="background:<?= $row44['report'] ==2? '#ccc': '#1D2E58'; ?>">신청하기</button>
             </div>
-            <?php
-                    $j ++;
-                }  
-            ?>
-        </section>
-        <section id="bus_btn" >
-            <button type="submit" formaction="<?= G5_BBS_URL ?>/view.report.update.php?bo_table=<?= $_GET['bo_table'] ?>&bo_idx=1&wr_bo_idx=<?= $_GET['wr_bo_idx'] ?>" class="btn_next_prv btn_next_prv_link" id="save" title="<?php $row44 == "" ? '저장하기':'수정하기'; ?>" <?= $row44['report'] ==2? "disabled": ""; ?> style="background:<?= $row44['report'] ==2? '#ccc': '#3a8afd'; ?>"><?= $row44 == "" ? '저장하기':'수정하기'; ?></button>
-            <button type="submit" formaction="<?= G5_BBS_URL ?>/board.report.php?bo_table=business&bo_idx=1" class="btn_next_prv btn_next_prv_link" id="cancel" title="취소">취소</button>
-            <button type="submit" formaction="<?= G5_BBS_URL ?>/view.report.update.php?bo_table=<?= $_GET['bo_table'] ?>&bo_idx=1&wr_bo_idx=<?= $_GET['wr_bo_idx'] ?>" class="btn_next_prv btn_next_prv_link" id="submission" title="신청하기" <?= $row44['report'] ==2? "disabled": ""; ?> style="background:<?= $row44['report'] ==2? '#ccc': '#3a8afd'; ?>">신청하기</button>
-        </section>
-    </form>
+        </div>
+</form>
 
 </article>
 <script>
@@ -131,12 +143,26 @@ $j=0;
         $('#submission').click(function(){
             $("#fwrite").append('<input type="hidden" name="save" value="2">');
         });
+        var file_number = 1;
 
         var disabled = '<?= $row44['report'] == 2? false : true; ?>'
         if(disabled){
-            var html = '<div class="input-file"><input type="text" style="margin: 0 -2px;" id="file_label_view1" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/> <input type="text" id="file-size-'+file_number+'" class="file-name file-size" style="margin: 0 -2px;" value="용량" readonly="readonly"/><input type="file" name="bf_file[]" id="upload01" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?> /><button type="button" class="file-label file-del " id="file-del<?= $i ?>" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>">삭제</button></div>';
-
-            $('.bo_class_form').append(html);
+            var html = '<tr class="input-file_list">'
+                    +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일명</th>'
+                    +'<td scope="col" class="view_table_text" colspan="1" style="width:40%">'
+                    +'    <input type="text" style="margin: 0 -2px;" id="file_label_view1" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/> '
+                    +'</td>'
+                    +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 사이즈</th>'
+                    +'<td scope="col" class="view_table_text" colspan="1" style="width:20%">'
+                    +'    <input type="text" id="file-size-'+file_number+'" class="file-name file-size" style="margin: 0 -2px;" value="용량" readonly="readonly"/>'
+                    +'    <input type="file" name="bf_file[]" id="upload01" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?> />'
+                    +'</td>'
+                    +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 삭제</th>'
+                    +'<td scope="col" class="view_table_text" colspan="1" style="width:10%">'
+                    +'<button type="button" class="file-label file-del " id="file-del<?= $i ?>" <?= $row44['report'] ==2? "disabled": ""; ?>">삭제</button>'
+                    +'</td>'
+                    +'</tr>';
+            $('#view_table_upload').append(html);
         }
 
 
@@ -165,19 +191,31 @@ $j=0;
                 }
                 
                 if($(this).val() != ""){
-                    file_number++;
                     $(this).prev().val(str);
-                    $(this).prev().prev().val(fileName);
-                    // <input type="text" id="file-size-'+file_number+'" value="'.str.'" />
-                    // value="'+fileName+'"
-                    // value="'+str+'" 
-                    var html = '<div class="input-file"><input type="text" id="file_label_view'+file_number+'" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/><input type="text" id="file-size-'+file_number+'" class="file-name file-size" value="용량" readonly="readonly"/><input type="file" name="bf_file[]" id="upload0'+file_number+'" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?>/><button type="button" class="file-label file-del " id="file-del'+file_number+'" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>">삭제</button></div>';
-                    $('.bo_class_form').append(html);
+                    $(this).parent().prev().prev().children().val(fileName);
 
-                    var html = '<input type="text" name="form_file'+file_number+'" id="form__file'+file_number+'"  class="input_text_100 input_text input_text_end input_form" value="'+ fileName+'" readonly>';
-                    $('#input_file_cont').append(html);
 
-                    $("#file-label-btn").attr('for', 'upload0'+file_number)
+                    file_number++;
+
+                    // var html = '<div class="input-file"><input type="text" id="file_label_view'+file_number+'" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/><input type="text" id="file-size-'+file_number+'" class="file-name file-size" value="용량" readonly="readonly"/><input type="file" name="bf_file[]" id="upload0'+file_number+'" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?>/><button type="button" class="file-label file-del " id="file-del'+file_number+'" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>">삭제</button></div>';
+                    var html ='<tr class="input-file_list">'
+                    +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일명</th>'
+                    +'<td scope="col" class="view_table_text" colspan="1" style="width:40%">'
+                    +'    <input type="text" id="file_label_view'+file_number+'" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/>'
+                    +'</td>'
+                    +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 사이즈</th>'
+                    +'<td scope="col" class="view_table_text" colspan="1" style="width:20%">'
+                    +'    <input type="text" id="file-size-'+file_number+'" class="file-name file-size" value="용량" readonly="readonly"/>'
+                    +'    <input type="file" name="bf_file[]" id="upload0'+file_number+'" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?>/>'
+                    +'</td>'
+                    +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 삭제</th>'
+                    +'<td scope="col" class="view_table_text" colspan="1" style="width:10%">'
+                    +'<button type="button" class="file-label file-del " id="file-del'+file_number+'" <?= $row44['report'] ==2? "disabled": ""; ?>>삭제</button>'
+                    +'</td>'
+                    +'</tr>';
+                    $('#view_table_upload').append(html);
+
+                    $("#file-label-btn").attr('for', 'upload0'+file_number);
                 }
             })
         })

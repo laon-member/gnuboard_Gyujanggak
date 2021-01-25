@@ -121,8 +121,7 @@ if( $provider && function_exists('social_nonce_is_valid') ){   //모바일로 �
 //     alert('w 값이 제대로 넘어오지 않았습니다.');
 // }
 
-include_once(G5_THEME_PATH.'/head1.php');
-
+include_once(G5_THEME_PATH.'/head2.php');
 
 // 회원아이콘 경로
 $mb_icon_path = G5_DATA_PATH.'/member/'.substr($member['mb_id'],0,2).'/'.get_mb_icon_name($member['mb_id']).'.gif';
@@ -156,5 +155,5 @@ if($_GET['page'] == 1){
 
 run_event('register_form_after', $w, $agree, $agree2);
 
-include_once('./_tail.php');
+include_once('./_tail.sub.php');
 ?>

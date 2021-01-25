@@ -1,6 +1,9 @@
 @charset "utf-8";
 
 /* 초기화 */
+*{
+  font-family:'Malgun Gothic', dotum, sans-serif;
+}
 html {overflow-y:scroll}
 body {margin:0;padding:0;font-size:0.75em;font-family:'Malgun Gothic', dotum, sans-serif;background:#fff; position: relative;}
 html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
@@ -268,11 +271,11 @@ button.btn02 {display:inline-block;margin:0;padding:7px;border:1px solid #3b3c3f
 .btn_confirm {text-align:right} /* 서식단계 진행 */
 
 .btn_submit {border:0;background:#1D2E58;color:#ffffff;cursor:pointer; border: 1px solid #DDDDDD; padding-left: 0 !important;}
-.btn_submit:hover {background: #1D2E58 !important; color: #ffffff;}
+
 .btn_close {border:1px solid #DDDDDD;cursor:pointer;background:#fff}
 a.btn_close {text-align:center;line-height:50px}
 
-a.btn_cancel {display:inline-block;background:#1D2E58 ;color:#fff;text-decoration:none;vertical-align:middle; height: 40px; text-align: center; line-height: 40px;}
+a.btn_cancel {display:inline-block;background:#1D2E58 ;color:#fff;text-decoration:none;vertical-align:middle; height: 48px; text-align: center; line-height: 48px;}
 button.btn_cancel {display:inline-block;background:#FFF;color:#333333;text-decoration:none;vertical-align:middle;border: 1px solid #DDDDDD;}
 a.btn_frmline, button.btn_frmline {display:inline-block;width:128px;padding:0 5px;height:40px;border:0;background:#434a54;border-radius:3px;color:#fff;text-decoration:none;vertical-align:top} /* 우편번호검색버튼 등 */
 a.btn_frmline {}

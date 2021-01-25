@@ -12,12 +12,20 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 
 <!-- 회원정보 입력/수정 시작 { -->
 <div class="register">
+<aside id="bo_side">
+	<h2 class="aside_nav_title">마이페이지</h2>
+	<a class="aside_nav " href="<?php echo G5_BBS_URL ?>/mypage_form.php?page=1">회원정보</a>
+	<a class="aside_nav aisde_click" href="<?php echo G5_BBS_URL ?>/mypage_form.php?page=2">회원탈퇴</a>
+</aside>
+
+
+
 <script src="<?php echo G5_JS_URL ?>/jquery.register_form.js"></script>
 <?php if($config['cf_cert_use'] && ($config['cf_cert_ipin'] || $config['cf_cert_hp'])) { ?>
 <script src="<?php echo G5_JS_URL ?>/certify.js?v=<?php echo G5_JS_VER; ?>"></script>
 <?php } ?>
 
-	<form id="fregisterform" name="fregisterform" onsubmit="return fregisterform_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off">
+	<form id="fregisterform_mypage" name="fregisterform" onsubmit="return fregisterform_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off">
 	<input type="hidden" name="w" value="<?php echo $w ?>">
 	<input type="hidden" name="url" value="<?php echo $urlencode ?>">
 	<input type="hidden" name="agree" value="<?php echo $agree ?>">
@@ -31,11 +39,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	<input type="hidden" name="mb_nick_default" value="<?php echo get_text($member['mb_nick']) ?>">
 	<input type="hidden" name="mb_nick" value="<?php echo get_text($member['mb_nick']) ?>">
 	<?php }  ?>
-	<aside class="register_form_aside">
-		<h2 class="aisde_title">마이페이지</h2>
-		<a class="aside_nav" href="<?php echo G5_BBS_URL ?>/mypage_form.php?page=1">회원정보</a>
-		<a class="aside_nav aisde_click" href="<?php echo G5_BBS_URL ?>/mypage_form.php?page=2">회원탈퇴</a>
-	</aside>
 	<div id="register_form" class="form_01">   
 	    <div class="register_form_inner">
 	        <h2>회원탈퇴</h2>
@@ -46,7 +49,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 				</li>
 	           
 			</ul>
-			<div class="btn_confirm">
+			<div class="btn_confirm btn_block">
 				<input type="submit" id="btn_submit" class="btn_submit" accesskey="s" value="회원탈퇴" formaction="<?php echo G5_BBS_URL ?>/mypage_form_update.php"/>
 			</div> 
 	    </div>

@@ -28,7 +28,7 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
 ?>
 <!-- 게시판 목록 시작 { -->
 <aside id="bo_side">
-    <h2 class="aside_nav">보고서 관리</h2>
+    <h2 class="aside_nav_title">보고서 관리</h2>
    
     <?php 
         for($k=1; $row=sql_fetch_array($result); $k++) {
@@ -65,12 +65,12 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
         <caption><?php echo $board['bo_subject'] ?> 목록</caption>
         <thead>
         <tr>
-            <th scope="col" style="width:5%">번호</th>
-            <th scope="col" style="width:10%">접수번호</th>
-            <th scope="col" style="width:45%">과제명</th>
-            <th scope="col" style="width:10%">연구책임자</th>
-            <th scope="col" style="width:15%">중간보고서</th>
-            <th scope="col" style="width:15%">결과(연차)보고서</th>
+            <th scope="col" style="width:10%">번호</th>
+            <th scope="col" style="width:13%">접수번호</th>
+            <th scope="col" style="width:37%">과제명</th>
+            <th scope="col" style="width:14%">연구책임자</th>
+            <th scope="col" style="width:13%">중간보고서</th>
+            <th scope="col" style="width:13%">결과(연차)보고서</th>
         </tr>
         </thead>
         <tbody>
@@ -114,13 +114,13 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
             <td class="td_center">
                 <?= $row['quest_number'] ?> 
             </td>
-            <td class="td_download "  >
+            <td class="td_title "  >
           <?= $row['ko_title']; ?>
                     
             </td>
             <td class="td_datetime td_center"><?php echo $row['name']; ?></td>
-            <td class="td_datetime td_center"><a href="<?= G5_BBS_URL ?>/board_admin.php?bo_table=business&bo_idx=<?= $_GET['bo_idx'] ?>&wr_idx=<?= $_GET['wr_idx'] ?>&us_idx=<?= $list[$i]['idx']; ?>&u_id=1&report=1" class="value_btn btn_bo_val">바로가기</a></td>
-            <td class="td_datetime td_center"><a href="<?= G5_BBS_URL ?>/board_admin.php?bo_table=business&bo_idx=<?= $_GET['bo_idx'] ?>&wr_idx=<?= $_GET['wr_idx'] ?>&us_idx=<?= $list[$i]['idx']; ?>&u_id=1&report=2" class="value_btn btn_bo_val">바로가기</a></td>
+            <td class="td_datetime td_center"><a href="<?= G5_BBS_URL ?>/board_admin.php?bo_table=business&bo_idx=<?= $_GET['bo_idx'] ?>&wr_idx=<?= $_GET['wr_idx'] ?>&us_idx=<?= $list[$i]['idx']; ?>&u_id=1&report=1" class="value_btn">바로가기</a></td>
+            <td class="td_datetime td_center"><a href="<?= G5_BBS_URL ?>/board_admin.php?bo_table=business&bo_idx=<?= $_GET['bo_idx'] ?>&wr_idx=<?= $_GET['wr_idx'] ?>&us_idx=<?= $list[$i]['idx']; ?>&u_id=1&report=2" class="value_btn ">바로가기</a></td>
         </tr>
       
 
@@ -133,13 +133,11 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
 	<!-- 페이지 -->
 
     <!-- 현재 URL 주소 -->
-    <a href="<?= G5_BBS_URL ?>/board_admin.php?bo_table=business&bo_idx=1&u_id=1&page=1" class="value_btn " style="text-align:center">목록</a>
-
-            <!-- 게시판 검색 시작 { -->
-                <!-- http://localhost/bbs/board_admin.php?bo_table=business&bo_idx=1&u_id=1 -->
+    <section id="bo_v_files" class="td_right btn-cont">
+        <a href="<?= G5_BBS_URL ?>/board_admin.php?bo_table=business&bo_idx=1&u_id=1&page=1" class="value_btn btn_bo_val text_inline_block" style="text-align:center">목록</a>
+    </section>
 </div>
         
-            <!-- } 게시판 검색 끝 --> 
 
 
 <?php if($is_checkbox) { ?>

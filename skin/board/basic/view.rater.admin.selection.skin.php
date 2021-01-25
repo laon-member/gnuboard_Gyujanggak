@@ -110,8 +110,14 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                                     $row11 = sql_fetch($sql);
                                     $sum = $sum + $row11['test_sum'];
                                 }
-                                $average = $sum/$row333['cnt'];
-                                $average = sprintf('%0.0f', $average);
+
+                                if($sum > 0){
+                                    $average = @$sum/$row333['cnt'];
+                                    $average = @sprintf('%0.0f', $average);
+                                } else {
+                                    $average = 0;
+                                }
+                                
 
                             ?>
                             <?= $average ?>/80

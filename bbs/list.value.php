@@ -135,6 +135,7 @@ if ($is_search_bbs) {
     $sql = " select * from g5_business_propos where mb_id = '{$member['mb_id']}'";
     $sql .= " {$sql_order} DESC limit {$from_record}, $page_rows ";
 }
+echo $sql;
 
 // 페이지의 공지개수가 목록수 보다 작을 때만 실행
 if($total_page > 0) {

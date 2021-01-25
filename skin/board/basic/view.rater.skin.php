@@ -13,21 +13,19 @@ if ($is_nogood) $colspan++;
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
 
+$sql = " select * from g5_write_business where wr_id = '{$_GET['wr_idx']}'";
+$result = sql_query($sql);
+$row88 = sql_fetch_array($result);
 
+$sql = " select * from g5_write_business_title where idx = '{$row88['wr_title_idx']}'";
+$result = sql_query($sql);
+$row99 = sql_fetch_array($result);
 
-
-// $sql1 = " SELECT * FROM {$write_table} WHERE wr_title_idx = {$bo_idx} ";
-// $result1 = sql_query($sql1);
-// $num = 0;
-// for($j=1; $row=sql_fetch_array($result1); $j++) {
-    
-//     $num ++;
-// }
 
 ?>
 <!-- 게시판 목록 시작 { -->
 <aside id="bo_side">
-    <h2 class="aside_nav">심사관리</h2>
+    <h2 class="aside_nav_title">심사관리</h2>
    
     <a class="aside_nav <?= $_GET['bo_idx'] == 1?"aisde_click":""; ?>" href="<?= G5_BBS_URL ?>/board.rater.php?bo_table=<?= $bo_table ?>&bo_idx=1">지원자 선발</a>
     <a class="aside_nav <?= $_GET['bo_idx'] == 2?"aisde_click":""; ?>" href="<?= G5_BBS_URL ?>/board.rater.php?bo_table=<?= $bo_table ?>&bo_idx=2">중간보고서</a>
@@ -36,7 +34,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 <div id="bo_list" >
     <!-- 게시판 페이지 정보 및 버튼 시작 { -->
     <div id="bo_btn_top">
-        <h1 id="">심사관리</h1>
+        <h1 id="">[<?= $row99['title']?>]<?= $row88['wr_subject'] ?></h1>
 
     </div>
     <!-- } 게시판 페이지 정보 및 버튼 끝 -->
@@ -65,7 +63,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             alert("권한이 없습니다");
         }
 
-
         if ($_GET['bo_idx'] == 1) {
             $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}'";
             $result = sql_query($sql);
@@ -76,6 +73,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' and report_val_2 = 2";
             $result = sql_query($sql);
         }
+        
 
         for ($i=0; $i<$row = sql_fetch_array($result); $i++) {
 
@@ -110,7 +108,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                     
             </td>
             <td class="td_datetime td_center"><?php echo $row['name']; ?></td>
-            <td class="td_datetime td_center"><button type="button" class="value_btn btn_bo_val"> <?= $row22['value']==2? "확인" :"평가"; ?></button></td>
+            <td class="td_datetime td_center"><button type="button" class="value_btn_a btn_bo_val_val" style="background:#1F4392"> <?= $row22['value']==2? "확인" :"평가"; ?></button></td>
             <td class="td_datetime td_center" value="<?= $i ?>">
                 <form name="fboardlist" id="fboardlist" action="<?= https_url(G5_BBS_DIR)."/application_rater_update.php"; ?>" method="post">
                 
@@ -118,8 +116,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                     <input type="hidden" name="rater_idx" class= "sql_rater_idx" value="<?php echo $row66['idx']; ?>">
                     <input type="hidden" name="test_id" class="test_id"  value="<?= $_GET['bo_idx']?>">
                     <input type="hidden" name="value_id"  value="2">
-                    <input type="hidden" class="sql_us_idx" name="us_idx" value="<?php echo $row['idx']; ?>">
-                    <button type="submit" class="value_btn btn_bo_val_submit value_btn_a" <?= $row22['value']==2? "disabled" :""; ?> style="background:<?= $row22['value']==2? "#ccc" :"#3a8afd"; ?>" ><?= $row22['value']==2? "제출완료" :"제출"; ?></button> 
+                    <input type="hidden" class="sql_us_idx " name="us_idx" value="<?php echo $row['idx']; ?>">
+                    <button type="submit" class="value_btn btn_bo_val_submit value_btn_a" <?= $row22['value']==2? "disabled" :""; ?> style="background:<?= $row22['value']==2? "#ccc" :"#1F4392"; ?>" ><?= $row22['value']==2? "제출완료" :"제출"; ?></button> 
                 </form>
             </td>
         </tr>
@@ -133,56 +131,94 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 	<!-- 페이지 -->
 
     <!-- 현재 URL 주소 -->
-    <a href="<?= G5_BBS_URL ?>/board.rater.php?bo_table=qa&bo_idx=1" class="value_btn" style="text-align:center">목록</a>
+    <div class="btn_confirm write_div btn-cont list_btn_right">
+        <a href="<?= G5_BBS_URL ?>/board.rater.php?bo_table=qa&bo_idx=1" class="value_btn value_list_btn" style="text-align:center">목록</a>
+    </div>
             <!-- 게시판 검색 시작 { -->
 
 </div>
 
 <div class="bo_sch_wrap">
-    <fieldset class="bo_sch" style="width:800px; max-height:noen;height:600px;">
+    <fieldset class="bo_sch" style="width:1030px; max-height:noen;height:780px;">
         <?php
             $sql = " select * from g5_write_business where wr_id = '{$_GET['wr_idx']}'";
             $result = sql_query($sql);
             $row = sql_fetch_array($result);
+
+            $sql2 = "select * from rater where business_idx = '{$_GET['wr_idx']}' and user_id ='{$member['mb_id']}' and test_id = '{$_GET['bo_idx']}'";
+            $result2 = sql_query($sql2);
+            $row2 = sql_fetch_array($result2);
+
+            $sql3 = " select * from rater_value where rater_idx = '{$row2['idx']}' and report_idx = '{$_GET['bo_idx']}'";
+            $result3 = sql_query($sql3);
+            $row3 = sql_fetch_array($result3);
+
         ?>
-        <p id="sql_title_view"><?= $row['wr_subject'] ?></p>
-        <h3 id="sql_ko_title_view"></h3>
+        <div id="bo_btn_top_app" class="bo_btn_view_title">
+            <h1 class="view_title">[<?= $row99['title']?>]<?= $row88['wr_subject'] ?></h1>
+        </div>
         <form name="fsearch" method="POST" action="<?= https_url(G5_BBS_DIR)."/application_rater_update.php" ?>">
         <input type="hidden" name="business_idx" id= "business_idx" value="<?= $_GET['wr_idx'] ?>">
         <input type="hidden" name="test_id"  value="<?= $_GET['bo_idx']?>">
         <input type="hidden" name="value_id"  value="1">
         <input type="hidden" name="us_idx" id="us_idx"  value="">
-        
-        <label for="" class="label_text" style="display:block !important;">항목평가</label>
-        <label for="test_user" class="label_text" style="vertical-align: inherit;">연구진</label>
-        <input type="number" name="test_user" id="test_user"  class="input_text input_text_40 input_text_end" placeholder="연구진"  min="0" max="80"> 
-        <span>/80</span>
-        <label for="test_title" class="label_text" style="vertical-align: inherit;">주제</label>
-        <input type="number" name="test_title" id="test_title"  class="input_text input_text_40 input_text_end" placeholder="주제"  min="0" max="80" > 
-        <span>/80</span>
-        <label for="test_plan" class="label_text" style="vertical-align: inherit;">계획</label>
-        <input type="number" name="test_plan" id="test_plan"  class="input_text input_text_40 input_text_end" placeholder="계획"  min="0" max="80" > 
-        <span>/80</span>
-        <label for="test_sum" class="label_text" style="vertical-align: inherit;">종합평가</label>
-        <input type="number" name="test_sum" id="test_sum"  class="input_text input_text_40 input_text_end" placeholder="종합평가" readonly> 
-        <span>/80</span>
-        <label for="test_opinion" class="label_text" style="vertical-align: top;">평가의견</label>
-        <textarea name="test_opinion" id="test_opinion" class="input_text input_text_hight" <?= $row44['report'] ==2? "disabled": ""; ?> cols="20" rows="10"></textarea>
-        
+        <table class="view_table_app">
+            <thead>
+                <th colspan="1" style="width:10%" class="input_text_center">제목</th>
+                <td  colspan="3" id="bo_title_view"><?= $row['wr_subject'] ?></td>
+            </thead>
+            <tbody>
+                <tr class="view_table_header_table "></tr>
+                <tr class="input_text_center">
+                    <th colspan="4">항목평가</th>
+                </tr>
+                <tr>
+                    <th style="width:10%" class="input_text_center">연구진</th>  
+                    <td style="width:40%">
+                        <input type="number" name="test_user" id="test_user"  class="input_text input_text_80 input_text_end" placeholder="연구진"  min="0" max="80"> 
+                        <span class="">/80</span> 
+                    </td>
+                    <th style="width:10%" class="input_text_center">주제</th>  
+                    <td style="width:40%">
+                        <input type="number" name="test_title" id="test_title"  class="input_text input_text_80 input_text_end" placeholder="주제"  min="0" max="80" > 
+                        <span>/80</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th  class="input_text_center">계획</th>  
+                    <td>
+                        <input type="number" name="test_plan" id="test_plan"  class="input_text input_text_80 input_text_end" placeholder="계획"  min="0" max="80" > 
+                        <span>/80</span>
+                    </td>
+                    <th class="input_text_center">종합평가</th>  
+                    <td>
+                        <input type="number" name="test_sum" id="test_sum"  class="input_text input_text_80 input_text_end" placeholder="종합평가" value="<?= $row3['test_sum'] ?>" readonly > 
+                        <span>/80</span>
+                    </td>
+                </tr>
+                <tr class="input_text_center">
+                    <th>평가의견</th>
+                    <td colspan="3">
+                        <textarea name="test_opinion" id="test_opinion" class="input_text input_text_100 input_text_hight" <?= $row44['report'] ==2? "disabled": ""; ?> cols="20" rows="10"><?= $row3['test_opinion'] ?></textarea>
+                    </td>
+                </tr>
+            </tbody>
+        </table> 
         <div class="rater_value_btn_contianer">
-            <button type="button" class="btn_esc">취소</button>
+            <button type="button" class="btn_esc btn_color_white">취소</button>
+            <?php if($row3['value'] != 2){ ?>
             <button type="submit" class="btn_submit" id="value_btn_submit" >저장</button>
+            <?php } ?>
         </div>
-        </form>
-        
-    </fieldset>
+    </form>
+</fieldset>
     <div class="bo_sch_bg"></div>
     
     <script>
         $(function(){
-            $('.btn_bo_val').click(function(){
+            $('.btn_bo_val_val').click(function(){
                 var td_title = $(this).parent().siblings('.td_title').text();
-                $('#sql_ko_title_view').text(td_title);
+                $('#bo_title_view').text(td_title);
                 var us_idx_val = $(this).parent().siblings('.hidden').find('.sql_us_idx').val();
                 $('#us_idx').val(us_idx_val);
                 var us_idx = $(this).parent().next().find('.sql_us_idx').val();
@@ -224,7 +260,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                     $('#value_btn_submit').css({"background":"#ccc"});
                 } else {
                     $('#value_btn_submit').attr('disabled', false);
-                    $('#value_btn_submit').css({"background":"#3a8afd"});
+                    $('#value_btn_submit').css({"background":"#1D2E58"});
                 }
             });
             $('#test_title').change(function(){
@@ -238,7 +274,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                     $('#value_btn_submit').css({"background":"#ccc"});
                 } else {
                     $('#value_btn_submit').attr('disabled', false);
-                    $('#value_btn_submit').css({"background":"#3a8afd"});
+                    $('#value_btn_submit').css({"background":"#1D2E58"});
                 }
             });
             $('#test_plan').change(function(){
@@ -252,7 +288,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                     $('#value_btn_submit').css({"background":"#ccc"});
                 } else {
                     $('#value_btn_submit').attr('disabled', false);
-                    $('#value_btn_submit').css({"background":"#3a8afd"});
+                    $('#value_btn_submit').css({"background":"#1D2E58"});
                 }
             });
             $('#test_opinion').change(function(){
@@ -261,7 +297,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                     $('#value_btn_submit').css({"background":"#ccc"});
                 } else {
                     $('#value_btn_submit').attr('disabled', false);
-                    $('#value_btn_submit').css({"background":"#3a8afd"});
+                    $('#value_btn_submit').css({"background":"#1D2E58"});
                 }
             });
         

@@ -43,6 +43,8 @@ if ($_POST['save'] == '1') {
         sql_query($sql);
 
     } else {
+        if($_POST['contents'] == "") return alert("상세설명이 비어 있습니다");
+
         $sql = " insert into report
         set business_idx = '$wr_bo_idx',
             mb_id = '$member[mb_id]',
@@ -60,18 +62,42 @@ if ($_POST['save'] == '1') {
     }
     
 } else if ($_POST['save'] == '2') {
-    $sql = " update report
+    
+
+    if($_POST['save_db']){
+
+
+        $sql = " update report
                 set report_idx = '1',
                 contents = '{$_POST['contents']}',
                 report_file = '0',
                 report = '2',
                 report_value = '0' where idx = '{$_POST['file_idx']}'";
-    sql_query($sql);
+        sql_query($sql);
 
-    $sql = " update g5_business_propos
-        set $val
-        where idx = '{$_POST['wr_bo_idx']}'";
-    sql_query($sql);
+        $sql = " update g5_business_propos
+            set $val
+            where idx = '{$_POST['wr_bo_idx']}'";
+        sql_query($sql);
+
+    } else {
+        if($_POST['contents'] == "") return alert("상세설명이 비어 있습니다");
+
+        $sql = " insert into report
+        set business_idx = '$wr_bo_idx',
+            mb_id = '$member[mb_id]',
+            report_idx = '$bo_idx',
+            contents = '{$_POST['contents']}',
+            report_file = '0',
+            report = '2',
+            report_value = '0'";
+        sql_query($sql);
+
+        $sql = " update g5_business_propos
+                set $val
+                where idx = '{$_POST['wr_bo_idx']}'";
+        sql_query($sql);
+    }
 
 } else {
     alert('w 값이 제대로 넘어오지 않았습니다.');

@@ -49,7 +49,11 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
         <h1 id=""><?php  echo $row['title']; ?></h1>
 
         <ul class="btn_bo_user">
-            
+            <?php if ($is_admin == 'super') {  ?>
+                <li>
+                    <a href="<?php echo $write_href ?>&bo_idx=<?= $_GET['bo_idx'] ?><?= $_GET['u_id'] == 1?"&u_id=1" : "" ?>" class="btn_b01 btn " title="글쓰기"><i class="fa fa-pencil notice_write_icon" aria-hidden="true"></i><span class="sound_only">글쓰기</span></a>
+                </li>
+        	<?php }  ?>
             <li>
                 <?php
                     $http_host = $_SERVER['HTTP_HOST'];
@@ -75,11 +79,7 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
                     </form>
                 </fieldset>
             </li>
-            <?php if ($is_admin == 'super') {  ?>
-                <li>
-                    <a href="<?php echo $write_href ?>&bo_idx=<?= $_GET['bo_idx'] ?><?= $_GET['u_id'] == 1?"&u_id=1" : "" ?>" class="btn_b01 btn" title="글쓰기"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sound_only">글쓰기</span></a>
-                </li>
-        	<?php }  ?>
+            
         </ul>
     </div>
     <!-- } 게시판 페이지 정보 및 버튼 끝 -->
@@ -109,6 +109,7 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
             </thead>
             <tbody>
             <?php for ($i=0; $i<count($list); $i++) { ?>
+             
             <tr class="<?php if ($list[$i]['is_notice']) echo "bo_notice"; ?> <?php echo $lt_class ?> tr_hover">
                 
                 <td class="td_idx td_center">
@@ -128,6 +129,9 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
                                 if (isset($list[$i]['icon_secret'])) echo rtrim($list[$i]['icon_secret']);
                             ?>
                             <?php echo $list[$i]['subject'] ?>
+                            <?php if($list[$i]['wr_hit'] == 0){?>
+                                <img src="<?php echo G5_IMG_URL ?>/new_board_icon.png" alt="new_board_icon">
+                            <?php } ?>
                         </a>
                     </div>
                 </td>

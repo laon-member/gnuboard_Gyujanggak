@@ -141,8 +141,8 @@ $result1 = sql_query($sql1);
     </section>
     
     <!-- 첨부파일 시작 { -->
-    <section id="bo_v_files">
-        <ul class="btn_container">
+    <section id="bo_v_files " class="td_right">
+        <ul class="btn_container text_float">
             <?php if ($prev_href || $next_href) { ?>
                 <?php if ($prev_href) { ?>
                     <li class=" btn_next_prv" >
@@ -166,10 +166,10 @@ $result1 = sql_query($sql1);
                 <?php } ?>
             <?php } ?>
 
-                    <li class="btn_next_prv"><a href="<?php echo G5_BBS_URL .'/board.notice.php?bo_table=notice&bo_idx='.$_GET['bo_idx'].'&page=1'; ?>&bo_title=<?= $_GET['bo_title']; ?><?= $admin_notice ?>" class="">목록</a></li>
+                    <li class="btn_next_prv "><a href="<?php echo G5_BBS_URL .'/board.notice.php?bo_table=notice&bo_idx='.$_GET['bo_idx'].'&page=1'; ?>&bo_title=<?= $_GET['bo_title']; ?><?= $admin_notice ?>" class="">목록</a></li>
             </ul>
         
-            <section id="bus_btn">
+            <section id="bus_btn text_inline_block" >
             <a href="<?php echo G5_BBS_URL .'/board.notice.php?bo_table=notice&bo_idx='.$_GET['bo_idx'].'&page=1'; ?>&bo_title=<?= $_GET['bo_title']; ?><?= $admin_notice ?>" class="btn_next_prv btn_next_prv_link">목록보기</a>
         </section>
     </section>

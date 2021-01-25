@@ -34,7 +34,7 @@ $result1 = sql_query($sql1);
             <h1 class="view_title"><?= $category_title ?></h1>
         </div>
 
-        <?php ob_start(); ?>
+        <?php //ob_start(); ?>
         <table id="view_table">
             <thead>
                 <tr>
@@ -82,8 +82,8 @@ $result1 = sql_query($sql1);
             </thead>
         </table>
         <?php
-            $link_buttons = ob_get_contents();
-            ob_end_flush();
+            // $link_buttons = ob_get_contents();
+            // ob_end_flush();
         ?>
     </header>
     
@@ -108,10 +108,8 @@ $result1 = sql_query($sql1);
     
 	?>
     <!-- 첨부파일 시작 { -->
-    <section id="bo_v_files">
-    
-        
-        <ul class="btn_container">
+    <section id="bo_v_files" class="td_right">
+        <ul class="btn_container text_float text_inline_block">
         <?php if ($prev_href || $next_href) { ?>
             <?php if ($prev_href) { ?>
                 <li class=" btn_next_prv" >
@@ -135,10 +133,10 @@ $result1 = sql_query($sql1);
 
                 <li class="btn_next_prv"><a href="<?php echo G5_BBS_URL ?>/board.php?bo_table=business&bo_idx=<?= $view['wr_title_idx'] ?>" >목록</a></li>
         </ul>
-        
-        <section id="bus_btn" >
+        <section id="bus_btn "  class="text_inline_block">
             <a href="<?= G5_BBS_URL ?>/application.php?bo_table=business&bo_idx=<?php echo $view['wr_title_idx']; ?>&wr_id=<?php echo $_GET['wr_id']; ?>" class="btn_next_prv btn_next_prv_link" title="신청하기">신청하기</a>
         </section>
+        
     </section>
     <!-- } 첨부파일 끝 -->
     

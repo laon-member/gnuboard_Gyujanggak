@@ -91,7 +91,7 @@
 
 /* ### 기본 스타일 커스터마이징 끝 ### */
 /* 회원가입 약관 */
-.register {margin:0 auto}
+.register {margin:0 auto; display: flex;}
 .register:after {display:block;visibility:hidden;clear:both;content:""}
 .register .btn_confirm .btn_submit,
 .register .btn_confirm .btn_close {float:left;height:50px !important;width:48%;font-weight:bold;font-size:1.083em}
@@ -132,14 +132,15 @@
 .register_form_inner ul {padding:20px 0 200px 0;}
 .register_form_inner .register_form_inner_ul {padding:20px 0 50px 0;}
 .register_form_inner li {margin: 20px 0; display: flex;}
-.register_form_inner label {width: 20%; display:inline-block;line-height:40px}
+.register_form_inner label {width: 20%; display:inline-block;line-height:40px color #666666}
 .register_form_inner input{width: 80%; padding-left: 15px;}
 .register_form_inner p {text-align: center; margin-bottom: 40px;}
 #reg_mb_id{width: 55%;}
 
 
 #fregisterform #msg_certify {margin:5px 0 0;padding:5px;border:1px solid #dbecff;background:#eaf4ff;text-align:center}
-#fregisterform {display: flex; justify-content: space-between;}
+#fregisterform {display: flex; justify-content: space-between; width: 100%;}
+#fregisterform_mypage{display: flex; justify-content: space-between; width: 80%;}
 #fregisterform .frm_address {margin:5px 0 0}
 #fregisterform #mb_addr3 {display:inline-block;margin:5px 0 0;vertical-align:middle}
 #fregisterform #mb_addr_jibeon {display:block;margin:5px 0 0}
@@ -176,10 +177,11 @@
 .tooltip:before {content:"";position:absolute;top:0;left:-10px;width:0;height:0;border-style:solid;border-top:0px solid transparent;border-bottom:10px solid transparent;border-left:0;border-right:10px solid #000}
 .register_form_aside{width: 15%; display: table; background-color: #f7f7f7; text-align: center; padding: 10px 0;}
 .aisde_title{ margin-bottom: 20px; font-weight: bold;}
-.aside_nav{display: block; font-size: 14px; margin-bottom: 20px; cursor: pointer; color: #999999; font-weight: bold;}  
+/* .aside_nav{display: block; font-size: 14px; margin-bottom: 20px; cursor: pointer; color: #999999; font-weight: bold;}   */
 .aisde_click{color: #000;}
 
 .btn_confirm{display: flex; justify-content: space-between;}
+.btn_block{display: block; text-align: center !important;}
 .btn_close, .btn_submit{
   float: none !important;
   display: inline-block;
@@ -386,3 +388,15 @@
 #profile .my_profile_img img {border-radius:50%}
 #profile .profile_img img {border-radius:50%}
 #profile .profile_name .sv_wrap {font-weight:bold;text-align:left}
+
+#bo_side{
+  width: 15%;
+  background-color: #EEEEEE;
+  display: table;
+  text-align: center;
+  border: 1px solid #DDDDDD;
+}
+.aside_nav_title{height: 100px; background-color: #1D2E58; color: #ffffff;padding-top: 60px;padding-left: 20px;text-align: left;}
+.aside_nav{display: block;font-size: 16px;padding: 13px 0;border-left: 4px solid transparent;}
+.aisde_click{font-weight: bold; color: #4A9FDD; border-left: 4px solid #4A9FDD;background-color: #fff;}
+.aisde_click{font-weight: bold; color: #4A9FDD; border-left: 4px solid #4A9FDD;background-color: #fff;}

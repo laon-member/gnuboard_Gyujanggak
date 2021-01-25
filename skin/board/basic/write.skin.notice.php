@@ -9,7 +9,7 @@ $result1 = sql_query($sql1);
 ?>
 
 <aside id="bo_side">
-    <h2 class="aside_nav">공지사항</h2>
+    <h2 class="aside_nav_title">공지사항</h2>
     <?php 
         for($k=7; $row1=sql_fetch_array($result1); $k++) {
             $class_get = $_GET['bo_idx'] == $row1['idx']?"aisde_click":"";
@@ -22,6 +22,9 @@ $result1 = sql_query($sql1);
     ?>
 </aside>
 <section id="bo_v">
+    <div id="bo_btn_top">
+        <h1 class=""><?= $category_title ?></h1>
+    </div>
     <!-- 게시물 작성/수정 시작 { -->
     <form name="fwrite" id="fwrite" action="<?php echo $action_url ?>" onsubmit="return fwrite_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off" >
     <input type="hidden" name="uid" value="<?php echo get_uniqid(); ?>">
@@ -65,64 +68,69 @@ $result1 = sql_query($sql1);
     }
     echo $option_hidden;
     ?>
-  
  
-    <h1 class=""><?= $category_title ?></h1>
+  
+    
 
     <div class="bo_w_tit write_div">
         <label for="wr_subject" class="sound_only">제목<strong>필수</strong></label>
         
         <div id="autosave_wrapper" class="write_div">
-            <input type="text" name="wr_subject" value="<?php echo $subject ?>" id="wr_subject" required class="frm_input full_input required" size="50" maxlength="255" placeholder="제목">
         </div>
         
     </div>
 
-   
-    <div class="write_div">
-        <label for="wr_content" class="sound_only">내용<strong>필수</strong></label>
-        <div class="wr_content <?php echo $is_dhtml_editor ? $config['cf_editor'] : ''; ?>">
-            <?php if($write_min || $write_max) { ?>
-            <!-- 최소/최대 글자 수 사용 시 -->
-            <p id="char_count_desc">이 게시판은 최소 <strong><?php echo $write_min; ?></strong>글자 이상, 최대 <strong><?php echo $write_max; ?></strong>글자 이하까지 글을 쓰실 수 있습니다.</p>
-            <?php } ?>
-            <?php echo $editor_html; // 에디터 사용시는 에디터로, 아니면 textarea 로 노출 ?>
-            <?php if($write_min || $write_max) { ?>
-            <!-- 최소/최대 글자 수 사용 시 -->
-            <div id="char_count_wrap"><span id="char_count"></span>글자</div>
-            <?php } ?>
-        </div>
-        
-    </div>
+    <table id="view_table">
+        <thead>
+            <tr>
+                <th>제목</th>
+                <td colspan="6">
+                    <input type="text" name="wr_subject" value="<?php echo $subject ?>" id="wr_subject" required class="input_text frm_input full_input required" size="50" maxlength="255" placeholder="제목">
+                </td>
+            </tr>
+        </thead>
+        <tbody class="view_table_body">
+            
+            <tr>
+                <th>상세내용</th>
+                <td colspan="6">
+                    <div class="wr_content <?php echo $is_dhtml_editor ? $config['cf_editor'] : ''; ?> ">
+                        <?php if($write_min || $write_max) { ?>
+                        <!-- 최소/최대 글자 수 사용 시 -->
+                        <p id="char_count_desc">이 게시판은 최소 <strong><?php echo $write_min; ?></strong>글자 이상, 최대 <strong><?php echo $write_max; ?></strong>글자 이하까지 글을 쓰실 수 있습니다.</p>
+                        <?php } ?>
+                        <textarea id="wr_content" name="wr_content" class="input_text input_text_100" maxlength="65536" style="width:100%;height:300px"></textarea>
+                        <?php if($write_min || $write_max) { ?>
+                        <!-- 최소/최대 글자 수 사용 시 -->
+                        <div id="char_count_wrap"><span id="char_count"></span>글자</div>
+                        <?php } ?>
+                    </div>
+                </td>
+            </tr>
 
+        </tbody>
+    </table>
   
-    <label for="" id="bo_side"  class="label_text" style="text-align:left">자료첨부</label>
-    <section id="bo_v"  class="bo_class">
-    <?php echo "<script>var file_number = 1;</script>"; ?> 
-    <?php $file_number = "<script>document.writeln(file_number);</script>"; ?>
-        <label for="upload01" id="file-label-btn" class="file-label" style="background:<?= $row44['report'] ==2? '#ccc': '#3a8afd'; ?>">파일 업로드</label>
-        <div class="input-file input_file_text">
-            <p class="file-name">파일명</p>
-            <p class="file-name file-size">파일 용량</p>
-            <p class="file-name file-size">파일 삭제</p>
-        </div>
-    </section>
 
-    <div class="btn_confirm write_div">
+    <div class ="btn_confirm write_div btn-cont">
         <?php 
         
-         if($_GET['bo_title'] == 1){
-            $lilnk_admin = "";
-         } else if($_GET['bo_title'] == 2){
-            $lilnk_admin = "";
-        } else if($_GET['bo_title'] == 3){
-            $lilnk_admin = "&u_id=1";
-        }
+        if($_GET['bo_title'] == 1){
+           $lilnk_admin = "";
+        } else if($_GET['bo_title'] == 2){
+           $lilnk_admin = "";
+       } else if($_GET['bo_title'] == 3){
+           $lilnk_admin = "&u_id=1";
+       }
 
 
-        ?>
-        <a href="<?= G5_BBS_URL ?>/board.notice.php?bo_table=notice&bo_idx=<?= $_GET['bo_idx']; ?>&bo_title=<?= $_GET['bo_title'] ?><?= $lilnk_admin ?>" class="btn_cancel btn">취소</a>
-        <button type="submit" id="btn_submit" accesskey="s" class="btn_submit btn">작성완료</button>
+       ?>
+       
+        <div class="next_prev_bar">
+            <label for="upload01" id="file-label-btn" class="file-label"><img src="<?= G5_IMG_URL ?>/upload.png" alt=""> 파일 업로드</label>
+            <a href="<?= G5_BBS_URL ?>/board.notice.php?bo_table=notice&bo_idx=<?= $_GET['bo_idx']; ?>&bo_title=<?= $_GET['bo_title'] ?><?= $lilnk_admin ?>" class="btn_cancel btn">취소</a>
+            <button type="submit" id="btn_submit" accesskey="s" class="btn_submit btn">작성완료</button>
+        </div>
     </div>
     </form>
               
@@ -221,21 +229,37 @@ $result1 = sql_query($sql1);
         return true;
     }
     $(function(){
-        var html = '<div class="input-file"><input type="text" style="margin: 0 -2px;" id="file_label_view1" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/> <input type="text" id="file-size-'+file_number+'" class="file-name file-size" style="margin: 0 -2px;" value="용량" readonly="readonly"/><input type="file" name="bf_file[]" id="upload01" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?> /><button type="button" class="file-label file-del " id="file-del<?= $i ?>" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>">삭제</button></div>';
+        var file_number = 1;
+        var html = '<tr class="input-file_list">'
+                    +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일명</th>'
+                    +'<td scope="col" class="view_table_text" colspan="1" style="width:40%">'
+                    +'    <input type="text" style="margin: 0 -2px;" id="file_label_view1" readonly="readonly" class="input_text file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/> '
+                    +'</td>'
+                    +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 사이즈</th>'
+                    +'<td scope="col" class="view_table_text" colspan="2" style="width:20%">'
+                    +'    <input type="text" id="file-size-'+file_number+'" class=" input_textfile-name file-size" style="margin: 0 -2px;" value="용량" readonly="readonly"/>'
+                    +'    <input type="file" name="bf_file[]" id="upload01" class="file-upload"/>'
+                    +'</td>'
+                    +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 삭제</th>'
+                    +'<td scope="col" class="view_table_text" colspan="1" style="width:10%">'
+                    +'<button type="button" class=" input_text file-label file-del " id="file-del'+file_number+'">삭제</button>'
+                    +'</td>'
+                    +'</tr>';
+        
 
-        $('.bo_class').append(html);
+        $('.view_table_body').append(html);
         
 
         //클릭이벤트 unbind 
         $("#file-label-btn").unbind("click"); 
         
-        //클릭이벤트 bind
+        
         $("#file-label-btn").bind("click",function(){ 
             $('#upload0'+file_number).change(function(){
                 var fileValue = $(this).val().split("\\");
                 var fileName = fileValue[fileValue.length-1]; // 파일명
                 var fileSize = this.files[0].size;
-                var str;
+                var str ="";
 
                 //MB 단위 이상일때 MB 단위로 환산
                 if (fileSize >= 1024 * 1024) {
@@ -249,21 +273,35 @@ $result1 = sql_query($sql1);
                     var convertlastpage = fileSize.toFixed(2);
                     str = convertlastpage + ' KB';
                 }
-                
+
                 if($(this).val() != ""){
-                    file_number++;
+                  
                     $(this).prev().val(str);
-                    $(this).prev().prev().val(fileName);
-                    // <input type="text" id="file-size-'+file_number+'" value="'.str.'" />
-                    // value="'+fileName+'"
-                    // value="'+str+'" 
-                    var html = '<div class="input-file"><input type="text" id="file_label_view'+file_number+'" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/><input type="text" id="file-size-'+file_number+'" class="file-name file-size" value="용량" readonly="readonly"/><input type="file" name="bf_file[]" id="upload0'+file_number+'" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?>/><button type="button" class="file-label file-del " id="file-del'+file_number+'" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>">삭제</button></div>';
-                    $('.bo_class').append(html);
+                    $(this).parent().prev().prev().children().val(fileName);
 
-                    var html = '<input type="text" name="form_file'+file_number+'" id="form__file'+file_number+'"  class="input_text_100 input_text input_text_end input_form" value="'+ fileName+'" readonly>';
-                    $('#input_file_cont').append(html);
 
-                    $("#file-label-btn").attr('for', 'upload0'+file_number)
+                    file_number++;
+
+                    // var html = '<div class="input-file"><input type="text" id="file_label_view'+file_number+'" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/><input type="text" id="file-size-'+file_number+'" class="file-name file-size" value="용량" readonly="readonly"/><input type="file" name="bf_file[]" id="upload0'+file_number+'" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?>/><button type="button" class="file-label file-del " id="file-del'+file_number+'" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>">삭제</button></div>';
+                    var html ='<tr class="input-file_list">'
+                    +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일명</th>'
+                    +'<td scope="col" class="view_table_text" colspan="1" style="width:40%">'
+                    +'    <input type="text" id="file_label_view'+file_number+'" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/>'
+                    +'</td>'
+                    +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 사이즈</th>'
+                    +'<td scope="col" class="view_table_text" colspan="2" style="width:20%">'
+                    +'    <input type="text" id="file-size-'+file_number+'" class="file-name file-size" value="용량" readonly="readonly"/>'
+                    +'    <input type="file" name="bf_file[]" id="upload0'+file_number+'" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?>/>'
+                    +'</td>'
+                    +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 삭제</th>'
+                    +'<td scope="col" class="view_table_text" colspan="1" style="width:10%">'
+                    +'<button type="button" class="file-label file-del " id="file-del'+file_number+'" <?= $row44['report'] ==2? "disabled": ""; ?>>삭제</button>'
+                    +'</td>'
+                    +'</tr>';
+                    $('.view_table_body').append(html);
+
+                    $("#file-label-btn").attr('for', 'upload0'+file_number);
+
                 }
             })
         })

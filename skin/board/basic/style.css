@@ -205,7 +205,7 @@ box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075)}
 .bo_sch_input .sch_btn {height:38px;color:#656565;background:none;border:0;width:10%;font-size:15px}
 .bo_sch_input .bo_sch_cls {right:0;top:0;color:#b5b8bb;border:0;padding:12px 15px;font-size:16px;background:#fff}
 .bo_sch_input form{ display: flex;}
-#sfl{border: 1px solid #DDDDDD; margin-right: 10px;}
+#sfl{border: 1px solid #DDDDDD; margin-right: 10px; width: 80px;}
 .bo_sch_bg {background:#000;background:rgba(0,0,0,0.1);width:100%;height:100%}
 
 /* 게시판 쓰기 */
@@ -454,8 +454,26 @@ box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.1)}
 
 #bo_v{width: 80%;}
 .td_center{ text-align: center;}
-.td_title{padding-left: 20px; }
 
+.d_day_text{width: 60px; height: 24px; line-height: 24px; border-radius: 5px; color: #fff;  display: inline-block; margin-left: 5px;}
+.d_day_start{background-color: #4A9FDD;}
+.d_day_mid{background-color: #1F4392;}
+.d_day_end{background-color: #000000;}
+.td_height_56{height: 56px !important;}
+.td_right {text-align: right;}
+.text_float{float: left;}
+.td_title{padding-left: 20px; }
+.text_inline_block { display: inline-block !important;}
+
+.notice_write_icon{
+    color: #fff;
+    background: #1D2E58;
+    width: 72px;
+    vertical-align: top;
+    height: 40px;
+    line-height: 40px;
+    font-size: 24px;
+}
 .pg_wrap{text-align: center; padding-top: 20px; padding-bottom: 50px; position: absolute; bottom:100px; left: 56%; transform: translateX(-56%);}
 
 
@@ -488,8 +506,11 @@ box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.1)}
 .aisde_click{font-weight: bold; color: #4A9FDD; border-left: 4px solid #4A9FDD;background-color: #fff;}
 
 #bus_btn{text-align: center;}
-.btn_next_prv_link{ font-size: 16px; width: 180px; color: #fff;padding: 10px; border: 1px solid #DDDDDD; background-color: #1D2E58; margin:10px 0px 10px 20px;}
-.btn_color_white{font-size: 16px; height: 40px; line-height: 20px; width: 180px; color: #333333;padding: 10px; border: 1px solid #DDDDDD; background-color: #ffff; margin:10px 0px 10px 20px;}
+.btn_next_prv_link{ height:48px; font-size: 16px; width: 180px; color: #fff;padding: 10px; border: 1px solid #DDDDDD; background-color: #1D2E58; margin:10px 0px 10px 20px;}
+.btn_color_white{font-weight: normal;font-size: 16px; height: 48px; line-height: 24px; width: 180px; color: #333333;padding: 10px; border: 1px solid #DDDDDD; background-color: #ffff; margin:10px 0px 10px 20px;}
+a.btn_color_white{display: inline-block; text-align: center; vertical-align: middle;}
+
+btn_confirm
 
 #bo_v_files{display: flex; justify-content: space-between; text-align: right;}
 .download_file{display: inline-block; }
@@ -515,16 +536,20 @@ box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.1)}
 .write_div p, .label_text{margin: 20px 0 10px 10px;}
 .label_text{width: 15%; display: inline-block !important; text-align: left !important;}
 textarea.input_text {width: 100%;}
-.input_text{ width: 100%; height: 35px; border: none; padding: 0 10px;}
+.input_text{ width: 100%; height: 35px; border: none !important; padding: 0 10px; margin: 10px 0;}
  
+.input_text_10 {width: 10%;}
 .input_text_50 {width: 32%;}
 .input_text_40 {width: 28%;}
+.input_text_80 {width: 80%;}
+.input_text_80 {width: 90%;}
 .input_text_100{width: 100%;}
 .input_text_right{text-align: right;}
+.input_text_center{text-align: center;}
 
 .btn-cont{text-align: right; padding: 40px 0;}
 .btn_cancel{width: 20%;}
-.btn_submit {margin: 0 auto;  width:20%;}
+.btn_submit { width:20%;}
 .sub_text{margin: 0  0 20px 17% !important; color: #999999;}
 
 .frm_file{margin: 10px 0;border: 0;
@@ -665,14 +690,32 @@ border:1px solid #ccc;
 
 
 .value_btn, .value_btn_a{
-    width: 100px;
-    height:30px;
+    width: 80px;
+    height:32px;
     border: 1px solid transparent;
-    background: #3a8afd;
+    background: #1D2E58;
     display: block;
     line-height: 30px;
     color: #fff;
     margin: 0 auto;
+    display: block;
+}
+
+.value_list_btn{
+    width: 180px;
+    height: 48px;
+    line-height: 48px;
+    font-size: 18px;
+    margin: 0 ;
+    text-align: right;
+}
+
+.list_btn_right{
+    text-align: right;
+}
+
+.list_btn_right a{
+    display: inline-block;
 }
 
 .value_btn_a:hover{
@@ -709,24 +752,27 @@ border:1px solid #ccc;
 }
 
 #test_opinion{
-    width:80%;
+    width:100%;
 }
 
 .btn_esc{
-    width: 100px;
-    height: 30px;
+    width: 180px;
+    height: 48px;
     border: 1px solid #e8e8e8;
+    margin: 0 10px;
 }
 
 #value_btn_submit{
-    width: 100px;
-    height: 30px;
+    width: 180px;
+    height: 48px;
+    margin: 0 10px;
+    font-size: 16px;
 
 }
 
 .value_btn_submit_save{
     border:none;
-    background: #3a8afd;
+    background: #1D2E58;
     color: #fff;
 }
 
@@ -736,32 +782,38 @@ border:1px solid #ccc;
 
 .rater_value_btn_contianer{
     text-align: center;
-    margin: 10px;
+    margin: 30px 20px;
+}
+
+.btn_bo_val{
+    width: 180px;
+    height: 48px;
+    border: none;
+    margin: 0 10px;
+    font-size: 16px;
+    line-height: 48px;
 }
 
 .btn_bo_val_true{
-    width: 120px;
-    height: 35px;
-    background: #3a8afd;
-    border: none;
-    margin: 0 10px;
+    background: #1D2E58;
     color: #fff;
 }
 
 .btn_bo_val_false{
-    width: 120px;
-    height: 35px;
     background: #e8e8e8;
-    border: none;
-    margin: 0 10px;
     color: #000;
+}
+
+.bo_btn_view_title{
+    margin: 40px 10px 20px 10px !important;
 }
 
 input:focus {outline:none !important;}
 
 #view_table{width: 100%; border-spacing: 0px;border-collapse:collapse;}
-#view_table th, #view_table td{height: 40px;border: 1px solid #DDDDDD;}
-#view_table th{background-color: #F7F7F7;}
+#view_table th, #view_table td{height: 40px;border: 1px solid #DDDDDD; font-weight: normal; font-size: 14px;}
+#view_table th{background-color: #F7F7F7; color: #666666;}
+#view_table td{color: #333333;}
 .view_table_text{text-align: center;}
 .view_table_text_name{text-align: left; padding-left: 10px;}
 .view_title{font-size: 35px;}

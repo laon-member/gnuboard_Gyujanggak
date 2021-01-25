@@ -151,13 +151,12 @@ if ($sst) {
 $last_idx = "";
 // 여기 입니다.
 if ($is_search_bbs) {
-    $sql = "SELECT idx,bo_idx,bo_title_idx,gwb.mb_id,wr_subject FROM g5_business_propos as gbp INNER JOIN g5_write_business as gwb ON bo_idx = wr_id WHERE gwb.mb_id='{$member['mb_id']}' AND wr_subject LIKE '%".$stx."%' {$sql_order} limit {$from_record}, $page_rows ";
+    $sql = "SELECT idx,bo_idx,bo_title_idx,gwb.mb_id,wr_subject FROM g5_business_propos as gbp INNER JOIN g5_write_business as gwb ON bo_idx = wr_id WHERE gwb.mb_id='{$member['mb_id']}' AND wr_subject LIKE '%".$stx."%' {$sql_order}  limit {$from_record}, $page_rows ";
     // $sql = " select  * from {$write_table} where {$sql_search}  and wr_title_idx = '{$_GET['bo_idx']}'";
 } else {
     $sql = " select * from g5_business_propos where mb_id = '$member[mb_id]' AND $value = '4'";
-    $sql .= " {$sql_order} limit {$from_record}, $page_rows ";
+    $sql .= " {$sql_order} DESC limit {$from_record}, $page_rows ";
 }
-
 
 // 페이지의 공지개수가 목록수 보다 작을 때만 실행
 $j = 0;

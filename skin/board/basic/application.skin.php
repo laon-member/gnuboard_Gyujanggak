@@ -476,7 +476,7 @@ $result = sql_query($sql);
                     +'</td>'
                     +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 삭제</th>'
                     +'<td scope="col" class="view_table_text" colspan="1" style="width:10%">'
-                    +'<button type="button" class="file-label file-del " id="file-del<?= $i ?>" <?= $row44['report'] ==2? "disabled": ""; ?>">삭제</button>'
+                    +'<button type="button" class="file-label file-del " id="file-del<?= $i ?>" <?= $row44['report'] ==2? "disabled": ""; ?>>삭제</button>'
                     +'</td>'
                     +'</tr>';
         

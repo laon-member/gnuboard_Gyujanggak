@@ -127,8 +127,9 @@ if (!$is_search_bbs) {
 }
 
 
-$total_page  = 10;  // 전체 페이지 계산
-$from_record = 10; // 시작 열을 구함
+$total_page  = ceil($total_count / $page_rows);  // 전체 페이지 계산
+$from_record = ($page - 1) * $page_rows; // 시작 열을 구함
+
 
 // 공지글이 있으면 변수에 반영
 if(!empty($notice_array)) {

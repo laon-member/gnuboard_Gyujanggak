@@ -23,7 +23,8 @@ $sql = " select * from report where business_idx= '{$_GET['wr_bo_idx']}' ";
 $result = sql_query($sql);
 $row44 = sql_fetch_array($result);
 
-$sql = " select * from g5_board_file where bo_table= 'report' AND wr_id = '{$row44['idx']}'";
+
+$sql = " select * from g5_board_file where bo_table= 'report' AND wr_id = '{$row44['idx']}' AND wr_id > 0";
 $result = sql_query($sql);
 $il_file = array();
 $j=0;
@@ -65,6 +66,7 @@ $j=0;
     <?php // echo $action_url; ?>
     <form name="fwrite" id="fwrite" action="" onsubmit="return fwrite_submit(this);" method="POST" enctype="multipart/form-data" autocomplete="off" style="width:<?php echo $width; ?>">
     <input type="hidden" name="wr_bo_idx" value="<?= $_GET['wr_bo_idx']?>"> 
+    <input type="hidden" name="file_idx" value="<?= $row44['idx']?>"> 
 
     <table class="view_table_app">
         <thead>

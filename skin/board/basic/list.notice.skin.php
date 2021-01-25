@@ -67,6 +67,11 @@ if($board_user == 1){
     <div id="bo_btn_top">
     <h1 class="category_title"><?php echo $category_title; ?></h1>
         <ul class="btn_bo_user">
+            <?php if ($is_admin == 'super') {  ?>
+                <li>
+                    <a href="<?= G5_BBS_URL ?>/write_notice.php?bo_table=notice&bo_idx=<?= $_GET['bo_idx'] ?>&bo_title=3&u_id=1" class="btn_b01 btn" title="글쓰기"><i class="notice_write_icon fa fa-pencil" aria-hidden="true"></i><span class="sound_only">글쓰기</span></a>
+                </li>
+        	<?php }  ?>
             <li>
             <?php
                     $http_host = $_SERVER['HTTP_HOST'];
@@ -93,11 +98,7 @@ if($board_user == 1){
                     </form>
                 </fieldset>
             </li>
-        	<?php if ($is_admin == 'super') {  ?>
-                <li>
-                    <a href="<?= G5_BBS_URL ?>/write_notice.php?bo_table=notice&bo_idx=<?= $_GET['bo_idx'] ?>&bo_title=3&u_id=1" class="btn_b01 btn" title="글쓰기"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sound_only">글쓰기</span></a>
-                </li>
-        	<?php }  ?>
+        	
         </ul>
     </div>
     <!-- } 게시판 페이지 정보 및 버튼 끝 -->
@@ -156,6 +157,9 @@ if($board_user == 1){
                             if (isset($list[$i]['icon_secret'])) echo rtrim($list[$i]['icon_secret']);
                          ?>
                         <?php echo $list[$i]['wr_subject'] ?>
+                        <?php if($list[$i]['wr_hit'] == 0){?>
+                            <img src="<?php echo G5_IMG_URL ?>/new_board_icon.png" alt="new_board_icon">
+                        <?php } ?>
                     </a>
                     
                 </div>

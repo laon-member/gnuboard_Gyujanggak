@@ -43,7 +43,7 @@ if($_GET['bo_idx'] == 1){
 ?>
 <!-- 게시판 목록 시작 { -->
 <aside id="bo_side">
-    <h2 class="aside_nav">심사관리</h2>
+    <h2 class="aside_nav_title">심사관리</h2>
    
     <a class="aside_nav <?= $_GET['bo_idx'] == 1?"aisde_click":""; ?>" href="<?= G5_BBS_URL ?>/board.rater.php?bo_table=<?= $bo_table ?>&bo_idx=1">지원자 선발</a>
     <a class="aside_nav <?= $_GET['bo_idx'] == 2?"aisde_click":""; ?>" href="<?= G5_BBS_URL ?>/board.rater.php?bo_table=<?= $bo_table ?>&bo_idx=2">중간보고서</a>
@@ -54,88 +54,92 @@ if($_GET['bo_idx'] == 1){
     <!-- 게시판 페이지 정보 및 버튼 시작 { -->
     <div id="bo_btn_top">
         <h1 id="">[<?= $row2['title'];?>]<?= $row['wr_subject'];?></h1>
-        
     </div>
-    <div class="rater_btn_container">
-        <span>심사위원 배정 </span>
-        <button class="<?= $admin_val > 0 ? "btn_bo_val_false" :"btn_bo_val_true"; ?> btn_bo_val"><?= $admin_val > 0 ? "심사위원 선발 완료" :"+ 심사위원 추가"; ?> </button>
-    </div>
+   
     <!-- } 게시판 페이지 정보 및 버튼 끝 -->
-        	
-    <div class="tbl_head01 tbl_wrap">
-        <table>
-        <caption><?php echo $board['bo_subject'] ?> 목록</caption>
-        <thead>
-        <tr>
-            <th scope="col" style="width:10%">번호</th>
-            <th scope="col" style="width:10%">성명</th>
-            <th scope="col" style="width:20%">소속</th>
-            <th scope="col" style="width:20%">학력</th>
-            <th scope="col" style="width:20%">직책</th>
-            <th scope="col" style="width:10%">연구분야</th>
-            <th scope="col" style="width:10%">심사자 제외</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php
-        $sql = "  select COUNT(DISTINCT `idx`) as cnt from rater where business_idx = '{$_GET['wr_idx']}' and test_id ='{$_GET['bo_idx']}''";
-        $row11 = sql_fetch($sql);
-
-       
+    <form action="<?= $action_url ?>" method="post"> 
+        <input type="hidden" name="value" value="3">
+        <div class="tbl_head01 tbl_wrap">
+            <table>
+            <caption><?php echo $board['bo_subject'] ?> 목록</caption>
+            <thead>
+                <tr>
+                    <th colspan="7">심사위원 배정</th>
+                </tr>
+                <tr class="view_table_header_table"></tr>
+                <tr>
+                    <th scope="col" style="width:10%">번호</th>
+                    <th scope="col" style="width:15%">성명</th>
+                    <th scope="col" style="width:15%">소속</th>
+                    <th scope="col" style="width:15%">학력</th>
+                    <th scope="col" style="width:15%">직책</th>
+                    <th scope="col" style="width:15%">연구분야</th>
+                    <th scope="col" style="width:15%">심사자 제외</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php
+            $sql = "  select COUNT(DISTINCT `idx`) as cnt from rater where business_idx = '{$_GET['wr_idx']}' and test_id ='{$_GET['bo_idx']}''";
+            $row11 = sql_fetch($sql);
 
         
-        $sql = " select * from rater where business_idx = '{$_GET['wr_idx']}' and test_id ='{$_GET['bo_idx']}'";
-        $result = sql_query($sql);
-        $count = 0;
 
-        for ($i=0; $row = sql_fetch_array($result); $i++) {
-            $sql22 = " select * from g5_member where mb_id = '{$row['user_id']}'";
-            $result22 = sql_query($sql22);
-            $row22 = sql_fetch_array($result22);
-
-        ?>
-        
-        <tr class="<?php echo $lt_class ?> tr_hover">
-            <td class="hidden" style="display:none;">
-                <input type="hidden" class="sql_idx" name="sql_idx" value="<?= $_GET['bo_idx'] ?>">
-                <input type="hidden" class="sql_title" name="sql_title" value="<?php echo $row['title']; ?>">
-                <input type="hidden" class="sql_ko_title" name="sql_ko_title" value="<?php echo $row['ko_title']; ?>">
-                <input type="hidden" class="sql_us_idx" name="us_idx" value="<?php echo $row['idx']; ?>">
-
-                
-            </td>
             
-            <td class="td_idx td_center">
-                <?php
-                    echo $list[$i]['num'];
-                ?>
-            </td>
+            $sql = " select * from rater where business_idx = '{$_GET['wr_idx']}' and test_id ='{$_GET['bo_idx']}'";
+            $result = sql_query($sql);
+            $count = 0;
 
-            <td class="td_center">
-                <?= $row22['mb_name'] ?> 
-            </td>
-            <td class="td_datetime td_center"><?php echo $row22['belong']; ?></td>
-            <td class="td_datetime td_center"><?php echo $row22['degree']; ?></td>
-            <td class="td_datetime td_center"><?php echo $row22['rank']; ?></td>
-            <td class="td_datetime td_center"><?php echo $row22['category']; ?></td>
-            <td class="td_datetime td_center">
-                <a href="<?= $action_url ?>?value=3&idx=<?= $row['idx'] ?>" class="value_btn value_btn_esc" style="background:<?= $admin_val > 0 ? "#ccc" :"#3a8afd"; ?>" onclick="return <?= $admin_val < 1 ? 'true' :'false'; ?>">제외</a>
-            </td>
-        </tr>
-      
-            <?php $count++; ?>
-        <?php } ?>
-        <?php if ($count == 0) { echo '<tr><td colspan="6" class="empty_table">선택된 심사위원이 없습니다.</td></tr>'; } ?>
-        </tbody>
-        </table>
-    </div>
+            for ($i=0; $row = sql_fetch_array($result); $i++) {
+                $sql22 = " select * from g5_member where mb_id = '{$row['user_id']}'";
+                $result22 = sql_query($sql22);
+                $row22 = sql_fetch_array($result22);
+
+            ?>
+            
+            <tr class="<?php echo $lt_class ?> tr_hover">
+                <td class="hidden" style="display:none;">
+                    <input type="hidden" class="sql_idx" name="sql_idx" value="<?= $_GET['bo_idx'] ?>">
+                    <input type="hidden" class="sql_title" name="sql_title" value="<?php echo $row['title']; ?>">
+                    <input type="hidden" class="sql_ko_title" name="sql_ko_title" value="<?php echo $row['ko_title']; ?>">
+                    <input type="hidden" class="sql_us_idx" name="us_idx" value="<?php echo $row['idx']; ?>">
+
+                    
+                </td>
+                
+                <td class="td_idx td_center">
+                    <?php
+                        echo $list[$i]['num'];
+                    ?>
+                </td>
+
+                <td class="td_center">
+                    <?= $row22['mb_name'] ?> 
+                </td>
+                <td class="td_datetime td_center"><?php echo $row22['belong']; ?></td>
+                <td class="td_datetime td_center"><?php echo $row22['degree']; ?></td>
+                <td class="td_datetime td_center"><?php echo $row22['rank']; ?></td>
+                <td class="td_datetime td_center"><?php echo $row22['category']; ?></td>
+                <td class="td_datetime td_center">
+                    <label for="checkbox<?= $i ?>" id="checkbox_label<?= $i ?>" class="value_btn value_btn_esc"style="background:<?= $admin_val > 0 ? "#ccc" :"#1F4392"; ?>" onclick="return <?= $admin_val < 1 ? 'true' :'false'; ?>">제외</label>
+                    <input type="checkbox" name="checkbox[]" class="checkbox_input" id="checkbox<?= $i ?>" value="<?= $row['idx']?>" style="display:none;">
+                </td>
+            </tr>
+        
+                <?php $count++; ?>
+            <?php } ?>
+            <?php if ($count == 0) { echo '<tr><td colspan="7" class="empty_table">선택된 심사위원이 없습니다.</td></tr>'; } ?>
+            </tbody>
+            </table>
+        </div>
     
-	<!-- 페이지 -->
-
-    <!-- 현재 URL 주소 -->
-    <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=qa&bo_idx=<?= $_GET['bo_idx'] ?>&u_id=1" style="text-align:center;" class="value_btn" >목록</a>
-            <!-- 게시판 검색 시작 { -->
-
+        <div class ="btn_confirm write_div btn-cont">
+            <div class="rater_btn_container">
+                <button type="button" class="<?= $admin_val > 0 ? "btn_bo_val_false" :"btn_bo_val_true"; ?> btn_bo_val text_float"><?= $admin_val > 0 ? "심사위원 선발 완료" :"+ 심사위원 추가"; ?> </button>
+            </div>
+            <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=qa&bo_idx=<?= $_GET['bo_idx'] ?>&u_id=1" style="text-align:center;" class="btn_color_white" >취소</a>
+            <button id="value_btn_submit" class="value_btn_submit_save"><?= $count > 0? "수정":"저장"; ?></button>
+        </div>
+    </form>
 </div>
 <script>
 jQuery(function($){
@@ -181,21 +185,23 @@ jQuery(function($){
 });
 </script>
 <div class="bo_sch_wrap">
-    <fieldset class="bo_sch" style="width:800px; max-height:noen;height:600px;">
+    <fieldset class="bo_sch" style="width:1030px; max-height:noen;height:820px;">
         <form action="<?= $action_url ?>" method="post"> 
         <input type="hidden" name="wr_idx" value="<?= $_GET['wr_idx'] ?>">
         <input type="hidden" name="bo_idx" value="<?=$_GET['bo_idx'] ?>">
         <input type="hidden" name="value" value="1">
-            <p id="sql_title_view" class="td_center">심사위원 목록</p>
-            <table>
+            <div id="bo_btn_top">
+                <h1 id="">심사위원 목록</h1>
+            </div>
+            <table id="view_table">
             <thead>
             <tr>
-                <th scope="col" style="width:10%" class=" td_center">성명</th>
-                <th scope="col" style="width:20%" class=" td_center">소속</th>
-                <th scope="col" style="width:20%" class=" td_center">학력</th>
-                <th scope="col" style="width:20%" class=" td_center">직책</th>
-                <th scope="col" style="width:10%" class=" td_center">연구분야</th>
-                <th scope="col" style="width:10%" class=" td_center">심사자 제외</th>
+                <th scope="col" style="width:16.66%" class=" td_center td_height_56">성명</th>
+                <th scope="col" style="width:16.66%" class=" td_center td_height_56">소속</th>
+                <th scope="col" style="width:16.66%" class=" td_center td_height_56">학력</th>
+                <th scope="col" style="width:16.66%" class=" td_center td_height_56">직책</th>
+                <th scope="col" style="width:16.66%" class=" td_center td_height_56">연구분야</th>
+                <th scope="col" style="width:16.66%" class=" td_center td_height_56">심사자 제외</th>
             </tr>
             </thead>
             <tbody>
@@ -213,19 +219,23 @@ jQuery(function($){
                 
             <tr class="<?php echo $lt_class ?> tr_hover">
 
-                <td class="td_center">
+                <td class="td_center td_height_56">
                     <?= $row['mb_name'] ?> 
                 </td>
-                <td class="td_datetime td_center"><?php echo $row['belong']; ?></td>
-                <td class="td_datetime td_center"><?php echo $row['degree']; ?></td>
-                <td class="td_datetime td_center"><?php echo $row['rank']; ?></td>
-                <td class="td_datetime td_center"><?php echo $row['category']; ?></td>
-                <td class="td_datetime td_center"><label for="checkbox<?= $i ?>" id="checkbox_label<?= $i ?>" class="value_btn value_btn_esc">선택</label><input type="checkbox" name="checkbox[]" class="checkbox_input" id="checkbox<?= $i ?>" value="<?= $row['mb_no']?>" style="display:none;"></td>
+                <td class="td_datetime td_center td_height_56"><?php echo $row['belong']; ?></td>
+                <td class="td_datetime td_center td_height_56"><?php echo $row['degree']; ?></td>
+                <td class="td_datetime td_center td_height_56"><?php echo $row['rank']; ?></td>
+                <td class="td_datetime td_center td_height_56"><?php echo $row['category']; ?></td>
+                <td class="td_datetime td_center td_height_56">
+                    <label for="checkbox<?= $i ?>" id="checkbox_label<?= $i ?>" class="value_btn value_btn_esc">선택</label>
+                    <input type="checkbox" name="checkbox[]" class="checkbox_input" id="checkbox<?= $i ?>" value="<?= $row['mb_no']?>" style="display:none;">
+                </td>
             </tr>
             
               
             <?php 
                 $count_rater++;
+
                 }
             } 
             if ($count_rater == 0){ echo '<tr><td colspan="6" class="empty_table">선택 가능한 심사위원이 없습니다.</td></tr>'; } 
@@ -234,7 +244,7 @@ jQuery(function($){
             </tbody>
             </table>
             <div class="rater_value_btn_contianer">
-            <button type="button" class="button_esc btn_esc">  취소</button>
+            <button type="button" class="btn_color_white btn_esc">취소</button>
             <button id="value_btn_submit" class="value_btn_submit_save">저장</button>
             </div>
         </form>
@@ -248,7 +258,7 @@ jQuery(function($){
                 var value = $(this).next().is(':checked');                
                 if (value) {    
                     $(this).text("선택");
-                    $(this).css({"background": "#3a8afd"});
+                    $(this).css({"background": "#1D2E58"});
 
                 } else {
                     $(this).text("해제");

@@ -95,10 +95,10 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
         <caption><?php echo $board['bo_subject'] ?> 목록</caption>
         <thead>
         <tr>
-            <th scope="col">번호</th>
-            <th scope="col">과제번호</th>
-            <th scope="col">제목</th>
-            <th scope="col">대상자</th>
+            <th scope="col" style="width:10%">번호</th>
+            <th scope="col" style="width:20%">과제번호</th>
+            <th scope="col" style="width:50%">제목</th>
+            <th scope="col" style="width:20%">대상자</th>
         </tr>
         </thead>
         <tbody>
@@ -122,7 +122,7 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
                 echo $list[$i]['wr_quest_number'];
              ?>
             </td>
-            <td class="td_title" style="padding-left:<?php echo $list[$i]['reply'] ? (strlen($list[$i]['wr_reply'])*10) : '0'; ?>px">
+            <td class="td_title" >
                 <?php
                 if ($is_category && $list[$i]['ca_name']) {
 				?>

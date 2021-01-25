@@ -68,7 +68,7 @@ for($j=1; $row123=sql_fetch_array($result1); $j++) {
             </select>
             <div class="sch_bar">
                 <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" required id="stx" class="sch_input" size="25" maxlength="20" placeholder=" 검색어를 입력해주세요">
-                <button type="submit" value="검색" class="sch_btn"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">검색</span></button>
+                <button type="submit" value="검색" class="sch_btn"><i class="fa fa-search " aria-hidden="true"></i><span class="sound_only">검색</span></button>
             </div>
             </form>
         </fieldset>
@@ -142,7 +142,7 @@ for($j=1; $row123=sql_fetch_array($result1); $j++) {
             </td>
             <td class="td_datetime td_center"><?php echo $list[$i]['datetime'] ?></td>
             <td class="td_hit td_center"><?php echo $list[$i]['wr_hit'] ?></td>
-            <td class="td_end td_center">
+            <td class="td_end td_center td_d_day">
                 <?php 
                     $nDate = date("Y-m-d",time()); // 오늘 날짜를 출력하겠지요?
                     $valDate = $list[$i]['wr_date_end']; // 폼에서 POST로 넘어온 value 값('yyyy-mm-dd' 형식)
@@ -150,18 +150,24 @@ for($j=1; $row123=sql_fetch_array($result1); $j++) {
                   
                     if($list[$i]['wr_date_end'] < $nDate) {
                         $leftDate = preg_replace('#^-#', '', $leftDate);
+                        echo "D+00";
 
-                        echo "접수마감";
-                        echo "<br>";
-                        echo "D+".$leftDate;
+                        echo "<span class='d_day_text d_day_end'>접수마감</span>";
                     } else if($list[$i]['wr_date_end'] > $nDate && $nDate > $list[$i]['wr_date_start']) {
-                        echo "접수중";
-                        echo "<br>";
-                        echo "D-".$leftDate;
+                        if($leftDate > 9){
+                            echo "D-".$leftDate;
+                        } else {
+                            echo "D-0".$leftDate;
+                        }
+                        echo "<span class='d_day_text d_day_mid'>접수중</span>";
                     } else if($list[$i]['wr_date_end'] > $nDate && $nDate  < $list[$i]['wr_date_start']) {
-                        echo "접수예정";
-                        echo "<br>";
-                        echo "D-".$leftDate;
+                        if($leftDate > 9){
+                            echo "D-".$leftDate;
+                        } else {
+                            echo "D-0".$leftDate;
+                        }
+                        
+                        echo "<span class='d_day_text d_day_start'>접수예정</span>";
                     }
                 ?>
             </td>

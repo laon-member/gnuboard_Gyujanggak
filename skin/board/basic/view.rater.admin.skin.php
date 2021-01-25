@@ -14,6 +14,13 @@ if ($is_nogood) $colspan++;
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
 
 
+$sql1 = " SELECT * FROM g5_write_business WHERE wr_id = {$_GET['wr_idx']} ";
+$result1 = sql_query($sql1);
+$row=sql_fetch_array($result1);
+
+$sql2 = " SELECT * FROM g5_write_business_title WHERE idx = {$row['wr_title_idx']} ";
+$result2 = sql_query($sql2);
+$row2=sql_fetch_array($result2);
 
 
 // $sql1 = " SELECT * FROM {$write_table} WHERE wr_title_idx = {$bo_idx} ";
@@ -27,37 +34,28 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 ?>
 <!-- 게시판 목록 시작 { -->
 <aside id="bo_side">
-    <h2 class="aside_nav">심사관리</h2>
+    <h2 class="aside_nav_title">심사관리</h2>
    
     <a class="aside_nav <?= $_GET['bo_idx'] == 1?"aisde_click":""; ?>" href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=<?= $bo_table ?>&bo_idx=1&u_id=1">지원자 선발</a>
     <a class="aside_nav <?= $_GET['bo_idx'] == 2?"aisde_click":""; ?>" href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=<?= $bo_table ?>&bo_idx=2&u_id=1">중간보고서</a>
     <a class="aside_nav <?= $_GET['bo_idx'] == 3?"aisde_click":""; ?>" href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=<?= $bo_table ?>&bo_idx=3&u_id=1">결과(연차)보고서</a>
 </aside>
 <div id="bo_list" >
-    <?php 
-       
-    ?>
-    
-    
-    
-
-    <!-- 게시판 페이지 정보 및 버튼 시작 { -->
     <div id="bo_btn_top">
-        <h1 id="">심사관리</h1>
-
+        <h1 id="">[<?= $row2['title'];?>]<?= $row['wr_subject'];?></h1>
     </div>
-    <!-- } 게시판 페이지 정보 및 버튼 끝 -->
+
         	
     <div class="tbl_head01 tbl_wrap">
         <table>
         <caption><?php echo $board['bo_subject'] ?> 목록</caption>
         <thead>
         <tr>
-            <th scope="col" style="width:5%">번호</th>
+            <th scope="col" style="width:10%">번호</th>
             <th scope="col" style="width:10%">접수번호</th>
-            <th scope="col" style="width:45%">과제명</th>
-            <th scope="col" style="width:10%">연구책임자</th>
-            <th scope="col" style="width:30%">연구비 신청액</th>
+            <th scope="col" style="width:40%">과제명</th>
+            <th scope="col" style="width:20%">연구책임자</th>
+            <th scope="col" style="width:20%">연구비 신청액</th>
         </tr>
         </thead>
         <tbody>
@@ -122,13 +120,10 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         </tbody>
         </table>
     </div>
-    
-	<!-- 페이지 -->
 
-    <!-- 현재 URL 주소 -->
-    <button type="button" class="value_btn " onClick="history.back()">목록</button>
-
-            <!-- 게시판 검색 시작 { -->
+    <section id="bo_v_files" class="td_right btn-cont">
+        <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=qa&bo_idx=<?php echo $_GET['bo_idx']; ?>&u_id=1" class="btn_next_prv btn_next_prv_link" title="목록보기">목록보기</a>
+    </section>
 
 </div>
 <script>

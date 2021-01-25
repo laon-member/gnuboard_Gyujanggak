@@ -109,11 +109,11 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         <caption><?php echo $board['bo_subject'] ?> 목록</caption>
         <thead>
         <tr>
-            <th scope="col" style="width: 8%;">번호</th>
-            <th scope="col" style="width: 8%;">과제번호</th>
-            <th scope="col" style="width: 44%;">제목</th>
-            <th scope="col" style="width: 20%;">심사위원</th>
-            <th scope="col" style="width: 20%;">심사결과</th>
+            <th scope="col" style="width: 10%;">번호</th>
+            <th scope="col" style="width: 15%;">과제번호</th>
+            <th scope="col" style="width: 31%;">제목</th>
+            <th scope="col" style="width: 22%;">심사위원</th>
+            <th scope="col" style="width: 22%;">심사결과</th>
         </tr>
         </thead>
         <tbody>
@@ -150,10 +150,10 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
              ?>
             </td>
 
-            <td class="td_title td_center">
+            <td class=" td_center">
                 <?= $list[$i]['wr_quest_number'] ?>
             </td>
-            <td class="td_download "  style="padding-left:<?php echo $list[$i]['reply'] ? (strlen($list[$i]['wr_reply'])*10) : '0'; ?>px; ">
+            <td class="td_title " >
                
                 <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=<?=$_GET['bo_table']; ?>&wr_idx=<?php echo $list[$i]['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&u_id=1">
                 <?php
@@ -168,19 +168,19 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             </td>
             
             <td class="td_datetime td_center">
-                <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=<?=$_GET['bo_table']; ?>&wr_idx=<?php echo $list[$i]['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&us_idx=<?= $list[$i]['wr_id']; ?>&u_id=1&rater=1" class="value_btn" style="display:inline-block">
+                <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=<?=$_GET['bo_table']; ?>&wr_idx=<?php echo $list[$i]['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&us_idx=<?= $list[$i]['wr_id']; ?>&u_id=1&rater=1" class="value_btn" style="display:inline-block; background:#1F4392">
                   배정
                 </a>
-                <a href="<?= $action_url ?>?value=2&idx=<?= $list[$i]['wr_id'] ?>&bo_idx=<?= $_GET['bo_idx']; ?>" class="value_btn" onclick="return <?= $admin_val > 0 ?'false' : 'true'; ?>" style="display:inline-block; background:<?= $admin_val > 0 ? "#ccc" :"#3a8afd"; ?>" <?= $admin_val > 0? "disabled" :""; ?>>
+                <a href="<?= $action_url ?>?value=2&idx=<?= $list[$i]['wr_id'] ?>&bo_idx=<?= $_GET['bo_idx']; ?>" class="value_btn" onclick="return <?= $admin_val > 0 ?'false' : 'true'; ?>" style="display:inline-block; background:<?= $admin_val > 0 ? "#ccc" :"#1F4392"; ?>" <?= $admin_val > 0? "disabled" :""; ?>>
                     의뢰
                 </a>
             </td>
             <td class="td_datetime td_center">
                 <!-- <button type="button" class="value_btn btn_bo_val" style="display:inline-block;vertical-align: top;">선발</button> -->
-                <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=<?=$_GET['bo_table']; ?>&border_idx=<?php echo $list[$i]['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&bo_idx=<?= $_GET['bo_idx']?>&u_id=1" class="value_btn" style="display:inline-block">
+                <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=<?=$_GET['bo_table']; ?>&border_idx=<?php echo $list[$i]['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&bo_idx=<?= $_GET['bo_idx']?>&u_id=1" class="value_btn" style="display:inline-block; background:#1F4392">
                    선발
                 </a>
-                <a href="<?= $action_url_value ?>?us_idx=<?= $list[$i]['wr_id'] ?>&bo_idx=<?= $_GET['bo_idx']?>" class="value_btn" style="display:inline-block; background:<?= $admin_val > 2 ? "#ccc" :"#3a8afd"; ?>" <?= $admin_val > 2? "disabled" :""; ?>>
+                <a href="<?= $action_url_value ?>?us_idx=<?= $list[$i]['wr_id'] ?>&bo_idx=<?= $_GET['bo_idx']?>" class="value_btn" style="display:inline-block; background:<?= $admin_val > 2 ? "#ccc" :"#1F4392"; ?>" <?= $admin_val > 2? "disabled" :""; ?>>
                    발표
                 </a>
             </td>
@@ -193,12 +193,12 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         
     </div>
 
-	<!-- 페이지 -->
-
-    <?php echo $write_pages ?>
-	<!-- 페이지 -->
+	
 </div>
- 
+ <!-- 페이지 -->
+
+ <?php echo $write_pages ?>
+	<!-- 페이지 -->
 <?php if($is_checkbox) { ?>
 <noscript>
 <p>자바스크립트를 사용하지 않는 경우<br>별도의 확인 절차 없이 바로 선택삭제 처리하므로 주의하시기 바랍니다.</p>

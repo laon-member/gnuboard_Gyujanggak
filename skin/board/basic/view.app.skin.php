@@ -16,7 +16,7 @@ $result1 = sql_query($sql1);
 
 <!-- 게시물 읽기 시작 { -->
     <aside id="bo_side">
-    <h2 class="aside_nav">사업 공고</h2>
+    <h2 class="aside_nav_title">사업 공고</h2>
     <?php 
         for($k=1; $row1=sql_fetch_array($result1); $k++) {
             $class_get = $view['wr_title_idx'] == $row1['idx']?"aisde_click":"";
@@ -30,32 +30,56 @@ $result1 = sql_query($sql1);
 </aside>
 <article id="bo_v">
     <header>
+        <div id="bo_btn_top">
+            <h1 class="view_title"><?= $category_title ?></h1>
+        </div>
         <?php ob_start(); ?>
-        <!-- 게시물 상단 버튼 시작 { -->
-        <div id="bo_v_top">
-            <h1 class="category_title"><?php
-                echo $category_title;
-             ?></h1>
-            <button type="button" class="btn_bo_sch btn_b01 btn" title="게시판 검색">
-                <i class="fa fa-search" aria-hidden="true"></i>
-            </button>
-        </div>
-        <div class="bo_b_tit_container">
-            <span class="bo_v_tit">
-                <?php echo cut_str(get_text($view['wr_subject']), 70); // 글제목 출력 ?>
-            </span>
-        </div>       
-        <div class="profile_info_container">
-            <div class="profile_info">
-                <span>지원기간 : <?php echo $view['wr_date_start']; ?> ~ <?php echo $view['wr_date_end']; ?></span>
-            </div>
-            <div class="profile_info">
-                <span>등록일 : <?php echo date("y.m.d", strtotime($view['wr_datetime'])) ?></span>
-                <span>조회 : <?php echo number_format($view['wr_hit']) ?></span>
-            </div>
-        </div>
-        
-     
+        <table id="view_table">
+            <thead>
+                <tr>
+                    <th scope="col" class="view_table_header"colspan="1" style="width:10%;">제목</th>
+                    <td scope="col" class="view_table_title" colspan="6" style="width:90%;"> <?php echo cut_str(get_text($view['wr_subject']), 70); // 글제목 출력 ?></td>
+                </tr>
+                <tr>
+                    <th scope="col" class="view_table_header" style="width:10%;">지원기간</th>
+                    <td scope="col" class="view_table_text" colspan="2" style="width:40%;"><?php echo $view['wr_date_start']; ?> ~ <?php echo $view['wr_date_end']; ?></td>
+                    <th scope="col" class="view_table_header" style="width:10%;">등록일</th>
+                    <td scope="col" class="view_table_text" style="width:20%;"><?php echo date("y.m.d", strtotime($view['wr_datetime'])) ?></td>
+                    <th scope="col" class="view_table_header" style="width:10%;">조회</th>
+                    <td scope="col" class="view_table_text" style="width:10%;"><?php echo number_format($view['wr_hit']) ?></td>
+                </tr>
+
+            <?php
+                $cnt = 0;
+                if ($view['file']['count']) {
+                    for ($i=0; $i<count($view['file']); $i++) {
+                        if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] )
+                            $cnt++;
+                    }
+                }
+                
+            if($cnt) {
+                // 가변 파일
+                for ($i=0; $i< $view['file']['count']; $i++) {
+                    if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] ) {
+                ?>
+                    <tr class="">
+                        <th scope="col" colspan="1" class="view_table_header" style="width:10%;">첨부파일</th>
+                        <td scope="col" colspan="1" class="view_table_text" style="width:10%;">
+                            <img src="<?php echo G5_IMG_URL ?>/download_icon.png" alt="<?php echo $config['cf_title']; ?>">
+                        </td>
+                        <td scope="col" colspan="5" class="view_table_text" style="width:80%;">
+                            <a href="<?php echo $view['file'][$i]['href']; ?>" class=""><?= $view['file'][$i]['source'] ?></a>
+                        </td>
+                    </tr>
+                <?php
+                    }
+                }
+            }
+            ?>
+    
+            </thead>
+        </table>
         <?php
             $link_buttons = ob_get_contents();
             ob_end_flush();
@@ -65,71 +89,19 @@ $result1 = sql_query($sql1);
     
     <section id="bo_v_atc">
         <h2 id="bo_v_atc_title">본문</h2>
-        
-
-        <?php
-        // // 파일 출력
-        // $v_img_count = count($view['file']);
-        // if($v_img_count) {
-        //     echo "<div id=\"bo_v_img\">\n";
-
-        //     for ($i=0; $i<=count($view['file']); $i++) {
-        //         echo get_file_thumbnail($view['file'][$i]);
-        //     }
-
-        //     echo "</div>\n";
-      
-        // }
-         ?>
 
         <!-- 본문 내용 시작 { -->
-        <div id="bo_v_con"><?php echo get_view_thumbnail($view['content']); ?></div>
-        <?php //echo $view['rich_content']; // {이미지:0} 과 같은 코드를 사용할 경우 ?>
+        <div id="bo_v_con"><?php echo get_view_thumbnail($view['wr_content']); ?></div>
         <!-- } 본문 내용 끝 -->
 
         <?php if ($is_signature) { ?><p><?php echo $signature ?></p><?php } ?>
-
-
-      
     </section>
    
-    <?php
-    $cnt = 0;
-    if ($view['file']['count']) {
-        for ($i=0; $i<count($view['file']); $i++) {
-            if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] )
-                $cnt++;
-        }
-    }
-    
-	?>
 
    
     <!-- 첨부파일 시작 { -->
-    <section id="bo_v_files">
-        <ul class="download_file">
-            <?php if($cnt) { ?>
-            <?php
-            // 가변 파일
-            for ($i=0; $i<count($view['file']); $i++) {
-                if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] ) {
-            ?>
-                <li class="">
-                    <img src="<?php echo G5_IMG_URL ?>/download_icon.png" alt="download_icon">
-                    <span class="view_file_download_text"><?php echo $view['file'][$i]['source'] ?></span> 
-                    <a href="<?php echo $view['file'][$i]['href'];  ?>" class="view_file_download btn_next_prv" >
-                        다운로드
-                    </a>
-                
-                </li>
-            <?php
-                        }
-                    }
-                }
-            ?>
-    
-        </ul>
-        <ul class="btn_container">
+    <section id="bo_v_files" class="td_right">
+        <ul class="btn_container text_float text_inline_block">
         <?php if ($prev_href || $next_href) { ?>
             <?php if ($prev_href) { ?>
                 <li class=" btn_next_prv" >
@@ -143,7 +115,7 @@ $result1 = sql_query($sql1);
                         <span class="nb_tit">
                             <i class="fa fa-chevron-up" aria-hidden="true" style="transform: rotate(-90deg);"></i>
                         </span >
-                    이전글</a> 
+                    이전</a> 
                 </li>
             <?php } ?>
             <?php if ($next_href) { ?>
@@ -154,7 +126,7 @@ $result1 = sql_query($sql1);
                         }
                     
                     ?>
-                    <a href="<?= G5_BBS_URL ?>/board.app.php?bo_table=business&wr_id=<?php echo $next_href; ?>&u_id=1">다음글
+                    <a href="<?= G5_BBS_URL ?>/board.app.php?bo_table=business&wr_id=<?php echo $next_href; ?>&u_id=1">다음
                         <span class="nb_tit"> 
                             <i class="fa fa-chevron-down" aria-hidden="true" style="transform: rotate(-90deg);"></i>
                         </span>
@@ -162,17 +134,15 @@ $result1 = sql_query($sql1);
                 </li>
             <?php } ?>
         <?php } ?>
-
-            <a href="<?php echo G5_BBS_URL ?>/board.app.php?bo_table=business&bo_idx=<?= $view['wr_title_idx'] ?>&page=1&u_id=1" class="btn_next_prv btn_next_prv_link">목록</a>
+        <li class="btn_next_prv"><a href="<?php echo G5_BBS_URL ?>/board.app.php?bo_table=business&bo_idx=<?= $view['wr_title_idx'] ?>&page=1&u_id=1" >목록</a></li>
         </ul>
+        <section id="bus_btn "  class="text_inline_block">
+            <a href="<?php echo G5_BBS_URL ?>/board.app.php?bo_table=business&bo_idx=<?= $view['wr_title_idx'] ?>&page=1&u_id=1" class="btn_next_prv btn_next_prv_link">목록</a>
+        </section>
+        
     </section>
     <!-- } 첨부파일 끝 -->
     
-
-    <section id="bus_btn" >
-        <a href="<?php echo G5_BBS_URL ?>/board.app.php?bo_table=business&bo_idx=<?= $view['wr_title_idx'] ?>&page=1&u_id=1" class="btn_next_prv btn_next_prv_link">목록</a>
-    </section>
-
 
 </article>
 

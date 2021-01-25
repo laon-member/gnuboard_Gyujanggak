@@ -5,7 +5,7 @@ $value = $_POST['value'] !=  ""? $_POST['value'] : $_GET['value'];
 
 
 if($value == 1){
-    $count = count($_POST['checkbox']) != 0? count($_POST['checkbox']) : 0;
+    $count = @count($_POST['checkbox']) != 0? count($_POST['checkbox']) : 0;
     if($count == 0){
         alert('심사위원을 선택해주세요');
     }
@@ -48,8 +48,16 @@ if($value == 1){
 
     }
 } else if($value == 3){
-    $row = sql_fetch("DELETE FROM rater WHERE idx = {$_GET['idx']}");
-    alert("삭제했습니다");
+    // $row = sql_fetch("DELETE FROM rater WHERE idx = {$_GET['idx']}");
+    // echo count($_POST['checkbox']);
+    if(@count($_POST['checkbox']) == 0) return alert('삭제할 심사위원을 선택해주세요');
+
+    for($i=0; $i<count($_POST['checkbox']); $i++){
+        $row = sql_fetch("DELETE FROM rater WHERE idx = {$_POST['checkbox'][$i]}");
+    }
+
+    alert('삭제 했습니다.');
+    
 } else if($value == 4){
     if ($_POST['bo_idx_list'] == 1){
         for($i=0; $i<count($_POST['checkbox']); $i++){

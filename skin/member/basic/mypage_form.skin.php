@@ -42,7 +42,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	
 	<div id="register_form" class="form_01">   
 	    <div class="register_form_inner">
-	        <h2>회원정보</h2>
+	        <h1>회원정보</h1>
 	        <ul>
 				<li>
 	                <label for="reg_mb_id">아이디</label>
@@ -66,8 +66,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 				</li>
 			</ul>
 			<div class="btn_confirm">
-				<input type="submit" id="btn_submit" class="btn_submit" accesskey="s" value="수정" formaction="<?php echo G5_BBS_URL ?>/mypage_form_update.php"/>
 				<a href="<?php echo G5_URL ?>" class="btn_close">취소</a>
+				<input type="submit" id="btn_submit" class="btn_submit" accesskey="s" value="수정" formaction="<?php echo G5_BBS_URL ?>/mypage_form_update.php"/>
 			</div> 
 	    </div>
 	</div>

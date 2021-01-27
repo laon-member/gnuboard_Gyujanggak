@@ -9,11 +9,11 @@ $result1 = sql_query($sql1);
 ?>
 
 <aside id="bo_side">
-    <h2 class="aside_nav_title">공지사항</h2>
+    <h2 class="aside_nav_title">자료실</h2>
     <?php 
         for($k=7; $row1=sql_fetch_array($result1); $k++) {
             $class_get = $_GET['bo_idx'] == $row1['idx']?"aisde_click":"";
-            echo '<a class="aside_nav '.$class_get.'" href="'.G5_BBS_URL .'/board.notice.php?bo_table=notice&bo_idx='.$k.'&page=1&bo_title='.$_GET['bo_title'].'">'.$row1['title'].'</a>';
+            echo '<a class="aside_nav '.$class_get.'" href="'.G5_BBS_URL .'/board.notice.php?bo_table=notice&bo_idx='.$k.'&page=1&bo_title='.$_GET['bo_title'].'&u_id=1">'.$row1['title'].'</a>';
            
             if($_GET['bo_idx'] == $row1['idx']){
                 $category_title =  $row1['title']; 
@@ -128,7 +128,7 @@ $result1 = sql_query($sql1);
        
         <div class="next_prev_bar">
             <label for="upload01" id="file-label-btn" class="file-label"><img src="<?= G5_IMG_URL ?>/upload.png" alt=""> 파일 업로드</label>
-            <a href="<?= G5_BBS_URL ?>/board.notice.php?bo_table=notice&bo_idx=<?= $_GET['bo_idx']; ?>&bo_title=<?= $_GET['bo_title'] ?><?= $lilnk_admin ?>" class="btn_cancel btn">취소</a>
+            <a href="<?= G5_BBS_URL ?>/board.notice.php?bo_table=notice&bo_idx=<?= $_GET['bo_idx']; ?>&bo_title=<?= $_GET['bo_title'] ?>&u_id=1" class="btn_color_white btn">취소</a>
             <button type="submit" id="btn_submit" accesskey="s" class="btn_submit btn">작성완료</button>
         </div>
     </div>
@@ -284,7 +284,7 @@ $result1 = sql_query($sql1);
 
                     // var html = '<div class="input-file"><input type="text" id="file_label_view'+file_number+'" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/><input type="text" id="file-size-'+file_number+'" class="file-name file-size" value="용량" readonly="readonly"/><input type="file" name="bf_file[]" id="upload0'+file_number+'" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?>/><button type="button" class="file-label file-del " id="file-del'+file_number+'" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>">삭제</button></div>';
                     var html ='<tr class="input-file_list">'
-                    +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일명</th>'
+                    +'<th scope="col" class="view_table_header" colspan="1" style="width:10%;height: 58px;">파일명</th>'
                     +'<td scope="col" class="view_table_text" colspan="1" style="width:40%">'
                     +'    <input type="text" id="file_label_view'+file_number+'" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/>'
                     +'</td>'
@@ -307,14 +307,14 @@ $result1 = sql_query($sql1);
         })
 
         $(document).off().on('click','.file-del',function(){
-            var val = $(this).prev().val();
-            var next = $(this).parent().next().find('.file-upload').val();
+            var val = $(this).parent().prev().prev().find('.file-upload').val();
+            var next = $(this).parent().parent().next().find('.file-upload').val();
 
             if(val != ""){
-                $(this).parent().remove();
+                $(this).parent().parent().remove();
             } else {
-                if(next == ""){
-                    $(this).parent().remove();
+                if(next != undefined){
+                    $(this).parent().parent().remove();
                 } 
             }    
         })

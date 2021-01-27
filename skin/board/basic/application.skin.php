@@ -75,7 +75,7 @@ $result = sql_query($sql);
                 <tr>
                     <th scope="col" class="view_table_header" style="width:10%;">접수번호</th>
                     <td scope="col" class="view_table_text" colspan="3" style="width:40%;">
-                        <input type="text" name="info_number" id="info_number"  class="input_text " placeholder="접수번호">
+                        <input type="text" name="info_number" id="info_number"  class="input_text " placeholder="접수 완료시 자동부여됩니다." readonly>
                     </td>
                     <th scope="col" class="view_table_header" style="width:10%;">과제번호</th>
                     <td scope="col" class="view_table_text" colspan="3" style="width:40%;">
@@ -97,7 +97,7 @@ $result = sql_query($sql);
                 <tr>
                     <th scope="col" class="view_table_header" colspan="1" style="width:10%;">과제명(영문)</th>
                     <td scope="col" class="view_table_text" colspan="7" style="width:90%;">
-                        <input type="text" name="en_title" id="en_title"  class="input_text " placeholder="과제명(영문)" onkeydown="onlyAlphabet(this)">
+                        <input type="text" name="en_title" id="en_title"  class="input_text " placeholder="과제명(영문)" >
                     </td>
                 </tr>
                 <tr class="view_table_header_table"></tr>
@@ -171,20 +171,20 @@ $result = sql_query($sql);
                 </tr>
                 <tr>
                     <th scope="col" class="view_table_header" style="">공동연구원</th>
-                    <td scope="col" class="view_table_text" colspan="2" style="">
+                    <td scope="col" class="view_table_text" colspan="1" style="">
                         <input type="text" name="main_member" id="main_member"  class="input_text " placeholder="* 연구책임자 제외">
                     </td>
                     <th scope="col" class="view_table_header" style="">연구원보조</th>
-                    <td scope="col" class="view_table_text" colspan="2" style="">
+                    <td scope="col" class="view_table_text" colspan="3" style="">
                         <input type="text" name="sub_member" id="sub_member"  class="input_text" placeholder="명">
                     </td>
                 </tr>
                 <tr>
                     <th scope="col" class="view_table_header" colspan="1" style="">총 연구 기간</th>
-                    <td scope="col" class="view_table_text" colspan="2" style="">
+                    <td scope="col" class="view_table_text" colspan="1" style="">
                         <input type="date" name="date_start" id="date_start"  class="input_text" max="9999-12-31" >
                     </td>
-                    <td scope="col" class="view_table_text" colspan="3" style="">
+                    <td scope="col" class="view_table_text" colspan="4" style="">
                         <input type="date" name="date_end" id="date_end"  class="input_text" max="9999-12-31">
                     </td>
                 </tr>
@@ -250,11 +250,11 @@ $result = sql_query($sql);
                 <tr>
                     <th scope="col" class="view_table_header" style="">접수번호</th>
                     <td scope="col" class="view_table_text" colspan="4" style="">
-                    <input type="text" name="info_number_view" id="info_number_view"  class="input_text" placeholder="접수번호"  readonly>
+                    <input type="text" name="info_number_view" id="info_number_view"  class="input_text" placeholder="접수 완료시 자동부여됩니다."  readonly>
                     </td>
                     <th scope="col" class="view_table_header" style="">과제번호</th>
                     <td scope="col" class="view_table_text" colspan="4" style="">
-                    <input type="text" name="quest_number_view" id="quest_number_view"  class="input_text" placeholder="과제번호" value="<?php echo $quest_number ?>" readonly>
+                    <input type="text" name="quest_number_view" id="quest_number_view"  class="input_text" placeholder="과제번호" value="<?= $row['wr_quest_number']; ?>" readonly>
                     </td>
                 </tr>
             </thead>
@@ -365,9 +365,7 @@ $result = sql_query($sql);
 </section>
 
 <script>
-    function onlyAlphabet(ele) {
-        ele.value = ele.value.replace(/[^//a-z]/gi,"");
-    }
+    
     $(function(){
         $('.btn_step1').click(function(){
             $('.step').removeClass('step_view');
@@ -375,8 +373,8 @@ $result = sql_query($sql);
         });
         $('.btn_step2').click(function(){
             // validation
-            if($('#info_number').val() == "") return alert("접수번호가 비어있습니다");
-            if($('#quest_number').val() == "") return alert("과제번호가 비어있습니다");
+            // if($('#info_number').val() == "") return alert("접수번호가 비어있습니다");
+            // if($('#quest_number').val() == "") return alert("과제번호가 비어있습니다");
             if($('#ko_title').val() == "") return alert("국문 과제명이 비어있습니다");
             if($('#en_title').val() == "") return alert("영문 과제명이 비어있습니다");
             if($('#name').val() == "") return alert("성명이 비어있습니다");
@@ -386,6 +384,18 @@ $result = sql_query($sql);
             if($('#email').val() == "") return alert("이메일이 비어있습니다");
             if($('#phone').val() == "") return alert("전화번호가 비어있습니다");
             
+            //정규식 설정
+            var fncTest = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]+(\.[a-zA-Z]{2,3}){1,4}$/i;
+            //정규식 결과 저장
+            var emailResult = fncTest.test( $("#email").val() );
+            if(!emailResult) return alert("E-mail 주소가 형식에 맞지 않습니다.");
+
+            //정규식 설정
+            var regex= /^[0-9]/g;
+            //정규식 결과 저장
+            var phoneResult = regex.test( $("#phone").val() );
+            if(!phoneResult) return alert("전화번호에 숫자만 입력해주세요");
+
             // logic
             $('.step').removeClass('step_view');
             $('.step2').addClass('step_view');
@@ -398,9 +408,33 @@ $result = sql_query($sql);
             if($('#sub_member').val() == "") return alert("연구원보조가 비어있습니다");
             if($('#date_start').val() == "") return alert("연구 기간 시작이 비어있습니다");
             if($('#date_end').val() == "") return alert("연구 기간 끝이 비어있습니다");
+            var date_start = $('#date_start').val();
+            var date_end = $('#date_end').val();
+
+            if(date_start > date_end) return  alert("연구기간 끝나는 날짜가 시작하는 날짜보다 빠릅니다");
+            // if($('#date_start').val() > $('#date_end').val()) return ("연구 기간 끝나는 날짜가 시작하는 날짜보다 빠릅니다.");
             if($('#value').val() == "") return alert("연구비신청액이 비어있습니다");
             if($('#one_year').val() == "") return alert("1차년 연구비가 비어있습니다");
             if($('#two_year').val() == "") return alert("2차년 연구비가 비어있습니다");
+
+             //정규식 설정
+             var regex= /^[0-9]+$/;
+            //정규식 결과 저장
+            var main_memberResult = regex.test( $("#main_member").val() );
+            if(!main_memberResult) return alert("공동연구원에 숫자만 입력해주세요");
+            
+            var sub_memberResult = regex.test($("#sub_member").val());
+            if(!sub_memberResult) return alert("연구원보조에 숫자만 입력해주세요");
+
+            var moneyResult = regex.test( $("#money").val() );
+            if(!moneyResult) return alert("연구비신청액에 숫자만 입력해주세요");
+
+            var one_yearResult = regex.test( $("#one_year").val() );
+            if(!one_yearResult) return alert("1차년 연구비에 숫자만 입력해주세요");
+
+            var two_yearResult = regex.test( $("#two_year").val() );
+            if(!two_yearResult) return alert("2차년 연구비에 숫자만 입력해주세요");
+
 
             IsValidDateStart = Date.parse($('#date_start').val());
             if (isNaN(IsValidDateStart)) return alert('총 연구기간 시작 날짜가 유효하지 않습니다.');
@@ -440,7 +474,7 @@ $result = sql_query($sql);
             $('#email_view').val($(this).val());
         });
         $('#phone').change(function(){
-            $('#phone_view').val($(this).val().replace(/\B(?=(\d{4})+(?!\d))/g, "-"));
+            $('#phone_view').val($(this).val());
         });
         $('#main_member').change(function(){
             $('#main_member_view').val($(this).val()+"명");
@@ -449,10 +483,10 @@ $result = sql_query($sql);
             $('#sub_member_view').val($(this).val()+"명");
         });
         $('#date_start').change(function(){
-            $('#date_start_view').val($(this).val());
+            $('#date_start_view').val($('#date_start').val()+" ~ "+$('#date_end').val());
         });
         $('#date_end').change(function(){
-            $('#date_end_view').val($(this).val());
+            $('#date_start_view').val($('#date_start').val()+" ~ "+$('#date_end').val());
         });
         $('#money').change(function(){
             $('#money_view').val($(this).val().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원");
@@ -514,7 +548,7 @@ $result = sql_query($sql);
                     $(this).parent().prev().prev().children().val(fileName);
 
                     var html = '<tr class="input_form_info">'
-                    +'    <th scope="col" class="view_table_header " colspan="1" style="width:10%">첨부파일</th>'
+                    +'    <th scope="col" class="view_table_header " colspan="1" style="width:10%;height: 58px;">첨부파일</th>'
                     +'    <td scope="col" class="view_table_text " colspan="1" style="width:10%">'
                     +'       <img src="<?php echo G5_IMG_URL ?>/download_icon.png" alt="<?php echo $config['cf_title']; ?>">'
                     +'    </th>'

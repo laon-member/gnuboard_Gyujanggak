@@ -17,7 +17,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 ?>
 <!-- 게시판 목록 시작 { -->
 <aside id="bo_side">
-    <h2 class="aside_nav">심사관리</h2>
+    <h2 class="aside_nav_title">심사관리</h2>
    
     <a class="aside_nav <?= $_GET['bo_idx'] == 1?"aisde_click":""; ?>" href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=<?= $bo_table ?>&bo_idx=1&u_id=1">지원자 선발</a>
     <a class="aside_nav <?= $_GET['bo_idx'] == 2?"aisde_click":""; ?>" href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=<?= $bo_table ?>&bo_idx=2&u_id=1">중간보고서</a>
@@ -32,15 +32,14 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     <div id="bo_btn_top">
     <?php 
         $sql = " select * from g5_write_business where wr_id = '{$_GET['border_idx']}'";
-        $row44 = sql_fetch($sql);
-
-        $sql = " select * from g5_write_business_title where idx = '{$row44['wr_title_idx']}'";
+        $row66 = sql_fetch($sql);
+        
+        $sql = " select * from g5_write_business_title where idx = '{$row66['wr_title_idx']}'";
         $row22 = sql_fetch($sql)
     ?>
     
-        <h1 id="">[<?= $row22['title'] ?>]<?= $row11['wr_subject'] ?></h1>
+        <h1 id="">[<?= $row22['title'] ?>]<?= $row66['wr_subject'] ?></h1>
     </div>
-    <p>지원자 심사 결과</p>
 
     <!-- } 게시판 페이지 정보 및 버튼 끝 -->
      
@@ -51,6 +50,11 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         <table>
             <caption><?php echo $board['bo_subject'] ?> 목록</caption>
             <thead>
+                <tr>
+                    <th colspan="7">지원자 심사 결과</th>
+                </tr>
+                <tr class="view_table_header_table"></tr>
+
                 <tr>
                     <th scope="col" style="width:5%">번호</th>
                     <th scope="col" style="width:10%">접수번호</th>
@@ -92,27 +96,25 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                         <td class="td_idx td_center"><?= $list[$i]['num']; ?></td>
 
                         <td class="td_center"><?= $row['quest_number'] ?> </td>
-                        <td class="td_download ko_title" ><?= $row['ko_title']; ?></td>
+                        <td class="td_download ko_title td_title" ><?= $row['ko_title']; ?></td>
                         <td class="td_datetime td_center"><?php echo $row['name'];  ?></td>
                         <td class="td_center wr_average">
                             <?php
+                                $sum =0;
                                 $average = 0;
-                                $sql333 = " select count(*) as cnt from rater where business_idx = '{$_GET['border_idx']}'";
+                                $sql333 = " select count(*) as cnt from rater_value where report_idx = '{$row['idx']}'";
                                 $result333 = sql_query($sql333);
-                                $row333 = sql_fetch_array($result333);
+                                $row332 = sql_fetch_array($result333);
+
+                                $sql = "  select * from rater_value where report_idx = '{$row['idx']}  '";
+                                $result333 = sql_query($sql);
                                 
-                                $sql = " select * from rater where business_idx = '{$_GET['border_idx']}'";
-                                $result = sql_query($sql);
-                                $sum = 0;
-                                
-                                for ($j=0; $j<$row33 = sql_fetch_array($result); $j++) {
-                                    $sql = "  select * from rater_value where rater_idx = '{$row33['idx']}'";
-                                    $row11 = sql_fetch($sql);
-                                    $sum = $sum + $row11['test_sum'];
+                                for ($j=0; $row33 = sql_fetch_array($result333); $j++) {
+                                    $sum = $sum + $row33['test_sum'];
                                 }
 
-                                if($sum > 0){
-                                    $average = @$sum/$row333['cnt'];
+                                if($row332['cnt'] > 0){
+                                    $average = @$sum/$row332['cnt'];
                                     $average = @sprintf('%0.0f', $average);
                                 } else {
                                     $average = 0;
@@ -125,42 +127,53 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                         <td class="td_center wr_average_max_min">
                             <?php
                             $average_max_min_not = 0;
-                                $sql333 = " select count(*) as cnt from rater where business_idx = '{$_GET['border_idx']}'";
+                                $sql333 = " select count(*) as cnt from rater_value where report_idx = '{$row['idx']}'";
                                 $result333 = sql_query($sql333);
-                                $row333 = sql_fetch_array($result333);
-                                if($row333['cnt'] < 2){
-                                    $sql = " select * from rater where business_idx = '{$_GET['border_idx']}'";
+                                $row33 = sql_fetch_array($result333);
+
+                                $sql_sum = 0;
+                                $sql_max = 0;
+                                $sql_min = 0;
+
+                                if($row33['cnt'] > 2){
+                                    $sql = "  select * from rater_value where report_idx = '{$row['idx']}  '";
                                     $result = sql_query($sql);
                                     $sum = 0;
                                     
                                     
-                                    $sql = "SELECT sum(test_sum) AS sum FROM rater_value WHERE report_idx = '{$row['idx']}'";
+                                    $sql = "SELECT sum(test_sum) AS sum FROM rater_value WHERE report_idx = '{$row['idx']}' limit 1";
                                     $sql_sum = sql_fetch($sql);
 
-                                    $sql = "SELECT max(test_sum) AS max FROM rater_value WHERE report_idx = '{$row['idx']}'";
+                                    $sql = "SELECT max(test_sum) AS max FROM rater_value WHERE report_idx = '{$row['idx']}' limit 1";
                                     $sql_max = sql_fetch($sql);
 
-                                    $sql = "SELECT min(test_sum) AS min FROM rater_value WHERE report_idx = '{$row['idx']}'";
+                                    $sql = "SELECT min(test_sum) AS min FROM rater_value WHERE report_idx = '{$row['idx']}' limit 1";
                                     $sql_min = sql_fetch($sql);
 
                                    
                                     $sql_min_max_sum = $sql_max['max'] + $sql_min['min'];
                                     $sql_test_sum =$sql_sum['sum'] - $sql_min_max_sum;
 
-                                    $rater_user = $row333['cnt'] - 2;
+                                    $rater_user = $row33['cnt'] - 2;
                                     $average_max_min_not = $sql_test_sum/$rater_user;
                                 } else {
-                                    $sql = " select * from rater where business_idx = '{$_GET['border_idx']}'";
+                                    $sql = "  select * from rater_value where report_idx = '{$row['idx']}  '";
                                     $result = sql_query($sql);
                                     $sum = 0;
 
                                     
-                                    for ($j=0; $j<$row33 = sql_fetch_array($result); $j++) {
-                                        $sql = "  select * from rater_value where rater_idx = '{$row33['idx']}' ";
-                                        $row11 = sql_fetch($sql);
-                                        $sum = $sum + $row11['test_sum'];
+                                    for ($j=0; $row33 = sql_fetch_array($result); $j++) {
+                    
+                                        $sum = $sum + $row33['test_sum'];
                                     }
-                                    $average_max_min_not = $sum/$row333['cnt'];
+
+                                   if( $j == 0){
+                                    @$average_max_min_not = 0;
+                                   } else {
+                                    @$average_max_min_not = $sum/$j;
+                                   }
+
+                                    
                                     
                                 }
                                 $average_max_min_not = sprintf('%0.0f', $average_max_min_not);
@@ -202,10 +215,10 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             <?php if ($list_num == 0) { echo '<tr><td colspan="7" class="empty_table">지원자가 없습니다.</td></tr>'; } ?>
             </tbody>
         </table>
-        <div class = "submit_btn_contianer">
-            <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=qa&bo_idx=1&u_id=1" class="value_btn" style="text-align:center;display:inline-block">목록</a>
-            <?php if ( $row44['value'] < 3) {  ?>
-                <button type="submit" class="value_btn value_submit" style="display:inline-block; background:"> 저장 </button>
+        <div class = "td_right btn-cont text_block">
+            <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=qa&bo_idx=1&u_id=1" class="btn_color_white" style="text-align:center;display:inline-block"><?= $row66['value'] < 3 ? "취소" : "확인"; ?></a>
+            <?php if ( $row66['value'] < 3) {  ?>
+                <button type="submit" class="btn_next_prv btn_next_prv_link text_inline_block  value_submit" style="display:inline-block; background:"> <?= $row44['value'] == 1 ? "저장" : "수정"; ?> </button>
             <?php } ?>
         </div>
         
@@ -273,34 +286,50 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         });
     </script>
     <div class="bo_sch_wrap">
-        <fieldset class="bo_sch" style="width:800px; max-height:noen;height:600px;">
-                <p id="sql_title_view" class="td_center">심사결과 상세현황</p>
+        <fieldset class="bo_sch" style="width:1030px; max-height:noen;height:820px; padding: 20px;">
+            <?php 
+                $sql = " select * from g5_write_business where wr_id = '{$_GET['border_idx']}'";
+                $row66 = sql_fetch($sql);
+            ?>
+            <div id="bo_btn_top">
+                <h1 id="">심사결과 상세현황</h1>
+            </div>
+            <table id="view_table">
+            <thead>
+            <tr>
+                <th style="width:5%" class=" td_center">과제명</th>
+                <td style="width:95%" colspan="7" class="td_title"><?= $row66['wr_subject'] ?></td>
                 
-                <table>
-                <thead>
-                <tr>
-                    <td style="width:5%" >과제명</td>
-                    <th style="width:30%" id="ko_title">지원자의 과제명</th>
-                    <td style="width:5%">평점평균<br>(단순)</td>
-                    <th style="width:5%" id="wr_average">70 / 80</th>
-                    <td style="width:10%">평점평균<br>(최고/최저점 제외)</td>
-                    <th style="width:5%" id="wr_average_max_min">70 / 80</th>
-                </tr>
-                <tr>
-                    <th scope="col" style="width:10%" class=" td_center">심사위원</th>
-                    <th scope="col" style="width:20%" class=" td_center">연구진 평가점수</th>
-                    <th scope="col" style="width:20%" class=" td_center">주제 평가점수</th>
-                    <th scope="col" style="width:20%" class=" td_center">계획 평가점수</th>
-                    <th scope="col" style="width:10%" class=" td_center">총점</th>
-                    <th scope="col" style="width:10%" class=" td_center">종합평가</th>
-                    <th scope="col" style="width:10%" class=" td_center">평가의견</th>
-                </tr>
-                </thead>
-                <tbody id="tbody">
+            </tr>
+            <tr>
+                <th style="width:5%" class=" td_center">과제명</th>
+                <td style="width:95%" colspan="7" id="ko_title" class="td_title"></td>
                 
-                </tbody>
-                </table>
-                <button type="button" id="top_esc">  취소</button>
+            </tr>
+            <tr>
+                <th style="width:8%" class=" td_center">평점평균<br>(단순)</th>
+                <td style="width:40%" colspan="5" id="wr_average" class="td_title">70 / 80</td>
+                <th style="width:8%" class=" td_center">평점평균<br>(최고/최저점 제외)</th>
+                <td style="width:42%" id="wr_average_max_min" class="td_title">70 / 80</td>
+            </tr>
+            
+            <tr class="view_table_header_table"></tr>
+            <tr>
+                <th scope="col" style="width:8%" class=" td_center">심사위원</th> 
+                <th scope="col" style="width:8%" class=" td_center">연구진<br>평가점수</th>
+                <th scope="col" style="width:8%" class=" td_center">주제<br>평가점수</th>
+                <th scope="col" style="width:8%" class=" td_center">계획<br>평가점수</th>
+                <th scope="col" style="width:8%" class=" td_center">총점</th>
+                <th scope="col" style="width:8%" class=" td_center">종합평가</th>
+                <th scope="col" style="width:52%" colspan="2" class=" td_center">평가의견</th>
+            </tr>
+            </thead>
+            <tbody id="tbody">
+            </tbody>
+            </table>
+            <div style="text-align:center">
+                <button type="button" style="margin:40px; 0" id="top_esc" class="btn_next_prv_link">확인</button>
+            </div>
         </fieldset>
         <div class="bo_sch_bg"></div>
     </div>

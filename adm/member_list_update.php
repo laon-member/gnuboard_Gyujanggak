@@ -76,11 +76,31 @@ include_once('./_common.php');
 
 // goto_url('./member_list.php?'.$qstr);
 
-
 if($_POST['level'] == 1){
+    $sql = " SELECT * FROM `g5_member` WHERE mb_no ='{$_POST['idx']}'";
+    $row = sql_fetch($sql);
+    if($member['mb_level'] <= $row['mb_level']  && $is_admin != 'super' ) return alert('자신의 권한보다 높은사람은 수정이 불가능합니다.'); 
+    // alert($row['mb_level']);
+    if($row['mb_level'] != 2 ){
+        $sql = " update g5_member
+                set belong = '',
+                degree = '',
+                rank = '',
+                category = '',
+                mb_level = '2'
+                WHERE mb_no = '{$_POST['idx']}'";
+        sql_query($sql);
+        // echo $sql;
+        alert('유저를 배정했습니다.');
+    }else {
+        alert("이미 일반 유저입니다.");
+    }
+    
+} else if($_POST['level'] == 2){
     if(isset($_POST['idx']) && $_POST['belong'] !="" && $_POST['degree'] !="" && $_POST['rank'] !="" && $_POST['category'] !=""){
         $sql = " SELECT * FROM `g5_member` WHERE mb_no ='{$_POST['idx']}'";
         $row = sql_fetch($sql);
+        if($member['mb_level'] <= $row['mb_level']  && $is_admin != 'super') return alert('자신의 권한보다 높은사람은 수정이 불가능합니다.'); 
         if($row['mb_level'] < 5){
             $sql = " update g5_member
                     set belong = '{$_POST['belong']}',
@@ -101,16 +121,15 @@ if($_POST['level'] == 1){
                     WHERE mb_no = '{$_POST['idx']}'";
             sql_query($sql);
             alert('심사위원의 정보를 수정했습니다.'); 
-        } else {
-            alert('자신의 권한보다 높은사람은 수정이 불가능합니다.'); 
         }
     } else {
         alert('빈칸 없이 입력해주세요.'); 
     }
-} else if($_POST['level'] == 2){
+} else if($_POST['level'] == 3){
     if(isset($_POST['idx']) && $_POST['belong'] !="" && $_POST['degree'] !="" && $_POST['rank'] !="" && $_POST['category'] !=""){
         $sql = " SELECT * FROM `g5_member` WHERE mb_no ='{$_POST['idx']}'";
         $row = sql_fetch($sql);
+        if($member['mb_level'] <= $row['mb_level']  && $is_admin != 'super') return alert('자신의 권한보다 높은사람은 수정이 불가능합니다.'); 
         if($row['mb_name'] == '최고관리자'){
             alert('최고관리자는 수정 불가능 합니다');
         } else if($row['mb_level'] < 10){

@@ -22,12 +22,19 @@ if($_GET['no_alt'] == 'yes'){
 <!-- 상단 시작 { -->
 <div id="hd">
     <div class="hd_wrapper_menu">
-        <ul class="hd_login layout">        
+        <ul class="hd_login layout">    
+            <li class="text_float_left" style="float:left">
+            <?php 
+                if($board_user == 1) echo "지원자 페이지";
+                if($board_user == 2) echo "심사자 페이지";
+                if($board_user == 3) echo "관리자 페이지";
+            ?>
+            </li>    
             <?php if ($is_member) {  ?>
             <li><?php echo $member['mb_name']; ?>님</li>
             <li><a href="<?php echo G5_BBS_URL ?>/mypage_form.php?page=1">마이페이지</a></li>
-            <!-- <?php if ($member['mb_level'] == 10) { ?><li><li><a href="../adm/member_list.php">관리자(원본)</a></li><?php } ?>
-            <?php if ($member['mb_level'] == 10) { ?><li><li><a href="../adm/member_list copy.php">관리자</a></li><?php } ?> -->
+            <?php if ($member['mb_level'] == 10 && $is_admin =="super") { ?><li><li><a href="../adm/member_list.php">관리자(원본)</a></li><?php } ?>
+            <?php if ($member['mb_level'] == 10) { ?><li><li><a href="../adm/member_list copy.php">관리자</a></li><?php } ?>
             <li><a href="<?php echo G5_BBS_URL ?>/logout.php">로그아웃</a></li>
                 
             <?php } else {  ?>
@@ -177,13 +184,17 @@ if($_GET['no_alt'] == 'yes'){
         <?php
             $sql1 = " SELECT * FROM g5_write_notice where notice_table = 7 order by wr_id desc limit 0, 5 ";
             $result1 = sql_query($sql1);
+
+            if($board_user == 3) {
+                $u_id = "&u_id=1";
+            }
         ?>
             <p>공지사항 </p>
             <div class="notice_container">
                 <ul class="header_notice_nav">
                     <?php for($j=1; $row=sql_fetch_array($result1); $j++) { ?>
                         <li class="header_notice_list">
-                            <a href="<?= G5_BBS_URL ?>/board.notice.php?bo_idx=<?= $row['notice_table']; ?>&bo_table=notice&wr_id=<?= $row['wr_id'] ;?>&bo_title=<?= $board_user ?>"><?= $row['wr_subject']; ?></a>
+                            <a href="<?= G5_BBS_URL ?>/board.notice.php?bo_idx=<?= $row['notice_table']; ?>&bo_table=notice&wr_id=<?= $row['wr_id'] ;?>&bo_title=<?php echo $board_user; echo $u_id; ?>"><?= $row['wr_subject']; ?></a>
                         </li>
                     <?php } ?>
                     
@@ -203,28 +214,38 @@ if($_GET['no_alt'] == 'yes'){
     <script>
     jQuery(function($){
         
+        var open = true;
+
         $('.board_nav_list_menu').on('click', function(){
             
-          if($(this).attr('id') != 'slide'){
-                $(this).attr('id', 'slide');
-                $('.sub_menu').css({'height':'180%'});
-                $('.sub_menu').slideDown();
-                $('.board_nav_list').removeClass("board_nav_list_hover");
+            if(open){
+                open = false;
+                if($(this).attr('id') != 'slide'){
+                    $(this).attr('id', 'slide');
+                    $('.sub_menu').css({'height':'180%'});
+                    $('.sub_menu').slideDown(400, function(){
+                        open = true;
+                    });
+                    $('.board_nav_list').removeClass("board_nav_list_hover");
 
-                $('.menu span:nth-child(1)').css({'left':'50%', 'top':'50%','transform':'translate(-50%, -50%) rotate(45deg)'});
-                $('.menu span:nth-child(2)').css({'display':'none'});
-                $('.menu span:nth-child(3)').css({'left':'50%', 'top':'50%','transform':'translate(-50%, -50%) rotate(-45deg)'});
-            } else {
-                $(this).removeAttr('id', 'slide');
-                $('.sub_menu').css({'height':'0px'});
-                $('.sub_menu').slideUp();
-                $('.board_nav_list').addClass("board_nav_list_hover");
-                
+                    $('.menu span:nth-child(1)').css({'left':'50%', 'top':'50%','transform':'translate(-50%, -50%) rotate(45deg)'});
+                    $('.menu span:nth-child(2)').css({'display':'none'});
+                    $('.menu span:nth-child(3)').css({'left':'50%', 'top':'50%','transform':'translate(-50%, -50%) rotate(-45deg)'});
+                } else {
+                    $(this).removeAttr('id', 'slide');
+                    // $('.sub_menu').css({'height':'0px'});
+                    $('.sub_menu').slideUp(400, function(){
+                        open = true;
+                    });
+                    $('.board_nav_list').addClass("board_nav_list_hover");
+                    
 
-                $('.menu span:nth-child(1)').css({'left':'50%', 'top':'5px','transform':'translateX(-50%) rotate(0)'});
-                $('.menu span:nth-child(2)').css({'left':'50%', 'top':'50%','transform':'translate(-50%, -50%) rotate(0)','display':'block'});
-                $('.menu span:nth-child(3)').css({'left':'50%', 'top':'22px','transform':'translateX(-50%) rotate(0)'});
+                    $('.menu span:nth-child(1)').css({'left':'50%', 'top':'5px','transform':'translateX(-50%) rotate(0)'});
+                    $('.menu span:nth-child(2)').css({'left':'50%', 'top':'50%','transform':'translate(-50%, -50%) rotate(0)','display':'block'});
+                    $('.menu span:nth-child(3)').css({'left':'50%', 'top':'22px','transform':'translateX(-50%) rotate(0)'});
+                }
             }
+          
         })
         
         // $('.board_nav_list_hover').hover(function(){

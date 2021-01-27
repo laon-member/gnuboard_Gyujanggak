@@ -18,7 +18,7 @@ $sql = " select * from {$g5['board_file_table']} where bo_table = '$bo_table' an
 $file = sql_fetch($sql);
 
 if (!$file['bf_file'])
-    alert_close('파일 정보가 존재하지 않습니다.');
+    alert('파일 정보가 존재하지 않습니다.');
 
 // JavaScript 불가일 때
 // if($js != 'on' && $board['bo_download_point'] < 0) {

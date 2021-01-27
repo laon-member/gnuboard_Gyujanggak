@@ -8,7 +8,7 @@ $sql = " select * from g5_write_business_title where bo_table = '{$_GET['bo_tabl
 $result = sql_query($sql);
 ?>
 <aside id="bo_side">
-    <h2 class="aside_nav_title">사업 공고</h2>
+    <h2 class="aside_nav_title">사업공고 관리</h2>
     <?php 
     $title_text="";
         for($k=1; $row=sql_fetch_array($result); $k++) {
@@ -123,7 +123,7 @@ $result = sql_query($sql);
     <div class ="btn_confirm write_div btn-cont">
         <div class="next_prev_bar">
             <label for="upload01" id="file-label-btn" class="file-label"><img src="<?= G5_IMG_URL ?>/upload.png" alt=""> 파일 업로드</label>
-            <a href="<?php echo get_pretty_url($bo_table); ?>&bo_idx=<?= $_GET['bo_idx'] ?>" class="btn_cancel btn">취소</a>
+            <a href="<?php echo G5_BBS_URL; ?>/board.app.php?bo_table=business&bo_idx=<?= $_GET['bo_idx'] ?>&u_id=1" class="btn_color_white btn">취소</a>
             <button type="submit" id="btn_submit" accesskey="s" class="btn_submit btn">작성완료</button>
         </div>
     </div>
@@ -225,6 +225,18 @@ $result = sql_query($sql);
     }
 
     $(function(){
+        $('#btn_submit').click(function(){
+            var date_start = $('#date_start_view').val();
+            var date_end = $('#date_end_view').val();
+
+            if(date_start > date_end) {
+                alert("연구기간 끝나는 날짜가 시작하는 날짜보다 빠릅니다");
+                return false;
+            }
+
+        })
+
+
         var file_number = 1;
         var html = '<tr class="input-file_list">'
                     +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일명</th>'
@@ -282,7 +294,7 @@ $result = sql_query($sql);
 
                     // var html = '<div class="input-file"><input type="text" id="file_label_view'+file_number+'" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/><input type="text" id="file-size-'+file_number+'" class="file-name file-size" value="용량" readonly="readonly"/><input type="file" name="bf_file[]" id="upload0'+file_number+'" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?>/><button type="button" class="file-label file-del " id="file-del'+file_number+'" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>">삭제</button></div>';
                     var html ='<tr class="input-file_list">'
-                    +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일명</th>'
+                    +'<th scope="col" class="view_table_header" colspan="1" style="width:10%; height:58px">파일명</th>'
                     +'<td scope="col" class="view_table_text" colspan="1" style="width:40%">'
                     +'    <input type="text" id="file_label_view'+file_number+'" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/>'
                     +'</td>'
@@ -307,9 +319,15 @@ $result = sql_query($sql);
 
 
         $(document).on('click','.file-del',function(){
-            var val = $(this).prev().val();
+            var val = $(this).parent().prev().prev().find('.file-upload').val();
+            var next = $(this).parent().parent().next().find('.file-upload').val();
+
             if(val != ""){
-                $(this).parent().remove();
+                $(this).parent().parent().remove();
+            } else {
+                if(next != undefined){
+                    $(this).parent().parent().remove();
+                } 
             }
         })
     })

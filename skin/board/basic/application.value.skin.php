@@ -158,7 +158,7 @@ $row22=sql_fetch_array($result1);
                                 <img src="<?php echo G5_IMG_URL ?>/download_icon.png" alt="<?php echo $config['cf_title']; ?>">
                             </td>
                             <td scope="col" colspan="5" class="view_table_text" style="width:80%;">
-                                <a href="<?php echo $view['file'][$i]['href']; ?>" class=""><?php echo $row_list['bf_source'] ?></a>
+                                <a href="<?= G5_BBS_URL ?>/download.php?bo_table=g5_business_propos&wr_id=<?= $row_list['wr_id'] ?>&no=<?= $i?>"><?php echo $row_list['bf_source'] ?></a>
                             </td>
                         </tr>
                     <?php

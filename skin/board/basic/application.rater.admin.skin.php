@@ -193,9 +193,6 @@ $row33=sql_fetch_array($result1);
                     $sql = " select * from report where business_idx = '{$row['idx']}' and report_idx = '2' and report = '2'";
                     $result = sql_query($sql);
                     $row77 = sql_fetch_array($result);
-                    if($row77 == ""){
-                        alert("권한이 없습니다");
-                    }
                     
                     $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' AND";
                     $result = sql_query($sql);

@@ -133,10 +133,17 @@ $result1 = sql_query($sql1);
 
                 <li class="btn_next_prv"><a href="<?php echo G5_BBS_URL ?>/board.php?bo_table=business&bo_idx=<?= $view['wr_title_idx'] ?>" >목록</a></li>
         </ul>
+        <?php 
+
+        $nDate = date("Y-m-d",time()); 
+
+        if($view['wr_date_end'] >= $nDate && $view['value'] != 3) {
+        
+        ?>
         <section id="bus_btn "  class="text_inline_block">
             <a href="<?= G5_BBS_URL ?>/application.php?bo_table=business&bo_idx=<?php echo $view['wr_title_idx']; ?>&wr_id=<?php echo $_GET['wr_id']; ?>" class="btn_next_prv btn_next_prv_link" title="신청하기">신청하기</a>
         </section>
-        
+        <?php } ?>
     </section>
     <!-- } 첨부파일 끝 -->
     

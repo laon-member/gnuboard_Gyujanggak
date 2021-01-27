@@ -16,12 +16,11 @@ $result1 = sql_query($sql1);
 
 <!-- 게시물 읽기 시작 { -->
     <aside id="bo_side">
-    <h2 class="aside_nav_title">사업 공고</h2>
+    <h2 class="aside_nav_title">사업공고 관리</h2>
     <?php 
         for($k=1; $row1=sql_fetch_array($result1); $k++) {
             $class_get = $view['wr_title_idx'] == $row1['idx']?"aisde_click":"";
-            echo '<a class="aside_nav '.$class_get.'" href="'.G5_BBS_URL .'/board.php?bo_table=business&bo_idx='.$k.'&page=1">'.$row1['title'].'</a>';
-           
+            echo '<a class="aside_nav '.$class_get.'" href="'.G5_BBS_URL .'/board.app.php?bo_table=business&bo_idx='.$k.'&u_id=1&page=1">'.$row1['title'].'</a>';
             if($view['wr_title_idx'] == $row1['idx']){
                 $category_title =  $row1['title']; 
             }
@@ -134,7 +133,6 @@ $result1 = sql_query($sql1);
                 </li>
             <?php } ?>
         <?php } ?>
-        <li class="btn_next_prv"><a href="<?php echo G5_BBS_URL ?>/board.app.php?bo_table=business&bo_idx=<?= $view['wr_title_idx'] ?>&page=1&u_id=1" >목록</a></li>
         </ul>
         <section id="bus_btn "  class="text_inline_block">
             <a href="<?php echo G5_BBS_URL ?>/board.app.php?bo_table=business&bo_idx=<?= $view['wr_title_idx'] ?>&page=1&u_id=1" class="btn_next_prv btn_next_prv_link">목록</a>

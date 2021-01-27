@@ -422,7 +422,7 @@ function get_list($write_row, $board, $skin_url, $subject_len=40)
         $list['comment_cnt'] = "<span class=\"cnt_cmt\">".$list['wr_comment']."</span>";
 
     // 당일인 경우 시간으로 표시함
-    $list['datetime'] = substr($list['wr_datetime'],0,10);
+    // $list['datetime'] = substr($list['wr_datetime'],0,10);
     $list['datetime2'] = $list['wr_datetime'];
     if ($list['datetime'] == G5_TIME_YMD)
         $list['datetime2'] = substr($list['datetime2'],11,5);

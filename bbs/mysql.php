@@ -20,7 +20,7 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
         echo "<td class='td_datetime td_center'>".$row2['test_plan']."</td>";
         echo "<td class='td_datetime td_center'>".$row2['test_sum']."</td>";
         echo "<td class='td_datetime td_center'>".$row2['test_average']."</td>";
-        echo "<td class='td_datetime td_center'>".$row2['test_opinion']."</td>";
+        echo "<td colspan='2' class='td_title'>".$row2['test_opinion']."</td>";
         echo "</tr>";
     } 
     

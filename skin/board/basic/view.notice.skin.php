@@ -16,7 +16,16 @@ $result1 = sql_query($sql1);
 
 <!-- 게시물 읽기 시작 { -->
     <aside id="bo_side">
-    <h2 class="aside_nav_title">공지사항</h2>
+    <h2 class="aside_nav_title">
+        <?php 
+        
+            if($_GET['bo_title'] == 1 || $_GET['bo_title'] == 3){
+                 echo '자료실';
+            } else if( $_GET['bo_title'] == 2){
+                echo '공지사항';
+            }
+        ?>
+    </h2>
     <?php 
         if($board_user == 1){
             $board_user_num =9;

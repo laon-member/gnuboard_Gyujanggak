@@ -205,7 +205,7 @@ $result = sql_query($sql);
                             $result = sql_query($sql);
                             $row77 = sql_fetch_array($result);
 
-                            $sql2 = " select * from g5_board_file where bo_table = 'report' and wr_id = '{$row77['us_idx']}'";
+                            $sql2 = " select * from g5_board_file where bo_table = 'report' and wr_id = '{$row77['idx']}'";
                             $result2 = sql_query($sql2);    
                         } else if($_GET['bo_idx'] == 2){
                             $sql = " select * from report where business_idx = '{$row['idx']}' and report_idx = '2' and report = '2'";
@@ -215,6 +215,7 @@ $result = sql_query($sql);
                             $sql2 = " select * from g5_board_file where bo_table = 'report' and wr_id = '{$row77['idx']}'";
                             $result2 = sql_query($sql2);    
                         }
+
 
                         // 가변 파일
                             for ($i=0; $row_list2 = sql_fetch_array($result2); $i++) {
@@ -226,7 +227,7 @@ $result = sql_query($sql);
                                         <img src="<?php echo G5_IMG_URL ?>/download_icon.png" alt="<?php echo $config['cf_title']; ?>">
                                     </td>
                                     <td scope="col" colspan="5" class="view_table_text" style="width:80%;">
-                                        <a href="<?= G5_BBS_URL ?>/download.php?bo_table=g5_business_propos&wr_id=<?= $row_list['wr_id'] ?>&no=<?= $row_list2['bf_no'] ?>" class=""><?= $row_list2['bf_source'] ?></a>
+                                        <a href="<?= G5_BBS_URL ?>/download.php?bo_table=g5_business_propos&wr_id=<?= $row_list2['wr_id'] ?>&no=<?= $row_list2['bf_no'] ?>" ><?= $row_list2['bf_source'] ?></a>
                                     </td>
                                 </tr>
                         <?php

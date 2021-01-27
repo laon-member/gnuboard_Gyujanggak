@@ -67,6 +67,7 @@ $j=0;
     <form name="fwrite" id="fwrite" action="" onsubmit="return fwrite_submit(this);" method="POST" enctype="multipart/form-data" autocomplete="off" style="width:<?php echo $width; ?>">
     <input type="hidden" name="wr_bo_idx" value="<?= $_GET['wr_bo_idx']?>"> 
     <input type="hidden" name="file_idx" value="<?= $row44['idx']?>"> 
+    <input type="hidden" name="save_db" value="<?= $row44['idx'] != "" ? "true" : ""; ?>"> 
 
     <table class="view_table_app">
         <thead>

@@ -42,6 +42,8 @@ if ($_POST['save'] == '1') {
                 where idx = '{$_POST['wr_bo_idx']}'";
         sql_query($sql);
 
+        $mes = "수정 완료";
+
     } else {
         if($_POST['contents'] == "") return alert("상세설명이 비어 있습니다");
 
@@ -59,6 +61,8 @@ if ($_POST['save'] == '1') {
                 set $val
                 where idx = '{$_POST['wr_bo_idx']}'";
         sql_query($sql);
+
+        $mes = "저장 완료";
     }
     
 } else if ($_POST['save'] == '2') {
@@ -80,6 +84,8 @@ if ($_POST['save'] == '1') {
             where idx = '{$_POST['wr_bo_idx']}'";
         sql_query($sql);
 
+        $mes = "제출 완료";
+
     } else {
         if($_POST['contents'] == "") return alert("상세설명이 비어 있습니다");
 
@@ -97,6 +103,7 @@ if ($_POST['save'] == '1') {
                 set $val
                 where idx = '{$_POST['wr_bo_idx']}'";
         sql_query($sql);
+        $mes = "제출 완료";
     }
 
 } else {
@@ -331,5 +338,5 @@ run_event('write_update_after', $board, $wr_id, $w, $qstr, $redirect_url);
 if ($file_upload_msg)
     alert($file_upload_msg, $redirect_url);
 else
-    goto_url($redirect_url);
+    alert($mes, $redirect_ur);
 ?>

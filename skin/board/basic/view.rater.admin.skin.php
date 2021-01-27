@@ -121,8 +121,8 @@ $row2=sql_fetch_array($result2);
         </table>
     </div>
 
-    <section id="bo_v_files" class="td_right btn-cont">
-        <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=qa&bo_idx=<?php echo $_GET['bo_idx']; ?>&u_id=1" class="btn_next_prv btn_next_prv_link" title="목록보기">목록보기</a>
+    <section id="bo_v_files" class="td_right btn-cont text_block">
+        <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=qa&bo_idx=<?php echo $_GET['bo_idx']; ?>&u_id=1" class="btn_next_prv btn_next_prv_link text_inline_block" title="목록보기">목록보기</a>
     </section>
 
 </div>

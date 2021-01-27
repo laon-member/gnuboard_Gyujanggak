@@ -448,6 +448,7 @@ box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.1)}
     background: #ffffff;
     border: 1px solid #DDDDDD;
     font-size: 18px;
+    margin: 10px 20px 10px 0;
 }
 
 
@@ -464,6 +465,7 @@ box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.1)}
 .text_float{float: left;}
 .td_title{padding-left: 20px; }
 .text_inline_block { display: inline-block !important;}
+.text_block { display: block !important;}
 
 .notice_write_icon{
     color: #fff;
@@ -508,9 +510,7 @@ box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.1)}
 #bus_btn{text-align: center;}
 .btn_next_prv_link{ height:48px; font-size: 16px; width: 180px; color: #fff;padding: 10px; border: 1px solid #DDDDDD; background-color: #1D2E58; margin:10px 0px 10px 20px;}
 .btn_color_white{font-weight: normal;font-size: 16px; height: 48px; line-height: 24px; width: 180px; color: #333333;padding: 10px; border: 1px solid #DDDDDD; background-color: #ffff; margin:10px 0px 10px 20px;}
-a.btn_color_white{display: inline-block; text-align: center; vertical-align: middle;}
-
-btn_confirm
+a.btn_color_white{display: inline-block; text-align: center; vertical-align: middle; border: 1px solid #DDDDDD;}
 
 #bo_v_files{display: flex; justify-content: space-between; text-align: right;}
 .download_file{display: inline-block; }
@@ -668,6 +668,7 @@ border:1px solid #ccc;
 
 .header_notice_back{
     width: 100%;
+    min-width: 1180px;
     background-color: #F7F7F7;
     padding: 0 ;
     text-align: center;
@@ -676,6 +677,7 @@ border:1px solid #ccc;
 
 .header_notice{
     width: 60%;
+    min-width:1180px;
     height: 70px;
     /* padding: 15px 0; */
     margin: 0 auto;
@@ -810,8 +812,11 @@ border:1px solid #ccc;
 
 input:focus {outline:none !important;}
 
+
+table th,table td, table a{ font-size: 14px;}
+
 #view_table{width: 100%; border-spacing: 0px;border-collapse:collapse;}
-#view_table th, #view_table td{height: 40px;border: 1px solid #DDDDDD; font-weight: normal; font-size: 14px;}
+#view_table th, #view_table td{height: 56px;border: 1px solid #DDDDDD; font-weight: normal; font-size: 14px;}
 #view_table th{background-color: #F7F7F7; color: #666666;}
 #view_table td{color: #333333;}
 .view_table_text{text-align: center;}

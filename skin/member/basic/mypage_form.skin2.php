@@ -41,7 +41,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	<?php }  ?>
 	<div id="register_form" class="form_01">   
 	    <div class="register_form_inner">
-	        <h2>회원탈퇴</h2>
+	        <h1>회원탈퇴</h1>
 	        <ul>
 				<li>
 	                <label for="reg_mb_password">비밀번호</label>

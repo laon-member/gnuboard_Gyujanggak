@@ -55,7 +55,7 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
 
     <!-- 게시판 페이지 정보 및 버튼 시작 { -->
     <div id="bo_btn_top">
-        <h1 id=""><?= $row['wr_subject']; ?></h1>
+        <h1 id="">[<?= $title_text ?>]<?= $row['wr_subject']; ?></h1>
 
     </div>
     <!-- } 게시판 페이지 정보 및 버튼 끝 -->
@@ -133,7 +133,7 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
 	<!-- 페이지 -->
 
     <!-- 현재 URL 주소 -->
-    <section id="bo_v_files" class="td_right btn-cont">
+    <section id="bo_v_files" class="td_right btn-cont text_block">
         <a href="<?= G5_BBS_URL ?>/board_admin.php?bo_table=business&bo_idx=1&u_id=1&page=1" class="value_btn btn_bo_val text_inline_block" style="text-align:center">목록</a>
     </section>
 </div>

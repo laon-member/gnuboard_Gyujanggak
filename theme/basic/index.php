@@ -19,7 +19,6 @@ include_once(G5_THEME_PATH.'/head1.php');
         <p>관리자</p>
     </a>
 </div>
-
 <?php
 include_once(G5_THEME_PATH.'/tail1.php');
 ?>

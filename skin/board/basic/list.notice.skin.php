@@ -67,7 +67,7 @@ if($board_user == 1){
     <div id="bo_btn_top">
     <h1 class="category_title"><?php echo $category_title; ?></h1>
         <ul class="btn_bo_user">
-            <?php if ($is_admin == 'super') {  ?>
+            <?php if ($is_admin == 'super' && $_GET['bo_title'] == 3) {  ?>
                 <li>
                     <a href="<?= G5_BBS_URL ?>/write_notice.php?bo_table=notice&bo_idx=<?= $_GET['bo_idx'] ?>&bo_title=3&u_id=1" class="btn_b01 btn" title="글쓰기"><i class="notice_write_icon fa fa-pencil" aria-hidden="true"></i><span class="sound_only">글쓰기</span></a>
                 </li>
@@ -122,11 +122,11 @@ if($board_user == 1){
         <caption><?php echo $board['bo_subject'] ?> 목록</caption>
         <thead>
         <tr>
-            <th scope="col">번호</th>
-            <th scope="col">제목</th>
-            <th scope="col">첨부</th>
-            <th scope="col">등록일</th>
-            <th scope="col">조회</th>
+            <th scope="col" style="width:10%">번호</th>
+            <th scope="col" style="width:60%">제목</th>
+            <th scope="col" style="width:10%">첨부</th>
+            <th scope="col" style="width:10%">등록일</th>
+            <th scope="col" style="width:10%">조회</th>
         </tr>
         </thead>
         <tbody>
@@ -200,6 +200,8 @@ if($board_user == 1){
 
 <?php if ($is_checkbox) { ?>
 <script>
+
+
 
 function fboardlist_submit(f) {
     var chk_count = 0;

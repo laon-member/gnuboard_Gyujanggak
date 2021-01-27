@@ -93,10 +93,10 @@ for($j=1; $row123=sql_fetch_array($result1); $j++) {
         <caption><?php echo $board['bo_subject'] ?> 목록</caption>
         <thead>
         <tr>
-            <th scope="col" style="width:7%;">번호</th>
+            <th scope="col" style="width:8%;">번호</th>
             <th scope="col" style="width:45%;">제목</th>
-            <th scope="col" style="width:8%;">첨부</th>
-            <th scope="col" style="width:10%;">등록일</th>
+            <th scope="col" style="width:7%;">첨부</th>
+            <th scope="col" style="width:15%;">등록일</th>
             <th scope="col" style="width:10%;">조회</th>
             <th scope="col" style="width:15%;">상태</th>
         </tr>
@@ -147,8 +147,8 @@ for($j=1; $row123=sql_fetch_array($result1); $j++) {
                     $nDate = date("Y-m-d",time()); // 오늘 날짜를 출력하겠지요?
                     $valDate = $list[$i]['wr_date_end']; // 폼에서 POST로 넘어온 value 값('yyyy-mm-dd' 형식)
                     $leftDate = intval((strtotime($valDate) - strtotime($nDate)) / 86400); // 나머지 날짜값이 나옵니다.
-                  
-                    if($list[$i]['wr_date_end'] < $nDate) {
+                    
+                    if($list[$i]['wr_date_end'] < $nDate ||$list[$i]['value'] == 3) {
                         $leftDate = preg_replace('#^-#', '', $leftDate);
                         echo "D+00";
 

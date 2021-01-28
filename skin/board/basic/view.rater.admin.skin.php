@@ -105,7 +105,7 @@ $row2=sql_fetch_array($result2);
             <td class="td_center">
                 <?= $row['quest_number'] ?> 
             </td>
-            <td class="td_download "  >
+            <td class="td_title "  >
             <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=qa&bo_idx=<?= $_GET['bo_idx'] ?>&wr_idx=<?= $_GET['wr_idx'] ?>&us_idx=<?= $row['idx']; ?>&u_id=1"><?= $row['ko_title']; ?></a>
                     
             </td>

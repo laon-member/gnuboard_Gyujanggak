@@ -85,7 +85,7 @@ $result1 = sql_query($sql1);
             <tr>
                 <th>제목</th>
                 <td colspan="6">
-                    <input type="text" name="wr_subject" value="<?php echo $subject ?>" id="wr_subject" required class="input_text frm_input full_input required" size="50" maxlength="255" placeholder="제목">
+                    <input type="text" name="wr_subject" value="<?php echo $write['wr_subject'] ?>" id="wr_subject" required class="input_text frm_input full_input required" size="50" maxlength="255" placeholder="제목">
                 </td>
             </tr>
         </thead>
@@ -99,11 +99,12 @@ $result1 = sql_query($sql1);
                         <!-- 최소/최대 글자 수 사용 시 -->
                         <p id="char_count_desc">이 게시판은 최소 <strong><?php echo $write_min; ?></strong>글자 이상, 최대 <strong><?php echo $write_max; ?></strong>글자 이하까지 글을 쓰실 수 있습니다.</p>
                         <?php } ?>
-                        <textarea id="wr_content" name="wr_content" class="input_text input_text_100" maxlength="65536" style="width:100%;height:300px"></textarea>
+                        <textarea id="wr_content" name="wr_content" class="input_text input_text_100" maxlength="65536" style="width:100%;height:300px"><?php echo  $write['wr_content'] ?></textarea>
                         <?php if($write_min || $write_max) { ?>
                         <!-- 최소/최대 글자 수 사용 시 -->
                         <div id="char_count_wrap"><span id="char_count"></span>글자</div>
                         <?php } ?>
+                        
                     </div>
                 </td>
             </tr>

@@ -98,26 +98,40 @@ if($row != ""){
     
 }
 
-if ($w == '' || $w == 'r') {
-    if (isset($_SESSION['ss_datetime'])) {
-        if ($_SESSION['ss_datetime'] >= (G5_SERVER_TIME - $config['cf_delay_sec']) && !$is_admin)
-            alert('너무 빠른 시간내에 게시물을 연속해서 올릴 수 없습니다.');
-    }
+// if ($w == '' || $w == 'r') {
+//     if (isset($_SESSION['ss_datetime'])) {
+//         if ($_SESSION['ss_datetime'] >= (G5_SERVER_TIME - $config['cf_delay_sec']) && !$is_admin)
+//             alert('너무 빠른 시간내에 게시물을 연속해서 올릴 수 없습니다.');
+//     }
 
-    set_session("ss_datetime", G5_SERVER_TIME);
-}
+//     set_session("ss_datetime", G5_SERVER_TIME);
+// }
 
 
 $wr_seo_title = exist_seo_title_recursive('bbs', generate_seo_title($wr_subject), $write_table, $wr_id);
 
 if ($w == '' || $w == 'r') {
+    $sql = " SELECT max(info_number) as num FROM `g5_business_propos` where bo_idx = '{$_POST['wr_id']}' and bo_title_idx = '{$_POST['bo_idx']}'";
+    $result = sql_query($sql);
+    $row=sql_fetch_array($result);
+
+    $number = (int)$row['num'];
+    if($number == ""){
+        $info_number = sprintf('%04d', 1);
+    } else if($number > 0 && $number < 1000){
+        $number =  $number + 1;
+        $info_number = sprintf('%04d', $number);
+
+    } else {
+        $info_number = $number + 1;
+    }
 
 
     $sql = " insert into g5_business_propos
                 set bo_title_idx = '{$_POST['bo_idx']}',
                 bo_idx = '{$_POST['wr_id']}',
                 mb_id = '{$member['mb_id']}',
-                info_number = '{$_POST['info_number']}',
+                info_number = '{$info_number}',
                 quest_number = '{$_POST['quest_number']}',
                 ko_title = '{$_POST['ko_title']}',
                 en_title = '{$_POST['en_title']}',

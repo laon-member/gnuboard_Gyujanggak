@@ -5,7 +5,6 @@ include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 
 // 토큰체크
 // check_write_token($bo_table);
-
 $g5['title'] = '게시글 저장';
 
 $msg = array();
@@ -221,6 +220,7 @@ if ($w == '' || $w == 'r') {
         // 답변 포인트가 많은 경우 코멘트 대신 답변을 하는 경우가 많음
         insert_point($member['mb_id'], $board['bo_comment_point'], "{$board['bo_subject']} {$wr_id} 글답변", $bo_table, $wr_id, '쓰기');
     }
+
 }  else if ($w == 'u') {
     if (get_session('ss_bo_table') != $_POST['bo_table'] || get_session('ss_wr_id') != $_POST['wr_id']) {
         alert('올바른 방법으로 수정하여 주십시오.', get_pretty_url($bo_table));
@@ -287,30 +287,11 @@ if ($w == '' || $w == 'r') {
         $sql_ip = " , wr_ip = '{$_SERVER['REMOTE_ADDR']}' ";
 
     $sql = " update {$write_table}
-                set ca_name = '{$ca_name}',
-                     wr_option = '{$html},{$secret},{$mail}',
-                     wr_subject = '{$wr_subject}',
-                     wr_content = '{$wr_content}',
-                     wr_seo_title = '$wr_seo_title',
-                     wr_link1 = '{$wr_link1}',
-                     wr_link2 = '{$wr_link2}',
-                     mb_id = '{$mb_id}',
-                     wr_name = '{$wr_name}',
-                     wr_email = '{$wr_email}',
-                     wr_homepage = '{$wr_homepage}',
-                     wr_1 = '{$wr_1}',
-                     wr_2 = '{$wr_2}',
-                     wr_3 = '{$wr_3}',
-                     wr_4 = '{$wr_4}',
-                     wr_5 = '{$wr_5}',
-                     wr_6 = '{$wr_6}',
-                     wr_7 = '{$wr_7}',
-                     wr_8 = '{$wr_8}',
-                     wr_9 = '{$wr_9}',
-                     wr_10= '{$wr_10}'
-                     {$sql_ip}
-                     {$sql_password}
+                set wr_subject = '{$_POST['wr_subject']}',
+                     wr_content = '{$_POST['wr_content']}',
+                     wr_seo_title = '{$_POST['wr_subject']}'
               where wr_id = '{$wr['wr_id']}' ";
+
     sql_query($sql);
     $row = sql_fetch(" select * from $write_table where wr_id = '{$wr['wr_id']}'");
     $wr_id = $row['wr_id'];

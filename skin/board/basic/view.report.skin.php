@@ -114,10 +114,11 @@ $j=0;
                             <input type="hidden" value="<?= $row55['bf_no']; ?>" id="sql_file_no">
                             <input type="text" id="file-size-'+file_number+'" class="file-name file-size" style="margin: 0 -2px;" value="<?= $str ?>" readonly="readonly"/>
                             <input type="file" name="bf_file[]" id="upload00" class="file-upload file_sql_upload" <?= $row44['report'] ==2? "disabled": ""; ?> />
+                            <input type="checkbox" class="del-no" id="del-no<?= $j ?>" name="del-no[]" value="<?= $row55['bf_no']; ?>" style="display:none;">
                         </td>
                         <th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 삭제</th>
                         <td scope="col" class="view_table_text" colspan="1" style="width:10%">
-                        <button type="button" class="file-label file-del " id="file-del<?= $i ?>" <?= $row44['report'] ==2? "disabled": ""; ?>>삭제</button>
+                            <label for="del-no<?= $j ?>" class="file-label del-no-btn">삭제</label>
                         </td>
                     </tr>
                 <?php
@@ -200,7 +201,6 @@ $j=0;
 
                     file_number++;
 
-                    // var html = '<div class="input-file"><input type="text" id="file_label_view'+file_number+'" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/><input type="text" id="file-size-'+file_number+'" class="file-name file-size" value="용량" readonly="readonly"/><input type="file" name="bf_file[]" id="upload0'+file_number+'" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?>/><button type="button" class="file-label file-del " id="file-del'+file_number+'" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>">삭제</button></div>';
                     var html ='<tr class="input-file_list">'
                     +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일명</th>'
                     +'<td scope="col" class="view_table_text" colspan="1" style="width:40%">'
@@ -222,59 +222,14 @@ $j=0;
                 }
             })
         })
-        $(document).off().on('click','.file-del',function(){
-            if($(this).hasClass("file-event-none") === true)
-                exit;
-
-            if(disabled){
-                exit;
-            }
-
-            var val = $(this).prev().val();
-            var next = $(this).parent().next().find('.file-upload').val();
-
-            console.log(next);
-
-            if(val != ""){
-                $(this).parent().remove();
-            } else {
-                if($(this).prev().hasClass("file_sql_upload") === true) {
-                        $(this).parent().remove();
-                } else {
-                    if(next != "" && next != undefined){
-                        $(this).parent().remove();
-                    }
-                }
-            } 
-        })
 
         $(document).on("keydown", "input[type=file]", function(event) {
             return event.key != "Enter";
         });
 
-        $('.file-event-none').click(function(){
-            var sql_file_tabel = $(this).siblings('#sql_file_tabel').val();
-            var sql_file_id = $(this).siblings('#sql_file_id').val();
-            var sql_file_no = $(this).siblings('#sql_file_no').val();
-            var sql_file_btn = $(this).attr('id');
-            alert(sql_file_tabel);
-            alert(sql_file_id);
-            alert(sql_file_no);
-            $.ajax({
-                url: "<?= G5_BBS_URL ?>/file_del.php",
-                method: "POST",
-                data: {
-                    sql_file_tabel: sql_file_tabel,
-                    sql_file_id : sql_file_id,
-                    sql_file_no: sql_file_no,
-                    sql_file_btn: sql_file_btn
-                },
-                dataType: "text",
-                success : function(e){
-                    
-                }
-            });
-            $(this).parent().css({"display":"none"}); 
-        })     
+        $('.del-no-btn').click(function(){
+            var check_val =  $(this).parent().prev().prev().find('input[type="checkbox"]').is(":checked");
+            $(this).parent().parent().css({'display':'none'});
+        })
     })
 </script>

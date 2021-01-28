@@ -140,7 +140,7 @@ for($j=1; $row123=sql_fetch_array($result1); $j++) {
                     <img src="<?php echo G5_IMG_URL ?>/download_icon.png" alt="download_icon">
                 <?php } ?>
             </td>
-            <td class="td_datetime td_center"><?php echo $list[$i]['datetime'] ?></td>
+            <td class="td_datetime td_center"><?php echo $list[$i]['datetime2'] ?></td>
             <td class="td_hit td_center"><?php echo $list[$i]['wr_hit'] ?></td>
             <td class="td_end td_center td_d_day">
                 <?php 
@@ -153,9 +153,11 @@ for($j=1; $row123=sql_fetch_array($result1); $j++) {
                         echo "D+00";
 
                         echo "<span class='d_day_text d_day_end'>접수마감</span>";
-                    } else if($list[$i]['wr_date_end'] > $nDate && $nDate > $list[$i]['wr_date_start']) {
+                    } else if($list[$i]['wr_date_end'] >= $nDate && $nDate >= $list[$i]['wr_date_start']) {
                         if($leftDate > 9){
                             echo "D-".$leftDate;
+                        } else if($leftDate == 0) {
+                            echo "D-day";
                         } else {
                             echo "D-0".$leftDate;
                         }

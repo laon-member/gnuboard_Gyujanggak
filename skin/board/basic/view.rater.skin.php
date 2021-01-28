@@ -255,7 +255,7 @@ $row99 = sql_fetch_array($result);
                 test_sum = test_sum/3;
                 test_sum = test_sum.toFixed(2);
                 $('#test_sum').val(test_sum);
-                if($('#test_opinion').val() == "" || $('#test_user').val() == "" || $('#test_title').val() == "" || $('#test_plan').val() == ""){
+                if($('#test_opinion').val() == "" || $('#test_user').val() == "" || $('#test_title').val() == "" || $('#test_plan').val() == "" && $('#value_btn_submit').text() == "저장"){
                     $('#value_btn_submit').attr('disabled', true);
                     $('#value_btn_submit').css({"background":"#ccc"});
                 } else {
@@ -269,7 +269,7 @@ $row99 = sql_fetch_array($result);
                 test_sum = test_sum/3;
                 test_sum = test_sum.toFixed(2);
                 $('#test_sum').val(test_sum);
-                if($('#test_opinion').val() == "" || $('#test_user').val() == "" || $('#test_title').val() == "" || $('#test_plan').val() == ""){
+                if($('#test_opinion').val() == "" || $('#test_user').val() == "" || $('#test_title').val() == "" || $('#test_plan').val() == "" && $('#value_btn_submit').text() == "저장"){
                     $('#value_btn_submit').attr('disabled', true);
                     $('#value_btn_submit').css({"background":"#ccc"});
                 } else {
@@ -283,7 +283,7 @@ $row99 = sql_fetch_array($result);
                 test_sum = test_sum/3;
                 test_sum = test_sum.toFixed(2);
                 $('#test_sum').val(test_sum);
-                if($('#test_opinion').val() == "" || $('#test_user').val() == "" || $('#test_title').val() == "" || $('#test_plan').val() == ""){
+                if($('#test_opinion').val() == "" || $('#test_user').val() == "" || $('#test_title').val() == "" || $('#test_plan').val() == "" && $('#value_btn_submit').text() == "저장"){
                     $('#value_btn_submit').attr('disabled', true);
                     $('#value_btn_submit').css({"background":"#ccc"});
                 } else {
@@ -292,7 +292,7 @@ $row99 = sql_fetch_array($result);
                 }
             });
             $('#test_opinion').change(function(){
-                if($('#test_opinion').val() == "" || $('#test_user').val() == "" || $('#test_title').val() == "" || $('#test_plan').val() == ""){
+                if($('#test_opinion').val() == "" || $('#test_user').val() == "" || $('#test_title').val() == "" || $('#test_plan').val() == "" && $('#value_btn_submit').text() == "저장"){
                     $('#value_btn_submit').attr('disabled', true);
                     $('#value_btn_submit').css({"background":"#ccc"});
                 } else {

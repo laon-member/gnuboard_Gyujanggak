@@ -119,8 +119,16 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
                     
             </td>
             <td class="td_datetime td_center"><?php echo $row['name']; ?></td>
-            <td class="td_datetime td_center"><a href="<?= G5_BBS_URL ?>/board_admin.php?bo_table=business&bo_idx=<?= $_GET['bo_idx'] ?>&wr_idx=<?= $_GET['wr_idx'] ?>&us_idx=<?= $list[$i]['idx']; ?>&u_id=1&report=1" class="value_btn">바로가기</a></td>
-            <td class="td_datetime td_center"><a href="<?= G5_BBS_URL ?>/board_admin.php?bo_table=business&bo_idx=<?= $_GET['bo_idx'] ?>&wr_idx=<?= $_GET['wr_idx'] ?>&us_idx=<?= $list[$i]['idx']; ?>&u_id=1&report=2" class="value_btn ">바로가기</a></td>
+            <td class="td_datetime td_center">
+                <a href="<?= G5_BBS_URL ?>/board_admin.php?bo_table=business&bo_idx=<?= $_GET['bo_idx'] ?>&wr_idx=<?= $_GET['wr_idx'] ?>&us_idx=<?= $list[$i]['idx']; ?>&u_id=1&report=1" class="value_btn" onclick="<?= $row['report_val_1'] > 1 ? "" : "event.preventDefault();" ?>" style="background:<?= $row['report_val_1'] > 1 ? "#1D2E58" : "#cccccc" ?>">
+                    <?= $row['report_val_1'] > 1 ? "바로가기" : "미제출" ?>
+                </a>
+            </td>
+            <td class="td_datetime td_center">
+                <a href="<?= G5_BBS_URL ?>/board_admin.php?bo_table=business&bo_idx=<?= $_GET['bo_idx'] ?>&wr_idx=<?= $_GET['wr_idx'] ?>&us_idx=<?= $list[$i]['idx']; ?>&u_id=1&report=2" class="value_btn " onclick="<?= $row['report_val_2'] > 1 ? "" : "event.preventDefault();" ?>" style="background:<?= $row['report_val_2'] > 1 ? "#1D2E58" : "#cccccc" ?>">
+                    <?= $row['report_val_2'] > 1  ? "바로가기" : "미제출" ?>
+                </a>
+            </td>
         </tr>
       
 

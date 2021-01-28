@@ -23,7 +23,7 @@ if($_GET['no_alt'] == 'yes'){
 <div id="hd">
     <div class="hd_wrapper_menu">
         <ul class="hd_login layout">    
-            <li class="text_float_left" style="float:left">
+            <li class="text_float_left" style="float:left; cursor: context-menu;">
             <?php 
                 if($board_user == 1) echo "지원자 페이지";
                 if($board_user == 2) echo "심사자 페이지";
@@ -31,7 +31,7 @@ if($_GET['no_alt'] == 'yes'){
             ?>
             </li>    
             <?php if ($is_member) {  ?>
-            <li><?php echo $member['mb_name']; ?>님</li>
+            <li style="cursor: context-menu;"><?php echo $member['mb_name']; ?>님</li>
             <li><a href="<?php echo G5_BBS_URL ?>/mypage_form.php?page=1">마이페이지</a></li>
             <?php if ($member['mb_level'] == 10 && $is_admin =="super") { ?><li><li><a href="../adm/member_list.php">관리자(원본)</a></li><?php } ?>
             <?php if ($member['mb_level'] == 10) { ?><li><li><a href="../adm/member_list copy.php">관리자</a></li><?php } ?>
@@ -193,7 +193,7 @@ if($_GET['no_alt'] == 'yes'){
             <div class="notice_container">
                 <ul class="header_notice_nav">
                     <?php for($j=1; $row=sql_fetch_array($result1); $j++) { ?>
-                        <li class="header_notice_list">
+                        <li class="header_notice_list header_notice_list<?= $j ?>">
                             <a href="<?= G5_BBS_URL ?>/board.notice.php?bo_idx=<?= $row['notice_table']; ?>&bo_table=notice&wr_id=<?= $row['wr_id'] ;?>&bo_title=<?php echo $board_user; echo $u_id; ?>"><?= $row['wr_subject']; ?></a>
                         </li>
                     <?php } ?>
@@ -212,7 +212,25 @@ if($_GET['no_alt'] == 'yes'){
     </div>
 
     <script>
+    
+        
+
+
     jQuery(function($){
+
+        // function slideMenu(){
+        //     $('.header_notice_nav').animate({'margin-top':'-70px'}, 500)
+
+        //     setTimeout(() => {
+        //         var clone = "";
+        //         clone = $('.header_notice_list:first-child').clone();
+        //         $(".header_notice_nav").append(clone);
+        //         $('.header_notice_list:first-child').remove();
+        //         $('.header_notice_nav').css({'margin-top':'0px'})
+        //     }, 1000);
+        // }
+
+        // setInterval(slideMenu, 2000);
         
         var open = true;
 

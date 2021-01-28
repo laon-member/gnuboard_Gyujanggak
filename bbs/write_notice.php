@@ -58,19 +58,19 @@ if ($w == '') {
 } else if ($w == 'u') {
     // 김선용 1.00 : 글쓰기 권한과 수정은 별도로 처리되어야 함
     //if ($member['mb_level'] < $board['bo_write_level']) {
-    if($member['mb_id'] && $write['mb_id'] === $member['mb_id']) {
-        ;
-    } else if ($member['mb_level'] < $board['bo_write_level']) {
-        if ($member['mb_id']) {
-            alert('글을 수정할 권한이 없습니다.');
-        } else {
-            alert('글을 수정할 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', G5_BBS_URL.'/login.php?'.$qstr.'&amp;url='.urlencode($_SERVER['SCRIPT_NAME'].'?bo_table='.$bo_table));
-        }
-    }
+    // if($member['mb_id'] && $write['mb_id'] === $member['mb_id']) {
+    //     ;
+    // } else if ($member['mb_level'] < $board['bo_write_level']) {
+    //     if ($member['mb_id']) {
+    //         alert('글을 수정할 권한이 없습니다.');
+    //     } else {
+    //         alert('글을 수정할 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', G5_BBS_URL.'/login.php?'.$qstr.'&amp;url='.urlencode($_SERVER['SCRIPT_NAME'].'?bo_table='.$bo_table));
+    //     }
+    // }
 
-    $len = strlen($write['wr_reply']);
-    if ($len < 0) $len = 0;
-    $reply = substr($write['wr_reply'], 0, $len);
+    // $len = strlen($write['wr_reply']);
+    // if ($len < 0) $len = 0;
+    // $reply = substr($write['wr_reply'], 0, $len);
 
     // 원글만 구한다.
     $sql = " select count(*) as cnt from {$write_table}

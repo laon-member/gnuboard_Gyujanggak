@@ -542,22 +542,6 @@ border-radius : 4px;
 .header_notice_nav, .header_notice_list{list-style:none; height: 70px; }
 .header_notice_list{padding:25px 0;}
 .header_notice_list a {font-size: 18px; color: #666666;}
-.header_notice_nav{ animation: slide 10s infinite linear; } /* slide를 8초동안 진행하며 무한반복 함 */
-@keyframes slide {
-0% {margin-top:0;} 
-10% {margin-top:0;} 
-20% {margin-top: -70px;} 
-30% {margin-top: -70px;} 
-40% {margin-top:-140px;}
-50% {margin-top:-140px;}
-60% {margin-top:-210px;}
-70% {margin-top:-210px}
-80% {margin-top:-280px;}
-90% {margin-top:-280px;}
-100% {margin-top:0;}
-
-
-}
 
 .header_esc_start{
   display: block !important;

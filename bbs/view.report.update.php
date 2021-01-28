@@ -132,6 +132,21 @@ $chars_array = array_merge(range(0,9), range('a','z'), range('A','Z'));
 $file_upload_msg = '';
 $upload = array();
 
+$count_del =  @count($_POST['del-no']);
+
+if($count_del > 0 ){
+    for($k=0; $k < $count_del; $k++ ){
+        sql_query("delete from {$g5['board_file_table']} where bo_table = 'report' and wr_id = '{$_POST['file_idx']}' and bf_no = '{$_POST['del-no'][$k]}' ");
+    }
+
+    $sql123 = " select * from {$g5['board_file_table']} where bo_table = 'report' and wr_id = '{$_POST['file_idx']}' ";
+    $result123 = sql_query($sql123);
+    for($i=0; $row123=sql_fetch_array($result123); $i++) {
+        $sql1212 = " update {$g5['board_file_table']} set bf_no = '{$i}' where bo_table = 'report' and wr_id = '{$_POST['file_idx']}' and bf_no = '{$row123['bf_no']}' ";
+        sql_query($sql1212);
+    }
+}
+
 if(isset($_FILES['bf_file']['name']) && is_array($_FILES['bf_file']['name'])) {
     for ($i=0; $i<count($_FILES['bf_file']['name']); $i++) {
         $upload[$i]['file']     = '';
@@ -339,4 +354,6 @@ if ($file_upload_msg)
     alert($file_upload_msg, $redirect_url);
 else
     alert($mes, $redirect_ur);
+
+
 ?>

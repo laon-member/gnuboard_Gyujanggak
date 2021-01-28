@@ -72,7 +72,7 @@ $row33=sql_fetch_array($result1);
                 <tr>
                     <th scope="col" class="view_table_header" style="">접수번호</th>
                     <td scope="col" class="view_table_text" colspan="4" style="">
-                    <input type="text" name="info_number_view" id="info_number_view"  class="input_text input_text_50 input_text_end" placeholder="접수번호" value="<?= $row['info_number']; ?>"  readonly required>
+                    <input type="text" name="info_number_view" id="info_number_view"  class="input_text input_text_50 input_text_end" placeholder="접수번호" value="<?= $row['info_number']; ?>"  readonly >
                     </td>
                     <th scope="col" class="view_table_header" style="">과제번호</th>
                     <td scope="col" class="view_table_text" colspan="4" style="">
@@ -412,7 +412,6 @@ jQuery(function($){
             $row2 = sql_fetch_array($result2);
 
             $sql3 = " select * from rater_value where rater_idx = '{$row2['idx']}' and report_idx = '{$_GET['us_idx']}'";
-            echo $sql3;
             $result3 = sql_query($sql3);
             $row3 = sql_fetch_array($result3);
 

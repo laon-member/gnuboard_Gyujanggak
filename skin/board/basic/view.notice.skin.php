@@ -59,8 +59,8 @@ $result1 = sql_query($sql1);
         <table id="view_table">
             <thead>
                 <tr>
-                    <th scope="col" class="view_table_header"colspan="1" style="width:10%;">제목</th>
-                    <td scope="col" class="view_table_title" colspan="6" style="width:90%;"> <?php echo cut_str(get_text($view['wr_subject']), 70); // 글제목 출력 ?></td>
+                    <th scope="col" class="view_table_header "colspan="1" style="width:10%;">제목</th>
+                    <td scope="col" class="view_table_title td_title" colspan="6" style="width:90%;"> <?php echo cut_str(get_text($view['wr_subject']), 70); // 글제목 출력 ?></td>
                 </tr>
                 <tr>
                     <th scope="col" class="view_table_header" style="width:10%;">작성자</th>
@@ -174,11 +174,15 @@ $result1 = sql_query($sql1);
                     </li>
                 <?php } ?>
             <?php } ?>
+            <?php if ($is_admin == 'super' && $_GET['bo_title'] == 3) {  ?>
 
-                    <li class="btn_next_prv "><a href="<?php echo G5_BBS_URL .'/board.notice.php?bo_table=notice&bo_idx='.$_GET['bo_idx'].'&page=1'; ?>&bo_title=<?= $_GET['bo_title']; ?><?= $admin_notice ?>" class="">목록</a></li>
+            <?php } ?>
+               
             </ul>
         
             <section id="bus_btn text_inline_block" >
+            <a href="<?= G5_BBS_URL ?>/write_notice.php?bo_table=notice&bo_idx=<?= $_GET['bo_idx'] ?>&w=u&wr_id=<?= $_GET['wr_id'] ?>&bo_title=3&u_id=1" class="btn_up_val">수정</a>
+            <a href="<?php echo G5_BBS_URL ?>/write_del.php?wr_id=<?= $_GET['wr_id'] ?>&bo_idx=<?= $_GET['bo_idx'] ?>" class="btn_del_val">삭제</a>
             <a href="<?php echo G5_BBS_URL .'/board.notice.php?bo_table=notice&bo_idx='.$_GET['bo_idx'].'&page=1'; ?>&bo_title=<?= $_GET['bo_title']; ?><?= $admin_notice ?>" class="btn_next_prv btn_next_prv_link">목록보기</a>
         </section>
     </section>

@@ -39,7 +39,7 @@ $result1 = sql_query($sql1);
             <thead>
                 <tr>
                     <th scope="col" class="view_table_header"colspan="1" style="width:10%;">제목</th>
-                    <td scope="col" class="view_table_title" colspan="6" style="width:90%;"> <?php echo cut_str(get_text($view['wr_subject']), 70); // 글제목 출력 ?></td>
+                    <td scope="col" class="view_table_title td_title" colspan="6" style="width:90%;"> <?php echo cut_str(get_text($view['wr_subject']), 70); // 글제목 출력 ?></td>
                 </tr>
                 <tr>
                     <th scope="col" class="view_table_header" style="width:10%;">지원기간</th>
@@ -135,10 +135,9 @@ $result1 = sql_query($sql1);
         </ul>
         <?php 
 
-        $nDate = date("Y-m-d",time()); 
-
-        if($view['wr_date_end'] >= $nDate && $view['value'] != 3) {
+        $nDate = date("Y-m-d",time());
         
+        if($nDate >= $view['wr_date_start'] &&  $view['wr_date_end'] >= $nDate && $view['value'] != 3) {
         ?>
         <section id="bus_btn "  class="text_inline_block">
             <a href="<?= G5_BBS_URL ?>/application.php?bo_table=business&bo_idx=<?php echo $view['wr_title_idx']; ?>&wr_id=<?php echo $_GET['wr_id']; ?>" class="btn_next_prv btn_next_prv_link" title="신청하기">신청하기</a>

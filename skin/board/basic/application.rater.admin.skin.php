@@ -124,12 +124,12 @@ $row33=sql_fetch_array($result1);
                 <tr>
                     <th scope="col" class="view_table_header" style="">공동연구원</th>
                     <td scope="col" class="view_table_text" colspan="4" style="">
-                    <input type="text" name="main_member_view" id="main_member_view"  class="input_text input_text_50  input_text_end" placeholder="명" readonly value="<?= $row['main_member']; ?>">
+                    <input type="text" name="main_member_view" id="main_member_view"  class="input_text input_text_50  input_text_end" placeholder="명" readonly value="<?= $row['main_member']; ?>명">
 
                     </td>
                     <th scope="col" class="view_table_header" style="">연구원보조</th>
                     <td scope="col" class="view_table_text" colspan="3" style="">
-            <input type="text" name="sub_member_view" id="sub_member_view"  class="input_text input_text_50  input_text_end" placeholder="명" readonly value="<?= $row['sub_member']; ?>">
+            <input type="text" name="sub_member_view" id="sub_member_view"  class="input_text input_text_50  input_text_end" placeholder="명" readonly value="<?= $row['sub_member']; ?>명">
                     </td>
                 </tr>
                 <tr class="view_table_header_table"></tr>
@@ -145,17 +145,17 @@ $row33=sql_fetch_array($result1);
                 <tr>
                     <th scope="col" class="view_table_header" colspan="1" style="">연구비신청액</th>
                     <td scope="col" class="view_table_text" colspan="8" style="">
-                        <input type="text" name="money_view" id="money_view"  class="input_text input_text_end" placeholder="연구비신청액" readonly value="<?= $row['money']; ?>">
+                        <input type="text" name="money_view" id="money_view"  class="input_text input_text_end" placeholder="연구비신청액" readonly value="<?= number_format($row['money']); ?>원">
                     </td>
                 </tr>
                 <tr>
                     <th scope="col" class="view_table_header" colspan="1" style="">1차년 연구비</th>
                     <td scope="col" class="view_table_text" colspan="4" style=" width:40%">
-                        <input type="text" name="one_year_view" id="one_year_view"  class="input_text input_text_50 input_text_end" placeholder="1차년 연구비" readonly value="<?= $row['one_year']; ?>">
+                        <input type="text" name="one_year_view" id="one_year_view"  class="input_text input_text_50 input_text_end" placeholder="1차년 연구비" readonly value="<?= number_format($row['one_year']); ?>원">
                     </td>
                     <th scope="col" class="view_table_header" colspan="1" style="">2차년 연구비</th>
                     <td scope="col" class="view_table_text" colspan="3" style="">
-                        <input type="text" name="two_year_view" id="two_year_view"  class="input_text input_text_50 input_text_end" placeholder="2차년 연구비" readonly value="<?= $row['two_year']; ?>">
+                        <input type="text" name="two_year_view" id="two_year_view"  class="input_text input_text_50 input_text_end" placeholder="2차년 연구비" readonly value="<?= number_format($row['two_year']); ?>원">
                     </td>
                 </tr>
             </tbody>

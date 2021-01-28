@@ -37,7 +37,7 @@ $result1 = sql_query($sql1);
             <thead>
                 <tr>
                     <th scope="col" class="view_table_header"colspan="1" style="width:10%;">제목</th>
-                    <td scope="col" class="view_table_title" colspan="6" style="width:90%;"> <?php echo cut_str(get_text($view['wr_subject']), 70); // 글제목 출력 ?></td>
+                    <td scope="col" class="view_table_title td_title" colspan="6" style="width:90%;"> <?php echo cut_str(get_text($view['wr_subject']), 70); // 글제목 출력 ?></td>
                 </tr>
                 <tr>
                     <th scope="col" class="view_table_header" style="width:10%;">지원기간</th>

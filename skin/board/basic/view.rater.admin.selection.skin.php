@@ -275,7 +275,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                 var value = $(this).next().is(':checked');                
                 if (value) {    
                     $(this).text("선택");
-                    $(this).css({"background": "#3a8afd"});
+                    $(this).css({"background": "#1D2E58"});
 
                 } else {
                     $(this).text("해제");

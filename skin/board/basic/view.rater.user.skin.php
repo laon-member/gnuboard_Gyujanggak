@@ -90,7 +90,7 @@ if($_GET['bo_idx'] == 1){
             $count = 0;
 
             for ($i=0; $row = sql_fetch_array($result); $i++) {
-                $sql22 = " select * from g5_member where mb_id = '{$row['user_id']}'";
+                $sql22 = " select * from g5_member where mb_id = '{$row['user_id']}' ";
                 $result22 = sql_query($sql22);
                 $row22 = sql_fetch_array($result22);
 
@@ -207,7 +207,7 @@ jQuery(function($){
             <tbody>
             <?php
             
-            $sql = " select * from g5_member where mb_level > '4'";
+            $sql = " select * from g5_member where mb_level = 5;";
             $result = sql_query($sql);
             $count_rater = 0;
             for ($i=0; $row = sql_fetch_array($result); $i++) {

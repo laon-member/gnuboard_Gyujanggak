@@ -90,17 +90,6 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
         $result = sql_query($sql);
         for ($i=0; $i<$row = sql_fetch_array($result); $i++) {
 
-            // if($_GET['bo_idx'] == 2){
-            //     $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}'";
-            //     $result = sql_query($sql);
-            // } else if ($_GET['bo_idx'] == 3) {
-            //     $sql = " select * from rater where user_id = '{$member['mb_id']}' and test_id = '{$_GET['bo_idx']}'";
-            //     $result = sql_query($sql);
-            // }
-            
-        	// $sql55 = " select * from g5_write_business where wr_id = '{$row['business_idx']}'";
-            // $result55 = sql_query($sql55);
-            // $row22 = sql_fetch_array($result55);
         ?>
         
         <tr class="<?php echo $lt_class ?> tr_hover">

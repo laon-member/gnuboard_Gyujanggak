@@ -129,10 +129,13 @@ $j=0;
     </table>
         <div class ="btn_confirm write_div btn-cont">
             <div class="next_prev_bar">
-            <label for="upload01" id="file-label-btn" class="file-label"><img src="<?= G5_IMG_URL ?>/upload.png" alt=""> 파일 업로드</label>
+            <?php if($row44['report'] < 2){ ?>
+                <label for="upload01" id="file-label-btn" class="file-label"><img src="<?= G5_IMG_URL ?>/upload.png" alt=""> 파일 업로드</label>
 
-            <button type="submit" formaction="<?= G5_BBS_URL ?>/view.report.update.php?bo_table=<?= $_GET['bo_table'] ?>&bo_idx=1&wr_bo_idx=<?= $_GET['wr_bo_idx'] ?>" class="btn_next_prv btn_color_white" id="save" title="<?php $row44 == "" ? '저장하기':'수정하기'; ?>" <?= $row44['report'] ==2? "disabled": ""; ?> ><?= $row44 == "" ? '저장':'수정'; ?></button>
-            <button type="submit" formaction="<?= G5_BBS_URL ?>/board.report.php?bo_table=business&bo_idx=1" class="btn_next_prv  btn_color_white" id="cancel" title="취소">취소하기</button>
+                <button type="submit" formaction="<?= G5_BBS_URL ?>/view.report.update.php?bo_table=<?= $_GET['bo_table'] ?>&bo_idx=1&wr_bo_idx=<?= $_GET['wr_bo_idx'] ?>" class="btn_next_prv btn_color_white" id="save" title="<?php $row44 == "" ? '저장하기':'수정하기'; ?>" <?= $row44['report'] ==2? "disabled": ""; ?> ><?= $row44 == "" ? '저장':'수정'; ?></button>
+            <?php } ?>
+
+                <button type="submit" formaction="<?= G5_BBS_URL ?>/board.report.php?bo_table=business&bo_idx=1" class="btn_next_prv  btn_color_white" id="cancel" title="취소">취소하기</button>
             <button type="submit" formaction="<?= G5_BBS_URL ?>/view.report.update.php?bo_table=<?= $_GET['bo_table'] ?>&bo_idx=1&wr_bo_idx=<?= $_GET['wr_bo_idx'] ?>" class="btn_next_prv btn_next_prv_link" id="submission" title="신청하기" <?= $row44['report'] ==2? "disabled": ""; ?> style="background:<?= $row44['report'] ==2? '#ccc': '#1D2E58'; ?>">신청하기</button>
             </div>
         </div>
@@ -148,8 +151,7 @@ $j=0;
             $("#fwrite").append('<input type="hidden" name="save" value="2">');
         });
         var file_number = 1;
-
-        var disabled = '<?= $row44['report'] == 2? false : true; ?>'
+        var disabled = '<?= $row44['report'] == 2? false : true; ?>';
         if(disabled){
             var html = '<tr class="input-file_list">'
                     +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일명</th>'
@@ -227,9 +229,24 @@ $j=0;
             return event.key != "Enter";
         });
 
+        $(document).off().on('click','.file-del',function(){
+            var val = $(this).parent().prev().prev().find('.file-upload').val();
+            var next = $(this).parent().parent().next().find('.file-upload').val();
+
+            if(val != ""){
+                $(this).parent().parent().remove();
+            } else {
+                if(next != undefined){
+                    $(this).parent().parent().remove();
+                } 
+            }    
+        })
+        var report_value = '<?= $row44['report'] == "" ? 0 : $row44['report']; ?>';
         $('.del-no-btn').click(function(){
-            var check_val =  $(this).parent().prev().prev().find('input[type="checkbox"]').is(":checked");
-            $(this).parent().parent().css({'display':'none'});
+            if(report_value < 2){
+                var check_val =  $(this).parent().prev().prev().find('input[type="checkbox"]').is(":checked");
+                $(this).parent().parent().css({'display':'none'});
+            }
         })
     })
 </script>

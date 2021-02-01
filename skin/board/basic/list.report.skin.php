@@ -59,11 +59,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                     </form>
                 </fieldset>
             </li>
-        	<?php if ($is_admin == 'super') {  ?>
-                <li>
-                    <a href="<?php echo $write_href ?>&bo_idx=<?= $_GET['bo_idx'] ?><?= $_GET['u_id'] == 1?"&u_id=1" : "" ?>" class="btn_b01 btn" title="글쓰기"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sound_only">글쓰기</span></a>
-                </li>
-        	<?php }  ?>
         </ul>
     </div>
     <!-- } 게시판 페이지 정보 및 버튼 끝 -->
@@ -98,8 +93,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         <?php
 
             for ($i=0; $i<count($list); $i++) {
-                
-
                 $sql = " select * from report where mb_id= '{$member['mb_id']}' AND business_idx = '{$list[$i]['idx']}'";
                 $result = sql_query($sql);
                 $row22 = sql_fetch_array($result);
@@ -126,7 +119,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             </td>
             <td class="td_title">
                 <a href="<?= G5_BBS_URL ?>/board.report.php?bo_table=<?=$_GET['bo_table']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&wr_bo_idx=<?php echo $list[$i]['idx']; ?>&wr_idx=<?= $list[$i]['wr_id'] == ""? $list[$i]['bo_idx']:$list[$i]['wr_id']; ?>">
-                    <?= $row44['wr_subject'] == ""? $list[$i]['wr_subject']:$row44['wr_subject']; ?>
+                    <?= $row44['wr_subject']; ?>
                 </a>
             </td>
             <td class="td_datetime td_center"><?= $row44['wr_date_end'] == ""? $list[$i]['wr_date_end']:$row44['wr_date_end']; ?></td>

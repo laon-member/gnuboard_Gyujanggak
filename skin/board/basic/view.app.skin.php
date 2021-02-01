@@ -135,6 +135,10 @@ $result1 = sql_query($sql1);
         <?php } ?>
         </ul>
         <section id="bus_btn "  class="text_inline_block">
+            <?php if ($is_admin == 'super') {  ?>
+                <a href="<?php echo $write_href ?>&bo_idx=<?= $_GET['bo_idx'] ?>&bo_idx=<?= $view['wr_title_idx'] ?>&w=u&wr_id=<?= $_GET['wr_id'] ?>&u_id=1" class="btn_up_val">수정</a>
+                <a href="<?php echo G5_BBS_URL ?>/write_del_business.php?wr_id=<?= $_GET['wr_id'] ?>&bo_idx=<?= $view['wr_title_idx'] ?>" class="btn_del_val">삭제</a>
+            <?php } ?>
             <a href="<?php echo G5_BBS_URL ?>/board.app.php?bo_table=business&bo_idx=<?= $view['wr_title_idx'] ?>&page=1&u_id=1" class="btn_next_prv btn_next_prv_link">목록</a>
         </section>
         

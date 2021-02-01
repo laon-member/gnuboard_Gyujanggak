@@ -14,7 +14,7 @@ if (trim($mb_id)==''){
 
             $sql = " select *  from `{$g5['member_table']}` where mb_id = '$mb_id' ";
             $row = sql_fetch($sql);
-            if ($row && !$row['mb_leave_date'] && $row['mb_leave_date'] > date("Ymd", G5_SERVER_TIME)){
+            if ($row && !$row['mb_leave_date'] && !$row['mb_leave_date']){
                 $test = "이미 사용중인 회원아이디 입니다.";
             } else if($row && $row['mb_leave_date'] && $row['mb_leave_date'] <= date("Ymd", G5_SERVER_TIME)) {
                 $test = "탈퇴한 아이디 입니다.";

@@ -63,7 +63,7 @@ if(empty($_SESSION['FORM']['mb_id'])){
 				
 			</ul>
 			<?php if($_SESSION['id'] != "") { ?>
-				<p class="user_id_value"><strong>결과 </strong> 고객님의 아이디는 <strong><?php echo $_SESSION['id'] ?> </strong>입니다</p>
+				<p class="user_id_value"><strong><?= $_SESSION['name'] ?> </strong> 고객님의 아이디는 <strong><?php echo substr($_SESSION['id'], 0, -3) . "***";?> </strong>입니다</p>
 				<?php } ?>
 			<div class="btn_confirm">
 				<a href="<?php echo G5_URL ?>" class="btn_close">취소</a>

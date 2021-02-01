@@ -35,6 +35,7 @@ $result = sql_query($sql);
     <input type="hidden" name="sod" value="<?php echo $sod ?>">
     <input type="hidden" name="page" value="<?php echo $page ?>">
     <input type="hidden" name="bo_idx" value="<?php echo $_GET['bo_idx'] ?>">
+    <input type="hidden" name="wr_id" value="<?php echo $_GET['wr_id'] ?>">
     <?php
     $option = '';
     $option_hidden = '';
@@ -88,16 +89,16 @@ $result = sql_query($sql);
             <tr>
                 <th>과제번호</th>
                 <td colspan="6">
-                    <input type="text" name="quest_number_view" id="quest_number_view"  class="input_text input_text_100 input_text_end" placeholder="과제번호" value="<?= $row['quest_number']; ?>" required>
+                    <input type="text" name="quest_number_view" id="quest_number_view"  class="input_text input_text_100 input_text_end" placeholder="과제번호" value="<?= $write['wr_quest_number']; ?>" required>
                 </td>
             </tr>
             <tr>
                 <th>총 연구 기간</th>
                 <td colspan="1">
-                    <input type="date" name="date_start_act" id="date_start_view"  class="input_text frm_input required full_input input_text_100 input_text_end" value='' max="9999-12-31" required>
+                    <input type="date" name="date_start_act" id="date_start_view"  class="input_text frm_input required full_input input_text_100 input_text_end" value='<?= $write['wr_date_start'] ?>' max="9999-12-31" required>
                 </td>
                 <td colspan="5">
-                    <input type="date" name="date_end_act" id="date_end_view"  class=" input_textfrm_input required full_input input_text_100 input_text_end"  value='' max="9999-12-31" required>
+                    <input type="date" name="date_end_act" id="date_end_view"  class=" input_textfrm_input required full_input input_text_100 input_text_end"  value='<?= $write['wr_date_end'] ?>' max="9999-12-31" required>
                 </td>
             </tr>
             <tr>
@@ -108,15 +109,55 @@ $result = sql_query($sql);
                         <!-- 최소/최대 글자 수 사용 시 -->
                         <p id="char_count_desc">이 게시판은 최소 <strong><?php echo $write_min; ?></strong>글자 이상, 최대 <strong><?php echo $write_max; ?></strong>글자 이하까지 글을 쓰실 수 있습니다.</p>
                         <?php } ?>
-                        <textarea id="wr_content" name="wr_content" class="input_text input_text_100" maxlength="65536" style="width:100%;height:300px"></textarea>
+                        <textarea id="wr_content" name="wr_content" class="input_text input_text_100" maxlength="65536" style="width:100%;height:300px"><?php echo  $write['wr_content'] ?></textarea>
                         <?php if($write_min || $write_max) { ?>
                         <!-- 최소/최대 글자 수 사용 시 -->
                         <div id="char_count_wrap"><span id="char_count"></span>글자</div>
                         <?php } ?>
+                        
                     </div>
                 </td>
             </tr>
-
+            <?php
+                // 가변 파일
+                for ($i=0; $i< $file_count; $i++) {
+                    if (isset($file[$i]['source']) && $file[$i]['source'] ) {
+                ?>
+                    <tr class="input-file_list">
+                        <?php
+                            //MB 단위 이상일때 MB 단위로 환산
+                            if ($file[$i]['size'] >= 1024 * 1024) {
+                                $fileSize = $row55['bf_filesize'] / (1024 * 1024);
+                                $convertlastpage = sprintf('%0.2f', $fileSize); // 520 -> 520.00
+                                $str = $convertlastpage . ' MB';
+                            }
+                
+                            else {
+                                $fileSize = $file[$i]['size'] / 1024;
+                                $convertlastpage = sprintf('%0.2f', $fileSize); // 520 -> 520.00
+                                $str = $convertlastpage . ' KB';
+                            }
+                        ?>
+                        <th scope="col" class="view_table_header" colspan="1" style="width:10%">파일명</th>
+                        <td scope="col" class="view_table_text " colspan="1" style="width:40%">
+                            <input type="text" id="file_label_view1" readonly="readonly" class="input_text file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="<?= $file[$i]['source']; ?>" style="margin: 0 -2px;"/>
+                        </td>
+                        <th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 사이즈</th>
+                        <td scope="col" class="view_table_text" colspan="2" style="width:20%">
+                            <input type="hidden" name="file_idx" value="<?= $_GET['wr_id']; ?>" id="sql_file_id">
+                            <input type="text" id="file-size-'+file_number+'" class="file-name file-size" style="margin: 0 -2px;" value="<?= $str ?>" readonly="readonly"/>
+                            <input type="file" name="bf_file[]" id="upload00" class="file-upload file_sql_upload" <?= $file[$i]['report'] ==2? "disabled": ""; ?> />
+                            <input type="checkbox" class="del-no" id="del-no<?= $j ?>" name="del-no[]" value="<?= $file[$i]['no']; ?>" style="display:none;">
+                        </td>
+                        <th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 삭제</th>
+                        <td scope="col" class="view_table_text" colspan="1" style="width:10%">
+                            <label for="del-no<?= $j ?>" class="file-label del-no-btn">삭제</label>
+                        </td>
+                    </tr>
+                <?php
+                    }
+                }
+            ?>
         </tbody>
     </table>
     
@@ -124,10 +165,9 @@ $result = sql_query($sql);
         <div class="next_prev_bar">
             <label for="upload01" id="file-label-btn" class="file-label"><img src="<?= G5_IMG_URL ?>/upload.png" alt=""> 파일 업로드</label>
             <a href="<?php echo G5_BBS_URL; ?>/board.app.php?bo_table=business&bo_idx=<?= $_GET['bo_idx'] ?>&u_id=1" class="btn_color_white btn">취소</a>
-            <button type="submit" id="btn_submit" accesskey="s" class="btn_submit btn">작성완료</button>
+            <button type="submit" id="btn_submit" accesskey="s" class="btn_submit btn"><?= $w == ""? "저장" : "수정" ?></button>
         </div>
     </div>
-
 
     </form>
               
@@ -245,12 +285,13 @@ $result = sql_query($sql);
                     +'</td>'
                     +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 사이즈</th>'
                     +'<td scope="col" class="view_table_text" colspan="2" style="width:20%">'
-                    +'    <input type="text" id="file-size-'+file_number+'" class=" input_textfile-name file-size" style="margin: 0 -2px;" value="용량" readonly="readonly"/>'
+                    +'    <input type="text" id="file-size-'+file_number+'" class=" input_text file-name file-size" style="margin: 0 -2px;" value="용량" readonly="readonly"/>'
                     +'    <input type="file" name="bf_file[]" id="upload01" class="file-upload"/>'
                     +'</td>'
                     +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 삭제</th>'
+                    
                     +'<td scope="col" class="view_table_text" colspan="1" style="width:10%">'
-                    +'<button type="button" class=" input_text file-label file-del " id="file-del'+file_number+'">삭제</button>'
+                    +'<button type="button" class="  file-label file-del " id="file-del'+file_number+'">삭제</button>'
                     +'</td>'
                     +'</tr>';
         
@@ -296,7 +337,7 @@ $result = sql_query($sql);
                     var html ='<tr class="input-file_list">'
                     +'<th scope="col" class="view_table_header" colspan="1" style="width:10%; height:58px">파일명</th>'
                     +'<td scope="col" class="view_table_text" colspan="1" style="width:40%">'
-                    +'    <input type="text" id="file_label_view'+file_number+'" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/>'
+                    +'    <input type="text" id="file_label_view'+file_number+'" readonly="readonly" class="input_text file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/>'
                     +'</td>'
                     +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 사이즈</th>'
                     +'<td scope="col" class="view_table_text" colspan="2" style="width:20%">'
@@ -329,6 +370,11 @@ $result = sql_query($sql);
                     $(this).parent().parent().remove();
                 } 
             }
+        })
+
+        $('.del-no-btn').click(function(){
+            var check_val =  $(this).parent().prev().prev().find('input[type="checkbox"]').is(":checked");
+            $(this).parent().parent().css({'display':'none'});
         })
     })
     </script>

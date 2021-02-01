@@ -343,9 +343,6 @@ if($w == 'u') {
     $file = get_file($bo_table, $wr_id);
     if($file_count && (int)$file['count'] > $board['bo_upload_count'])
         alert('기존 파일을 삭제하신 후 첨부파일을 '.number_format($board['bo_upload_count']).'개 이하로 업로드 해주십시오.');
-} else {
-    if($file_count > $board['bo_upload_count'])
-        alert('첨부파일을 '.number_format($board['bo_upload_count']).'개 이하로 업로드 해주십시오.');
 }
 
 // 디렉토리가 없다면 생성합니다. (퍼미션도 변경하구요.)
@@ -357,6 +354,24 @@ $chars_array = array_merge(range(0,9), range('a','z'), range('A','Z'));
 // 가변 파일 업로드
 $file_upload_msg = '';
 $upload = array();
+
+$count_del =  @count($_POST['del-no']);
+
+if($count_del > 0 ){
+    for($k=0; $k < $count_del; $k++ ){
+        sql_query("delete from {$g5['board_file_table']} where bo_table = 'notice' and wr_id = '{$_POST['file_idx']}' and bf_no = '{$_POST['del-no'][$k]}' ");
+    }
+
+    $sql123 = " select * from {$g5['board_file_table']} where bo_table = 'notice' and wr_id = '{$_POST['file_idx']}' ";
+    $result123 = sql_query($sql123);
+    for($i=0; $row123=sql_fetch_array($result123); $i++) {
+        $sql1212 = " update {$g5['board_file_table']} set bf_no = '{$i}' where bo_table = 'notice' and wr_id = '{$_POST['file_idx']}' and bf_no = '{$row123['bf_no']}' ";
+        sql_query($sql1212);
+    }
+
+    sql_query(" update g5_write_notice set wr_file = '{$i}' where wr_id = '{$_POST['file_idx']}' ");
+}
+
 
 if(isset($_FILES['bf_file']['name']) && is_array($_FILES['bf_file']['name'])) {
     for ($i=0; $i<count($_FILES['bf_file']['name']); $i++) {

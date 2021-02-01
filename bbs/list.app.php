@@ -47,7 +47,6 @@ if ($sca || $stx || $stx === '0') {     //검색이면
     if (!$spt) $spt = $min_spt;
 
     $sql_search .= " and (wr_num between {$spt} and ({$spt} + {$config['cf_search_part']})) ";
-
     // 원글만 얻는다. (코멘트의 내용도 검색하기 위함)
     // 라엘님 제안 코드로 대체 http://sir.kr/g5_bug/2922
     $sql = "select COUNT(`wr_parent`) AS `cnt` FROM {$write_table} WHERE {$sql_search} {$sql_order} and wr_title_idx = '{$bo_idx}'";

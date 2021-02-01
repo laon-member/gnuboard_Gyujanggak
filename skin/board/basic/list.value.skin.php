@@ -134,7 +134,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                         }else if($list[$i]['value'] == 3){
                             echo '불합격';
                         }else{
-                            echo '-';
+                            echo '심사중';
                         }
                     ?>
                 </td>

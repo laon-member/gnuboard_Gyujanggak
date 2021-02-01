@@ -38,20 +38,24 @@ $is_search_bbs = false;
 
 if ($sca || $stx || $stx === '0') {     //검색이면
     $is_search_bbs = true;      //검색구분변수 true 지정
-    $sql_search = get_sql_search($sca, $sfl, $stx, $sop);
+    // $sql_search = get_sql_search($sca, $sfl, $stx, $sop);
 
+    if($sfl == 0){
+        $fdsa = "";
+    } else {
+        $fdsa = "and wr_title_idx = '{$sfl}'";
+    }
+    $sql_search = " (INSTR(LOWER(wr_subject), LOWER('$stx')))";
     // 가장 작은 번호를 얻어서 변수에 저장 (하단의 페이징에서 사용)
     $sql = " select MIN(wr_num) as min_wr_num from g5_write_business ";
     $row = sql_fetch($sql);
     $min_spt = (int)$row['min_wr_num'];
-
     if (!$spt) $spt = $min_spt;
-
     $sql_search .= " and (wr_num between {$spt} and ({$spt} + {$config['cf_search_part']})) ";
 
     // 원글만 얻는다. (코멘트의 내용도 검색하기 위함)
     // 라엘님 제안 코드로 대체 http://sir.kr/g5_bug/2922
-    $sql = " SELECT COUNT( `wr_parent`) AS `cnt` FROM g5_write_business WHERE {$sql_search}";
+    $sql = " SELECT COUNT( `wr_parent`) AS `cnt` FROM g5_write_business WHERE {$sql_search} {$fdsa}";
     $row = sql_fetch($sql);
     $total_count = $row['cnt'];
 
@@ -192,7 +196,8 @@ if ($sst) {
 
 
     if ($is_search_bbs) {
-        $sql = " select  * from g5_write_business where {$sql_search} {$sql_order} DESC limit {$from_record}, $page_rows ";
+
+        $sql = " select  * from g5_write_business where {$sql_search} $fdsa {$sql_order} DESC limit {$from_record}, $page_rows ";
     } else {
         $sql = "select * from g5_write_business ";
         if(!empty($notice_array))
@@ -236,7 +241,7 @@ $url = 'http://' . $http_host . $request_uri;
 if($stx == ""){
     $stx_text = "";
 } else {
-    $stx_text = '&stx='.$stx;
+    $stx_text = '&stx='.$stx.'&sfl='.$sfl;
 }
 $bo_idx_text = '&bo_idx='.$_GET['bo_idx'].'&u_id=1';
 $write_pages = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, G5_BBS_URL.'/board.rater.admin.php?bo_table=qa'.$bo_idx_text.$stx_text);

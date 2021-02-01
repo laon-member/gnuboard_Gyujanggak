@@ -79,7 +79,13 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                     <input type="hidden" name="bo_idx" value="<?= $_GET['bo_idx'] ?>">
                     <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
                     <select name="sfl" id="sfl">
-                        <option value="wr_subject">제목</option>
+                        <option value="0" <?= $sfl == "0" ? "selected": ""?>>전체</option>
+                        <option value="1" <?= $sfl == "1" ? "selected": ""?>>한국학 연구용역</option>
+                        <option value="2" <?= $sfl == "2" ? "selected": ""?>>한국학 저술지원</option>
+                        <option value="3" <?= $sfl == "3" ? "selected": ""?>>집중 클러스터</option>
+                        <option value="4" <?= $sfl == "4" ? "selected": ""?>>중소규모 집담회</option>
+                        <option value="5" <?= $sfl == "5" ? "selected": ""?>>한국학 학술대회</option>
+                        <option value="6" <?= $sfl == "6" ? "selected": ""?>>신진학자 초청 교류</option>
                     </select>
                     <div class="sch_bar">
                         <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" required id="stx" class="sch_input" size="25" maxlength="20" placeholder=" 검색어를 입력해주세요">

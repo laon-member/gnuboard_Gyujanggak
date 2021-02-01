@@ -88,13 +88,13 @@ $row33=sql_fetch_array($result1);
                 <tr>
                     <th scope="col" class="view_table_header" colspan="1" style="">과제명(국문)</th>
                     <td scope="col" class="view_table_text" colspan="8" style="">
-                    <input type="text" name="ko_title_view" id="ko_title_view"  class="input_text input_text_end" placeholder="과제명(국문)"readonly  value="<?= $row['ko_title']; ?>">
+                    <input type="text" name="ko_title_view" id="ko_title_view"  class="input_text" placeholder="과제명(국문)" value="<?= $row['ko_title']; ?>" readonly>
                     </td>
                 </tr>
                 <tr>
                     <th scope="col" class="view_table_header" colspan="1" style="">과제명(영문)</th>
                     <td scope="col" class="view_table_text" colspan="8" style="">
-                    <input type="text" name="en_title_view" id="en_title_view"  class="input_text input_text_end" placeholder="과제명(영문)" readonly value="<?= $row['en_title']; ?>">
+                    <input type="text" name="en_title_view" id="en_title_view"  class="input_text" placeholder="과제명(영문)" value="<?= $row['en_title']; ?>" readonly>
                     </td>
                 </tr>
                 <tr class="view_table_header_table"></tr>
@@ -104,43 +104,42 @@ $row33=sql_fetch_array($result1);
                 <tr>
                     <th scope="col" class="view_table_header" colspan="1" style="">성명</th>
                     <td scope="col" class="view_table_text" colspan="4" style="">
-                    <input type="text" name="name_view" id="name_view"  class="input_text input_text_50 input_text_end" placeholder="성명" readonly value="<?= $row['name']; ?>">
+                    <input type="text" name="name_view" id="name_view"  class="input_text" placeholder="성명" value="<?= $row['name']; ?>" readonly>
                     </td>
                     <th scope="col" class="view_table_header" colspan="1" style="">전공(학위)</th>
                     <td scope="col" class="view_table_text" colspan="3" style="">
-                    <input type="text" name="degree_view" id="degree_view"  class="input_text input_text_50 input_text_end" placeholder="전공(학위)" readonly value="<?= $row['degree']; ?>">
+                    <input type="text" name="degree_view" id="degree_view"  class="input_text" placeholder="전공(학위)" value="<?= $row['degree']; ?>" readonly>
                     </td>
                 </tr>
                 <tr>
                     <th scope="col" class="view_table_header" colspan="1" style="">소속</th>
                     <td scope="col" class="view_table_text" colspan="4" style="">
-                    <input type="text" name="belong_view" id="belong_view"  class="input_text input_text_50 input_text_end" placeholder="소속" readonly value="<?= $row['belong']; ?>">
+                    <input type="text" name="belong_view" id="belong_view"  class="input_text" placeholder="소속" value="<?= $row['belong']; ?>" readonly>
                     </td>
                     <th scope="col" class="view_table_header" colspan="1" style="">직급</th>
                     <td scope="col" class="view_table_text" colspan="3" style="">
-                    <input type="text" name="rank_view" id="rank_view"  class="input_text input_text_50 input_text_end" placeholder="직급" readonly value="<?= $row['rank']; ?>">
+                    <input type="text" name="rank_view" id="rank_view"  class="input_text" placeholder="직급"  value="<?= $row['rank']; ?>" readonly >
                     </td>
                 </tr>
                 <tr>
                     <th scope="col" class="view_table_header" colspan="1" style="">이메일</th>
                     <td scope="col" class="view_table_text" colspan="4" style="">
-                    <input type="text" name="email_view" id="email_view"  class="input_text input_text_50 input_text_end" placeholder="이메일" readonly value="<?= $row['email']; ?>">
+                    <input type="text" name="email_view" id="email_view"  class="input_text" placeholder="이메일" value="<?= $row['email']; ?>" readonly>
                     </td>
                     <th scope="col" class="view_table_header" colspan="1" style="">전화</th>
                     <td scope="col" class="view_table_text" colspan="3" style="">
-                    <input type="text" name="phone_view" id="phone_view"  class="input_text input_text_50 input_text_end" placeholder="전화" readonly value="<?= $row['phone']; ?>">
+                    <input type="text" name="phone_view" id="phone_view"  class="input_text" placeholder="전화" value="<?= $row['phone']; ?>" readonly>
                     </td>
                 </tr>
             
                 <tr>
                     <th scope="col" class="view_table_header" style="">공동연구원</th>
                     <td scope="col" class="view_table_text" colspan="4" style="">
-                    <input type="text" name="main_member_view" id="main_member_view"  class="input_text input_text_50  input_text_end" placeholder="명" readonly value="<?= $row['main_member']; ?>">
-
+                    <input type="text" name="main_member_view" id="main_member_view"  class="input_text" placeholder="명"  value="<?= number_format($row['main_member']); ?>명" readonly>
                     </td>
                     <th scope="col" class="view_table_header" style="">연구원보조</th>
                     <td scope="col" class="view_table_text" colspan="3" style="">
-            <input type="text" name="sub_member_view" id="sub_member_view"  class="input_text input_text_50  input_text_end" placeholder="명" readonly value="<?= $row['sub_member']; ?>">
+                    <input type="text" name="sub_member_view" id="sub_member_view"  class="input_text" placeholder="명"  value="<?= number_format($row['sub_member']); ?>명" readonly>
                     </td>
                 </tr>
                 <tr class="view_table_header_table"></tr>
@@ -150,23 +149,23 @@ $row33=sql_fetch_array($result1);
                 <tr>
                     <th scope="col" class="view_table_header" colspan="1"style="">총 연구 기간</th>
                     <td scope="col" class="view_table_text" colspan="8" style="">
-                        <input type="text" name="date_start_view" id="date_start_view" placeholder="총 연구 기간"  class="input_text" value="<?= $row['date_start']; ?> ~ <?= $row['date_end']; ?>" readonly>
+                        <input type="text" name="date_start_view" id="date_start_view" placeholder="총 연구 기간"  class="input_text"  value="<?= $row['date_start']; ?> ~ <?= $row['date_end']; ?>" readonly>
                     </td>
                 </tr>
                 <tr>
                     <th scope="col" class="view_table_header" colspan="1" style="">연구비신청액</th>
                     <td scope="col" class="view_table_text" colspan="8" style="">
-                        <input type="text" name="money_view" id="money_view"  class="input_text input_text_end" placeholder="연구비신청액" readonly value="<?= $row['money']; ?>">
+                    <input type="text" name="money_view" id="money_view"  class="input_text" placeholder="연구비신청액" value="<?= number_format($row['money']); ?>원" readonly>
                     </td>
                 </tr>
                 <tr>
                     <th scope="col" class="view_table_header" colspan="1" style="">1차년 연구비</th>
                     <td scope="col" class="view_table_text" colspan="4" style=" width:40%">
-                        <input type="text" name="one_year_view" id="one_year_view"  class="input_text input_text_50 input_text_end" placeholder="1차년 연구비" readonly value="<?= $row['one_year']; ?>">
+                    <input type="text" name="one_year_view" id="one_year_view"  class="input_text" placeholder="1차년 연구비" value="<?= number_format($row['one_year']); ?>원" readonly>
                     </td>
                     <th scope="col" class="view_table_header" colspan="1" style="">2차년 연구비</th>
                     <td scope="col" class="view_table_text" colspan="3" style="">
-                        <input type="text" name="two_year_view" id="two_year_view"  class="input_text input_text_50 input_text_end" placeholder="2차년 연구비" readonly value="<?= $row['two_year']; ?>">
+                        <input type="text" name="two_year_view" id="two_year_view"  class="input_text" placeholder="2차년 연구비" value="<?= number_format($row['two_year']); ?>원" readonly>
                     </td>
                 </tr>
             </tbody>
@@ -307,15 +306,16 @@ $row33=sql_fetch_array($result1);
             $result2 = sql_query($sql2);
             $row2 = sql_fetch_array($result2);
 
-            $sql3 = " select * from rater_value where rater_idx = '{$row2['idx']}' and report_idx = '{$_GET['bo_idx']}'";
+            $sql3 = " select * from rater_value where rater_idx = '{$row2['idx']}' and report_idx = '{$_GET['us_idx']}'";
             $result3 = sql_query($sql3);
-            $row3 = sql_fetch_array($result3);        
+            $row3 = sql_fetch_array($result3);     
          ?>
 
         <div class="btn_confirm write_div btn-cont">
             <a href="<?= G5_BBS_URL ?>/board.rater.php?bo_table=qa&bo_idx=<?= $_GET['bo_idx'] ?>&wr_idx=<?= $_GET['wr_idx'] ?>" class=" btn_color_white">이전</a>
             <button type="button" id="btn_submit2" accesskey="s" class="btn_submit btn btn_step4 btn_bo_val btn_color_white"><?= $row3['value']==2? "확인" :"평가"; ?></button>
             <button type="submit" id="btn_submit3" accesskey="s" class="btn_submit btn btn_step4" <?= $row3['value']==2? "disabled" :""; ?> style="background:<?= $row3['value']==2? "#ccc" :"#1D2E58"; ?>" ><?= $row3['value']==2? "제출완료" :"제출"; ?></button>
+
         </div>
     </div>
     </form>
@@ -468,7 +468,7 @@ jQuery(function($){
             </tbody>
         </table> 
         <div class="rater_value_btn_contianer">
-            <button type="button" class="btn_esc">취소</button>
+            <button type="button" class="btn_esc btn_color_white">취소</button>
             <?php if($row3['value'] != 2){ ?>
                 <button type="submit" class="btn_submit" id="value_btn_submit" ><?= $row3['idx'] != ""? "수정" : "저장"; ?></button>
             <?php } ?>

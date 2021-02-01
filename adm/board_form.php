@@ -118,7 +118,7 @@ if ($w == '') {
     $board['bo_hot'] = 100;
     $board['bo_image_width'] = 600;
     $board['bo_upload_count'] = 2;
-    $board['bo_upload_size'] = 1048576;
+    $board['bo_upload_size'] = 104857600;
     $board['bo_reply_order'] = 1;
     $board['bo_use_search'] = 1;
     $board['bo_skin'] = 'basic';

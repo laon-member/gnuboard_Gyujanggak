@@ -11,7 +11,6 @@ $result1 = sql_query($sql1);
 
 
 ?>
-
 <script src="<?php echo G5_JS_URL; ?>/viewimageresize.js"></script>
 
 <!-- 게시물 읽기 시작 { -->
@@ -72,15 +71,6 @@ $result1 = sql_query($sql1);
                 </tr>
 
             <?php
-                $cnt = 0;
-                if ($view['file']['count']) {
-                    for ($i=0; $i<count($view['file']); $i++) {
-                        if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] )
-                            $cnt++;
-                    }
-                }
-                
-            if($cnt) {
                 // 가변 파일
                 for ($i=0; $i< $view['file']['count']; $i++) {
                     if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] ) {
@@ -97,9 +87,8 @@ $result1 = sql_query($sql1);
                 <?php
                     }
                 }
-            }
             ?>
-    
+            
             </thead>
         </table>
         <?php
@@ -108,15 +97,6 @@ $result1 = sql_query($sql1);
         ?>
         
         <!-- } 게시물 상단 버튼 끝 -->
-     
-        
-
-
-
-
-
-
-
     </header>
     
     <section id="bo_v_atc">
@@ -174,15 +154,17 @@ $result1 = sql_query($sql1);
                     </li>
                 <?php } ?>
             <?php } ?>
-            <?php if ($is_admin == 'super' && $_GET['bo_title'] == 3) {  ?>
+            
 
-            <?php } ?>
                
             </ul>
         
             <section id="bus_btn text_inline_block" >
+            <?php if ($is_admin == 'super' && $_GET['bo_title'] == 3) {  ?>
             <a href="<?= G5_BBS_URL ?>/write_notice.php?bo_table=notice&bo_idx=<?= $_GET['bo_idx'] ?>&w=u&wr_id=<?= $_GET['wr_id'] ?>&bo_title=3&u_id=1" class="btn_up_val">수정</a>
             <a href="<?php echo G5_BBS_URL ?>/write_del.php?wr_id=<?= $_GET['wr_id'] ?>&bo_idx=<?= $_GET['bo_idx'] ?>" class="btn_del_val">삭제</a>
+            <?php } ?>
+
             <a href="<?php echo G5_BBS_URL .'/board.notice.php?bo_table=notice&bo_idx='.$_GET['bo_idx'].'&page=1'; ?>&bo_title=<?= $_GET['bo_title']; ?><?= $admin_notice ?>" class="btn_next_prv btn_next_prv_link">목록보기</a>
         </section>
     </section>

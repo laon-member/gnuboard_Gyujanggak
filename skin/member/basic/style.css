@@ -132,7 +132,7 @@
 .register_form_inner ul {padding:20px 0 200px 0;}
 .register_form_inner .register_form_inner_ul {padding:20px 0 50px 0;}
 .register_form_inner li {margin: 20px 0; display: flex;}
-.register_form_inner label {width: 20%; display:inline-block;line-height:40px color #666666}
+.register_form_inner label {width: 20%; display:inline-block;line-height:40px; color : #666666}
 .register_form_inner input{width: 80%; padding-left: 15px;}
 .register_form_inner p {text-align: center; margin-bottom: 40px;}
 #reg_mb_id{width: 55%;}

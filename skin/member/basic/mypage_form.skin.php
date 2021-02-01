@@ -45,7 +45,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	        <h1>회원정보</h1>
 	        <ul>
 				<li>
-	                <label for="reg_mb_id">아이디</label>
+	                <label for="reg_mb_id" style="">아이디</label>
 					<input type="text" name="mb_id" value="<?php echo $member['mb_id'] ?>" id="reg_mb_id" readonly class="frm_input full_input <?php echo $readonly ?>" placeholder="아이디" style="width:80%">
 				</li>
 				<li>

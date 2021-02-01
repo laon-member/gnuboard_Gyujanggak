@@ -60,7 +60,9 @@ $mb_9           = isset($_POST['mb_9'])             ? trim($_POST['mb_9'])      
 $mb_10          = isset($_POST['mb_10'])            ? trim($_POST['mb_10'])          : "";
 
 $mb_name        = clean_xss_tags($mb_name);
-$mb_email       = get_email_address($mb_email);
+
+
+
 $mb_homepage    = "";
 $mb_tel         = "";
 $mb_zip1        = "";
@@ -73,7 +75,7 @@ $mb_addr_jibeon = "";
 run_event('register_form_update_before', $mb_id, $w);
 
 if ($w == '' || $w == 'u') {
-
+    
     if ($msg = empty_mb_id($mb_id))         alert($msg, "", true, true); // alert($msg, $url, $error, $post);
     if ($msg = valid_mb_id($mb_id))         alert($msg, "", true, true);
     if ($msg = count_mb_id($mb_id))         alert($msg, "", true, true);
@@ -90,23 +92,13 @@ if ($w == '' || $w == 'u') {
     if($w == '' && $mb_password != $mb_password_re)
         alert('비밀번호가 일치하지 않습니다.');
 
-    
-    // if(preg_match('/[0-9]/', $mb_password)){
-    //     alert('숫자를 추가하세요');
-    // }
-
-    // if(preg_match('/[a-zA-Z]/', $mb_password)){
-    //     alert('영문을 추가하세요');
-    // }
-
-    // if(preg_match('/[~!@#$%^&*]/', $mb_password)){
-    //     alert('특수문자를 추가하세요');
-    // }
-
-    if(!preg_match('/[a-z0-9A-Z~!@#$%^&*]{9,}/', $mb_password)) {
+    if(!preg_match('/^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{9,}$/', $mb_password)) {
         alert('9자 이상의 영문, 숫자, 특수문자를 혼합만 가능합니다');
     }
-    
+
+    if(!preg_match('/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]+(\.[a-zA-Z]{2,3}){1,4}$/i', $mb_email)) {
+        alert('E-mail 형식을 확인해주세요');
+    }
     
         if ($msg = empty_mb_name($mb_name))       alert($msg, "", true, true);
     if ($msg = empty_mb_email($mb_email))     alert($msg, "", true, true);

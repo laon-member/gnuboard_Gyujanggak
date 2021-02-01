@@ -1,6 +1,0 @@
-SELECT bo_idx,gwb.mb_id,wr_subject
-FROM g5_business_propos as gbp
-INNER JOIN g5_write_business as gwb ON bo_idx = wr_id
-WHERE gwb.mb_id="admin"
-AND wr_subject LIKE '%a%'
-ORDER BY bo_idx DESC LIMIT 0,10;

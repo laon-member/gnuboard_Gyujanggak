@@ -108,10 +108,49 @@ $result1 = sql_query($sql1);
                     </div>
                 </td>
             </tr>
-
+            
+            <?php
+                // 가변 파일
+                for ($i=0; $i< $file_count; $i++) {
+                    if (isset($file[$i]['source']) && $file[$i]['source'] ) {
+                ?>
+                    <tr class="input-file_list">
+                        <?php
+                            //MB 단위 이상일때 MB 단위로 환산
+                            if ($file[$i]['size'] >= 1024 * 1024) {
+                                $fileSize = $row55['bf_filesize'] / (1024 * 1024);
+                                $convertlastpage = sprintf('%0.2f', $fileSize); // 520 -> 520.00
+                                $str = $convertlastpage . ' MB';
+                            }
+                
+                            else {
+                                $fileSize = $file[$i]['size'] / 1024;
+                                $convertlastpage = sprintf('%0.2f', $fileSize); // 520 -> 520.00
+                                $str = $convertlastpage . ' KB';
+                            }
+                        ?>
+                        <th scope="col" class="view_table_header" colspan="1" style="width:10%">파일명</th>
+                        <td scope="col" class="view_table_text " colspan="1" style="width:40%">
+                            <input type="text" id="file_label_view1" readonly="readonly" class="input_text file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="<?= $file[$i]['source']; ?>" style="margin: 0 -2px;"/>
+                        </td>
+                        <th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 사이즈</th>
+                        <td scope="col" class="view_table_text" colspan="2" style="width:20%">
+                            <input type="hidden" name="file_idx" value="<?= $_GET['wr_id']; ?>" id="sql_file_id">
+                            <input type="text" id="file-size-'+file_number+'" class="file-name file-size" style="margin: 0 -2px;" value="<?= $str ?>" readonly="readonly"/>
+                            <input type="file" name="bf_file[]" id="upload00" class="file-upload file_sql_upload" <?= $file[$i]['report'] ==2? "disabled": ""; ?> />
+                            <input type="checkbox" class="del-no" id="del-no<?= $j ?>" name="del-no[]" value="<?= $file[$i]['no']; ?>" style="display:none;">
+                        </td>
+                        <th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 삭제</th>
+                        <td scope="col" class="view_table_text" colspan="1" style="width:10%">
+                            <label for="del-no<?= $j ?>" class="file-label del-no-btn">삭제</label>
+                        </td>
+                    </tr>
+                <?php
+                    }
+                }
+            ?>
         </tbody>
     </table>
-  
 
     <div class ="btn_confirm write_div btn-cont">
         <?php 
@@ -130,7 +169,7 @@ $result1 = sql_query($sql1);
         <div class="next_prev_bar">
             <label for="upload01" id="file-label-btn" class="file-label"><img src="<?= G5_IMG_URL ?>/upload.png" alt=""> 파일 업로드</label>
             <a href="<?= G5_BBS_URL ?>/board.notice.php?bo_table=notice&bo_idx=<?= $_GET['bo_idx']; ?>&bo_title=<?= $_GET['bo_title'] ?>&u_id=1" class="btn_color_white btn">취소</a>
-            <button type="submit" id="btn_submit" accesskey="s" class="btn_submit btn">작성완료</button>
+            <button type="submit" id="btn_submit" accesskey="s" class="btn_submit btn"><?= $w == ""? "저장" : "수정" ?></button>
         </div>
     </div>
     </form>
@@ -148,13 +187,7 @@ $result1 = sql_query($sql1);
             check_byte("wr_content", "char_count");
         });
 
-        // $('#btn_submit').click(function(){
-        //     IsValidDateStart = Date.parse($('#date_start').val());
-        //     if (isNaN(IsValidDateStart)) return alert('총 연구기간 시작 날짜가 유효하지 않습니다.');
-                
-        //     IsValidDateEnd = Date.parse($('#date_end').val());
-        //     if (isNaN(IsValidDateEnd)) return alert('총 연구기간 끝나는 날짜가 유효하지 않습니다.');
-        // })
+
     });
     <?php } ?>
 
@@ -233,7 +266,7 @@ $result1 = sql_query($sql1);
         var file_number = 1;
         var html = '<tr class="input-file_list">'
                     +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일명</th>'
-                    +'<td scope="col" class="view_table_text" colspan="1" style="width:40%">'
+                    +'<td scope="col" class="view_table_text " colspan="1" style="width:40%">'
                     +'    <input type="text" style="margin: 0 -2px;" id="file_label_view1" readonly="readonly" class="input_text file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/> '
                     +'</td>'
                     +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 사이즈</th>'
@@ -243,7 +276,7 @@ $result1 = sql_query($sql1);
                     +'</td>'
                     +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 삭제</th>'
                     +'<td scope="col" class="view_table_text" colspan="1" style="width:10%">'
-                    +'<button type="button" class=" input_text file-label file-del " id="file-del'+file_number+'">삭제</button>'
+                    +'<button type="button" class="  file-label file-del " id="file-del'+file_number+'">삭제</button>'
                     +'</td>'
                     +'</tr>';
         
@@ -287,7 +320,7 @@ $result1 = sql_query($sql1);
                     var html ='<tr class="input-file_list">'
                     +'<th scope="col" class="view_table_header" colspan="1" style="width:10%;height: 58px;">파일명</th>'
                     +'<td scope="col" class="view_table_text" colspan="1" style="width:40%">'
-                    +'    <input type="text" id="file_label_view'+file_number+'" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/>'
+                    +'    <input type="text" id="file_label_view'+file_number+'" readonly="readonly" class="input_text file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/>'
                     +'</td>'
                     +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 사이즈</th>'
                     +'<td scope="col" class="view_table_text" colspan="2" style="width:20%">'
@@ -324,7 +357,10 @@ $result1 = sql_query($sql1);
             return event.key != "Enter";
         });
 
-       
+        $('.del-no-btn').click(function(){
+            var check_val =  $(this).parent().prev().prev().find('input[type="checkbox"]').is(":checked");
+            $(this).parent().parent().css({'display':'none'});
+        })
     })
     </script>
 </section>

@@ -26,17 +26,17 @@ if ($user == 'id') {
     if(empty($mb_email) || empty($mb_name)){
         alert('정보가 비어있습니다. 다시 입력해주세요');
     } else {
-        $sql = " SELECT * FROM `g5_member` WHERE mb_name = '{$mb_name}' AND mb_email = '{$mb_email}'";
-        $row2 = sql_fetch($sql);
+        $sql = " SELECT * FROM `g5_member` WHERE mb_email = '{$mb_email}'";
+        $result2 = sql_query($sql);
+        $row3=sql_fetch_array($result2);
 
-        if(isset($row2)){
-             $_SESSION['id'] = $row2['mb_id'];
-            // echo $row2['mb_id'];
-            // echo  $_SESSION['id'];
-             alert('아이디를 찾았습니다.');
-        } else {
-            alert('정보가 없습니다.');
-        }
+        if(!$row3['mb_email']) return alert('없는 이메일 입니다.');
+        if($row3['mb_name'] != $mb_name) return alert('없는 이름 입니다.');
+
+        $_SESSION['id'] = $row3['mb_id'];
+        $_SESSION['name'] = $row3   ['mb_name'];
+        alert('아이디를 찾았습니다.');
+        
     }
 
    
@@ -44,23 +44,24 @@ if ($user == 'id') {
 } else if ($user == 'pw') {
 
     $mb_id = $_POST['mb_id'];
-    $mb_name = $_POST['mb_name'];
     $mb_email = $_POST['mb_email'];
+    $mb_name = $_POST['mb_name'];
     
     if(empty($mb_id) || empty($mb_name) || empty($mb_email)){
         alert('정보가 비어있습니다. 다시 입력해주세요');
     } else {
-        $sql = " SELECT * FROM `g5_member` WHERE mb_id = '{$mb_id}' AND mb_name = '{$mb_name}' AND mb_email = '{$mb_email}'";
-        $row2 = sql_fetch($sql);
 
-        if(isset($row2['mb_password'])){
-            $_SESSION['mb_no'] = $row2['mb_no'];
-            echo $row2['mb_no'];
-            sql_query($sql);
-            alert('비밀번호를 찾았습니다.', G5_BBS_URL ."/id_pw_check_form.php?title=pw&idx=1");
-        } else {
-            alert('정보가 없습니다.');
-        }
+        $sql = " SELECT * FROM `g5_member` WHERE mb_id = '{$mb_id}'";
+        $result2 = sql_query($sql);
+        $row3=sql_fetch_array($result2);
+
+        if(!$row3['mb_id']) return alert('없는 아이디 입니다.');
+        if($row3['mb_email'] != $mb_email) return alert('없는 이메일 입니다.');
+        if($row3['mb_name'] != $mb_name) return alert('없는 이름 입니다.');
+
+        $_SESSION['mb_no'] = $row3['mb_no'];
+        alert('비밀번호를 찾았습니다.', G5_BBS_URL ."/id_pw_check_form.php?title=pw&idx=1");
+          
     }       
 } else if ($user == 'pw2'){
     $mb_new_password = trim($_POST['mb_new_pw']);
@@ -75,9 +76,16 @@ if ($user == 'id') {
             alert('9자 이상의 영문, 숫자, 특수문자를 혼합만 가능합니다');
         } else {
             if($mb_new_password_re == $mb_new_password){
+                $sql = "SELECT * FROM `g5_member` WHERE mb_no = '{$_SESSION['mb_no']}'";
+                $result2 = sql_query($sql);
+                $row=sql_fetch_array($result2);
+                if(login_password_check($row, $mb_new_password, $row['mb_password'])){
+                    alert('새비밀번호가 현재 비밀번호랑 일치합니다. ');
+                } 
+               
                 $sql_password= "";
                 $sql_password = " mb_password = '".get_encrypt_string($mb_new_password)."' ";
-                
+
                 $sql = "UPDATE `g5_member` set {$sql_password} WHERE mb_no = '{$_SESSION['mb_no']}'";
                 sql_query($sql);
                 $_SESSION['mb_no'] = '';

@@ -373,30 +373,14 @@ if ($w == '' || $w == 'r') {
         $sql_ip = " , wr_ip = '{$_SERVER['REMOTE_ADDR']}' ";
 
     $sql = " update {$write_table}
-                set ca_name = '{$ca_name}',
-                     wr_option = '{$html},{$secret},{$mail}',
-                     wr_subject = '{$wr_subject}',
-                     wr_content = '{$wr_content}',
-                     wr_seo_title = '$wr_seo_title',
-                     wr_link1 = '{$wr_link1}',
-                     wr_link2 = '{$wr_link2}',
-                     mb_id = '{$mb_id}',
-                     wr_name = '{$wr_name}',
-                     wr_email = '{$wr_email}',
-                     wr_homepage = '{$wr_homepage}',
-                     wr_1 = '{$wr_1}',
-                     wr_2 = '{$wr_2}',
-                     wr_3 = '{$wr_3}',
-                     wr_4 = '{$wr_4}',
-                     wr_5 = '{$wr_5}',
-                     wr_6 = '{$wr_6}',
-                     wr_7 = '{$wr_7}',
-                     wr_8 = '{$wr_8}',
-                     wr_9 = '{$wr_9}',
-                     wr_10= '{$wr_10}'
-                     {$sql_ip}
-                     {$sql_password}
-              where wr_id = '{$wr['wr_id']}' ";
+                set wr_quest_number = '{$_POST['quest_number_view']}',
+                wr_subject = '{$_POST['wr_subject']}',
+                wr_content = '{$_POST['wr_content']}',
+                wr_seo_title = '{$_POST['wr_subject']}',
+                wr_date_start = '{$_POST['date_start_act']}',
+                wr_date_end = '{$_POST['date_end_act']}'
+                where wr_id = '{$_POST['wr_id']}' ";
+
     sql_query($sql);
 
     
@@ -465,6 +449,24 @@ $chars_array = array_merge(range(0,9), range('a','z'), range('A','Z'));
 // 가변 파일 업로드
 $file_upload_msg = '';
 $upload = array();
+
+
+$count_del =  @count($_POST['del-no']);
+
+if($count_del > 0 ){
+    for($k=0; $k < $count_del; $k++ ){
+        sql_query("delete from {$g5['board_file_table']} where bo_table = 'business' and wr_id = '{$_POST['file_idx']}' and bf_no = '{$_POST['del-no'][$k]}' ");
+    }
+
+    $sql123 = " select * from {$g5['board_file_table']} where bo_table = 'business' and wr_id = '{$_POST['file_idx']}' ";
+    $result123 = sql_query($sql123);
+    for($i=0; $row123=sql_fetch_array($result123); $i++) {
+        $sql1212 = " update {$g5['board_file_table']} set bf_no = '{$i}' where bo_table = 'business' and wr_id = '{$_POST['file_idx']}' and bf_no = '{$row123['bf_no']}' ";
+        sql_query($sql1212);
+    }
+
+    sql_query(" update g5_write_business set wr_file = '{$i}' where wr_id = '{$_POST['file_idx']}' ");
+}
 
 if(isset($_FILES['bf_file']['name']) && is_array($_FILES['bf_file']['name'])) {
     for ($i=0; $i<count($_FILES['bf_file']['name']); $i++) {

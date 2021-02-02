@@ -136,7 +136,7 @@ $result1 = sql_query($sql1);
         <?php 
             $nDate = date("Y-m-d",time()); // 오늘 날짜를 출력하겠지요?
             $view['wr_date_end'];
-            if($nDate <= $view['wr_date_end'] && $nDate >= $view['wr_date_start']){ 
+            if($nDate <= $view['wr_date_end'] && $nDate >= $view['wr_date_start'] && $view['value'] < 3){ 
         ?>
         <section id="bus_btn"  class="text_inline_block">
             <a href="<?= G5_BBS_URL ?>/application.php?bo_table=business&bo_idx=<?php echo $view['wr_title_idx']; ?>&wr_id=<?php echo $_GET['wr_id']; ?>" class="btn_next_prv btn_next_prv_link" title="신청하기">신청하기</a>

@@ -2,7 +2,6 @@
 include_once('./_common.php');
 
 unset($_SESSION['FORM']);
-unset($_SESSION['id']);
 
 if( function_exists('social_check_login_before') ){
     $social_login_html = social_check_login_before();

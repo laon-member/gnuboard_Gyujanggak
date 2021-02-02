@@ -41,7 +41,7 @@ if(empty($_SESSION['FORM']['mb_id'])){
 	<?php }  ?>
 	<div id="register_form" class="form_01">   
 	    <div class="register_form_inner">
-	        <h1>비밀번호 찾기</h1>
+	        <h1>비밀번호 변경</h1>
 	        <ul>
 				<li>
 	                <label for="reg_mb_pw">새로운 비밀번호</label>

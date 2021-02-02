@@ -145,22 +145,26 @@ $result = sql_query($sql);
                         <th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 사이즈</th>
                         <td scope="col" class="view_table_text" colspan="2" style="width:20%">
                             <input type="hidden" name="file_idx" value="<?= $_GET['wr_id']; ?>" id="sql_file_id">
+                            <input type="hidden" name="file_idx_num[]" value="<?= $file[$i]['no']; ?>" id="sql_file_id">
                             <input type="text" id="file-size-'+file_number+'" class="file-name file-size" style="margin: 0 -2px;" value="<?= $str ?>" readonly="readonly"/>
-                            <input type="file" name="bf_file[]" id="upload00" class="file-upload file_sql_upload" <?= $file[$i]['report'] ==2? "disabled": ""; ?> />
-                            <input type="checkbox" class="del-no" id="del-no<?= $j ?>" name="del-no[]" value="<?= $file[$i]['no']; ?>" style="display:none;">
+                            <input type="file" name="bf_file[]" id="upload00" class="file-upload file_sql_upload" value="<?= $file[$i]['bf_no']; ?>"/>
+                            <input type="checkbox" id="del-no<?= $i ?>" name="del-no[]" value="<?= $file[$i]['bf_no']; ?>" style="display:none">
                         </td>
-                        <th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 삭제</th>
-                        <td scope="col" class="view_table_text" colspan="1" style="width:10%">
-                            <label for="del-no<?= $j ?>" class="file-label del-no-btn">삭제</label>
+                        </td>
+                            <th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 삭제</th>
+                            <td scope="col" class="view_table_text" colspan="1" style="width:10%">
+                            <label for="del-no<?= $i ?>" class="file-label del-no-btn">삭제</label>
                         </td>
                     </tr>
+
                 <?php
                     }
+
                 }
+                
             ?>
         </tbody>
     </table>
-    
     <div class ="btn_confirm write_div btn-cont">
         <div class="next_prev_bar">
             <label for="upload01" id="file-label-btn" class="file-label"><img src="<?= G5_IMG_URL ?>/upload.png" alt=""> 파일 업로드</label>
@@ -373,8 +377,9 @@ $result = sql_query($sql);
         })
 
         $('.del-no-btn').click(function(){
-            var check_val =  $(this).parent().prev().prev().find('input[type="checkbox"]').is(":checked");
-            $(this).parent().parent().css({'display':'none'});
+                var check_val =  $(this).parent().prev().prev().find('input[type="checkbox"]').is(":checked");
+                $(this).parent().prev().prev().find('.file_sql_upload').attr('name', 'report_name[]');
+                $(this).parent().parent().css({'display':'none'});
         })
     })
     </script>

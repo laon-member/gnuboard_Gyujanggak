@@ -337,64 +337,68 @@ jQuery(function($){
     var test_title = 0;
     var test_plan = 0;
     var test_sum = 0;
-    
-    if($('#test_opinion').val() == "" || $('#test_user').val() == "" || $('#test_title').val() == "" || $('#test_plan').val() == ""){
-        $('#value_btn_submit').attr('disabled', true);
-        $('#value_btn_submit').css({"background":"#ccc"});
-    } else {
-        $('#value_btn_submit').attr('disabled', false);
-        $('#value_btn_submit').css({"background":"#1D2E58 "});
-    }
 
     $('#test_user').change(function(){
         test_user = parseFloat($('#test_user').val());
+        test_title = parseFloat($('#test_title').val());
+        test_plan = parseFloat($('#test_plan').val());
+
         test_sum = Number(test_user) + Number(test_title) + Number(test_plan);
         test_sum = test_sum/3;
         test_sum = test_sum.toFixed(2);
+        
         $('#test_sum').val(test_sum);
-        if($('#test_opinion').val() == "" || $('#test_user').val() == "" || $('#test_title').val() == "" || $('#test_plan').val() == ""){
+        if($('#test_opinion').val() == "" || $('#test_user').val() == "" || $('#test_title').val() == "" || $('#test_plan').val() == "" && $('#value_btn_submit').text() == "저장"){
             $('#value_btn_submit').attr('disabled', true);
             $('#value_btn_submit').css({"background":"#ccc"});
         } else {
             $('#value_btn_submit').attr('disabled', false);
-            $('#value_btn_submit').css({"background":"#1D2E58 "});
+            $('#value_btn_submit').css({"background":"#1D2E58"});
         }
     });
     $('#test_title').change(function(){
+        test_user = parseFloat($('#test_user').val());
         test_title = parseFloat($('#test_title').val());
+        test_plan = parseFloat($('#test_plan').val());
+
         test_sum = Number(test_user) + Number(test_title) + Number(test_plan);
         test_sum = test_sum/3;
         test_sum = test_sum.toFixed(2);
         $('#test_sum').val(test_sum);
-        if($('#test_opinion').val() == "" || $('#test_user').val() == "" || $('#test_title').val() == "" || $('#test_plan').val() == ""){
+        
+        if($('#test_opinion').val() == "" || $('#test_user').val() == "" || $('#test_title').val() == "" || $('#test_plan').val() == "" && $('#value_btn_submit').text() == "저장"){
             $('#value_btn_submit').attr('disabled', true);
             $('#value_btn_submit').css({"background":"#ccc"});
         } else {
             $('#value_btn_submit').attr('disabled', false);
-            $('#value_btn_submit').css({"background":"#1D2E58 "});
+            $('#value_btn_submit').css({"background":"#1D2E58"});
         }
     });
     $('#test_plan').change(function(){
+        test_user = parseFloat($('#test_user').val());
+        test_title = parseFloat($('#test_title').val());
         test_plan = parseFloat($('#test_plan').val());
+
         test_sum = Number(test_user) + Number(test_title) + Number(test_plan);
         test_sum = test_sum/3;
         test_sum = test_sum.toFixed(2);
         $('#test_sum').val(test_sum);
-        if($('#test_opinion').val() == "" || $('#test_user').val() == "" || $('#test_title').val() == "" || $('#test_plan').val() == ""){
+        
+        if($('#test_opinion').val() == "" || $('#test_user').val() == "" || $('#test_title').val() == "" || $('#test_plan').val() == "" && $('#value_btn_submit').text() == "저장"){
             $('#value_btn_submit').attr('disabled', true);
             $('#value_btn_submit').css({"background":"#ccc"});
         } else {
             $('#value_btn_submit').attr('disabled', false);
-            $('#value_btn_submit').css({"background":"#1D2E58 "});
+            $('#value_btn_submit').css({"background":"#1D2E58"});
         }
     });
     $('#test_opinion').change(function(){
-        if($('#test_opinion').val() == "" || $('#test_user').val() == "" || $('#test_title').val() == "" || $('#test_plan').val() == ""){
+        if($('#test_opinion').val() == "" || $('#test_user').val() == "" || $('#test_title').val() == "" || $('#test_plan').val() == "" && $('#value_btn_submit').text() == "저장"){
             $('#value_btn_submit').attr('disabled', true);
             $('#value_btn_submit').css({"background":"#ccc"});
         } else {
             $('#value_btn_submit').attr('disabled', false);
-            $('#value_btn_submit').css({"background":"#1D2E58 "});
+            $('#value_btn_submit').css({"background":"#1D2E58"});
         }
     });
 

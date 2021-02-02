@@ -47,7 +47,7 @@ if ($sca || $stx || $stx === '0') {     //검색이면
 
     if (!$spt) $spt = $min_spt;
 
-    $sql_search .= " and (wr_num between {$spt} and ({$spt} + {$config['cf_search_part']})) ";
+    $sql_search .= " and (wr_num between {$spt} and ({$spt} + {$config['cf_search_part']})) and notice_table = {$_GET['bo_idx']} ";
 
     // 원글만 얻는다. (코멘트의 내용도 검색하기 위함)
     // 라엘님 제안 코드로 대체 http://sir.kr/g5_bug/2922
@@ -171,14 +171,13 @@ if ($sst) {
 
 
 if ($is_search_bbs) {
-    $sql = " select distinct * from {$write_table} where {$sql_search} {$sql_order} DESC limit {$from_record}, $page_rows ";
+    $sql = " select distinct * from {$write_table} where {$sql_search} {$sql_order}  DESC limit {$from_record}, $page_rows ";
 } else {
     $sql = " select * from {$write_table} where notice_table = '{$_GET['bo_idx']}' ";
     if(!empty($notice_array))
         $sql .= " and wr_id not in (".implode(', ', $notice_array).") ";
     $sql .= " {$sql_order} DESC limit {$from_record}, $page_rows ";
 }
-
 // 페이지의 공지개수가 목록수 보다 작을 때만 실행
 if($page_rows > 0) {
     $result = sql_query($sql);

@@ -227,7 +227,7 @@ $result = sql_query($sql);
                                         <img src="<?php echo G5_IMG_URL ?>/download_icon.png" alt="<?php echo $config['cf_title']; ?>">
                                     </td>
                                     <td scope="col" colspan="5" class="view_table_text" style="width:80%;">
-                                        <a href="<?= G5_BBS_URL ?>/download.php?bo_table=g5_business_propos&wr_id=<?= $row_list2['wr_id'] ?>&no=<?= $row_list2['bf_no'] ?>" ><?= $row_list2['bf_source'] ?></a>
+                                        <a href="<?= G5_BBS_URL ?>/download.php?bo_table=report&wr_id=<?= $row_list2['wr_id'] ?>&no=<?= $row_list2['bf_no'] ?>" ><?= $row_list2['bf_source'] ?></a>
                                     </td>
                                 </tr>
                         <?php

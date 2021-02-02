@@ -391,7 +391,7 @@ $result = sql_query($sql);
             if(!emailResult) return alert("E-mail 주소가 형식에 맞지 않습니다.");
 
             //정규식 설정
-            var regex= /^[0-9]/g;
+            var regex= /^[0-9]+$/;
             //정규식 결과 저장
             var phoneResult = regex.test( $("#phone").val() );
             if(!phoneResult) return alert("전화번호에 숫자만 입력해주세요");

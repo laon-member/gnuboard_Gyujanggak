@@ -113,7 +113,7 @@ $j=0;
                             <input type="hidden" value="<?= $row55['wr_id']; ?>" id="sql_file_id">
                             <input type="hidden" value="<?= $row55['bf_no']; ?>" id="sql_file_no">
                             <input type="text" id="file-size-'+file_number+'" class="file-name file-size" style="margin: 0 -2px;" value="<?= $str ?>" readonly="readonly"/>
-                            <input type="file" name="bf_file[]" id="upload00" class="file-upload file_sql_upload" <?= $row44['report'] ==2? "disabled": ""; ?> />
+                            <input type="file" name="bf_file[]" id="upload00" value="<?= $row55['bf_no']; ?>" class="file-upload file_sql_upload" <?= $row44['report'] ==2? "disabled": ""; ?> />
                             <input type="checkbox" class="del-no" id="del-no<?= $j ?>" name="del-no[]" value="<?= $row55['bf_no']; ?>" style="display:none;">
                         </td>
                         <th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 삭제</th>
@@ -132,11 +132,11 @@ $j=0;
             <?php if($row44['report'] < 2){ ?>
                 <label for="upload01" id="file-label-btn" class="file-label"><img src="<?= G5_IMG_URL ?>/upload.png" alt=""> 파일 업로드</label>
 
-                <button type="submit" formaction="<?= G5_BBS_URL ?>/view.report.update.php?bo_table=<?= $_GET['bo_table'] ?>&bo_idx=1&wr_bo_idx=<?= $_GET['wr_bo_idx'] ?>" class="btn_next_prv btn_color_white" id="save" title="<?php $row44 == "" ? '저장하기':'수정하기'; ?>" <?= $row44['report'] ==2? "disabled": ""; ?> ><?= $row44 == "" ? '저장':'수정'; ?></button>
+                <button type="submit" formaction="<?= G5_BBS_URL ?>/view.report.update.php?bo_table=report&bo_idx=1&wr_bo_idx=<?= $_GET['wr_bo_idx'] ?>" class="btn_next_prv btn_color_white btn_file_del" id="save" title="<?php $row44 == "" ? '저장하기':'수정하기'; ?>" <?= $row44['report'] ==2? "disabled": ""; ?> ><?= $row44 == "" ? '저장':'수정'; ?></button>
             <?php } ?>
 
                 <button type="submit" formaction="<?= G5_BBS_URL ?>/board.report.php?bo_table=business&bo_idx=1" class="btn_next_prv  btn_color_white" id="cancel" title="취소">취소하기</button>
-            <button type="submit" formaction="<?= G5_BBS_URL ?>/view.report.update.php?bo_table=<?= $_GET['bo_table'] ?>&bo_idx=1&wr_bo_idx=<?= $_GET['wr_bo_idx'] ?>" class="btn_next_prv btn_next_prv_link" id="submission" title="신청하기" <?= $row44['report'] ==2? "disabled": ""; ?> style="background:<?= $row44['report'] ==2? '#ccc': '#1D2E58'; ?>">신청하기</button>
+            <button type="button" formaction="<?= G5_BBS_URL ?>/view.report.update.php?bo_table=report&bo_idx=1&wr_bo_idx=<?= $_GET['wr_bo_idx'] ?>" class="btn_next_prv btn_next_prv_link btn_file_del" id="submission" title="신청하기" <?= $row44['report'] ==2? "disabled": ""; ?> style="background:<?= $row44['report'] ==2? '#ccc': '#1D2E58'; ?>">신청하기</button>
             </div>
         </div>
 </form>
@@ -245,8 +245,11 @@ $j=0;
         $('.del-no-btn').click(function(){
             if(report_value < 2){
                 var check_val =  $(this).parent().prev().prev().find('input[type="checkbox"]').is(":checked");
+                $(this).parent().prev().prev().find('.file_sql_upload').attr('name', 'report_name[]');
                 $(this).parent().parent().css({'display':'none'});
+
             }
         })
-    })
+
+    });
 </script>

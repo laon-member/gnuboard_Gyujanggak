@@ -18,7 +18,6 @@ include_once('./_common.php');
 //     set_session("ss_datetime", G5_SERVER_TIME);
 // }
 
-// echo $bo_idx;
 
 if($_GET['bo_idx'] == 1){
     $val = "report_val_1 =".$_POST['save']."";
@@ -29,6 +28,8 @@ if($_GET['bo_idx'] == 1){
 
 if ($_POST['save'] == '1') {
     if($_POST['save_db']){
+        if($_POST['contents'] == "") return alert("상세설명이 비어 있습니다");
+
         $sql = " update report
                 set report_idx = '$wr_reply',
                 contents = '{$_POST['contents']}',
@@ -70,6 +71,7 @@ if ($_POST['save'] == '1') {
 
     if($_POST['save_db']){
 
+        if($_POST['contents'] == "") return alert("상세설명이 비어 있습니다");
 
         $sql = " update report
                 set report_idx = '1',
@@ -133,18 +135,13 @@ $file_upload_msg = '';
 $upload = array();
 
 $count_del =  @count($_POST['del-no']);
-
+$count_file_num = @count($_FILES['bf_file']);
 if($count_del > 0 ){
     for($k=0; $k < $count_del; $k++ ){
         sql_query("delete from {$g5['board_file_table']} where bo_table = 'report' and wr_id = '{$_POST['file_idx']}' and bf_no = '{$_POST['del-no'][$k]}' ");
+        $count_file_num;
     }
 
-    $sql123 = " select * from {$g5['board_file_table']} where bo_table = 'report' and wr_id = '{$_POST['file_idx']}' ";
-    $result123 = sql_query($sql123);
-    for($i=0; $row123=sql_fetch_array($result123); $i++) {
-        $sql1212 = " update {$g5['board_file_table']} set bf_no = '{$i}' where bo_table = 'report' and wr_id = '{$_POST['file_idx']}' and bf_no = '{$row123['bf_no']}' ";
-        sql_query($sql1212);
-    }
 }
 
 if(isset($_FILES['bf_file']['name']) && is_array($_FILES['bf_file']['name'])) {
@@ -252,8 +249,6 @@ for ($i=0; $i<count($upload); $i++)
         }
         $row = sql_fetch(" select count(*) as cnt from {$g5['board_file_table']} where bo_table = 'report' and wr_id = '{$_POST['file_idx']}' and bf_no = '{$i}' ");
         $row22 = sql_fetch(" select * from report where business_idx = '{$wr_bo_idx}'");
-        echo " select * from report where business_idx = '{$wr_bo_idx}'";
-        echo $row22['idx'];
         if ($row['cnt'] )
         {
             // 삭제에 체크가 있거나 파일이 있다면 업데이트를 합니다.

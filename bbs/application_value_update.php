@@ -40,14 +40,14 @@ if($row1['cnt'] > 0){
                 $sql2 = " update g5_write_business set value = '3' where wr_id = '{$_GET['us_idx']}'";
                 sql_query($sql2);
 
-                alert('평가완료'); 
+                alert('심사결과를 발표 했습니다.'); 
             } else if($row2['value'] == 1) {
                 $sql = " UPDATE g5_business_propos set value = '4' where bo_idx = '{$_GET['us_idx']}'";
                 sql_query($sql);
                 
                 $sql2 = " update g5_write_business set value = '3' where wr_id = '{$_GET['us_idx']}'";
                 sql_query($sql2);
-                alert('평가완료');
+                alert('심사결과를 발표 했습니다.');
             }
         } else if($_GET['bo_idx'] == 2) {
             if($row2['wr_8'] == 4 || $row2['value'] == 3){
@@ -59,14 +59,14 @@ if($row1['cnt'] > 0){
                 $sql2 = " update g5_write_business set wr_8 = '3' where wr_id = '{$_GET['us_idx']}'";
                 sql_query($sql2);
 
-                alert('평가완료'); 
+                alert('심사결과를 발표 했습니다.'); 
             } else if($row2['wr_8'] == 1) {
                 $sql = " UPDATE g5_business_propos set value = '4' where bo_idx = '{$_GET['us_idx']}'";
                 sql_query($sql);
                 
                 $sql2 = " update g5_write_business set wr_8 = '3' where wr_id = '{$_GET['us_idx']}'";
                 sql_query($sql2);
-                alert('평가완료');
+                alert('심사결과를 발표 했습니다.');
             }
 
         } else if($_GET['bo_idx'] == 3) {
@@ -79,14 +79,14 @@ if($row1['cnt'] > 0){
                 $sql2 = " update g5_write_business set wr_9 = '3' where wr_id = '{$_GET['us_idx']}'";
                 sql_query($sql2);
 
-                alert('평가완료'); 
+                alert('심사결과를 발표 했습니다.'); 
             } else if($row2['wr_9'] == 1) {
                 $sql = " UPDATE g5_business_propos set value = '4' where bo_idx = '{$_GET['us_idx']}'";
                 sql_query($sql);
                 
                 $sql2 = " update g5_write_business set wr_9 = '3' where wr_id = '{$_GET['us_idx']}'";
                 sql_query($sql2);
-                alert('평가완료');
+                alert('심사결과를 발표 했습니다.');
             }
         }
 

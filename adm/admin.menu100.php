@@ -1,7 +1,7 @@
 <?php
-// $menu['menu100'] = array (
-//     array('100000', '환경설정', G5_ADMIN_URL.'/config_form.php',   'config'),
-//     array('100100', '기본환경설정', G5_ADMIN_URL.'/config_form.php',   'cf_basic'),
+$menu['menu100'] = array (
+    array('100000', '대비보드', G5_ADMIN_URL.'/config_form.php',   'config'),
+    array('100100', '대비보드', G5_ADMIN_URL.'/config_form.php',   'cf_basic'),
 //     array('100200', '관리권한설정', G5_ADMIN_URL.'/auth_list.php',     'cf_auth'),
 //     array('100280', '테마설정', G5_ADMIN_URL.'/theme.php',     'cf_theme', 1),
 //     array('100290', '메뉴설정', G5_ADMIN_URL.'/menu_list.php',     'cf_menu', 1),
@@ -21,4 +21,7 @@
 
 // $menu['menu100'][] = array('100410', 'DB업그레이드', G5_ADMIN_URL.'/dbupgrade.php', 'db_upgrade');
 // $menu['menu100'][] = array('100400', '부가서비스', G5_ADMIN_URL.'/service.php', 'cf_service');
+
+
+);
 ?>

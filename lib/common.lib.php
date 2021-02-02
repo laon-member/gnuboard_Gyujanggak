@@ -324,13 +324,12 @@ function get_filesize($size)
 function get_file($bo_table, $wr_id)
 {
     global $g5, $qstr;
-
+    $no = 0;
     $file['count'] = 0;
     $sql = " select * from {$g5['board_file_table']} where bo_table = '$bo_table' and wr_id = '$wr_id' order by bf_no ";
     $result = sql_query($sql);
     while ($row = sql_fetch_array($result))
     {
-        $no = $row['bf_no'];
         $bf_content = $row['bf_content'] ? html_purifier($row['bf_content']) : '';
         $file[$no]['href'] = G5_BBS_URL."/download.php?bo_table=$bo_table&amp;wr_id=$wr_id&amp;no=$no" . $qstr;
         $file[$no]['download'] = $row['bf_download'];
@@ -350,7 +349,9 @@ function get_file($bo_table, $wr_id)
         $file[$no]['bf_fileurl'] = $row['bf_fileurl'];
         $file[$no]['bf_thumburl'] = $row['bf_thumburl'];
         $file[$no]['bf_storage'] = $row['bf_storage'];
+        $file[$no]['bf_no'] = $row['bf_no'];
         $file['count']++;
+        $no ++;
     }
 
     return $file;

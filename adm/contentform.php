@@ -5,6 +5,7 @@ include_once(G5_EDITOR_LIB);
 
 auth_check($auth[$sub_menu], "w");
 
+
 // 상단, 하단 파일경로 필드 추가
 if(!sql_query(" select co_include_head from {$g5['content_table']} limit 1 ", false)) {
     $sql = " ALTER TABLE `{$g5['content_table']}`  ADD `co_include_head` VARCHAR( 255 ) NOT NULL ,
@@ -37,25 +38,6 @@ $html_title = "내용";
 $g5['title'] = $html_title.' 관리';
 $readonly = '';
 
-if ($w == "u")
-{
-    $html_title .= " 수정";
-    $readonly = " readonly";
-
-    $sql = " select * from {$g5['content_table']} where co_id = '$co_id' ";
-    $co = sql_fetch($sql);
-    if (!$co['co_id'])
-        alert('등록된 자료가 없습니다.');
-}
-else
-{
-    $html_title .= ' 입력';
-    $co = array(
-        'co_html' => 2,
-        'co_skin' => 'basic',
-        'co_mobile_skin' => 'basic'
-        );
-}
 
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 ?>

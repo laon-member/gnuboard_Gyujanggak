@@ -145,7 +145,6 @@ for($j=1; $row123=sql_fetch_array($result1); $j++) {
             <td class="td_end td_center td_d_day">
                 <?php 
                     $nDate = date("Y-m-d",time()); // 오늘 날짜를 출력하겠지요?
-                    $valDate = $list[$i]['wr_date_end']; // 폼에서 POST로 넘어온 value 값('yyyy-mm-dd' 형식)
                     $leftDate = intval((strtotime($valDate) - strtotime($nDate)) / 86400); // 나머지 날짜값이 나옵니다.
                     
                     if($list[$i]['wr_date_end'] < $nDate ||$list[$i]['value'] == 3) {

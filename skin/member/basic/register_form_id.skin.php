@@ -77,3 +77,8 @@ if(empty($_SESSION['FORM']['mb_id'])){
 
 <script>
 </script>
+
+<?php
+	unset($_SESSION['id']);
+	$_SESSION['id'] = '';
+?>

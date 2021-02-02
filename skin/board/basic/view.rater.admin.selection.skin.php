@@ -85,6 +85,15 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                 $list_num = 0;
                 for ($i=0; $i<$row = sql_fetch_array($result44); $i++) {
                     $list_num ++;
+                    if($_GET['bo_idx'] == 1){
+                        $row_value = $row66['value'];
+                    } else if($_GET['bo_idx'] == 2){
+                        $row_value = $row66['wr_8'];
+                    } else if($_GET['bo_idx'] == 3){
+                        $row_value = $row66['wr_9'];
+                    }
+
+
             ?>
                     <tr class="<?php echo $lt_class ?> tr_hover">
                         <td class="hidden" style="display:none;">
@@ -218,10 +227,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         <div class = "td_right btn-cont text_block">
             <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=qa&bo_idx=1&u_id=1" class="btn_color_white" style="text-align:center;display:inline-block"><?= $row66['value'] < 3 ? "취소" : "확인"; ?></a>
             <?php if ( $row66['value'] < 3) {  ?>
-                <button type="submit" class="btn_next_prv btn_next_prv_link text_inline_block  value_submit" style="display:inline-block; background:"> <?= $row44['value'] == 1 ? "저장" : "수정"; ?> </button>
+                <button type="submit" class="btn_next_prv btn_next_prv_link text_inline_block  value_submit" style="display:inline-block; background:"> <?= $row_value < 2 ? "저장" : "수정"; ?> </button>
             <?php } ?>
         </div>
-        
         </form>
     </div>
     

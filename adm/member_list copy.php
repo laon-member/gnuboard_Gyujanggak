@@ -59,7 +59,7 @@ $intercept_count = $row['cnt'];
 $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목록</a>';
 
 $g5['title'] = '회원관리';
-include_once('./admin.head.php');
+include_once('./admin.head1.php');
 
 $sql = " select * {$sql_common} {$sql_search} {$sql_order} limit {$from_record}, {$rows} ";
 $result = sql_query($sql);

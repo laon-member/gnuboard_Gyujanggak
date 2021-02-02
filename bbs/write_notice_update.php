@@ -339,12 +339,6 @@ for ($i=0; $i<$upload_count; $i++) {
         $file_count++;
 }
 
-if($w == 'u') {
-    $file = get_file($bo_table, $wr_id);
-    if($file_count && (int)$file['count'] > $board['bo_upload_count'])
-        alert('기존 파일을 삭제하신 후 첨부파일을 '.number_format($board['bo_upload_count']).'개 이하로 업로드 해주십시오.');
-}
-
 // 디렉토리가 없다면 생성합니다. (퍼미션도 변경하구요.)
 @mkdir(G5_DATA_PATH.'/file/'.$bo_table, G5_DIR_PERMISSION);
 @chmod(G5_DATA_PATH.'/file/'.$bo_table, G5_DIR_PERMISSION);
@@ -358,6 +352,9 @@ $upload = array();
 $count_del =  @count($_POST['del-no']);
 
 if($count_del > 0 ){
+    sql_query("delete from {$g5['board_file_table']} where bo_table = 'notice' and wr_id = '{$_POST['file_idx']}' and  bf_source = ''");
+
+
     for($k=0; $k < $count_del; $k++ ){
         sql_query("delete from {$g5['board_file_table']} where bo_table = 'notice' and wr_id = '{$_POST['file_idx']}' and bf_no = '{$_POST['del-no'][$k]}' ");
     }
@@ -370,6 +367,9 @@ if($count_del > 0 ){
     }
 
     sql_query(" update g5_write_notice set wr_file = '{$i}' where wr_id = '{$_POST['file_idx']}' ");
+
+    sql_query("delete from {$g5['board_file_table']} where bo_table = 'notice' and wr_id = '{$_POST['file_idx']}' and  bf_source = ''");
+
 }
 
 

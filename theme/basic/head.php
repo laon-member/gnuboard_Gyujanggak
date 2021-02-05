@@ -33,8 +33,7 @@ if($_GET['no_alt'] == 'yes'){
             <?php if ($is_member) {  ?>
             <li style="cursor: context-menu;"><?php echo $member['mb_name']; ?>님</li>
             <li><a href="<?php echo G5_BBS_URL ?>/mypage_form.php?page=1">마이페이지</a></li>
-            <?php if ($member['mb_level'] == 10 && $is_admin =="super") { ?><li><li><a href="../adm/member_list.php">관리자(원본)</a></li><?php } ?>
-            <?php if ($member['mb_level'] == 10) { ?><li><li><a href="../adm/member_list copy.php">관리자</a></li><?php } ?>
+            <?php if ($member['mb_level'] == 10 && $is_admin =="super") { ?><li><li><a href="../adm/config_form.php">관리자</a></li><?php } ?>
             <li><a href="<?php echo G5_BBS_URL ?>/logout.php">로그아웃</a></li>
                 
             <?php } else {  ?>
@@ -93,7 +92,7 @@ if($_GET['no_alt'] == 'yes'){
                     <?php if($board_user == 2) { ?>
                         <?php 
                             if (!$is_member)
-                                alert('로그인 후 이용하여 주십시오.', G5_BBS_URL."/login.php");
+                                goto_url(G5_BBS_URL."/login.php");
                 
                             if($member['mb_level'] < 5){
                                 alert('심사자이상만 접근 가능합니다.');
@@ -119,10 +118,10 @@ if($_GET['no_alt'] == 'yes'){
                     <?php if($board_user == 3 && $_GET['u_id'] == "1") { ?>
                     <?php
                         if (!$is_member)
-                            alert('로그인 후 이용하여 주십시오.', G5_BBS_URL."/login.php");
+                            goto_url(G5_BBS_URL."/login.php");
 
                         if($member['mb_level'] < 10){
-                            alert('관리자이상만 접근 가능합니다.');
+                            alert('관리자 이상만 접근 가능합니다.');
                         }
                     ?>
                         <li class="board_nav_list board_nav_list_hover <?= $board_app_border ?>">

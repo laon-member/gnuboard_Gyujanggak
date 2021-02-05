@@ -156,7 +156,7 @@ function imageview(id, w, h)
 
 </header>
 <script>
-jQuery(function($){
+$(function(){
 
     var menu_cookie_key = 'g5_admin_btn_gnb';
 
@@ -188,6 +188,10 @@ jQuery(function($){
         $(this).parent().addClass("on").siblings().removeClass("on");
     });
 
+    $('.rotate_restart_icon').click(function(){
+        location.reload();
+    });
+
 });
 </script>
 
@@ -197,8 +201,8 @@ jQuery(function($){
 
     <div id="container" class="<?php echo $adm_menu_cookie['container']; ?>">
         <div class="admin_board_date_bar">
-            <span><strong><?= date("Y년m월d일"); ?></strong> <?= date("A"); ?> <?= date("g:i"); ?></span>
-            <img src="<?= G5_ADMIN_URL ?>/img/rotate-cw.png" alt="rorate">
+            <span><strong><?= date("Y년m월d일"); ?></strong> <?= date("A") == 'AM'? '오전' : '오후'; ?> <?= date("g:i"); ?></span>
+            <img src="<?= G5_ADMIN_URL ?>/img/rotate-cw.png" alt="rorate" class="rotate_restart_icon">
         </div>
         <h1 id="container_title"><?php echo $g5['title'] ?></h1>
         <div class="container_wr_sub">

@@ -8,7 +8,7 @@ include_once('./_common.php');
 add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 0);
 
 
-if(empty($_SESSION['FORM']['mb_id'])){
+if(empty($_SESSION['mb_id'])){
 // 세션값이 없으면..
 	$form_id = "";
 	$form_name = "";
@@ -18,11 +18,9 @@ if(empty($_SESSION['FORM']['mb_id'])){
 } else {
 	// 세션값이 존재하면
 	// 즉, 폼값에 오류가 있어 저장에 실패한 경우 임
-	$form_id = $_SESSION['FORM']['mb_id'];
-	$form_name = $_SESSION['FORM']['mb_name'];
-	$form_pw = $_SESSION['FORM']['mb_password'];
-	$form_pw_re = $_SESSION['FORM']['mb_password_re'];
-	$form_email = $_SESSION['FORM']['mb_email'];
+	$form_id = $_SESSION['mb_id'];
+	$form_name = $_SESSION['mb_name'];
+	$form_email = $_SESSION['mb_email'];
 }
 
 
@@ -63,7 +61,7 @@ if(empty($_SESSION['FORM']['mb_id'])){
 	            </li>
 				<li>
 	                <label for="reg_mb_password">비밀번호</label>
-					<input autocomplete="off" type="password" name="mb_password" id="reg_mb_password" <?php echo $form_pw ?> class="frm_input full_input "  placeholder="* 9자 이상의 영문, 숫자, 특수문자를 혼합하여 등록하시기 바랍니다.">
+					<input autocomplete="off" type="password" name="mb_password" id="reg_mb_password" <?php echo $form_pw ?> class="frm_input full_input "  placeholder="* 9자 이상의 영문, 숫자, 특수문자 혼합하여 등록하시기 바랍니다.">
 				</li>
 	            <li>
 	                <label for="reg_mb_password_re">비밀번호 확인</label>
@@ -102,7 +100,7 @@ $(function(){
 				var str2 = data.replace(/(\r\n\t|\n|\r\t)/gm,""); 
 				alert(str2);
 
-				if(str2 == "사용가능한 아이디입니다." ){
+				if(str2 == "사용 가능한 아이디입니다." ){
 					$("#btn_submit").removeAttr("disabled");
 					$("#btn_submit").css({background: "#1D2E58", color: "#fff"});
 					value = 1;

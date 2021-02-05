@@ -136,7 +136,7 @@ $j=0;
             <?php } ?>
 
                 <button type="submit" formaction="<?= G5_BBS_URL ?>/board.report.php?bo_table=business&bo_idx=1" class="btn_next_prv  btn_color_white" id="cancel" title="취소">취소하기</button>
-            <button type="button" formaction="<?= G5_BBS_URL ?>/view.report.update.php?bo_table=report&bo_idx=1&wr_bo_idx=<?= $_GET['wr_bo_idx'] ?>" class="btn_next_prv btn_next_prv_link btn_file_del" id="submission" title="신청하기" <?= $row44['report'] ==2? "disabled": ""; ?> style="background:<?= $row44['report'] ==2? '#ccc': '#1D2E58'; ?>">신청하기</button>
+            <button type="submit" formaction="<?= G5_BBS_URL ?>/view.report.update.php?bo_table=report&bo_idx=1&wr_bo_idx=<?= $_GET['wr_bo_idx'] ?>" class="btn_next_prv btn_next_prv_link btn_file_del" id="submission" title="신청하기" <?= $row44['report'] ==2? "disabled": ""; ?> style="background:<?= $row44['report'] ==2? '#ccc': '#1D2E58'; ?>">신청하기</button>
             </div>
         </div>
 </form>

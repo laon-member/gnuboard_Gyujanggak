@@ -30,6 +30,18 @@ if ($page == "1") {
     $sql_email= "";
 
 
+    if($_POST['mb_name'] != "")
+        $sql_name = " mb_name= '".$_POST['mb_name'] . "',";
+    else return alert('이름이 비어있습니다.');
+
+    if($_POST['mb_email'] != "")
+        $sql_email = " mb_email= '".$_POST['mb_email'] . "'";
+    else return alert('이메일이 비어있습니다.');
+
+    if(!preg_match('/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]+(\.[a-zA-Z]{2,3}){1,4}$/i', $_POST['mb_email'])) {
+        alert("E-mail 주소가 형식에 맞지 않습니다.");
+    }
+    
     if($mb_new_password == "" || $mb_new_password_re == ""){
         alert("비밀번호가 비어있습니다.");
     }
@@ -39,18 +51,15 @@ if ($page == "1") {
     }
 
     if(!preg_match('/[a-z0-9A-Z~!@#$%^&*]{9,}/', $mb_new_password)) {
-        alert('9자 이상의 영문, 숫자, 특수문자를 혼합만 가능합니다');
+        alert('9자 이상의 영문, 숫자, 특수문자 혼합만 가능합니다');
     }
 
     $sql_password = " mb_password = '".get_encrypt_string($mb_new_password)."', ";
 
     
 
-    if($_POST['mb_name'] != "")
-        $sql_name = " mb_name= '".$_POST['mb_name'] . "',";
+    
 
-    if($_POST['mb_email'] != "")
-        $sql_email = " mb_email= '".$_POST['mb_email'] . "'";
 
     $sql = "UPDATE `g5_member` set {$sql_password} {$sql_name} {$sql_email} WHERE mb_id = '{$member['mb_id']}'";
     sql_query($sql);

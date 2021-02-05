@@ -497,6 +497,7 @@ width : 30px !important;
 height : 30px !important;
 padding: 0px !important;
 margin-top: 35px;
+cursor: pointer;
 }
 .board_nav_list_menu{
   margin: 0 !important;
@@ -594,3 +595,6 @@ border-radius : 4px;
 .view_table_app th, .view_table_app td{height: 56px;border: 1px solid #DDDDDD;}
 .view_table_app th{background-color: #F7F7F7;}
 
+#sfl{
+  width: 130PX;
+}

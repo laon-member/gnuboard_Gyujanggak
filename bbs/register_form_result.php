@@ -73,7 +73,7 @@ if ($user == 'id') {
         alert('비밀번호가 넘어오지 않았습니다.');
 
         if(!preg_match('/[a-z0-9A-Z~!@#$%^&*]{9,}/', $mb_new_password)) {
-            alert('9자 이상의 영문, 숫자, 특수문자를 혼합만 가능합니다');
+            alert('9자 이상의 영문, 숫자, 특수문자 혼합만 가능합니다');
         } else {
             if($mb_new_password_re == $mb_new_password){
                 $sql = "SELECT * FROM `g5_member` WHERE mb_no = '{$_SESSION['mb_no']}'";
@@ -91,7 +91,7 @@ if ($user == 'id') {
                 $_SESSION['mb_no'] = '';
                 alert('비밀번호를 수정했습니다.', G5_URL);
             } else {
-                alert('새로운 비밀번호가 일치하지 않습니다.');
+                alert('비밀번호가 일치하지 않습니다.');
             }
         }
     }

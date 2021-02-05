@@ -379,8 +379,8 @@ $result = sql_query($sql);
             if($('#en_title').val() == "") return alert("영문 과제명이 비어있습니다");
             if($('#name').val() == "") return alert("성명이 비어있습니다");
             if($('#degree').val() == "") return alert("전공(학위)이 비어있습니다");
-            if($('#rank').val() == "") return alert("소속이 비어있습니다");
-            if($('#belong').val() == "") return alert("직급이 비어있습니다");
+            if($('#rank').val() == "") return alert("직급이 비어있습니다");
+            if($('#belong').val() == "") return alert("소속이 비어있습니다");
             if($('#email').val() == "") return alert("이메일이 비어있습니다");
             if($('#phone').val() == "") return alert("전화번호가 비어있습니다");
             
@@ -411,7 +411,7 @@ $result = sql_query($sql);
             var date_start = $('#date_start').val();
             var date_end = $('#date_end').val();
 
-            if(date_start > date_end) return  alert("연구기간 끝나는 날짜가 시작하는 날짜보다 빠릅니다");
+            if(date_start > date_end) return  alert("지원기간 끝나는 날짜가 시작하는 날짜보다 빠릅니다");
             // if($('#date_start').val() > $('#date_end').val()) return ("연구 기간 끝나는 날짜가 시작하는 날짜보다 빠릅니다.");
             if($('#value').val() == "") return alert("연구비신청액이 비어있습니다");
             if($('#one_year').val() == "") return alert("1차년 연구비가 비어있습니다");
@@ -440,7 +440,7 @@ $result = sql_query($sql);
             if (isNaN(IsValidDateStart)) return alert('총 연구기간 시작 날짜가 유효하지 않습니다.');
                 
             IsValidDateEnd = Date.parse($('#date_end').val());
-            if (isNaN(IsValidDateEnd)) return alert('총 연구기간 끝나는 날짜가 유효하지 않습니다.');
+            if (isNaN(IsValidDateEnd)) return alert('총 지원기간 끝나는 날짜가 유효하지 않습니다.');
 
             // logic
             $('.step').removeClass('step_view');

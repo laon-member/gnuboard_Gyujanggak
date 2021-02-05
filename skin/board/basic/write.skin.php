@@ -93,7 +93,7 @@ $result = sql_query($sql);
                 </td>
             </tr>
             <tr>
-                <th>총 연구 기간</th>
+                <th>지원기간</th>
                 <td colspan="1">
                     <input type="date" name="date_start_act" id="date_start_view"  class="input_text frm_input required full_input input_text_100 input_text_end" value='<?= $write['wr_date_start'] ?>' max="9999-12-31" required>
                 </td>
@@ -274,7 +274,7 @@ $result = sql_query($sql);
             var date_end = $('#date_end_view').val();
 
             if(date_start > date_end) {
-                alert("연구기간 끝나는 날짜가 시작하는 날짜보다 빠릅니다");
+                alert("지원기간 끝나는 날짜가 시작하는 날짜보다 빠릅니다");
                 return false;
             }
 

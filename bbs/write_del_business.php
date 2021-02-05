@@ -22,6 +22,6 @@ for($i=0; $row = sql_fetch_array($result); $i++){
 
 sql_query("delete from rater where business_idx = '{$_GET['wr_id']}'");
 
-alert("삭제 했습니다.", G5_BBS_URL.'/board.app.php?bo_table=business&bo_idx='.$_GET['bo_idx'].'&u_id=1');
+alert("삭제되었습니다.", G5_BBS_URL.'/board.app.php?bo_table=business&bo_idx='.$_GET['bo_idx'].'&u_id=1');
 
 ?>

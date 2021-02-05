@@ -13,10 +13,10 @@ $print_version = defined('G5_YOUNGCART_VER') ? 'YoungCart Version '.G5_YOUNGCART
 
         </div>    
         <footer id="ft">
-            <p>
+            <!-- <p>
                 Copyright &copy; <?php echo $_SERVER['HTTP_HOST']; ?>. All rights reserved. <?php echo $print_version; ?><br>
                <button type="button" class="scroll_top"><span class="top_img"></span><span class="top_txt">TOP</span></button>
-           </p>
+           </p> -->
         </footer>
     </div>
 
@@ -29,9 +29,9 @@ $(".scroll_top").click(function(){
 </script>
 
 <!-- <p>실행시간 : <?php echo get_microtime() - $begin_time; ?> -->
-
 <script src="<?php echo G5_ADMIN_URL ?>/admin.js?ver=<?php echo G5_JS_VER; ?>"></script>
 <script src="<?php echo G5_JS_URL ?>/jquery.anchorScroll.js?ver=<?php echo G5_JS_VER; ?>"></script>
+
 <script>
 $(function(){
 

@@ -50,13 +50,13 @@ if($value == 1){
 } else if($value == 3){
     // $row = sql_fetch("DELETE FROM rater WHERE idx = {$_GET['idx']}");
     // echo count($_POST['checkbox']);
-    if(@count($_POST['checkbox']) == 0) return alert('삭제할 심사위원을 선택해주세요');
+    if(@count($_POST['checkbox']) == 0) return alert('제외할 심사위원을 선택해주세요');
 
     for($i=0; $i<count($_POST['checkbox']); $i++){
         $row = sql_fetch("DELETE FROM rater WHERE idx = {$_POST['checkbox'][$i]}");
     }
 
-    alert('삭제 했습니다.');
+    alert('삭제되었습니다.');
     
 } else if($value == 4){
     if ($_POST['bo_idx_list'] == 1){
@@ -90,7 +90,7 @@ if($value == 1){
     }
     sql_query($sql);
 
-    alert('저장했습니다');
+    alert('저장되었습니다');
     
         
 } else if($value == 5){

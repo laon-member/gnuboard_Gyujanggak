@@ -655,5 +655,9 @@ if($_POST['bo_title'] == 3){
 if ($file_upload_msg)
     alert($file_upload_msg, $redirect_url);
 else
-    alert("작성 완료", G5_BBS_URL."/board.notice.php?bo_table=notice&bo_idx={$_POST['bo_idx']}&bo_title={$_POST['bo_title']}{$admin_notice}");
+    if(!$w){
+        alert('작성 완료', G5_BBS_URL."/board.app.php?bo_table=business&bo_idx=".$_POST['bo_idx']."&u_id=1")
+    } else {
+        alert('수정 완료', G5_BBS_URL."/board.app.php?bo_table=business&bo_idx=".$_POST['bo_idx']."&u_id=1")
+    }
 ?>

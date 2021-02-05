@@ -746,6 +746,10 @@ if ($file_upload_msg)
     alert($file_upload_msg, $redirect_url);
 else
     // goto_url($redirect_url);
-    alert('작성 완료', G5_BBS_URL."/board.app.php?bo_table=business&bo_idx=".$_POST['bo_idx']."&u_id=1")
+    if(!$w){
+        alert('작성 완료', G5_BBS_URL."/board.app.php?bo_table=business&bo_idx=".$_POST['bo_idx']."&u_id=1")
+    } else {
+        alert('수정 완료', G5_BBS_URL."/board.app.php?bo_table=business&bo_idx=".$_POST['bo_idx']."&u_id=1")
+    }
 ?>
 <!-- http://localhost/bbs/board.app.php?bo_table=business&bo_idx=1&u_id=1 -->

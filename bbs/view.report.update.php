@@ -1,12 +1,12 @@
 <?php
 include_once('./_common.php');
-// include_once(G5_LIB_PATH.'/naver_syndi.lib.php');
-// include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
+include_once(G5_LIB_PATH.'/naver_syndi.lib.php');
+include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 
 // // 토큰체크
 // check_write_token($bo_table);
 
-// $g5['title'] = '게시글 저장';
+$g5['title'] = '게시글 저장';
 
 
 // if ($w == '' || $w == 'r') {
@@ -24,6 +24,7 @@ if($_GET['bo_idx'] == 1){
 } else if($_GET['bo_idx'] == 2){
     $val = "report_val_2".$_POST['save']."";
 }
+
 
 
 if ($_POST['save'] == '1') {
@@ -109,7 +110,7 @@ if ($_POST['save'] == '1') {
     }
 
 } else {
-    alert('w 값이 제대로 넘어오지 않았습니다.');
+    alert('보고서를 제출을 못했습니다');
 }
 
 
@@ -191,10 +192,10 @@ if(isset($_FILES['bf_file']['name']) && is_array($_FILES['bf_file']['name'])) {
 
         if (is_uploaded_file($tmp_file)) {
             // 관리자가 아니면서 설정한 업로드 사이즈보다 크다면 건너뜀
-            if (!$is_admin && $filesize > $board['bo_upload_size']) {
-                $file_upload_msg .= '\"'.$filename.'\" 파일의 용량('.number_format($filesize).' 바이트)이 게시판에 설정('.number_format($board['bo_upload_size']).' 바이트)된 값보다 크므로 업로드 하지 않습니다.\\n';
-                continue;
-            }
+            // if (!$is_admin && $filesize > 104857600) {
+            //     $file_upload_msg .= '\"'.$filename.'\" 파일의 용량('.number_format($filesize).' 바이트)이 게시판에 설정(104857600 바이트)된 값보다 크므로 업로드 하지 않습니다.\\n';
+            //     continue;
+            // }
 
             //=================================================================\
             // 090714

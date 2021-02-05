@@ -27,6 +27,11 @@ else
 if(!$mb_id)
     alert('회원아이디 값이 없습니다. 올바른 방법으로 이용해 주십시오.');
 
+
+     $_SESSION['mb_id'] = $_POST['mb_id'];
+	 $_SESSION['mb_name'] = $_POST['mb_name'];
+	 $_SESSION['mb_email'] = $_POST['mb_email'];
+
 $mb_password    = trim($_POST['mb_password']);
 $mb_password_re = trim($_POST['mb_password_re']);
 $mb_name        = trim($_POST['mb_name']);
@@ -93,7 +98,7 @@ if ($w == '' || $w == 'u') {
         alert('비밀번호가 일치하지 않습니다.');
 
     if(!preg_match('/^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{9,}$/', $mb_password)) {
-        alert('9자 이상의 영문, 숫자, 특수문자를 혼합만 가능합니다');
+        alert('9자 이상의 영문, 숫자, 특수문자 혼합만 가능합니다');
     }
 
     if(!preg_match('/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]+(\.[a-zA-Z]{2,3}){1,4}$/i', $mb_email)) {
@@ -173,6 +178,11 @@ if ($w == '') {
 
     unset($_SESSION['FORM']);
     // print "<script language=javascript> alert('회원가입이 완료 되었습니다.'); location.href='". G5_BBS_URL."/register_form.php';</script>";
+
+    
+    $_SESSION['mb_id'] = '';
+    $_SESSION['mb_name'] = '';
+    $_SESSION['mb_email'] = '';
     echo"<script>alert('회원가입이 완료 되었습니다.'); location.href='".G5_URL."';</script>"; 
     
     

@@ -82,6 +82,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                     $result44 = sql_query($sql44);
                 }
 
+
                 $list_num = 0;
                 for ($i=0; $i<$row = sql_fetch_array($result44); $i++) {
                     $list_num ++;
@@ -111,11 +112,16 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                             <?php
                                 $sum =0;
                                 $average = 0;
-                                $sql333 = " select count(*) as cnt from rater_value where report_idx = '{$row['idx']}'";
+                                $sql444 = " select * from rater where business_idx = '{$_GET['border_idx']}' and test_id = '{$_GET['bo_idx']}'";
+                                $result444 = sql_query($sql444);
+                                $row444 = sql_fetch_array($result444);
+
+
+                                $sql333 = " select count(*) as cnt from rater_value where rater_idx = '{$row444['idx']}'";
                                 $result333 = sql_query($sql333);
                                 $row332 = sql_fetch_array($result333);
 
-                                $sql = "  select * from rater_value where report_idx = '{$row['idx']}  '";
+                                $sql = "  select * from rater_value where rater_idx = '{$row444['idx']}  '";
                                 $result333 = sql_query($sql);
                                 
                                 for ($j=0; $row33 = sql_fetch_array($result333); $j++) {
@@ -136,7 +142,12 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                         <td class="td_center wr_average_max_min">
                             <?php
                             $average_max_min_not = 0;
-                                $sql333 = " select count(*) as cnt from rater_value where report_idx = '{$row['idx']}'";
+                                $sql444 = " select * from rater where business_idx = '{$_GET['border_idx']}' and test_id = '{$_GET['bo_idx']}'";
+                                $result444 = sql_query($sql444);
+                                $row444 = sql_fetch_array($result444);
+
+
+                                $sql333 = " select count(*) as cnt from rater_value where report_idx = '{$row444['idx']}'";
                                 $result333 = sql_query($sql333);
                                 $row33 = sql_fetch_array($result333);
 
@@ -145,18 +156,18 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                                 $sql_min = 0;
 
                                 if($row33['cnt'] > 2){
-                                    $sql = "  select * from rater_value where report_idx = '{$row['idx']}  '";
+                                    $sql = "  select * from rater_value where rater_idx = '{$row['idx']}  '";
                                     $result = sql_query($sql);
                                     $sum = 0;
                                     
                                     
-                                    $sql = "SELECT sum(test_sum) AS sum FROM rater_value WHERE report_idx = '{$row['idx']}' limit 1";
+                                    $sql = "SELECT sum(test_sum) AS sum FROM rater_value WHERE rater_idx = '{$row444['idx']}' limit 1";
                                     $sql_sum = sql_fetch($sql);
 
-                                    $sql = "SELECT max(test_sum) AS max FROM rater_value WHERE report_idx = '{$row['idx']}' limit 1";
+                                    $sql = "SELECT max(test_sum) AS max FROM rater_value WHERE rater_idx = '{$row444['idx']}' limit 1";
                                     $sql_max = sql_fetch($sql);
 
-                                    $sql = "SELECT min(test_sum) AS min FROM rater_value WHERE report_idx = '{$row['idx']}' limit 1";
+                                    $sql = "SELECT min(test_sum) AS min FROM rater_value WHERE rater_idx = '{$row444['idx']}' limit 1";
                                     $sql_min = sql_fetch($sql);
 
                                    
@@ -166,7 +177,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                                     $rater_user = $row33['cnt'] - 2;
                                     $average_max_min_not = $sql_test_sum/$rater_user;
                                 } else {
-                                    $sql = "  select * from rater_value where report_idx = '{$row['idx']}  '";
+                                    $sql = "  select * from rater_value where rater_idx = '{$row444['idx']}  '";
                                     $result = sql_query($sql);
                                     $sum = 0;
 

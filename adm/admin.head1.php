@@ -16,8 +16,8 @@ if (is_array($files)) {
         add_stylesheet('<link rel="stylesheet" href="'.$css_file.'">', $k);
     }
 }
-include_once(G5_THEME_PATH.'/head.sub.php');
-include_once(G5_PATH.'/head.sub copy.php');
+
+include_once(G5_PATH.'/head.sub.php');
 
 function print_menu1($key, $no='')
 {
@@ -94,7 +94,7 @@ function imageview(id, w, h)
         selectBoxHidden(id);
 }
 </script>
-<!-- 
+
 <div id="to_content"><a href="#container">본문 바로가기</a></div>
 
 <header id="hd">
@@ -106,7 +106,7 @@ function imageview(id, w, h)
         <div id="tnb">
             <ul>
                 <li class="tnb_li"><a href="<?php echo G5_URL ?>/" class="tnb_community" target="_blank" title="커뮤니티 바로가기">커뮤니티 바로가기</a></li>
-                <li class="tnb_li"><a href="<?php echo G5_ADMIN_URL ?>/service.php" class="tnb_service">부가서비스</a></li>
+                <!-- <li class="tnb_li"><a href="<?php echo G5_ADMIN_URL ?>/service.php" class="tnb_service">부가서비스</a></li> -->
                 <li class="tnb_li"><button type="button" class="tnb_mb_btn">관리자<span class="./img/btn_gnb.png">메뉴열기</span></button>
                     <ul class="tnb_mb_area">
                         <li><a href="<?php echo G5_ADMIN_URL ?>/member_form.php?w=u&amp;mb_id=<?php echo $member['mb_id'] ?>">관리자정보</a></li>
@@ -143,6 +143,7 @@ function imageview(id, w, h)
                     <div class="gnb_oparea">
                         <h3><?php echo $menu['menu'.$key][0][1];?></h3>
                         <?php echo print_menu1('menu'.$key, 1); ?>
+                        
                     </div>
                 </div>
             </li>
@@ -153,7 +154,7 @@ function imageview(id, w, h)
         </ul>
     </nav>
 
-</header> -->
+</header>
 <script>
 jQuery(function($){
 
@@ -189,59 +190,12 @@ jQuery(function($){
 
 });
 </script>
-<div id="hd">
-    <h1 id="hd_h1"><?php echo $g5['title'] ?></h1>
-    <div id="skip_to_container"><a href="#container">본문 바로가기</a></div>
 
-
-    <div id="hd_wrapper">
-
-        <div id="logo">
-            <a href="<?php echo G5_URL ?>"><img src="<?php echo G5_IMG_URL ?>/logo.png" alt="<?php echo $config['cf_title']; ?>"></a>
-        </div>
-    
-        <ul class="hd_login">        
-            <?php if ($is_member) {  ?>
-            <li><a href=""><?php echo $member['mb_name']; ?>님</a></li>
-            <li><a href="<?php echo G5_BBS_URL ?>/mypage_form.php?page=1">마이페이지</a></li>
-            <li><a href="<?php echo G5_BBS_URL ?>/logout.php">로그아웃</a></li>
-            <?php //if ($is_admin) {  ?>
-            <!-- <li class="tnb_admin"><a href="<?php echo correct_goto_url(G5_ADMIN_URL); ?>">관리자</a></li> -->
-            <?php //}  ?>
-            	<?php if ($admin_href) { ?><li><a href="../adm/member_list.php" class="btn_admin btn" title="관리자"><i class="fa fa-cog fa-spin fa-fw"></i><span class="sound_only">관리자</span></a></li><?php } ?>
-                <!--  -->
-            <?php } else {  ?>
-            <li><a href="<?php echo G5_BBS_URL ?>/login.php">로그인</a></li>
-            <?php }  ?>
-            
-            
-        </ul>
-    </div>
-    <style>
-        #hd{position: relative;}
-        .header_notice_back{position: absolute;top: 100%;width: 100%;}
-        .header_notice_nav, .header_notice_list{list-style:none; height: 16px;}
-        .notice_container{overflow:hidden;}
-        .header_notice_nav{animation:slide 8s infinite;} /* slide를 8초동안 진행하며 무한반복 함 */
-        @keyframes slide {
-        0% {margin-top:0;} /* 0 ~ 10  : 정지 */
-        10% {margin-top:0;} /* 10 ~ 25 : 변이 */
-        20% {margin-top:-3%;} /* 25 ~ 35 : 정지 */
-        30% {margin-top:-3%;} /* 35 ~ 50 : 변이 */
-        40% {margin-top:-5%;}
-        50% {margin-top:-5%;}
-        60% {margin-top:-8%;}
-        70% {margin-top:-8%;}
-        80% {margin-top:-11%;}
-        90% {margin-top:-11%;}
-        100% {margin-top:0;}
-        }
-    </style>
-</div>
 
 <div id="wrapper">
 
+
     <div id="container" class="<?php echo $adm_menu_cookie['container']; ?>">
-<!-- 
+    
         <h1 id="container_title"><?php echo $g5['title'] ?></h1>
-        <div class="container_wr"> -->
+        <div class="container_wr">

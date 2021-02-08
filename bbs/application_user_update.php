@@ -60,24 +60,22 @@ if($value == 1){
     
 } else if($value == 4){
     if ($_POST['bo_idx_list'] == 1){
-        for($i=0; $i<count($_POST['checkbox']); $i++){
+        for($i=0; $i<@count($_POST['checkbox']); $i++){
             $position = $_POST['checkbox'];
 
             sql_fetch("UPDATE g5_business_propos SET value = 1 WHERE idx = '{$position[$i]}'");
         }
     } else if ($_POST['bo_idx_list'] == 2){
-        for($i=0; $i<count($_POST['checkbox']); $i++){
+        for($i=0; $i<@count($_POST['checkbox']); $i++){
             $position = $_POST['checkbox'];
 
-            $row = sql_fetch("SELECT * FROM g5_business_propos WHERE idx = '{$position[$i]}'");
-            sql_fetch("UPDATE report SET value = '1' WHERE report_idx = 1 AND business_idx = '{$row['idx']}'");
+            sql_fetch("UPDATE g5_business_propos SET report_val_1 = '1' WHERE idx = '{$position[$i]}'");
         }
     } else if ($_POST['bo_idx_list'] == 3){
-        for($i=0; $i<count($_POST['checkbox']); $i++){
+        for($i=0; $i<@count($_POST['checkbox']); $i++){
             $position = $_POST['checkbox'];
 
-            $row = sql_fetch("SELECT * FROM g5_business_propos WHERE idx = '{$_GET['idx']}'");
-            sql_fetch("UPDATE report SET value = '1' WHERE report_idx = 2 AND business_idx = '{$row['idx']}'");
+            sql_fetch("UPDATE g5_business_propos SET report_val_2 = '1' WHERE idx = '{$position[$i]}'");
         }
     }
 
@@ -97,9 +95,9 @@ if($value == 1){
     if($_GET['bo_idx'] == 1){
        sql_fetch("UPDATE g5_business_propos SET value = '0' WHERE idx = '{$_GET['border_idx']}'");
     } else if($_GET['bo_idx'] == 2){
-        sql_fetch("UPDATE report SET value = '0' WHERE idx = '{$_GET['border_idx']}'");
+        sql_fetch("UPDATE g5_business_propos SET report_val_1 = '0' WHERE idx = '{$_GET['border_idx']}'");
     } else if($_GET['bo_idx'] == 3){
-        sql_fetch("UPDATE report SET value = '0' WHERE idx = '{$_GET['border_idx']}'");
+        sql_fetch("UPDATE g5_business_propos SET report_val_2 = '0' WHERE idx = '{$_GET['border_idx']}'");
     }
     
     alert('삭제했습니다');

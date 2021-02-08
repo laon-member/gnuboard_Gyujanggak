@@ -75,23 +75,22 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                     $sql44 = " select * from g5_business_propos where bo_idx = '{$_GET['border_idx']}'";
                     $result44 = sql_query($sql44);
                 } else if($_GET['bo_idx'] == 2){
-                    $sql44 = " select * from g5_business_propos where bo_idx = '{$_GET['border_idx']}' and report_val_1 = 2 and value = 4";
+                    $sql44 = " select * from g5_business_propos where bo_idx = '{$_GET['border_idx']}' and value = 4";
                     $result44 = sql_query($sql44);
                 } else if($_GET['bo_idx'] == 3){
-                    $sql44 = " select * from g5_business_propos where bo_idx = '{$_GET['border_idx']}' and report_val_2 = 2 and value = 4";
+                    $sql44 = " select * from g5_business_propos where bo_idx = '{$_GET['border_idx']}' and report_val_1 = 4";
                     $result44 = sql_query($sql44);
                 }
-
 
                 $list_num = 0;
                 for ($i=0; $i<$row = sql_fetch_array($result44); $i++) {
                     $list_num ++;
                     if($_GET['bo_idx'] == 1){
-                        $row_value = $row66['value'];
+                        $row_value = $row['value'];
                     } else if($_GET['bo_idx'] == 2){
-                        $row_value = $row66['wr_8'];
+                        $row_value = $row['report_val_1'];
                     } else if($_GET['bo_idx'] == 3){
-                        $row_value = $row66['wr_9'];
+                        $row_value = $row['report_val_2'];
                     }
 
 
@@ -105,7 +104,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                         
                         <td class="td_idx td_center"><?= $list[$i]['num']; ?></td>
 
-                        <td class="td_center"><?= $row['quest_number'] ?> </td>
+                        <td class="td_center"><?= $row['info_number'] ?> </td>
                         <td class="td_download ko_title td_title" ><?= $row['ko_title']; ?></td>
                         <td class="td_datetime td_center"><?php echo $row['name'];  ?></td>
                         <td class="td_center wr_average">
@@ -209,25 +208,25 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                                         $value_num = $row['value'];
                                         $value_idx = $row['idx'];
                                     } else if($_GET['bo_idx'] == 2){
-                                        $sql55 = " select * from report where business_idx = '{$row['idx']}' and report_idx = 2";
+                                        $sql55 = " select * from report where business_idx = '{$row['idx']}' and report_idx = 1";
                                         $row55 = sql_fetch($sql55);
-                                        $value_num = $row55['value'];
-                                        $value_idx = $row55['idx'];
+                                        $value_num = $row['report_val_1'];
+                                        $value_idx = $row['idx'];
                                     } else if($_GET['bo_idx'] == 3){
                                         $sql55 = " select * from report where business_idx = '{$row['idx']}' and report_idx = 2";
                                         $row55 = sql_fetch($sql55);
-                                        $value_num = $row55['value'];
-                                        $value_idx = $row55['idx'];
+                                        $value_num = $row['report_val_2'];
+                                        $value_idx = $row['idx'];
                                     }
 
                                     if($value_num == 3 || $value_num == 4){
                                 ?>
-                                    <label for="" id="" class="value_btn" style="background: #ccc !important">선택 완료</label>
+                                    <label for="" id="" class="value_btn" style="background: #ccc !important">선택 완료 </label>
                                 <?php } else  if($value_num == 1 || $value_num == 2){ ?>
                                     <a href="<?=https_url(G5_BBS_DIR)?>/application_user_update.php?bo_idx=<?= $_GET['bo_idx'] ?>&border_idx=<?= $value_idx ?>&value=5" class="value_btn value_tel" style="background: #ccc !important">해제</a>
                                 <?php } else if($value_num == 0 ){ ?>
                                     <label for="checkbox<?= $i ?>" id="checkbox_label<?= $i ?>" class="value_btn value_btn_click">선택</label>
-                                    <input type="checkbox" name="checkbox[]" class="checkbox_input" id="checkbox<?= $i ?>" value="<?= $row['idx']?>" style="display:none;">
+                                    <input type="checkbox" name="checkbox[]" class="checkbox_input" id="checkbox<?= $i ?>" value="<?= $value_idx ?>" style="display:none;">
                                 <?php } ?>
                         </td>
                     </tr>
@@ -236,14 +235,24 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             </tbody>
         </table>
         <div class = "td_right btn-cont text_block">
-            <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=qa&bo_idx=1&u_id=1" class="btn_color_white" style="text-align:center;display:inline-block"><?= $row66['value'] < 3 ? "취소" : "확인"; ?></a>
-            <?php if ( $row66['value'] < 3) {  ?>
+            <?php 
+                if($_GET['bo_idx'] == 1){
+                    $row_value = $row66['value'];
+                } else if($_GET['bo_idx'] == 2){
+                    $row_value = $row66['wr_8'];
+                } else if($_GET['bo_idx'] == 3){
+                    $row_value = $row66['wr_9'];
+                }
+
+            ?>
+
+            <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=qa&bo_idx=<?= $_GET['bo_idx'] ?>&u_id=1" class="btn_color_white" style="text-align:center;display:inline-block"><?= $row_value < 3 ? "취소" : "확인"; ?></a>
+            <?php if ( $row_value < 3) {  ?>
                 <button type="submit" class="btn_next_prv btn_next_prv_link text_inline_block  value_submit" style="display:inline-block; background:"> <?= $row_value < 2 ? "저장" : "수정"; ?> </button>
             <?php } ?>
         </div>
         </form>
     </div>
-    
 	<!-- 페이지 -->
 
     <!-- 현재 URL 주소 -->

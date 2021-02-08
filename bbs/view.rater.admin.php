@@ -52,8 +52,9 @@ if ($sca || $stx || $stx === '0') {     //검색이면
     // 원글만 얻는다. (코멘트의 내용도 검색하기 위함)
     // 라엘님 제안 코드로 대체 http://sir.kr/g5_bug/2922
     $sql = " SELECT COUNT(DISTINCT `wr_parent`) AS `cnt` FROM {$write_table} WHERE {$sql_search} ";
+    $row = sql_fetch($sql);
     $total_count = $row['cnt'];
-
+    echo  $sql;
     $title_text = '검색';
 
     // for($i=1; $row=sql_fetch_array($result); $i++) {
@@ -75,12 +76,13 @@ if ($sca || $stx || $stx === '0') {     //검색이면
         $sql = " select COUNT(DISTINCT `idx`) as cnt from g5_business_propos where bo_idx = '{$_GET['wr_idx']}'";
         $row = sql_fetch($sql);
     } else if ($_GET['bo_idx'] == 2) {
-        $sql = " select COUNT(DISTINCT `idx`) as cnt from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' and report_val_1 = 2";
+        $sql = " select COUNT(DISTINCT `idx`) as cnt from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' and value = 4";
         $row = sql_fetch($sql);
     } else if ($_GET['bo_idx'] == 3) {
-        $sql = " select COUNT(DISTINCT `idx`) as cnt from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' and report_val_2 = 2";
+        $sql = " select COUNT(DISTINCT `idx`) as cnt from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' and report_val_1 = 4";
         $row = sql_fetch($sql);
     }
+
     
     $total_count = $row['cnt'];
 }
@@ -195,10 +197,20 @@ if ($sst) {
 
 
 // 여기 입니다.
-    $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}'";
+
+    if($_GET['bo_idx'] == 1){
+        $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}'";
+    } else if ($_GET['bo_idx'] == 2) {
+        $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' and value = 4";
+    } else if ($_GET['bo_idx'] == 3) {
+        $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' and report_val_1 = 4";
+    }
+
+
     if(!empty($notice_array))
         $sql .= " and wr_id not in (".implode(', ', $notice_array).") ";
     $sql .= " {$sql_order} limit {$from_record}, $page_rows ";
+
 // 페이지의 공지개수가 목록수 보다 작을 때만 실행
 if($page_rows > 0) {
     $result = sql_query($sql);

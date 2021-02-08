@@ -30,8 +30,11 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 
 <!-- 콘텐츠 시작 { -->
 <div id="wrapper_main">
+<div class="main_display">
 <img src="<?=G5_THEME_URL ?>/img/main_background.png" alt="user_icon" class="main_back">
 <div class="main_back_filter"></div>
+
+</div>
     <div id="container_wr">
    
     <div id="container_layout">

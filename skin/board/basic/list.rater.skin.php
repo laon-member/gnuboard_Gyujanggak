@@ -99,9 +99,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                     if($_GET['bo_idx'] == 1){
                         $sql55 = " select COUNT(DISTINCT `idx`) as cnt from g5_business_propos where bo_idx = '{$row44['wr_id']}'";
                     } else if($_GET['bo_idx'] == 2){
-                        $sql55 = " select COUNT(DISTINCT `idx`) as cnt from g5_business_propos where report_val_1 = '2' AND bo_idx = '{$row44['wr_id']}' and report_val_1 = 2";
+                        $sql55 = " select COUNT(DISTINCT `idx`) as cnt from g5_business_propos where value = '4' AND bo_idx = '{$row44['wr_id']}'";
                     } else if($_GET['bo_idx'] == 3){
-                        $sql55 = " select COUNT(DISTINCT `idx`) as cnt from g5_business_propos where report_val_2 = '2' AND bo_idx = '{$row44['wr_id']}' and report_val_2 = 2";
+                        $sql55 = " select COUNT(DISTINCT `idx`) as cnt from g5_business_propos where report_val_1 = '4' AND bo_idx = '{$row44['wr_id']}' ";
                     }
                     $result55 = sql_query($sql55);
                     $row55 = sql_fetch_array($result55);

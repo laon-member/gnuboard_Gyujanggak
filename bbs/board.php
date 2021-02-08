@@ -22,7 +22,7 @@ if (!$bo_table) {
     alert($msg);
 }
 
-$g5['board_title'] = ((G5_IS_MOBILE && $board['bo_mobile_subject']) ? $board['bo_mobile_subject'] : $board['bo_subject']);
+$g5['board_title'] =  $board['bo_subject'];
 
 // wr_id 값이 있으면 글읽기
 if ((isset($wr_id) && $wr_id) || (isset($wr_seo_title) && $wr_seo_title)) {
@@ -248,7 +248,7 @@ if ($member['mb_level'] >= $board['bo_list_level'] && $board['bo_use_list_view']
 
 include_once(G5_BBS_PATH.'/board_tail.php');
 
-echo "\n<!-- 사용스킨 : ".(G5_IS_MOBILE ? $board['bo_mobile_skin'] : $board['bo_skin'])." -->\n";
+// echo "\n<!-- 사용스킨 : ".(G5_IS_MOBILE ? $board['bo_mobile_skin'] : $board['bo_skin'])." -->\n";
 
 include_once(G5_PATH.'/tail.sub.php');
 ?>

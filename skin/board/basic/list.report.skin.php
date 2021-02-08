@@ -93,7 +93,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         <?php
 
             for ($i=0; $i<count($list); $i++) {
-                $sql = " select * from report where mb_id= '{$member['mb_id']}' AND business_idx = '{$list[$i]['idx']}'";
+                $sql = " select * from report where mb_id= '{$member['mb_id']}' AND business_idx = '{$list[$i]['idx']}' and report_idx = '{$_GET['bo_idx']}'";
                 $result = sql_query($sql);
                 $row22 = sql_fetch_array($result);
 

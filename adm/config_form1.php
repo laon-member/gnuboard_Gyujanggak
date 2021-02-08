@@ -67,8 +67,7 @@ for($i=0; $i<$row = sql_fetch_array($result); $i++){
                 <li class="header_notice_list header_notice_list<?= $j ?>">
                     [공지사항]
                     <span>
-                    <?php  
-                    if(strlen($notice['wr_subject']) > 30){
+                    <?php  if(strlen($notice['wr_subject'], "UTF-8") > 30){
                         echo iconv_substr( $notice['wr_subject'], 0, 30, "utf-8");
                         echo '...';
                     } else {

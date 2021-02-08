@@ -67,7 +67,17 @@ $row2=sql_fetch_array($result2);
         
 
 
-            $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}'";
+
+            if($_GET['bo_idx'] == 1){
+                $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}'";
+            } else if ($_GET['bo_idx'] == 2) {
+                $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' and value = 4";
+            } else if ($_GET['bo_idx'] == 3) {
+                $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' and report_val_1 = 4";
+            }
+        
+
+
             $result = sql_query($sql);
         
 
@@ -103,7 +113,7 @@ $row2=sql_fetch_array($result2);
             </td>
 
             <td class="td_center">
-                <?= $row['quest_number'] ?> 
+                <?= $row['info_number'] ?> 
             </td>
             <td class="td_title "  >
             <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=qa&bo_idx=<?= $_GET['bo_idx'] ?>&wr_idx=<?= $_GET['wr_idx'] ?>&us_idx=<?= $row['idx']; ?>&u_id=1"><?= $row['ko_title']; ?></a>

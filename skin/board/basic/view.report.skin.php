@@ -19,7 +19,11 @@ $sql = " select * from g5_write_business_title where idx= '{$row22['bo_title_idx
 $result = sql_query($sql);
 $row33 = sql_fetch_array($result);
 
-$sql = " select * from report where business_idx= '{$_GET['wr_bo_idx']}' ";
+if($_GET['bo_idx'] == 1){
+    $sql = " select * from report where business_idx= '{$_GET['wr_bo_idx']}' and report_idx = 1 ";
+} else if($_GET['bo_idx'] == 2 ){
+    $sql = " select * from report where business_idx= '{$_GET['wr_bo_idx']}' and report_idx = 2 ";
+}
 $result = sql_query($sql);
 $row44 = sql_fetch_array($result);
 
@@ -68,6 +72,7 @@ $j=0;
     <input type="hidden" name="wr_bo_idx" value="<?= $_GET['wr_bo_idx']?>"> 
     <input type="hidden" name="file_idx" value="<?= $row44['idx']?>"> 
     <input type="hidden" name="save_db" value="<?= $row44['idx'] != "" ? "true" : ""; ?>"> 
+    <input type="hidden" name="report_idx" value="<?= $_GET['bo_idx']; ?>"> 
 
     <table class="view_table_app">
         <thead>
@@ -132,11 +137,11 @@ $j=0;
             <?php if($row44['report'] < 2){ ?>
                 <label for="upload01" id="file-label-btn" class="file-label"><img src="<?= G5_IMG_URL ?>/upload.png" alt=""> 파일 업로드</label>
 
-                <button type="submit" formaction="<?= G5_BBS_URL ?>/view.report.update.php?bo_table=report&bo_idx=1&wr_bo_idx=<?= $_GET['wr_bo_idx'] ?>" class="btn_next_prv btn_color_white btn_file_del" id="save" title="<?php $row44 == "" ? '저장하기':'수정하기'; ?>" <?= $row44['report'] ==2? "disabled": ""; ?> ><?= $row44 == "" ? '저장':'수정'; ?></button>
+                <button type="submit" formaction="<?= G5_BBS_URL ?>/view.report.update.php?bo_table=report&bo_idx=<?= $_GET['bo_idx'] ?>&wr_bo_idx=<?= $_GET['wr_bo_idx'] ?>" class="btn_next_prv btn_color_white btn_file_del" id="save" title="<?php $row44 == "" ? '저장하기':'수정하기'; ?>" <?= $row44['report'] ==2? "disabled": ""; ?> ><?= $row44 == "" ? '저장':'수정'; ?></button>
             <?php } ?>
 
-                <button type="submit" formaction="<?= G5_BBS_URL ?>/board.report.php?bo_table=business&bo_idx=1" class="btn_next_prv  btn_color_white" id="cancel" title="취소">취소하기</button>
-            <button type="submit" formaction="<?= G5_BBS_URL ?>/view.report.update.php?bo_table=report&bo_idx=1&wr_bo_idx=<?= $_GET['wr_bo_idx'] ?>" class="btn_next_prv btn_next_prv_link btn_file_del" id="submission" title="신청하기" <?= $row44['report'] ==2? "disabled": ""; ?> style="background:<?= $row44['report'] ==2? '#ccc': '#1D2E58'; ?>">신청하기</button>
+                <button type="submit" formaction="<?= G5_BBS_URL ?>/board.report.php?bo_table=business&bo_idx=<?= $_GET['bo_idx'] ?>" class="btn_next_prv  btn_color_white" id="cancel" title="취소">취소하기</button>
+            <button type="submit" formaction="<?= G5_BBS_URL ?>/view.report.update.php?bo_table=report&bo_idx=<?= $_GET['bo_idx'] ?>&wr_bo_idx=<?= $_GET['wr_bo_idx'] ?>" class="btn_next_prv btn_next_prv_link btn_file_del" id="submission" title="신청하기" <?= $row44['report'] ==2? "disabled": ""; ?> style="background:<?= $row44['report'] ==2? '#ccc': '#1D2E58'; ?>">신청하기</button>
             </div>
         </div>
 </form>

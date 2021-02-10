@@ -16,13 +16,10 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 
 $sql = " select * from g5_write_business_title where bo_table = '{$_GET['bo_table']}'";
 $result = sql_query($sql);
-$sql1 = " SELECT * FROM {$write_table} WHERE wr_title_idx = {$bo_idx} ";
+$sql1 = " SELECT count(*) as cnt FROM {$write_table} WHERE wr_title_idx = {$bo_idx} ";
 $result1 = sql_query($sql1);
-$num = 0;
-for($j=1; $row=sql_fetch_array($result1); $j++) {
-    
-    $num ++;
-}
+$row=sql_fetch_array($result1);
+$num = $row['cnt'];
 
 ?>
 <!-- 게시판 목록 시작 { -->
@@ -151,7 +148,7 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
 
         </tr>
         <?php } ?>
-        <?php if ($list == 0) { echo '<tr><td colspan="6" class="empty_table">사업공고 내용이 없습니다.</td></tr>'; } ?>
+        <?php if (count($list) == 0) { echo '<tr><td colspan="6" class="empty_table">사업공고 내용이 없습니다.</td></tr>'; } ?>
         </tbody>
         </table>
     </form>

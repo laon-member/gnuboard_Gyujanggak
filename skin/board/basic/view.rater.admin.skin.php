@@ -69,11 +69,11 @@ $row2=sql_fetch_array($result2);
 
 
             if($_GET['bo_idx'] == 1){
-                $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}'";
+                $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' ORDER BY idx DESC";
             } else if ($_GET['bo_idx'] == 2) {
-                $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' and value = 4";
+                $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' and value = 4  ORDER BY idx DESC";
             } else if ($_GET['bo_idx'] == 3) {
-                $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' and report_val_1 = 4";
+                $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' and report_val_1 = 4  ORDER BY idx DESC";
             }
         
 

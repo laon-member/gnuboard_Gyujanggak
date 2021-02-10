@@ -45,9 +45,9 @@ if($_GET['bo_idx'] == 1){
 <aside id="bo_side">
     <h2 class="aside_nav_title">심사관리</h2>
    
-    <a class="aside_nav <?= $_GET['bo_idx'] == 1?"aisde_click":""; ?>" href="<?= G5_BBS_URL ?>/board.rater.php?bo_table=<?= $bo_table ?>&bo_idx=1">지원자 선발</a>
-    <a class="aside_nav <?= $_GET['bo_idx'] == 2?"aisde_click":""; ?>" href="<?= G5_BBS_URL ?>/board.rater.php?bo_table=<?= $bo_table ?>&bo_idx=2">중간보고서</a>
-    <a class="aside_nav <?= $_GET['bo_idx'] == 3?"aisde_click":""; ?>" href="<?= G5_BBS_URL ?>/board.rater.php?bo_table=<?= $bo_table ?>&bo_idx=3">결과(연차)보고서</a>
+    <a class="aside_nav <?= $_GET['bo_idx'] == 1?"aisde_click":""; ?>" href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=<?= $bo_table ?>&bo_idx=1&u_id=1">지원자 선발</a>
+    <a class="aside_nav <?= $_GET['bo_idx'] == 2?"aisde_click":""; ?>" href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=<?= $bo_table ?>&bo_idx=2&u_id=1">중간보고서</a>
+    <a class="aside_nav <?= $_GET['bo_idx'] == 3?"aisde_click":""; ?>" href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=<?= $bo_table ?>&bo_idx=3&u_id=1">결과(연차)보고서</a>
 </aside>
 <div id="bo_list" >
 
@@ -120,8 +120,8 @@ if($_GET['bo_idx'] == 1){
                 <td class="td_datetime td_center"><?php echo $row22['rank']; ?></td>
                 <td class="td_datetime td_center"><?php echo $row22['category']; ?></td>
                 <td class="td_datetime td_center">
-                    <label for="checkbox<?= $i ?>" id="checkbox_label<?= $i ?>" class="value_btn value_btn_esc"style="background:<?= $admin_val > 0 ? "#ccc" :"#1F4392"; ?>" onclick="return <?= $admin_val < 1 ? 'true' :'false'; ?>">제외</label>
-                    <input type="checkbox" name="checkbox[]" class="checkbox_input" id="checkbox<?= $i ?>" value="<?= $row['idx']?>" style="display:none;">
+                    <label for="checkbox_checked<?= $i ?>" id="checkbox_label<?= $i ?>" class="value_btn value_btn_esc_checked"style="background:<?= $admin_val > 0 ? "#ccc" :"#1F4392"; ?>" onclick="return <?= $admin_val < 1 ? 'true' :'false'; ?>">제외</label>
+                    <input type="checkbox" name="checkbox[]" class="checkbox_input" id="checkbox_checked<?= $i ?>" value="<?= $row['idx']?>" style="display:none;">
                 </td>
             </tr>
         
@@ -255,10 +255,25 @@ jQuery(function($){
     $(document).ready(function(){
         $('.value_btn_esc').on('click', function (e) {
             if(<?= $admin_val ?> == 0){
-                var value = $(this).next().is(':checked');                
+                var value = $(this).next().is(':checked');  
                 if (value) {    
                     $(this).text("선택");
                     $(this).css({"background": "#1D2E58"});
+
+                } else {
+                    $(this).text("해제");
+                    $(this).css({"background": "#CCC"});
+
+                }
+            }
+        });
+
+        $('.value_btn_esc_checked').on('click', function (e) {
+            if(<?= $admin_val ?> == 0){
+                var value = $(this).next().is(':checked');  
+                if (value) {    
+                    $(this).text("제외");
+                    $(this).css({"background": "#1F4392"});
 
                 } else {
                     $(this).text("해제");

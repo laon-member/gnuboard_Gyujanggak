@@ -72,13 +72,13 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                 $total_count = $row11['cnt'];
                 
                 if($_GET['bo_idx'] == 1){
-                    $sql44 = " select * from g5_business_propos where bo_idx = '{$_GET['border_idx']}'";
+                    $sql44 = " select * from g5_business_propos where bo_idx = '{$_GET['border_idx']}' order by idx desc";
                     $result44 = sql_query($sql44);
                 } else if($_GET['bo_idx'] == 2){
-                    $sql44 = " select * from g5_business_propos where bo_idx = '{$_GET['border_idx']}' and value = 4";
+                    $sql44 = " select * from g5_business_propos where bo_idx = '{$_GET['border_idx']}' and value = 4 order by idx desc";
                     $result44 = sql_query($sql44);
                 } else if($_GET['bo_idx'] == 3){
-                    $sql44 = " select * from g5_business_propos where bo_idx = '{$_GET['border_idx']}' and report_val_1 = 4";
+                    $sql44 = " select * from g5_business_propos where bo_idx = '{$_GET['border_idx']}' and report_val_1 = 4 order by idx desc";
                     $result44 = sql_query($sql44);
                 }
 
@@ -93,6 +93,23 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                         $row_value = $row['report_val_2'];
                     }
 
+                    $value_num == 0;
+                    $value_idx == 0;
+                    if($_GET['bo_idx'] == 1){
+                        $value_num = $row['value'];
+                        $value_idx = $row['idx'];
+                    } else if($_GET['bo_idx'] == 2){
+                        $sql55 = " select * from report where business_idx = '{$row['idx']}' and report_idx = 1";
+                        $row55 = sql_fetch($sql55);
+                        $value_num = $row['report_val_1'];
+                        $value_idx = $row['idx'];
+                    } else if($_GET['bo_idx'] == 3){
+                        $sql55 = " select * from report where business_idx = '{$row['idx']}' and report_idx = 2";
+                        $row55 = sql_fetch($sql55);
+                        $value_num = $row['report_val_2'];
+                        $value_idx = $row['idx'];
+                    }
+
 
             ?>
                     <tr class="<?php echo $lt_class ?> tr_hover">
@@ -105,30 +122,44 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                         <td class="td_idx td_center"><?= $list[$i]['num']; ?></td>
 
                         <td class="td_center"><?= $row['info_number'] ?> </td>
-                        <td class="td_download ko_title td_title" ><?= $row['ko_title']; ?></td>
+                        <td class="td_download ko_title td_title" >
+                        <?php 
+                              if($value_num == 3){ 
+                                echo '[불합격]';
+                              } else if( $value_num == 4){
+                                echo '[합격]';
+                              }  
+                        ?>
+                            <?= $row['ko_title']; ?>    
+                        </td>
                         <td class="td_datetime td_center"><?php echo $row['name'];  ?></td>
                         <td class="td_center wr_average">
                             <?php
                                 $sum =0;
                                 $average = 0;
+                                $row_count = 0;
+
                                 $sql444 = " select * from rater where business_idx = '{$_GET['border_idx']}' and test_id = '{$_GET['bo_idx']}'";
                                 $result444 = sql_query($sql444);
                                 $row444 = sql_fetch_array($result444);
 
+                                $sql555 = " select * from rater where business_idx = '{$_GET['border_idx']}' and test_id = '{$_GET['bo_idx']}'";
+                                $result555 = sql_query($sql555);
+                                for($k =0; $k < $row555 = sql_fetch_array($result555); $k){
+                                    $sql333 = " select * from rater_value where rater_idx = '{$row555['idx']}'";
+                                    $result333 = sql_query($sql333);
+                                    $row332 = sql_fetch_array($result333);
 
-                                $sql333 = " select count(*) as cnt from rater_value where rater_idx = '{$row444['idx']}'";
-                                $result333 = sql_query($sql333);
-                                $row332 = sql_fetch_array($result333);
-
-                                $sql = "  select * from rater_value where rater_idx = '{$row444['idx']}  '";
-                                $result333 = sql_query($sql);
-                                
-                                for ($j=0; $row33 = sql_fetch_array($result333); $j++) {
-                                    $sum = $sum + $row33['test_sum'];
+                                    if($row332){
+                                        $row_count ++;
+                                        $sum =  $sum + $row332['test_sum'];
+                                    }
                                 }
 
-                                if($row332['cnt'] > 0){
-                                    $average = @$sum/$row332['cnt'];
+                                
+
+                                if($row_count > 0){
+                                    $average = @$sum/$row_count;
                                     $average = @sprintf('%0.0f', $average);
                                 } else {
                                     $average = 0;
@@ -136,60 +167,61 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                                 
 
                             ?>
-                            <?= $average ?>/80
+                            <?= $average ?>/80 
                         </td>
                         <td class="td_center wr_average_max_min">
                             <?php
-                            $average_max_min_not = 0;
+                                $average_max_min_not = 0;
+                                $row_count =0;
+                                $sum =0;
+
                                 $sql444 = " select * from rater where business_idx = '{$_GET['border_idx']}' and test_id = '{$_GET['bo_idx']}'";
                                 $result444 = sql_query($sql444);
                                 $row444 = sql_fetch_array($result444);
 
+                                $sql555 = " select * from rater where business_idx = '{$_GET['border_idx']}' and test_id = '{$_GET['bo_idx']}'";
+                                $result555 = sql_query($sql555);
+                                for($k =0; $k < $row555 = sql_fetch_array($result555); $k){
+                                    $sql333 = " select * from rater_value where rater_idx = '{$row555['idx']}'";
+                                    $result333 = sql_query($sql333);
+                                    $row332 = sql_fetch_array($result333);
 
-                                $sql333 = " select count(*) as cnt from rater_value where report_idx = '{$row444['idx']}'";
-                                $result333 = sql_query($sql333);
-                                $row33 = sql_fetch_array($result333);
+                                    if($row332){
+                                        $sum =  $sum + $row332['test_sum'];
+                                        $row_count ++;
+                                    }
+                                }
 
                                 $sql_sum = 0;
                                 $sql_max = 0;
                                 $sql_min = 0;
 
-                                if($row33['cnt'] > 2){
-                                    $sql = "  select * from rater_value where rater_idx = '{$row['idx']}  '";
+                                if($row_count > 2){
+                                    $sql = "  select * from rater_value where  rater_idx = '{$row444['idx']}' and report_idx = '{$row['idx']}' '";
                                     $result = sql_query($sql);
                                     $sum = 0;
                                     
                                     
-                                    $sql = "SELECT sum(test_sum) AS sum FROM rater_value WHERE rater_idx = '{$row444['idx']}' limit 1";
+                                    $sql = "SELECT sum(test_sum) AS sum FROM rater_value WHERE report_idx = '{$row['idx']}'";
                                     $sql_sum = sql_fetch($sql);
 
-                                    $sql = "SELECT max(test_sum) AS max FROM rater_value WHERE rater_idx = '{$row444['idx']}' limit 1";
+                                    $sql = "SELECT max(test_sum) AS max FROM rater_value WHERE report_idx = '{$row['idx']}' ";
                                     $sql_max = sql_fetch($sql);
 
-                                    $sql = "SELECT min(test_sum) AS min FROM rater_value WHERE rater_idx = '{$row444['idx']}' limit 1";
+                                    $sql = "SELECT min(test_sum) AS min FROM rater_value WHERE report_idx = '{$row['idx']}' ";
                                     $sql_min = sql_fetch($sql);
 
                                    
                                     $sql_min_max_sum = $sql_max['max'] + $sql_min['min'];
                                     $sql_test_sum =$sql_sum['sum'] - $sql_min_max_sum;
 
-                                    $rater_user = $row33['cnt'] - 2;
+                                    $rater_user = $row_count - 2;
                                     $average_max_min_not = $sql_test_sum/$rater_user;
                                 } else {
-                                    $sql = "  select * from rater_value where rater_idx = '{$row444['idx']}  '";
-                                    $result = sql_query($sql);
-                                    $sum = 0;
-
-                                    
-                                    for ($j=0; $row33 = sql_fetch_array($result); $j++) {
-                    
-                                        $sum = $sum + $row33['test_sum'];
-                                    }
-
-                                   if( $j == 0){
+                                   if($row_count == 0){
                                     @$average_max_min_not = 0;
                                    } else {
-                                    @$average_max_min_not = $sum/$j;
+                                    @$average_max_min_not = $sum/$row_count;
                                    }
 
                                     
@@ -202,22 +234,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                         <td class="td_datetime td_center">
                                 <input type="hidden" id="sql_list_idx" name="bo_id" value="<?php echo $row['idx']; ?>">
                                 <?php
-                                    $value_num;
-                                    $value_idx;
-                                    if($_GET['bo_idx'] == 1){
-                                        $value_num = $row['value'];
-                                        $value_idx = $row['idx'];
-                                    } else if($_GET['bo_idx'] == 2){
-                                        $sql55 = " select * from report where business_idx = '{$row['idx']}' and report_idx = 1";
-                                        $row55 = sql_fetch($sql55);
-                                        $value_num = $row['report_val_1'];
-                                        $value_idx = $row['idx'];
-                                    } else if($_GET['bo_idx'] == 3){
-                                        $sql55 = " select * from report where business_idx = '{$row['idx']}' and report_idx = 2";
-                                        $row55 = sql_fetch($sql55);
-                                        $value_num = $row['report_val_2'];
-                                        $value_idx = $row['idx'];
-                                    }
+                                   
 
                                     if($value_num == 3 || $value_num == 4){
                                 ?>

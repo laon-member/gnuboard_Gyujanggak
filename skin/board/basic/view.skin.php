@@ -166,6 +166,7 @@ $result1 = sql_query($sql1);
 
 
         $('.btn_next_prv_link').click(function(){
+
             if(now_date <= board_date_end && now_date >= board_date_start && board_value < 3){
                 
             } else {

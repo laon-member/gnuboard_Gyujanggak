@@ -54,7 +54,6 @@ if ($sca || $stx || $stx === '0') {     //검색이면
     $sql = " SELECT COUNT(DISTINCT `wr_parent`) AS `cnt` FROM {$write_table} WHERE {$sql_search} ";
     $total_count = $row['cnt'];
 
-    echo $total_count;
     $title_text = '검색';
 
     // for($i=1; $row=sql_fetch_array($result); $i++) {
@@ -77,10 +76,10 @@ if ($sca || $stx || $stx === '0') {     //검색이면
         $sql = "select COUNT(DISTINCT `idx`) as cnt from g5_business_propos where bo_idx = '{$_GET['border_idx']}'";
         $row = sql_fetch($sql);
     } else if ($_GET['bo_idx'] == 2) {
-        $sql = "select COUNT(DISTINCT `idx`) as cnt from g5_business_propos where bo_idx = '{$_GET['border_idx']}' and report_val_1 = 2";
+        $sql = "select COUNT(DISTINCT `idx`) as cnt from g5_business_propos where bo_idx = '{$_GET['border_idx']}' and value = 4";
         $row = sql_fetch($sql);
     } else if ($_GET['bo_idx'] == 3) {
-        $sql = "select COUNT(DISTINCT `idx`) as cnt from g5_business_propos where bo_idx = '{$_GET['border_idx']}' and report_val_2 = 2";
+        $sql = "select COUNT(DISTINCT `idx`) as cnt from g5_business_propos where bo_idx = '{$_GET['border_idx']}' and report_val_1 = 4";
         $row = sql_fetch($sql);
     }
     

@@ -176,7 +176,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                 <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=<?=$_GET['bo_table']; ?>&wr_idx=<?php echo $list[$i]['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&us_idx=<?= $list[$i]['wr_id']; ?>&u_id=1&rater=1" class="value_btn" style="display:inline-block; background:#1F4392">
                   배정
                 </a>
-                <a href="<?= $action_url ?>?value=2&idx=<?= $list[$i]['wr_id'] ?>&bo_idx=<?= $_GET['bo_idx']; ?>" class="value_btn" onclick="return <?= $admin_val > 0 ?'false' : 'true'; ?>" style="display:inline-block; background:<?= $admin_val > 0 ? "#ccc" :"#1F4392"; ?>" <?= $admin_val > 0? "disabled" :""; ?>>
+                <a href="<?= $action_url ?>?value=2&idx=<?= $list[$i]['wr_id'] ?>&bo_idx=<?= $_GET['bo_idx']; ?>" class="value_btn <?= $admin_val > 0 ?'' : 'value_rater_btn'; ?>" onclick="return <?= $admin_val > 0 ?'false' : 'true'; ?>" style="display:inline-block; background:<?= $admin_val > 0 ? "#ccc" :"#1F4392"; ?>" <?= $admin_val > 0? "disabled" :""; ?>>
                     의뢰
                 </a>
             </td>
@@ -185,7 +185,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                 <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=<?=$_GET['bo_table']; ?>&border_idx=<?php echo $list[$i]['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&u_id=1" class="value_btn" style="display:inline-block; background:#1F4392">
                    선발
                 </a>
-                <a href="<?= $action_url_value ?>?us_idx=<?= $list[$i]['wr_id'] ?>&bo_idx=<?= $_GET['bo_idx']?>" class="value_btn" style="display:inline-block; background:<?= $admin_val > 2 ? "#ccc" :"#1F4392"; ?>" <?= $admin_val > 2? "disabled" :""; ?>>
+                <a href="<?= $action_url_value ?>?us_idx=<?= $list[$i]['wr_id'] ?>&bo_idx=<?= $_GET['bo_idx']?>" class="value_btn  <?= $admin_val > 2 ? "" : 'value_admin_btn'; ?>" onclick="return <?= $admin_val > 2 ?'false' : 'true'; ?>"  style="display:inline-block; background:<?= $admin_val > 2 ? "#ccc" :"#1F4392"; ?>" <?= $admin_val > 2? "disabled" :""; ?>>
                    발표
                 </a>
             </td>
@@ -212,6 +212,17 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 
 <?php if ($is_checkbox) { ?>
 <script>
+function a_event(ev){
+    var result = confirm('정말 '+ev+'하시겠습니까?'); 
+        
+    if(result) {  
+        return true;
+
+    } else { 
+        return false;
+    }
+}
+
 function all_checked(sw) {
     var f = document.fboardlist;
 
@@ -284,14 +295,29 @@ jQuery(function($){
         }
     });
 
-    // if(<?php echo $_GET['bo_idx'] == 1? true : false ?> ){
-    //     alert('fdsa');
-    // }
+    $('.value_rater_btn').click(function(){
+        var result = confirm('정말 의뢰하시겠습니까?'); 
+        
+        if(result) {  
+            return true;
 
-    // $('.aside_nav').click(function(){
-    //     $('.aside_nav').removeClass('.aisde_click');
-    //     $(this).addClass('.aisde_click');
-    // });
+        } else { 
+            return false;
+        }
+
+    })
+    
+    $('.value_admin_btn').click(function(){
+        var result = confirm('정말 발표하시겠습니까?'); 
+        
+        if(result) {  
+            return true;
+
+        } else { 
+            return false;
+        }
+
+    })
 
 });
 </script>

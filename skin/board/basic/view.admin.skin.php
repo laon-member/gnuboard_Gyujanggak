@@ -17,14 +17,10 @@ $sql = " select * from g5_write_business_title where bo_table = '{$_GET['bo_tabl
 $result = sql_query($sql);
 
 
-$sql1 = "select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}'";
+$sql1 = "select count(*) as cnt from g5_business_propos where bo_idx = '{$_GET['wr_idx']}'";
 $result1 = sql_query($sql1);
-$num = 0;
-for($j=1; $row=sql_fetch_array($result1); $j++) {
-    
-    $num ++;
-}
-
+$row=sql_fetch_array($result1);
+$num = $row['cnt'];
 ?>
 <!-- 게시판 목록 시작 { -->
 <aside id="bo_side">
@@ -83,10 +79,7 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
         $result = sql_query($sql);
         $row = sql_fetch_array($result);
      
-
-
-
-        $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}'";
+        $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' order by idx desc";
         $result = sql_query($sql);
         for ($i=0; $i<$row = sql_fetch_array($result); $i++) {
 
@@ -101,7 +94,7 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
             </td>
 
             <td class="td_center">
-                <?= $row['quest_number'] ?> 
+                <?= $row['info_number'] ?> 
             </td>
             <td class="td_title "  >
           <?= $row['ko_title']; ?>
@@ -109,13 +102,23 @@ for($j=1; $row=sql_fetch_array($result1); $j++) {
             </td>
             <td class="td_datetime td_center"><?php echo $row['name']; ?></td>
             <td class="td_datetime td_center">
-                <a href="<?= G5_BBS_URL ?>/board_admin.php?bo_table=business&bo_idx=<?= $_GET['bo_idx'] ?>&wr_idx=<?= $_GET['wr_idx'] ?>&us_idx=<?= $list[$i]['idx']; ?>&u_id=1&report=1" class="value_btn" onclick="<?= $row['report_val_1'] > 1 ? "" : "event.preventDefault();" ?>" style="background:<?= $row['report_val_1'] > 1 ? "#1D2E58" : "#cccccc" ?>">
-                    <?= $row['report_val_1'] > 1 ? "바로가기" : "미제출" ?>
+            <?php 
+                $sql1 = " select * from report where business_idx = '{$row['idx']}' and report_idx = '1'";
+                $result1 = sql_query($sql1);
+                $value = sql_fetch_array($result1);
+            ?>
+                <a href="<?= G5_BBS_URL ?>/board_admin.php?bo_table=business&bo_idx=<?= $_GET['bo_idx'] ?>&wr_idx=<?= $_GET['wr_idx'] ?>&us_idx=<?= $list[$i]['idx']; ?>&u_id=1&report=1" class="value_btn" onclick="<?= $value['report'] == 2  ? "" : "event.preventDefault();" ?>" style="background:<?=$value['report'] == 2  ? "#1D2E58" : "#cccccc" ?>">
+                    <?= $value['report'] == 2 ? "바로가기" : "미제출" ?>
                 </a>
             </td>
             <td class="td_datetime td_center">
-                <a href="<?= G5_BBS_URL ?>/board_admin.php?bo_table=business&bo_idx=<?= $_GET['bo_idx'] ?>&wr_idx=<?= $_GET['wr_idx'] ?>&us_idx=<?= $list[$i]['idx']; ?>&u_id=1&report=2" class="value_btn " onclick="<?= $row['report_val_2'] > 1 ? "" : "event.preventDefault();" ?>" style="background:<?= $row['report_val_2'] > 1 ? "#1D2E58" : "#cccccc" ?>">
-                    <?= $row['report_val_2'] > 1  ? "바로가기" : "미제출" ?>
+                <?php 
+                    $sql1 = " select * from report where business_idx = '{$row['idx']}' and report_idx = '2'";
+                    $result1 = sql_query($sql1);
+                    $value = sql_fetch_array($result1);
+                ?>
+                <a href="<?= G5_BBS_URL ?>/board_admin.php?bo_table=business&bo_idx=<?= $_GET['bo_idx'] ?>&wr_idx=<?= $_GET['wr_idx'] ?>&us_idx=<?= $list[$i]['idx']; ?>&u_id=1&report=2" class="value_btn " onclick="<?= $value['report'] == 2  ? "" : "event.preventDefault();" ?>" style="background:<?=$value['report'] == 2  ? "#1D2E58" : "#cccccc" ?>">
+                    <?= $value['report'] == 2  ? "바로가기" : "미제출" ?>
                 </a>
             </td>
         </tr>

@@ -37,70 +37,65 @@ if($row1['cnt'] > 0){
     $sql2 = "select * from g5_business_propos where bo_idx = '{$_GET['us_idx']}'";
     $result2 = sql_query($sql2);
     for($j=1; $row2=sql_fetch_array($result2); $j++) {
-        echo $row2['value'];
         if($_GET['bo_idx'] == 1){
             if($row2['value'] == 4 || $row2['value'] == 3){
                 alert("이미 발표를 했습니다.");
             }else if($row2['value'] == 0){
-                $sql = " UPDATE g5_business_propos set value = '3' where bo_idx = '{$_GET['us_idx']}'";
+                $sql = " UPDATE g5_business_propos set value = '3' where bo_idx = '{$_GET['us_idx']}' and value = '0'";
                 sql_query($sql);
 
                 $sql2 = " update g5_write_business set value = '3' where wr_id = '{$_GET['us_idx']}'";
                 sql_query($sql2);
 
-                alert('심사결과를 발표 했습니다.'); 
             } else if($row2['value'] == 1) {
-                $sql = " UPDATE g5_business_propos set value = '4' where bo_idx = '{$_GET['us_idx']}'";
+                $sql = " UPDATE g5_business_propos set value = '4' where bo_idx = '{$_GET['us_idx']}' and value = '1'";
                 sql_query($sql);
                 
                 $sql2 = " update g5_write_business set value = '3' where wr_id = '{$_GET['us_idx']}'";
                 sql_query($sql2);
-                alert('심사결과를 발표 했습니다.');
             }
         } else if($_GET['bo_idx'] == 2) {
             if($row2['report_val_1'] == 4 || $row2['report_val_1'] == 3){
                 alert("이미 발표를 했습니다.");
             }else if($row2['report_val_1'] == 0){
-                $sql = " UPDATE g5_business_propos set report_val_1 = '3' where bo_idx = '{$_GET['us_idx']}'";
+                $sql = " UPDATE g5_business_propos set report_val_1 = '3' where bo_idx = '{$_GET['us_idx']}' and report_val_1 = '0'";
                 sql_query($sql);
 
                 $sql2 = " update g5_write_business set wr_8 = '3' where wr_id = '{$_GET['us_idx']}'";
                 sql_query($sql2);
 
-                alert('심사결과를 발표 했습니다.'); 
             } else if($row2['report_val_1'] == 1) {
-                $sql = " UPDATE g5_business_propos set report_val_1 = '4' where bo_idx = '{$_GET['us_idx']}'";
+                $sql = " UPDATE g5_business_propos set report_val_1 = '4' where bo_idx = '{$_GET['us_idx']}' and report_val_1 = '1'";
                 sql_query($sql);
                 
                 $sql2 = " update g5_write_business set wr_8 = '3' where wr_id = '{$_GET['us_idx']}'";
                 sql_query($sql2);
-                alert('심사결과를 발표 했습니다.');
             }
 
         } else if($_GET['bo_idx'] == 3) {
             if($row2['report_val_2'] == 4 || $row2['report_val_2'] == 3){
                 alert("이미 발표를 했습니다.");
             }else if($row2['report_val_2'] == 0){
-                $sql = " UPDATE g5_business_propos set report_val_2 = '3' where bo_idx = '{$_GET['us_idx']}'";
+                $sql = " UPDATE g5_business_propos set report_val_2 = '3' where bo_idx = '{$_GET['us_idx']}' and report_val_2 = '0'";
                 sql_query($sql);
 
                 $sql2 = " update g5_write_business set wr_9 = '3' where wr_id = '{$_GET['us_idx']}'";
                 sql_query($sql2);
 
-                alert('심사결과를 발표 했습니다.'); 
             } else if($row2['report_val_2'] == 1) {
-                $sql = " UPDATE g5_business_propos set report_val_2 = '4' where bo_idx = '{$_GET['us_idx']}'";
+                $sql = " UPDATE g5_business_propos set report_val_2 = '4' where bo_idx = '{$_GET['us_idx']}' and report_val_2 = '1'";
                 sql_query($sql);
                 
                 $sql2 = " update g5_write_business set wr_9 = '3' where wr_id = '{$_GET['us_idx']}'";
                 sql_query($sql2);
-                alert('심사결과를 발표 했습니다.');
             }
         }
 
         
     }
+    alert('심사결과를 발표 했습니다.');
 }
+alert('심사결과를 발표하지 못 했습니다.');
 
 
 ?>

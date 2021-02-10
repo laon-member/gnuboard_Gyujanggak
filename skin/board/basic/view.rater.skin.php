@@ -110,7 +110,7 @@ $row99 = sql_fetch_array($result);
             </td>
 
             <td class="td_center ">
-                <?= $row['quest_number'] ?> 
+                <?= $row['info_number'] ?> 
             </td>
             <td class="td_download td_title"  >
             <a href="<?= G5_BBS_URL ?>/board.rater.php?bo_table=qa&bo_idx=<?= $_GET['bo_idx'] ?>&wr_idx=<?= $_GET['wr_idx'] ?>&us_idx=<?= $row['idx']; ?>"><?= $row['ko_title']; ?></a>

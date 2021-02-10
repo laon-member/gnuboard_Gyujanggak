@@ -87,14 +87,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         </thead>
         
         <?php
-            
-            echo $sql2;
-            // $result2 = sql_query($sql2);
-            // $row=sql_fetch_array($result2);
             for($i=0;$i<count($list); $i++) {
                 
-                
-
                 $sql = " select * from g5_write_business where wr_id= '{$list[$i]['bo_idx']}'";
                 $result = sql_query($sql);
                 $row44 = sql_fetch_array($result);
@@ -142,7 +136,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         </tbody>
         <?php }?>
         <?php if ($total_count == 0) { echo '<tr><td colspan="6" class="empty_table">게시물이 없습니다.</td></tr>'; } ?>
-                        <?= $row['cut']; ?>
         </table>
     </div>
 
@@ -230,16 +223,6 @@ jQuery(function($){
             $(".more_opt.is_list_btn").hide();
         }
     });
-
-    // if(<?php //echo $_GET['bo_idx'] == 1? true : false ?> ){
-    //     alert('fdsa');
-    // }
-
-    // $('.aside_nav').click(function(){
-    //     $('.aside_nav').removeClass('.aisde_click');
-    //     $(this).addClass('.aisde_click');
-    // });
-
 });
 </script>
 <?php } ?>

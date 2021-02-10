@@ -72,11 +72,11 @@ $row33=sql_fetch_array($result1);
                 <tr>
                     <th scope="col" class="view_table_header" style="">접수번호</th>
                     <td scope="col" class="view_table_text" colspan="4" style="">
-                    <input type="text" name="info_number_view" id="info_number_view"  class="input_text input_text_50 input_text_end" placeholder="접수번호" value="<?= $row['info_number']; ?>"  readonly >
+                    <input type="text" name="info_number_view" id="info_number_view"  class="input_text input_text_100 input_text_end" placeholder="접수번호" value="<?= $row['info_number']; ?>"  readonly >
                     </td>
                     <th scope="col" class="view_table_header" style="">과제번호</th>
                     <td scope="col" class="view_table_text" colspan="4" style="">
-                        <input type="text" name="quest_number_view" id="quest_number_view"  class="input_text input_text_50 input_text_end" placeholder="과제번호" value="<?= $row['quest_number']; ?>" readonly>
+                        <input type="text" name="quest_number_view" id="quest_number_view"  class="input_text input_text_100 input_text_end" placeholder="과제번호" value="<?= $row['quest_number']; ?>" readonly>
                     </td>
                 </tr>
             </thead>

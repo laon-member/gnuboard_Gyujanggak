@@ -316,7 +316,7 @@ for ($i=0; $i<count($upload); $i++)
             $upload[$i]['source'] = addslashes($upload[$i]['source']);
         }
         $row = sql_fetch(" select count(*) as cnt from {$g5['board_file_table']} where bo_table = 'report' and wr_id = '{$_POST['file_idx']}' and bf_no = '{$i}' ");
-        $row22 = sql_fetch(" select * from report where business_idx = '{$wr_bo_idx}'");
+        $row22 = sql_fetch(" select * from report where business_idx = '{$wr_bo_idx}' and report_idx='{$_POST['report_idx']}'");
         if ($row['cnt'] )
         {
             // 삭제에 체크가 있거나 파일이 있다면 업데이트를 합니다.

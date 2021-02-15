@@ -171,3 +171,15 @@ $result1 = sql_query($sql1);
     <!-- } 첨부파일 끝 -->
         
 </article>
+
+<script>
+$(function(){
+    $('.btn_del_val').click(function(){
+        if(confirm('정말 삭제하시겠습니까')){
+            return true;
+        } else {
+            return false;
+        }
+    })
+})
+</script>

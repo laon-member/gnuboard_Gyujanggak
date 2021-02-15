@@ -31,7 +31,7 @@ if($value == 1){
     $row22 = sql_fetch(" select * from rater where business_idx = '{$_GET['idx']}' and test_id = '{$_GET['bo_idx']}'");
 
     if($row22['idx'] == ""){
-        alert('심사위원을 추가해주세여');
+        alert('심사위원을 추가해주세요');
     } else {
         $row = sql_fetch("UPDATE rater SET value = '2' WHERE business_idx = '{$_GET['idx']}'");
 

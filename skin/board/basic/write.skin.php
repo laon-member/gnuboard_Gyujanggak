@@ -95,10 +95,10 @@ $result = sql_query($sql);
             <tr>
                 <th>지원기간</th>
                 <td colspan="1">
-                    <input type="date" name="date_start_act" id="date_start_view"  class="input_text frm_input required full_input input_text_100 input_text_end" value='<?= $write['wr_date_start'] ?>' max="9999-12-31" required>
+                    <input type="text" name="date_start_act" id="date_start_view"  class="input_text frm_input required full_input input_text_100 input_text_end input_date" value='<?= $write['wr_date_start'] ?>' max="9999-12-31" placeholder="연도-월-일"  required>
                 </td>
                 <td colspan="5">
-                    <input type="date" name="date_end_act" id="date_end_view"  class=" input_textfrm_input required full_input input_text_100 input_text_end"  value='<?= $write['wr_date_end'] ?>' max="9999-12-31" required>
+                    <input type="date" name="date_end_act" id="date_end_view"  class=" input_text frm_input required full_input input_text_100 input_text_end input_date"  value='<?= $write['wr_date_end'] ?>' max="9999-12-31"  placeholder="연도-월-일" required>
                 </td>
             </tr>
             <tr>
@@ -269,15 +269,29 @@ $result = sql_query($sql);
     }
 
     $(function(){
+        $(".input_date").datepicker(
+            {dateFormat: 'yy-mm-dd'}
+        );
         $('#btn_submit').click(function(){
             var date_start = $('#date_start_view').val();
             var date_end = $('#date_end_view').val();
 
+            IsValidDateStart = Date.parse(date_start);
+            if (isNaN(IsValidDateStart)){
+                alert('총 지원기간 시작 날짜가 없는 날짜 입니다.');
+                return false;
+            } 
+                
+            IsValidDateEnd = Date.parse(date_end);
+            if (isNaN(IsValidDateEnd)){
+                alert('총 지원기간 끝나는 날짜가 없는 날짜 입니다.');
+                return false;
+            }
+            
             if(date_start > date_end) {
                 alert("지원기간 끝나는 날짜가 시작하는 날짜보다 빠릅니다");
                 return false;
             }
-
         })
 
 

@@ -99,7 +99,7 @@ if($_GET['no_alt'] == 'yes'){
                             }    
                         ?>
                         <li class="board_nav_list board_nav_list_hover <?= $board_rater_border ?>">
-                            <a href="<?= G5_BBS_URL ?>/board.rater.php?bo_table=qa&bo_idx=1" class=" " >심사관리</a>
+                            <a href="<?= G5_BBS_URL ?>/board.rater.php?bo_table=qa&bo_idx=1" class=" " >심사 관리</a>
                             <ul class="sub_menu">
                                 <li><a href="<?= G5_BBS_URL ?>/board.rater.php?bo_table=qa&bo_idx=1">지원자 선발</a></li>
                                 <li><a href="<?= G5_BBS_URL ?>/board.rater.php?bo_table=qa&bo_idx=2">중간보고서</a></li>
@@ -125,7 +125,7 @@ if($_GET['no_alt'] == 'yes'){
                         }
                     ?>
                         <li class="board_nav_list board_nav_list_hover <?= $board_app_border ?>">
-                            <a href="<?= G5_BBS_URL ?>/board.app.php?bo_table=business&bo_idx=1&u_id=1">신청서관리</a>
+                            <a href="<?= G5_BBS_URL ?>/board.app.php?bo_table=business&bo_idx=1&u_id=1">사업공고 관리</a>
                             <ul class="sub_menu">
                                 <li><a href="<?= G5_BBS_URL ?>/board.app.php?bo_table=business&bo_idx=1&u_id=1">한국학 연구용역</a> </li>
                                 <li><a href="<?= G5_BBS_URL ?>/board.app.php?bo_table=business&bo_idx=2&u_id=1">한국학 저술지원</a></li>

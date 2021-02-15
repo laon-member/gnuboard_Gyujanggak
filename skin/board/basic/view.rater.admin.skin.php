@@ -34,7 +34,7 @@ $row2=sql_fetch_array($result2);
 ?>
 <!-- 게시판 목록 시작 { -->
 <aside id="bo_side">
-    <h2 class="aside_nav_title">심사관리</h2>
+    <h2 class="aside_nav_title">심사 관리</h2>
    
     <a class="aside_nav <?= $_GET['bo_idx'] == 1?"aisde_click":""; ?>" href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=<?= $bo_table ?>&bo_idx=1&u_id=1">지원자 선발</a>
     <a class="aside_nav <?= $_GET['bo_idx'] == 2?"aisde_click":""; ?>" href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=<?= $bo_table ?>&bo_idx=2&u_id=1">중간보고서</a>

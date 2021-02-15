@@ -43,7 +43,7 @@ if($_GET['bo_idx'] == 1){
 ?>
 <!-- 게시판 목록 시작 { -->
 <aside id="bo_side">
-    <h2 class="aside_nav_title">심사관리</h2>
+    <h2 class="aside_nav_title">심사 관리</h2>
    
     <a class="aside_nav <?= $_GET['bo_idx'] == 1?"aisde_click":""; ?>" href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=<?= $bo_table ?>&bo_idx=1&u_id=1">지원자 선발</a>
     <a class="aside_nav <?= $_GET['bo_idx'] == 2?"aisde_click":""; ?>" href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=<?= $bo_table ?>&bo_idx=2&u_id=1">중간보고서</a>
@@ -74,7 +74,7 @@ if($_GET['bo_idx'] == 1){
                     <th scope="col" style="width:15%">학력</th>
                     <th scope="col" style="width:15%">직책</th>
                     <th scope="col" style="width:15%">연구분야</th>
-                    <th scope="col" style="width:15%">심사자 제외</th>
+                    <th scope="col" style="width:15%">심사자 선택</th>
                 </tr>
             </thead>
             <tbody>
@@ -201,7 +201,7 @@ jQuery(function($){
                 <th scope="col" style="width:16.66%" class=" td_center td_height_56">학력</th>
                 <th scope="col" style="width:16.66%" class=" td_center td_height_56">직책</th>
                 <th scope="col" style="width:16.66%" class=" td_center td_height_56">연구분야</th>
-                <th scope="col" style="width:16.66%" class=" td_center td_height_56">심사자 제외</th>
+                <th scope="col" style="width:16.66%" class=" td_center td_height_56">심사자 선택</th>
             </tr>
             </thead>
             <tbody>

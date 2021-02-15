@@ -67,9 +67,9 @@ $result = sql_query($sql);
         <table class="view_table_app">
             <thead>
                 <tr>
-                    <th scope="col" class="view_table_header"colspan="1" style="width:10%;">제목</th>
-                    <td scope="col" class="view_table_title" colspan="7" style="width:90%;">
-                        <input type="text" name="title_view" id="title_view"  class="input_text " placeholder="제목" value="<?= $row['wr_subject']; ?>"  readonly>
+                    <th scope="col" class="view_table_header "colspan="1" style="width:10%;">제목</th>
+                    <td scope="col" class="view_table_title " colspan="7" style="width:90%;">
+                        <input type="text" name="title_view" id="title_view"  class="input_text "  placeholder="제목" value="<?= $row['wr_subject']; ?>"  readonly>
                     </td>
                 </tr>
                 <tr>
@@ -90,14 +90,14 @@ $result = sql_query($sql);
                 </tr>
                 <tr>
                     <th scope="col" class="view_table_header" style="width:10%;" colspan="1">과제명(국문)</th>
-                    <td scope="col" class="view_table_text" colspan="7" style="width:90%;">
-                        <input type="text" name="ko_title" id="ko_title"  class="input_text " placeholder="과제명(국문)"  >
+                    <td scope="col" class="view_table_text view_table_padding" colspan="7" style="width:90%;">
+                        <input type="text" name="ko_title" id="ko_title"  class="input_text input_border_true" placeholder="과제명(국문)"  >
                     </td>
                 </tr>
                 <tr>
                     <th scope="col" class="view_table_header" colspan="1" style="width:10%;">과제명(영문)</th>
-                    <td scope="col" class="view_table_text" colspan="7" style="width:90%;">
-                        <input type="text" name="en_title" id="en_title"  class="input_text " placeholder="과제명(영문)" >
+                    <td scope="col" class="view_table_text view_table_padding" colspan="7" style="width:90%;">
+                        <input type="text" name="en_title" id="en_title "  class="input_text input_border_true" placeholder="과제명(영문)" >
                     </td>
                 </tr>
                 <tr class="view_table_header_table"></tr>
@@ -106,32 +106,32 @@ $result = sql_query($sql);
                 </tr>
                 <tr>
                     <th scope="col" class="view_table_header" colspan="1"style="width:10%;">성명</th>
-                    <td scope="col" class="view_table_text" colspan="3" style="width:40%;">
-                        <input type="text" name="name" id="name"  class="input_text " placeholder="성명">
+                    <td scope="col" class="view_table_text view_table_padding"  colspan="3" style="width:40%;">
+                        <input type="text" name="name" id="name"  class="input_text input_border_true" placeholder="성명">
                     </td>
                     <th scope="col" class="view_table_header" colspan="1"style="width:10%;">전공(학위)</th>
-                    <td scope="col" class="view_table_text" colspan="3" style="width:40%;">
-                        <input type="text" name="degree" id="degree"  class="input_text " placeholder="전공(학위)" >
+                    <td scope="col" class="view_table_text view_table_padding" colspan="3" style="width:40%;">
+                        <input type="text" name="degree" id="degree"  class="input_text input_border_true" placeholder="전공(학위)" >
                     </td>
                 </tr>
                 <tr>
                     <th scope="col" class="view_table_header" colspan="1" style="width:10%;">소속</th>
-                    <td scope="col" class="view_table_text" colspan="3" style="width:40%;">
-                        <input type="text" name="belong" id="belong"  class="input_text " placeholder="소속"  >
+                    <td scope="col" class="view_table_text view_table_padding" colspan="3" style="width:40%;">
+                        <input type="text" name="belong" id="belong"  class="input_text input_border_true" placeholder="소속"  >
                     </td>
                     <th scope="col" class="view_table_header" colspan="1" style="width:10%;">직급</th>
-                    <td scope="col" class="view_table_text" colspan="3" style="width:40%;">
-                        <input type="text" name="rank" id="rank"  class="input_text " placeholder="직급" >
+                    <td scope="col" class="view_table_text view_table_padding" colspan="3" style="width:40%;">
+                        <input type="text" name="rank" id="rank"  class="input_text input_border_true" placeholder="직급" >
                     </td>
                 </tr>
                 <tr>
                     <th scope="col" class="view_table_header" colspan="1" style="width:10%;">이메일</th>
-                    <td scope="col" class="view_table_text" colspan="3" style="width:40%;">
-                        <input type="text" name="email" id="email"  class="input_text " placeholder="이메일">
+                    <td scope="col" class="view_table_text view_table_padding" colspan="3" style="width:40%;">
+                        <input type="text" name="email" id="email"  class="input_text input_border_true" placeholder="이메일">
                     </td>
                     <th scope="col" class="view_table_header" colspan="1" style="width:10%;">전화</th>
-                    <td scope="col" class="view_table_text" colspan="3" style="width:40%;">
-                    <input type="text" name="phone" id="phone"  class="input_text " placeholder="전화" > 
+                    <td scope="col" class="view_table_text view_table_padding" colspan="3" style="width:40%;">
+                    <input type="text" name="phone" id="phone"  class="input_text input_border_true" placeholder="전화" > 
                     </td>
                 </tr>
             </tbody>
@@ -171,37 +171,37 @@ $result = sql_query($sql);
                 </tr>
                 <tr>
                     <th scope="col" class="view_table_header" style="">공동연구원</th>
-                    <td scope="col" class="view_table_text" colspan="1" style="">
-                        <input type="text" name="main_member" id="main_member"  class="input_text " placeholder="* 연구책임자 제외">
+                    <td scope="col" class="view_table_text view_table_padding" colspan="1" style="">
+                        <input type="text" name="main_member" id="main_member"  class="input_text input_border_true" placeholder="명 ( * 연구책임자 제외 )">
                     </td>
                     <th scope="col" class="view_table_header" style="">연구원보조</th>
-                    <td scope="col" class="view_table_text" colspan="3" style="">
-                        <input type="text" name="sub_member" id="sub_member"  class="input_text" placeholder="명">
+                    <td scope="col" class="view_table_text view_table_padding" colspan="3" style="">
+                        <input type="text" name="sub_member" id="sub_member"  class="input_text input_border_true" placeholder="명">
                     </td>
                 </tr>
                 <tr>
                     <th scope="col" class="view_table_header" colspan="1" style="">총 연구 기간</th>
-                    <td scope="col" class="view_table_text" colspan="1" style="">
-                        <input type="date" name="date_start" id="date_start"  class="input_text" max="9999-12-31" >
+                    <td scope="col" class="view_table_text view_table_padding" colspan="1" style="">
+                        <input type="text" name="date_start" id="date_start"  class="input_text input_date input_border_true" max="9999-12-31" placeholder="연도-월-일" >
                     </td>
-                    <td scope="col" class="view_table_text" colspan="4" style="">
-                        <input type="date" name="date_end" id="date_end"  class="input_text" max="9999-12-31">
+                    <td scope="col" class="view_table_text view_table_padding" colspan="4" style="">
+                        <input type="text" name="date_end" id="date_end" max="9999-12-31"class="input_text input_date input_border_true" placeholder="연도-월-일">
                     </td>
                 </tr>
                 <tr>
                     <th scope="col" class="view_table_header" colspan="1">연구비신청액</th>
-                    <td scope="col" class="view_table_text" colspan="5" style="">
-                        <input type="text" name="money" id="money"  class="input_text " placeholder="연구비신청액" >
+                    <td scope="col" class="view_table_text view_table_padding" colspan="5" style="">
+                        <input type="text" name="money" id="money"  class="input_text input_border_true" placeholder="연구비신청액" >
                     </td>
                 </tr>
                 <tr>
                     <th scope="col" class="view_table_header" colspan="1">1차년 연구비</th>
-                    <td scope="col" class="view_table_text" colspan="1" style="">
-                        <input type="text" name="one_year" id="one_year"  class="input_text " placeholder="1차년 연구비">
+                    <td scope="col" class="view_table_text view_table_padding" colspan="1" style="">
+                        <input type="text" name="one_year" id="one_year"  class="input_text input_border_true" placeholder="1차년 연구비">
                     </td>
                     <th scope="col" class="view_table_header" colspan="1">2차년 연구비</th>
-                    <td scope="col" class="view_table_text" colspan="3" style="">
-                        <input type="text" name="two_year" id="two_year"  class="input_text " placeholder="2차년 연구비">
+                    <td scope="col" class="view_table_text view_table_padding" colspan="3" style="">
+                        <input type="text" name="two_year" id="two_year"  class="input_text input_border_true" placeholder="2차년 연구비">
                     </td>
                 </tr>
                 
@@ -367,6 +367,10 @@ $result = sql_query($sql);
 <script>
     
     $(function(){
+        $(".input_date").datepicker(
+            {dateFormat: 'yy-mm-dd'}
+        );
+
         $('.btn_step1').click(function(){
             $('.step').removeClass('step_view');
             $('.step1').addClass('step_view');
@@ -379,8 +383,8 @@ $result = sql_query($sql);
             if($('#en_title').val() == "") return alert("영문 과제명이 비어있습니다");
             if($('#name').val() == "") return alert("성명이 비어있습니다");
             if($('#degree').val() == "") return alert("전공(학위)이 비어있습니다");
-            if($('#rank').val() == "") return alert("직급이 비어있습니다");
             if($('#belong').val() == "") return alert("소속이 비어있습니다");
+            if($('#rank').val() == "") return alert("직급이 비어있습니다");
             if($('#email').val() == "") return alert("이메일이 비어있습니다");
             if($('#phone').val() == "") return alert("전화번호가 비어있습니다");
             
@@ -437,11 +441,11 @@ $result = sql_query($sql);
 
 
             IsValidDateStart = Date.parse($('#date_start').val());
-            if (isNaN(IsValidDateStart)) return alert('총 연구기간 시작 날짜가 유효하지 않습니다.');
+            if (isNaN(IsValidDateStart)) return alert('총 지원기간 시작 날짜가 없는 날짜 입니다.');
                 
             IsValidDateEnd = Date.parse($('#date_end').val());
-            if (isNaN(IsValidDateEnd)) return alert('총 지원기간 끝나는 날짜가 유효하지 않습니다.');
-
+            if (isNaN(IsValidDateEnd)) return alert('총 지원기간 끝나는 날짜가 없는 날짜 입니다.');
+            
             // logic
             $('.step').removeClass('step_view');
             $('.step3').addClass('step_view');
@@ -583,6 +587,7 @@ $result = sql_query($sql);
                 }
             })
         })
+        
 
         $(document).off().on('click','.file-del',function(){
             var val = $(this).parent().find('.file-upload').prev().val();
@@ -603,7 +608,6 @@ $result = sql_query($sql);
         $(document).on("keydown", "input[type=file]", function(event) { 
             return event.key != "Enter";
         });
-
     })
 
 

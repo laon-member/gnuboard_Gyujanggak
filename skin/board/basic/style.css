@@ -83,6 +83,14 @@
 #bo_w .cke_sc_def dt {}
 #bo_w .cke_sc_def dd {}
 
+input#myInput::-webkit-calendar-picker-indicator { display: none }
+
+input[type=date]::-webkit-inner-spin-button, 
+input[type=date]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
 /* ### 기본 스타일 커스터마이징 끝 ### */
 
 /* 게시판 목록 */
@@ -556,6 +564,8 @@ textarea.input_text {width: 100%;}
 .input_text_right{text-align: right;}
 .input_text_center{text-align: center;}
 
+.input_border_true{border: 1px solid #ccc !important; height: 100%;}
+.view_table_padding{padding: 10px;}
 .btn-cont{text-align: right; padding: 40px 0;}
 .btn_cancel{width: 20%;}
 .btn_submit { width:20%;}

@@ -123,12 +123,14 @@ $row22=sql_fetch_array($result1);
                         <input type="text" name="date_start_view" id="date_start_view" placeholder="총 연구 기간"  class="input_text"  value="<?= $row['date_start']; ?> ~ <?= $row['date_end']; ?>" readonly>
                     </td>
                 </tr>
+                
                 <tr>
                     <th scope="col" class="view_table_header" colspan="1" style="">연구비신청액</th>
                     <td scope="col" class="view_table_text" colspan="8" style="">
                     <input type="text" name="money_view" id="money_view"  class="input_text" placeholder="연구비신청액" value="<?= number_format($row['money']); ?>원" readonly>
                     </td>
                 </tr>
+                <?php if($row['bo_title_idx'] == 2){ ?>
                 <tr>
                     <th scope="col" class="view_table_header" colspan="1" style="">1차년 연구비</th>
                     <td scope="col" class="view_table_text" colspan="4" style=" width:40%">
@@ -139,6 +141,7 @@ $row22=sql_fetch_array($result1);
                         <input type="text" name="two_year_view" id="two_year_view"  class="input_text" placeholder="2차년 연구비" value="<?= number_format($row['two_year']); ?>원" readonly>
                     </td>
                 </tr>
+                <?php } ?>
                 <tr class="view_table_header_table"></tr>
                 <tr>
                     <th scope="col" class="view_table_header " colspan="9">자료 첨부</th>

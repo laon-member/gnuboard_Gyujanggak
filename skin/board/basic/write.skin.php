@@ -80,41 +80,33 @@ $result = sql_query($sql);
         <thead>
             <tr>
                 <th>제목</th>
-                <td colspan="6">
-                    <input type="text" name="wr_subject" value="<?php echo $subject ?>" id="wr_subject" required class="input_text frm_input full_input required" size="50" maxlength="255" placeholder="제목">
+                <td colspan="6" class="view_table_padding">
+                    <input type="text" name="wr_subject" value="<?php echo $subject ?>" id="wr_subject" required class="input_text frm_input full_input required input_border_true" size="50" maxlength="255" placeholder="제목">
                 </td>
             </tr>
         </thead>
         <tbody class="view_table_body">
             <tr>
                 <th>과제번호</th>
-                <td colspan="6">
-                    <input type="text" name="quest_number_view" id="quest_number_view"  class="input_text input_text_100 input_text_end" placeholder="과제번호" value="<?= $write['wr_quest_number']; ?>" required>
+                <td colspan="6" class="view_table_padding">
+                
+                    <input type="text" name="quest_number_view" id="quest_number_view"  class="input_text input_text_100 input_text_end input_border_true" placeholder="과제번호" value="<?= $write['wr_quest_number']; ?>" required>
                 </td>
             </tr>
             <tr>
                 <th>지원기간</th>
-                <td colspan="1">
-                    <input type="text" name="date_start_act" id="date_start_view"  class="input_text frm_input required full_input input_text_100 input_text_end input_date" value='<?= $write['wr_date_start'] ?>' max="9999-12-31" placeholder="연도-월-일"  required>
+                <td colspan="1" class="view_table_padding">
+                    <input type="text" name="date_start_act" id="date_start_view"  class="input_text frm_input required full_input input_text_100 input_text_end input_date input_border_true" value='<?= $write['wr_date_start'] ?>' max="9999-12-31" readonly placeholder="연도-월-일"   required>
                 </td>
-                <td colspan="5">
-                    <input type="date" name="date_end_act" id="date_end_view"  class=" input_text frm_input required full_input input_text_100 input_text_end input_date"  value='<?= $write['wr_date_end'] ?>' max="9999-12-31"  placeholder="연도-월-일" required>
+                <td colspan="5" class="view_table_padding">
+                    <input type="text" name="date_end_act" id="date_end_view" class="input_text frm_input required full_input input_text_100 input_text_end input_date input_border_true"   value='<?= $write['wr_date_end'] ?>' max="9999-12-31" readonly  placeholder="연도-월-일" required>
                 </td>
             </tr>
             <tr>
                 <th>상세내용</th>
-                <td colspan="6">
+                <td colspan="6" class="view_table_padding">
                     <div class="wr_content <?php echo $is_dhtml_editor ? $config['cf_editor'] : ''; ?> ">
-                        <?php if($write_min || $write_max) { ?>
-                        <!-- 최소/최대 글자 수 사용 시 -->
-                        <p id="char_count_desc">이 게시판은 최소 <strong><?php echo $write_min; ?></strong>글자 이상, 최대 <strong><?php echo $write_max; ?></strong>글자 이하까지 글을 쓰실 수 있습니다.</p>
-                        <?php } ?>
-                        <textarea id="wr_content" name="wr_content" class="input_text input_text_100" maxlength="65536" style="width:100%;height:300px"><?php echo  $write['wr_content'] ?></textarea>
-                        <?php if($write_min || $write_max) { ?>
-                        <!-- 최소/최대 글자 수 사용 시 -->
-                        <div id="char_count_wrap"><span id="char_count"></span>글자</div>
-                        <?php } ?>
-                        
+                        <textarea id="wr_content" name="wr_content" class="input_text input_text_100 input_border_true" maxlength="65536" style="width:100%;height:300px; resize:none"><?php echo  $write['wr_content'] ?></textarea>
                     </div>
                 </td>
             </tr>
@@ -188,6 +180,8 @@ $result = sql_query($sql);
     check_byte("wr_content", "char_count");
 
     $(function() {
+        
+
         $("#wr_content").on("keyup", function() {
             check_byte("wr_content", "char_count");
         });

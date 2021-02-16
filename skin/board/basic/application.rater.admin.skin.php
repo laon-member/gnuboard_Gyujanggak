@@ -54,17 +54,17 @@ $row33=sql_fetch_array($result1);
             <thead>
                 <tr>
                     <th scope="col" class="view_table_header"colspan="1" style="width: 10%;">제목</th>
-                    <td scope="col" class="view_table_title" colspan="8" style="">
+                    <td scope="col" class="view_table_title" colspan="8" style="width: 90%;">
                         <input type="text" name="title_view" id="title_view"  class="input_text " placeholder="제목" value="<?= $row['ko_title']; ?>   "  readonly>
                     </td>
                 </tr>
                 <tr>
-                    <th scope="col" class="view_table_header" style="">접수번호</th>
-                    <td scope="col" class="view_table_text" colspan="4" style="">
+                    <th scope="col" class="view_table_header" style="width: 10%;">접수번호</th>
+                    <td scope="col" class="view_table_text" colspan="4" style="width: 40%;">
                     <input type="text" name="info_number_view" id="info_number_view"  class="input_text input_text_100 input_text_end" placeholder="접수번호" value="<?= $row['info_number']; ?>"  readonly required>
                     </td>
-                    <th scope="col" class="view_table_header" style="">과제번호</th>
-                    <td scope="col" class="view_table_text" colspan="4" style="">
+                    <th scope="col" class="view_table_header" style="width: 10%;">과제번호</th>
+                    <td scope="col" class="view_table_text" colspan="3" style="width: 40%;">
                         <input type="text" name="quest_number_view" id="quest_number_view"  class="input_text input_text_100 input_text_end" placeholder="과제번호" value="<?= $row['quest_number']; ?>" readonly>
                     </td>
                 </tr>
@@ -148,6 +148,7 @@ $row33=sql_fetch_array($result1);
                         <input type="text" name="money_view" id="money_view"  class="input_text input_text_end" placeholder="연구비신청액" readonly value="<?= number_format($row['money']); ?>원">
                     </td>
                 </tr>
+                <?php if($row['bo_title_idx'] == 2){ ?>
                 <tr>
                     <th scope="col" class="view_table_header" colspan="1" style="">1차년 연구비</th>
                     <td scope="col" class="view_table_text" colspan="4" style=" width:40%">
@@ -158,10 +159,12 @@ $row33=sql_fetch_array($result1);
                         <input type="text" name="two_year_view" id="two_year_view"  class="input_text input_text_100 input_text_end" placeholder="2차년 연구비" readonly value="<?= number_format($row['two_year']); ?>원">
                     </td>
                 </tr>
+                <?php } ?>
             </tbody>
             <?php
             $file_idx = '';
                 if($_GET['bo_idx'] == 1){
+           
                     $sql = " select * from rater where user_id = '{$member['mb_id']}' and business_idx = '{$_GET['wr_idx']}' and test_id = '{$_GET['bo_idx']}'";
                     $result = sql_query($sql);
                     $row77 = sql_fetch_array($result);
@@ -169,6 +172,7 @@ $row33=sql_fetch_array($result1);
                     $file_idx = $row['idx'];
 
                 } else if($_GET['bo_idx'] == 2){
+          
                     $sql = " select * from rater where user_id = '{$member['mb_id']}' and business_idx = '{$_GET['wr_idx']}' and test_id = '{$_GET['bo_idx']}'";
                     $result = sql_query($sql);
                     $row77 = sql_fetch_array($result);
@@ -179,6 +183,7 @@ $row33=sql_fetch_array($result1);
 
                     $file_idx = $row_list['idx'];
             ?> 
+            
                 <tr class="view_table_header_table"></tr>
                 <tr>
                     <th scope="col" class="view_table_header " colspan="9">상세설명</th>
@@ -216,7 +221,7 @@ $row33=sql_fetch_array($result1);
             <tbody id="view_table_upload">
                 <tr class="view_table_header_table"></tr>
                 <tr>
-                    <th scope="col" class="view_table_header " colspan="9">자료첨부</th>
+                    <th scope="col" class="view_table_header " colspan="9">지원자 선발 첨부 파일</th>
                 </tr>
                 <?php
                         $sql = " select * from g5_board_file where bo_table = 'g5_business_propos' and wr_id = '{$_GET['us_idx']}'";
@@ -242,6 +247,13 @@ $row33=sql_fetch_array($result1);
                     ?>
                      <?php
                         if($_GET['bo_idx'] == 2){
+                  
+                     ?>  
+                        <tr class="view_table_header_table"></tr>
+                        <tr>
+                            <th scope="col" class="view_table_header " colspan="9">중간보고서 첨부파일</th>
+                        </tr>
+                    <?php 
                             $sql = " select * from report where business_idx = '{$row['idx']}' and report_idx = '1' and report = '2'";
                             $result = sql_query($sql);
                             $row77 = sql_fetch_array($result);
@@ -249,6 +261,12 @@ $row33=sql_fetch_array($result1);
                             $sql2 = " select * from g5_board_file where bo_table = 'report' and wr_id = '{$row77['idx']}'";
                             $result2 = sql_query($sql2);    
                         } else if($_GET['bo_idx'] == 3){
+                    ?> 
+                        <tr class="view_table_header_table"></tr>
+                        <tr>
+                            <th scope="col" class="view_table_header " colspan="9">결과(연차)보고서 첨부파일</th>
+                        </tr>
+                    <?php 
                             $sql = " select * from report where business_idx = '{$row['idx']}' and report_idx = '2' and report = '2'";
                             $result = sql_query($sql);
                             $row77 = sql_fetch_array($result);
@@ -267,7 +285,7 @@ $row33=sql_fetch_array($result1);
                                         <img src="<?php echo G5_IMG_URL ?>/download_icon.png" alt="<?php echo $config['cf_title']; ?>">
                                     </td>
                                     <td scope="col" colspan="5" class="view_table_text" style="width:80%;">
-                                        <a href="<?= G5_BBS_URL ?>/download.php?bo_table=g5_business_propos&wr_id=<?= $row_list['wr_id'] ?>&no=<?= $row_list2['bf_no'] ?>" class=""><?= $row_list2['bf_source'] ?></a>
+                                        <a href="<?= G5_BBS_URL ?>/download.php?bo_table=report&wr_id=<?= $row_list2['wr_id'] ?>&no=<?= $row_list2['bf_no'] ?>" class=""><?= $row_list2['bf_source'] ?></a>
                                     </td>
                                 </tr>
                         <?php

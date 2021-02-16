@@ -84,9 +84,9 @@ $j=0;
         <tbody>
             <tr class="view_table_header_table"></tr>
             <tr>
-                <td scope="col" class="view_table_title" colspan="8" style="">
+                <td scope="col" class="view_table_title view_table_padding" colspan="8" style="">
                     <h2 id="bo_v_atc_title">본문</h2>
-                    <input type="text" name="contents" class="input_text input_text_hight" placeholder="설명을 입력해주세요." value="<?= $row44['contents']; ?>"<?= $row44['report'] ==2? "disabled": ""; ?>> 
+                    <input type="text" name="contents" class="input_text input_text_hight input_border_true" placeholder="설명을 입력해주세요." value="<?= $row44['contents']; ?>"<?= $row44['report'] ==2? "disabled": ""; ?>> 
                 </td>
             </tr>
         </tbody> 

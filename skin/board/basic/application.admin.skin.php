@@ -67,12 +67,12 @@ $result = sql_query($sql);
             <table class="view_table_app">
             <thead>
                 <tr>
-                    <th scope="col" class="view_table_header" style="">접수번호</th>
-                    <td scope="col" class="view_table_text" colspan="4" style="">
+                    <th scope="col" class="view_table_header" colspan="1" style="width:10%">접수번호</th>
+                    <td scope="col" class="view_table_text" colspan="3" style=" width:40%">
                     <input type="text" name="info_number_view" id="info_number_view"  class="input_text input_text_100 input_text_end" placeholder="접수번호" value="<?= $row['info_number']; ?>"  readonly required>
                     </td>
-                    <th scope="col" class="view_table_header" style="">과제번호</th>
-                    <td scope="col" class="view_table_text" colspan="4" style="">
+                    <th scope="col" class="view_table_header" colspan="1" style="width:10%">과제번호</th>
+                    <td scope="col" class="view_table_text" colspan="4" style="width:40%">
                         <input type="text" name="quest_number_view" id="quest_number_view"  class="input_text input_text_100 input_text_end" placeholder="과제번호" value="<?= $row['quest_number']; ?>" readonly>
                     </td>
                 </tr>
@@ -83,45 +83,44 @@ $result = sql_query($sql);
                     <th scope="col" class="view_table_header " colspan="9">연구책임자</th>
                 </tr>
                 <tr>
-                    <th scope="col" class="view_table_header" colspan="1" style="">성명</th>
-                    <td scope="col" class="view_table_text" colspan="4" style="">
+                    <th scope="col" class="view_table_header" colspan="" style="">성명</th>
+                    <td scope="col" class="view_table_text" colspan="3" style="">
                     <input type="text" name="name_view" id="name_view"  class="input_text input_text_100 input_text_end" placeholder="성명" readonly value="<?= $row['name']; ?>">
                     </td>
-                    <th scope="col" class="view_table_header" colspan="1" style="">전공(학위)</th>
-                    <td scope="col" class="view_table_text" colspan="3" style="">
+                    <th scope="col" class="view_table_header" colspan="" style="">전공(학위)</th>
+                    <td scope="col" class="view_table_text" colspan="4" style="">
                     <input type="text" name="degree_view" id="degree_view"  class="input_text input_text_100 input_text_end" placeholder="전공(학위)" readonly value="<?= $row['degree']; ?>">
                     </td>
                 </tr>
                 <tr>
                     <th scope="col" class="view_table_header" colspan="1" style="">소속</th>
-                    <td scope="col" class="view_table_text" colspan="4" style="">
-                    <input type="text" name="belong_view" id="belong_view"  class="input_text input_text_100 input_text_end" placeholder="소속" readonly value="<?= $row['belong']; ?>">
+                    <td scope="col" class="view_table_text" colspan="3" style="">
+                        <input type="text" name="belong_view" id="belong_view"  class="input_text input_text_100 input_text_end" placeholder="소속" readonly value="<?= $row['belong']; ?>">
                     </td>
                     <th scope="col" class="view_table_header" colspan="1" style="">직급</th>
-                    <td scope="col" class="view_table_text" colspan="3" style="">
-                    <input type="text" name="rank_view" id="rank_view"  class="input_text input_text_100 input_text_end" placeholder="직급" readonly value="<?= $row['rank']; ?>">
+                    <td scope="col" class="view_table_text" colspan="4" style="">
+                        <input type="text" name="rank_view" id="rank_view"  class="input_text input_text_100 input_text_end" placeholder="직급" readonly value="<?= $row['rank']; ?>">
                     </td>
                 </tr>
                 <tr>
                     <th scope="col" class="view_table_header" colspan="1" style="">이메일</th>
-                    <td scope="col" class="view_table_text" colspan="4" style="">
-                    <input type="text" name="email_view" id="email_view"  class="input_text input_text_100 input_text_end" placeholder="이메일" readonly value="<?= $row['email']; ?>">
+                    <td scope="col" class="view_table_text" colspan="3" style="">
+                        <input type="text" name="email_view" id="email_view"  class="input_text input_text_100 input_text_end" placeholder="이메일" readonly value="<?= $row['email']; ?>">
                     </td>
                     <th scope="col" class="view_table_header" colspan="1" style="">전화</th>
-                    <td scope="col" class="view_table_text" colspan="3" style="">
-                    <input type="text" name="phone_view" id="phone_view"  class="input_text input_text_100 input_text_end" placeholder="전화" readonly value="<?= $row['phone']; ?>">
+                    <td scope="col" class="view_table_text" colspan="4" style="">
+                        <input type="text" name="phone_view" id="phone_view"  class="input_text input_text_100 input_text_end" placeholder="전화" readonly value="<?= $row['phone']; ?>">
                     </td>
                 </tr>
             
                 <tr>
-                    <th scope="col" class="view_table_header" style="">공동연구원</th>
-                    <td scope="col" class="view_table_text" colspan="4" style="">
-                    <input type="text" name="main_member_view" id="main_member_view"  class="input_text input_text_100  input_text_end" placeholder="명" readonly value="<?= $row['main_member']; ?>명">
-
-                    </td>
-                    <th scope="col" class="view_table_header" style="">연구원보조</th>
+                    <th scope="col" class="view_table_header" style="1">공동연구원</th>
                     <td scope="col" class="view_table_text" colspan="3" style="">
-            <input type="text" name="sub_member_view" id="sub_member_view"  class="input_text input_text_100  input_text_end" placeholder="명" readonly value="<?= $row['sub_member']; ?>명">
+                        <input type="text" name="main_member_view" id="main_member_view"  class="input_text input_text_100  input_text_end" placeholder="명" readonly value="<?= $row['main_member']; ?>명">
+                    </td>
+                    <th scope="col" class="view_table_header" style="1">연구원보조</th>
+                    <td scope="col" class="view_table_text" colspan="4" style="">
+                        <input type="text" name="sub_member_view" id="sub_member_view"  class="input_text input_text_100  input_text_end" placeholder="명" readonly value="<?= $row['sub_member']; ?>명">
                     </td>
                 </tr>
                 <tr class="view_table_header_table"></tr>
@@ -140,16 +139,18 @@ $result = sql_query($sql);
                         <input type="text" name="money_view" id="money_view"  class="input_text input_text_end" placeholder="연구비신청액" readonly value="<?= number_format($row['money']); ?>원">
                     </td>
                 </tr>
+                <?php if($row['bo_title_idx'] == 2){ ?>
                 <tr>
                     <th scope="col" class="view_table_header" colspan="1" style="">1차년 연구비</th>
-                    <td scope="col" class="view_table_text" colspan="4" style=" width:40%">
+                    <td scope="col" class="view_table_text" colspan="3" style=" width:40%">
                         <input type="text" name="one_year_view" id="one_year_view"  class="input_text input_text_100 input_text_end" placeholder="1차년 연구비" readonly value="<?= number_format($row['one_year']); ?>원">
                     </td>
                     <th scope="col" class="view_table_header" colspan="1" style="">2차년 연구비</th>
-                    <td scope="col" class="view_table_text" colspan="3" style="">
+                    <td scope="col" class="view_table_text" colspan="4" style="">
                         <input type="text" name="two_year_view" id="two_year_view"  class="input_text input_text_100 input_text_end" placeholder="2차년 연구비" readonly value="<?= number_format($row['two_year']); ?>원">
                     </td>
                 </tr>
+                 <?php } ?>
             </tbody>
             <?php
             $file_idx = '';
@@ -197,10 +198,38 @@ $result = sql_query($sql);
             <tbody id="view_table_upload">
                 <tr class="view_table_header_table"></tr>
                 <tr>
-                    <th scope="col" class="view_table_header " colspan="9">자료첨부</th>
+                    <th scope="col" class="view_table_header " colspan="9">지원자 선발 첨부 파일</th>
                 </tr>
+                    <?php
+                        $sql = " select * from g5_board_file where bo_table = 'g5_business_propos' and wr_id = '{$_GET['us_idx']}'";
+                        $result = sql_query($sql);
+                        
+                        // 가변 파일
+                            for ($i=0; $row_list = sql_fetch_array($result); $i++) {
+                                if (isset($row_list['bf_source'][$i])) {
+                        ?>
+                                
+                                <tr class="">
+                                    <th scope="col" colspan="1" class="view_table_header" style="width:10%;">첨부파일</th>
+                                    <td scope="col" colspan="1" class="view_table_text" style="width:10%;">
+                                        <img src="<?php echo G5_IMG_URL ?>/download_icon.png" alt="<?php echo $config['cf_title']; ?>">
+                                    </td>
+                                    <td scope="col" colspan="5" class="view_table_text" style="width:80%;">
+                                        <a href="<?= G5_BBS_URL ?>/download.php?bo_table=g5_business_propos&wr_id=<?= $row_list['wr_id'] ?>&no=<?= $row_list['bf_no'] ?>" class=""><?php echo $row_list['bf_source'] ?></a>
+                                    </td>
+                                </tr>
+                        <?php
+                            }
+                        }
+                    ?>
                      <?php
                         if($_GET['report'] == 1){
+                    ?>  
+                        <tr class="view_table_header_table"></tr>
+                        <tr>
+                            <th scope="col" class="view_table_header " colspan="9">중간보고서 첨부파일</th>
+                        </tr>
+                    <?php 
                             $sql = " select * from report where business_idx = '{$row['idx']}' and report_idx = '1' and report = '2'";
                             $result = sql_query($sql);
                             $row77 = sql_fetch_array($result);
@@ -208,6 +237,12 @@ $result = sql_query($sql);
                             $sql2 = " select * from g5_board_file where bo_table = 'report' and wr_id = '{$row77['idx']}'";
                             $result2 = sql_query($sql2);    
                         } else if($_GET['report'] == 2){
+                    ?> 
+                        <tr class="view_table_header_table"></tr>
+                        <tr>
+                            <th scope="col" class="view_table_header " colspan="9">결과(연차)보고서 첨부파일</th>
+                        </tr>
+                    <?php
                             $sql = " select * from report where business_idx = '{$row['idx']}' and report_idx = '2' and report = '2'";
                             $result = sql_query($sql);
                             $row77 = sql_fetch_array($result);

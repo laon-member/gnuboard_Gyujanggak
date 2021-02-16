@@ -97,7 +97,7 @@ $result = sql_query($sql);
                 <tr>
                     <th scope="col" class="view_table_header" colspan="1" style="width:10%;">과제명(영문)</th>
                     <td scope="col" class="view_table_text view_table_padding" colspan="7" style="width:90%;">
-                        <input type="text" name="en_title" id="en_title "  class="input_text input_border_true" placeholder="과제명(영문)" >
+                        <input type="text" name="en_title" id="en_title"  class="input_text input_border_true" placeholder="과제명(영문)" >
                     </td>
                 </tr>
                 <tr class="view_table_header_table"></tr>
@@ -182,16 +182,17 @@ $result = sql_query($sql);
                 <tr>
                     <th scope="col" class="view_table_header" colspan="1" style="">총 연구 기간</th>
                     <td scope="col" class="view_table_text view_table_padding" colspan="1" style="">
-                        <input type="text" name="date_start" id="date_start"  class="input_text input_date input_border_true" max="9999-12-31" placeholder="연도-월-일" >
+                        <input type="text" name="date_start" id="date_start"  class="input_text input_date input_border_true" max="9999-12-31" readonly placeholder="연도-월-일" >
                     </td>
                     <td scope="col" class="view_table_text view_table_padding" colspan="4" style="">
-                        <input type="text" name="date_end" id="date_end" max="9999-12-31"class="input_text input_date input_border_true" placeholder="연도-월-일">
+                        <input type="text" name="date_end" id="date_end" max="9999-12-31"class="input_text input_date input_border_true" readonly placeholder="연도-월-일">
                     </td>
                 </tr>
+                <?php if($_GET['bo_idx'] == 2){ ?>
                 <tr>
                     <th scope="col" class="view_table_header" colspan="1">연구비신청액</th>
-                    <td scope="col" class="view_table_text view_table_padding" colspan="5" style="">
-                        <input type="text" name="money" id="money"  class="input_text input_border_true" placeholder="연구비신청액" >
+                    <td scope="col" class="view_table_text " colspan="5" style="">
+                        <input type="text" name="money" id="money"  class="input_text " placeholder="연구비신청액" readonly>
                     </td>
                 </tr>
                 <tr>
@@ -204,7 +205,14 @@ $result = sql_query($sql);
                         <input type="text" name="two_year" id="two_year"  class="input_text input_border_true" placeholder="2차년 연구비">
                     </td>
                 </tr>
-                
+                <?php } else { ?>
+                <tr>
+                    <th scope="col" class="view_table_header" colspan="1">연구비신청액</th>
+                    <td scope="col" class="view_table_text view_table_padding" colspan="5" style="">
+                        <input type="text" name="money" id="money"  class="input_text input_border_true" placeholder="연구비신청액" >
+                    </td>
+                </tr>
+                <?php } ?>
             </tbody>
         </table>
     
@@ -243,17 +251,17 @@ $result = sql_query($sql);
             <thead>
                 <tr>
                     <th scope="col" class="view_table_header"colspan="1" style="width: 10%;">제목</th>
-                    <td scope="col" class="view_table_title" colspan="8" style="">
+                    <td scope="col" class="view_table_title" colspan="8" style="width: 90%;">
                         <input type="text" name="title_view" id="title_view"  class="input_text " placeholder="제목" value="<?= $row['wr_subject']; ?>"  readonly>
                     </td>
                 </tr>
                 <tr>
-                    <th scope="col" class="view_table_header" style="">접수번호</th>
-                    <td scope="col" class="view_table_text" colspan="4" style="">
+                    <th scope="col" class="view_table_header" style="width: 10%;">접수번호</th>
+                    <td scope="col" class="view_table_text" colspan="4" style="width: 40%;">
                     <input type="text" name="info_number_view" id="info_number_view"  class="input_text" placeholder="접수 완료시 자동부여됩니다."  readonly>
                     </td>
-                    <th scope="col" class="view_table_header" style="">과제번호</th>
-                    <td scope="col" class="view_table_text" colspan="4" style="">
+                    <th scope="col" class="view_table_header" style="width: 10%;">과제번호</th>
+                    <td scope="col" class="view_table_text" colspan="4" style="width: 40%;">
                     <input type="text" name="quest_number_view" id="quest_number_view"  class="input_text" placeholder="과제번호" value="<?= $row['wr_quest_number']; ?>" readonly>
                     </td>
                 </tr>
@@ -327,15 +335,17 @@ $result = sql_query($sql);
                 <tr>
                     <th scope="col" class="view_table_header" colspan="1"style="">총 연구 기간</th>
                     <td scope="col" class="view_table_text" colspan="8" style="">
-                        <input type="text" name="date_start_view" id="date_start_view" placeholder="총 연구 기간"  class="input_text" readonly>
+                        <input type="text" name="date_start_view" id="date_start_view" placeholder="총 연구 기간"  class="input_text"  readonly>
                     </td>
                 </tr>
+                
                 <tr>
                     <th scope="col" class="view_table_header" colspan="1" style="">연구비신청액</th>
                     <td scope="col" class="view_table_text" colspan="8" style="">
-                    <input type="text" name="money_view" id="money_view"  class="input_text" placeholder="연구비신청액" value="<?php echo $value ?>" readonly>
+                    <input type="text" name="money_view" id="money_view"  class="input_text" placeholder="연구비신청액" readonly>
                     </td>
                 </tr>
+                <?php if($_GET['bo_idx'] == 2){ ?>
                 <tr>
                     <th scope="col" class="view_table_header" colspan="1" style="">1차년 연구비</th>
                     <td scope="col" class="view_table_text" colspan="4" style=" width:40%">
@@ -346,6 +356,8 @@ $result = sql_query($sql);
                         <input type="text" name="two_year_view" id="two_year_view"  class="input_text" placeholder="2차년 연구비" readonly>
                     </td>
                 </tr>
+                <?php } ?>
+                
                 <tr class="view_table_header_table"></tr>
                 <tr>
                     <th scope="col" class="view_table_header " colspan="9">자료 첨부</th>
@@ -418,9 +430,10 @@ $result = sql_query($sql);
             if(date_start > date_end) return  alert("지원기간 끝나는 날짜가 시작하는 날짜보다 빠릅니다");
             // if($('#date_start').val() > $('#date_end').val()) return ("연구 기간 끝나는 날짜가 시작하는 날짜보다 빠릅니다.");
             if($('#value').val() == "") return alert("연구비신청액이 비어있습니다");
+            <?php if($_GET['bo_idx'] == 2){?>
             if($('#one_year').val() == "") return alert("1차년 연구비가 비어있습니다");
             if($('#two_year').val() == "") return alert("2차년 연구비가 비어있습니다");
-
+            <?php } ?>
              //정규식 설정
              var regex= /^[0-9]+$/;
             //정규식 결과 저장
@@ -430,16 +443,18 @@ $result = sql_query($sql);
             var sub_memberResult = regex.test($("#sub_member").val());
             if(!sub_memberResult) return alert("연구원보조에 숫자만 입력해주세요");
 
-            var moneyResult = regex.test( $("#money").val() );
+            var moneyResult = regex.test( $("#money").val());
             if(!moneyResult) return alert("연구비신청액에 숫자만 입력해주세요");
 
-            var one_yearResult = regex.test( $("#one_year").val() );
+            <?php if($_GET['bo_idx'] == 2){ ?>
+
+            var one_yearResult = regex.test( $("#one_year").val());
             if(!one_yearResult) return alert("1차년 연구비에 숫자만 입력해주세요");
 
-            var two_yearResult = regex.test( $("#two_year").val() );
+            var two_yearResult = regex.test( $("#two_year").val());
             if(!two_yearResult) return alert("2차년 연구비에 숫자만 입력해주세요");
 
-
+            <?php } ?>
             IsValidDateStart = Date.parse($('#date_start').val());
             if (isNaN(IsValidDateStart)) return alert('총 지원기간 시작 날짜가 없는 날짜 입니다.');
                 
@@ -450,6 +465,7 @@ $result = sql_query($sql);
             $('.step').removeClass('step_view');
             $('.step3').addClass('step_view');
         });
+        var money_sum = 0;
         $('#info_number').change(function(){
             $('#info_number_view').val($(this).val());
         });
@@ -481,10 +497,10 @@ $result = sql_query($sql);
             $('#phone_view').val($(this).val());
         });
         $('#main_member').change(function(){
-            $('#main_member_view').val($(this).val()+"명");
+            $('#main_member_view').val($(this).val().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"명");
         });
         $('#sub_member').change(function(){
-            $('#sub_member_view').val($(this).val()+"명");
+            $('#sub_member_view').val($(this).val().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"명");
         });
         $('#date_start').change(function(){
             $('#date_start_view').val($('#date_start').val()+" ~ "+$('#date_end').val());
@@ -496,9 +512,15 @@ $result = sql_query($sql);
             $('#money_view').val($(this).val().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원");
         });
         $('#one_year').change(function(){
+             money_sum = Number($(this).val()) + Number($('#two_year').val());
+            $('#money').val(money_sum);
+            $('#money_view').val(money_sum);
             $('#one_year_view').val($(this).val().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원");
         });
         $('#two_year').change(function(){
+            money_sum = Number($(this).val()) + Number($('#one_year').val());
+            $('#money').val(money_sum);
+            $('#money_view').val(money_sum);
             $('#two_year_view').val($(this).val().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원");
         });
         var file_number = 1;

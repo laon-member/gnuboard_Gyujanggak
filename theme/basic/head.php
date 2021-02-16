@@ -52,7 +52,7 @@ if($_GET['no_alt'] == 'yes'){
                     <?php if($board_user == 1 && $_GET['u_id'] == ""){ ?>
                     <?php  
                         if($member['mb_level'] > 2 && $member['mb_level'] < 10 ){
-                            alert('심사자는 접근이 불가합니다.');
+                            alert('심사자는 접근이 불가합니다.', G5_URL);
                         }    
                         ?>
                         <li class="board_nav_list board_nav_list_hover <?= $board_border ?>">
@@ -95,7 +95,7 @@ if($_GET['no_alt'] == 'yes'){
                                 goto_url(G5_BBS_URL."/login.php");
                 
                             if($member['mb_level'] < 5){
-                                alert('심사자이상만 접근 가능합니다.');
+                                alert('심사자이상만 접근 가능합니다.', G5_URL);
                             }    
                         ?>
                         <li class="board_nav_list board_nav_list_hover <?= $board_rater_border ?>">
@@ -121,7 +121,7 @@ if($_GET['no_alt'] == 'yes'){
                             goto_url(G5_BBS_URL."/login.php");
 
                         if($member['mb_level'] < 10){
-                            alert('관리자 이상만 접근 가능합니다.');
+                            alert('관리자 이상만 접근 가능합니다.', G5_URL);
                         }
                     ?>
                         <li class="board_nav_list board_nav_list_hover <?= $board_app_border ?>">

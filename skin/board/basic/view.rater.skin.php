@@ -64,19 +64,19 @@ $row99 = sql_fetch_array($result);
         }
 
         if ($_GET['bo_idx'] == 1) {
-            $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}'";
+            $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' order by idx desc";
             $result = sql_query($sql);
 
             $list_count = sql_query("select count(*) as cnt from g5_business_propos where bo_idx = '{$_GET['wr_idx']}'");
             $list_count = sql_fetch_array($list_count);
         } else if ($_GET['bo_idx'] == 2) {
-            $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' and value = 4";
+            $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' and value = 4 order by idx desc";
             $result = sql_query($sql);
 
             $list_count = sql_query("select count(*) as cnt from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' and value = 4");
             $list_count = sql_fetch_array($list_count);
         } else if ($_GET['bo_idx'] == 3) {
-            $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' and report_val_1 = 4";
+            $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' and report_val_1 = 4 order by idx desc";
             $result = sql_query($sql);
 
             $list_count = sql_query("select count(*) as cnt from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' and report_val_1 = 4");
@@ -132,7 +132,7 @@ $row99 = sql_fetch_array($result);
         </tr>
 
         <?php } ?>
-        <?php if ($list_count == 0) { echo '<tr><td colspan="6" class="empty_table">사업공고 내용이 없습니다.</td></tr>'; } ?>
+        <?php if ($list_count['cnt'] == 0) { echo '<tr><td colspan="6" class="empty_table">사업공고 내용이 없습니다.</td></tr>'; } ?>
         </tbody>
         </table>
     </div>

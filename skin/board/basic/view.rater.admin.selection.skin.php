@@ -67,20 +67,36 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             </thead>
             <tbody>
             <?php
-                $sql = "  select COUNT(DISTINCT `idx`) as cnt from rater where user_id = '{$member['mb_id']}' and test_id = '{$_GET['bo_idx']}'";
-                $row11 = sql_fetch($sql);
-                $total_count = $row11['cnt'];
+                // $sql = "  select COUNT(DISTINCT `idx`) as cnt from rater where user_id = '{$member['mb_id']}' and test_id = '{$_GET['bo_idx']}'";
+                // $row11 = sql_fetch($sql);
+                // $total_count = $row11['cnt'];
                 
                 if($_GET['bo_idx'] == 1){
+                    $sql44 = " select count(*) as cnt from g5_business_propos where bo_idx = '{$_GET['border_idx']}' order by idx desc";
+                    $result44 = sql_query($sql44);
+                    $total_count = sql_fetch_array($result44);
+                    $total_count=  $total_count['cnt'];
+
                     $sql44 = " select * from g5_business_propos where bo_idx = '{$_GET['border_idx']}' order by idx desc";
                     $result44 = sql_query($sql44);
                 } else if($_GET['bo_idx'] == 2){
+                    $sql44 = " select count(*) as cnt  from g5_business_propos where bo_idx = '{$_GET['border_idx']}' and value = 4 order by idx desc";
+                    $result44 = sql_query($sql44);
+                    $total_count = sql_fetch_array($result44);
+                    $total_count=  $total_count['cnt'];
+
                     $sql44 = " select * from g5_business_propos where bo_idx = '{$_GET['border_idx']}' and value = 4 order by idx desc";
                     $result44 = sql_query($sql44);
                 } else if($_GET['bo_idx'] == 3){
+                    $sql44 = " select count(*) as cnt from g5_business_propos where bo_idx = '{$_GET['border_idx']}' and report_val_1 = 4 order by idx desc";
+                    $result44 = sql_query($sql44);
+                    $total_count = sql_fetch_array($result44);
+                    $total_count=  $total_count['cnt'];
+
                     $sql44 = " select * from g5_business_propos where bo_idx = '{$_GET['border_idx']}' and report_val_1 = 4 order by idx desc";
                     $result44 = sql_query($sql44);
                 }
+
 
                 $list_num = 0;
                 for ($i=0; $i<$row = sql_fetch_array($result44); $i++) {
@@ -122,7 +138,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                         <td class="td_idx td_center"><?= $list[$i]['num']; ?></td>
 
                         <td class="td_center"><?= $row['info_number'] ?> </td>
-                        <td class="td_download ko_title td_title" >
+                        <td class="td_download ko_title td_title td_cursor" >
                         <?php 
                               if($value_num == 3){ 
                                 echo '[불합격]';
@@ -146,7 +162,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                                 $sql555 = " select * from rater where business_idx = '{$_GET['border_idx']}' and test_id = '{$_GET['bo_idx']}'";
                                 $result555 = sql_query($sql555);
                                 for($k =0; $k < $row555 = sql_fetch_array($result555); $k){
-                                    $sql333 = " select * from rater_value where rater_idx = '{$row555['idx']}'";
+                                    $sql333 = " select * from rater_value where rater_idx = '{$row555['idx']}' and report_idx= '{$value_idx}'";
                                     $result333 = sql_query($sql333);
                                     $row332 = sql_fetch_array($result333);
 
@@ -182,7 +198,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                                 $sql555 = " select * from rater where business_idx = '{$_GET['border_idx']}' and test_id = '{$_GET['bo_idx']}'";
                                 $result555 = sql_query($sql555);
                                 for($k =0; $k < $row555 = sql_fetch_array($result555); $k){
-                                    $sql333 = " select * from rater_value where rater_idx = '{$row555['idx']}'";
+                                    $sql333 = " select * from rater_value where rater_idx = '{$row555['idx']}' and report_idx= '{$value_idx}'";
                                     $result333 = sql_query($sql333);
                                     $row332 = sql_fetch_array($result333);
 
@@ -238,17 +254,17 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 
                                     if($value_num == 3 || $value_num == 4){
                                 ?>
-                                    <label for="" id="" class="value_btn" style="background: #ccc !important">선택 완료 </label>
+                                    <label for="" id="" class="value_btn " style="background: #ccc !important">선택 완료 </label>
                                 <?php } else  if($value_num == 1 || $value_num == 2){ ?>
-                                    <a href="<?=https_url(G5_BBS_DIR)?>/application_user_update.php?bo_idx=<?= $_GET['bo_idx'] ?>&border_idx=<?= $value_idx ?>&value=5" class="value_btn value_tel" style="background: #ccc !important">해제</a>
+                                    <a href="<?=https_url(G5_BBS_DIR)?>/application_user_update.php?bo_idx=<?= $_GET['bo_idx'] ?>&border_idx=<?= $value_idx ?>&value=5" class="value_btn value_tel" style="background: #ccc !important td_cursor">해제</a>
                                 <?php } else if($value_num == 0 ){ ?>
-                                    <label for="checkbox<?= $i ?>" id="checkbox_label<?= $i ?>" class="value_btn value_btn_click">선택</label>
+                                    <label for="checkbox<?= $i ?>" id="checkbox_label<?= $i ?>" class="value_btn value_btn_click td_cursor" >선택</label>
                                     <input type="checkbox" name="checkbox[]" class="checkbox_input" id="checkbox<?= $i ?>" value="<?= $value_idx ?>" style="display:none;">
                                 <?php } ?>
                         </td>
                     </tr>
                 <?php } ?>
-            <?php if ($list_num == 0) { echo '<tr><td colspan="7" class="empty_table">지원자가 없습니다.</td></tr>'; } ?>
+            <?php if ($total_count == 0) { echo '<tr><td colspan="7" class="empty_table">지원자가 없습니다.</td></tr>'; } ?>
             </tbody>
         </table>
         <div class = "td_right btn-cont text_block">

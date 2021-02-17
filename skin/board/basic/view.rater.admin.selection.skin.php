@@ -190,6 +190,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                                 $average_max_min_not = 0;
                                 $row_count =0;
                                 $sum =0;
+                                $max = 0;
+                                $min = 80;
 
                                 $sql444 = " select * from rater where business_idx = '{$_GET['border_idx']}' and test_id = '{$_GET['bo_idx']}'";
                                 $result444 = sql_query($sql444);
@@ -198,38 +200,26 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                                 $sql555 = " select * from rater where business_idx = '{$_GET['border_idx']}' and test_id = '{$_GET['bo_idx']}'";
                                 $result555 = sql_query($sql555);
                                 for($k =0; $k < $row555 = sql_fetch_array($result555); $k){
-                                    $sql333 = " select * from rater_value where rater_idx = '{$row555['idx']}' and report_idx= '{$value_idx}'";
+                                    $sql333 = " select * from rater_value where rater_idx = '{$row555['idx']}' and report_idx= '{$row['idx']}'";
                                     $result333 = sql_query($sql333);
                                     $row332 = sql_fetch_array($result333);
 
                                     if($row332){
+                                        if($max < $row332['test_sum']){
+                                            $max = $row332['test_sum'];
+                                        }
+                                        if($min > $row332['test_sum']){
+                                            $min = $row332['test_sum'];
+                                        }
+
                                         $sum =  $sum + $row332['test_sum'];
                                         $row_count ++;
                                     }
                                 }
 
-                                $sql_sum = 0;
-                                $sql_max = 0;
-                                $sql_min = 0;
-
                                 if($row_count > 2){
-                                    $sql = "  select * from rater_value where  rater_idx = '{$row444['idx']}' and report_idx = '{$row['idx']}' '";
-                                    $result = sql_query($sql);
-                                    $sum = 0;
-                                    
-                                    
-                                    $sql = "SELECT sum(test_sum) AS sum FROM rater_value WHERE report_idx = '{$row['idx']}'";
-                                    $sql_sum = sql_fetch($sql);
-
-                                    $sql = "SELECT max(test_sum) AS max FROM rater_value WHERE report_idx = '{$row['idx']}' ";
-                                    $sql_max = sql_fetch($sql);
-
-                                    $sql = "SELECT min(test_sum) AS min FROM rater_value WHERE report_idx = '{$row['idx']}' ";
-                                    $sql_min = sql_fetch($sql);
-
-                                   
-                                    $sql_min_max_sum = $sql_max['max'] + $sql_min['min'];
-                                    $sql_test_sum =$sql_sum['sum'] - $sql_min_max_sum;
+                                    $sql_min_max_sum = $max + $min;
+                                    $sql_test_sum =$sum - $sql_min_max_sum;
 
                                     $rater_user = $row_count - 2;
                                     $average_max_min_not = $sql_test_sum/$rater_user;
@@ -286,10 +276,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         </div>
         </form>
     </div>
-	<!-- 페이지 -->
-
-    <!-- 현재 URL 주소 -->
-    <!-- 게시판 검색 시작 { -->
     <script>
         jQuery(function($){
             // 게시판 검색

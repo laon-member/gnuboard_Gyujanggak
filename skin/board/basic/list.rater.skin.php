@@ -56,14 +56,13 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         <thead>
         <tr>
             <th scope="col" style="width:10%">번호</th>
-            <th scope="col" style="width:15%">과제번호</th>
             <th scope="col" style="width:60%">제목</th>
             <th scope="col" style="width:15%">심사대상</th>
         </tr>
         </thead>
         <tbody>
         <?php
-        $sql = "select * from rater where user_id = '{$member['mb_id']}' AND value = '2' AND test_id = '{$_GET['bo_idx']}' ORDER BY idx DESC";
+        $sql = "select * from rater where user_id = '{$member['mb_id']}' AND value = '2' AND test_id = '{$_GET['bo_idx']}' GROUP BY business_idx DESC";
         $result = sql_query($sql);
         for ($i=0; $i<count($list); $i++) {
         	
@@ -77,13 +76,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             <td class="td_idx td_center">
             <?php echo $list[$i]['num']; ?>
             </td>
-
-            <td class="td_center">
-                <?= $row44['wr_quest_number'] ?> 
-            </td>
             <td class="td_title ">
                
-                <a href="<?= G5_BBS_URL ?>/board.rater.php?bo_table=<?=$_GET['bo_table']; ?>&wr_idx=<?php echo $row44['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>">
+                <a href="<?= G5_BBS_URL ?>/board.rater.php?bo_table=<?=$_GET['bo_table']; ?>&wr_idx=<?php echo $row44['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&bo_title_idx=<?= $row44['wr_title_idx'] ?>">
                     <?php
                         $sql5 = " select * from g5_write_business_title where idx= '{$row44['wr_title_idx']}'";
                         $result5 = sql_query($sql5);
@@ -97,11 +92,11 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             <td class="td_datetime td_center">
                 <?php 
                     if($_GET['bo_idx'] == 1){
-                        $sql55 = " select COUNT(DISTINCT `idx`) as cnt from g5_business_propos where bo_idx = '{$row44['wr_id']}'";
+                        $sql55 = " select COUNT(DISTINCT `idx`) as cnt from rater where business_idx = '{$list[$i]['business_idx']}' and user_id = '{$member['mb_id']}'";
                     } else if($_GET['bo_idx'] == 2){
-                        $sql55 = " select COUNT(DISTINCT `idx`) as cnt from g5_business_propos where value = '4' AND bo_idx = '{$row44['wr_id']}'";
+                        $sql55 = " select COUNT(DISTINCT `idx`) as cnt from rater where value = '4' AND bo_idx = '{$row44['wr_id']}'";
                     } else if($_GET['bo_idx'] == 3){
-                        $sql55 = " select COUNT(DISTINCT `idx`) as cnt from g5_business_propos where report_val_1 = '4' AND bo_idx = '{$row44['wr_id']}' ";
+                        $sql55 = " select COUNT(DISTINCT `idx`) as cnt from rater where report_val_1 = '4' AND bo_idx = '{$row44['wr_id']}' ";
                     }
                     $result55 = sql_query($sql55);
                     $row55 = sql_fetch_array($result55);

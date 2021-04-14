@@ -116,10 +116,11 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         <thead>
         <tr>
             <th scope="col" style="width: 10%;">번호</th>
-            <th scope="col" style="width: 15%;">과제번호</th>
-            <th scope="col" style="width: 31%;">제목</th>
-            <th scope="col" style="width: 22%;">심사위원</th>
+            <th scope="col" style="width: 40%;">제목</th>
+            <th scope="col" style="width: 14%;">심사위원</th>
             <th scope="col" style="width: 22%;">심사결과</th>
+            <th scope="col" style="width: 14%;">과제번호</th>
+
         </tr>
         </thead>
         <tbody>
@@ -155,9 +156,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
              ?>
             </td>
 
-            <td class=" td_center">
-                <?= $list[$i]['wr_quest_number'] ?>
-            </td>
+            
             <td class="td_title " >
                
                 <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=<?=$_GET['bo_table']; ?>&wr_idx=<?php echo $list[$i]['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&u_id=1">
@@ -173,12 +172,12 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             </td>
             
             <td class="td_datetime td_center">
-                <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=<?=$_GET['bo_table']; ?>&wr_idx=<?php echo $list[$i]['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&us_idx=<?= $list[$i]['wr_id']; ?>&u_id=1&rater=1" class="value_btn" style="display:inline-block; background:#1F4392">
+                <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=<?=$_GET['bo_table']; ?>&wr_idx=<?php echo $list[$i]['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&us_idx=<?= $list[$i]['wr_id']; ?>&u_id=1&rater=1&list=true" class="value_btn" style="display:inline-block; background:#1F4392">
                   배정
                 </a>
-                <a href="<?= $action_url ?>?value=2&idx=<?= $list[$i]['wr_id'] ?>&bo_idx=<?= $_GET['bo_idx']; ?>" class="value_btn <?= $admin_val > 0 ?'' : 'value_rater_btn'; ?>" onclick="return <?= $admin_val > 0 ?'false' : 'true'; ?>" style="display:inline-block; background:<?= $admin_val > 0 ? "#ccc" :"#1F4392"; ?>" <?= $admin_val > 0? "disabled" :""; ?>>
+                <!-- <a href="<?= $action_url ?>?value=2&idx=<?= $list[$i]['wr_id'] ?>&bo_idx=<?= $_GET['bo_idx']; ?>" class="value_btn <?= $admin_val > 0 ?'' : 'value_rater_btn'; ?>" onclick="return <?= $admin_val > 0 ?'false' : 'true'; ?>" style="display:inline-block; background:<?= $admin_val > 0 ? "#ccc" :"#1F4392"; ?>" <?= $admin_val > 0? "disabled" :""; ?>>
                     의뢰
-                </a>
+                </a> -->
             </td>
             <td class="td_datetime td_center">
                 <!-- <button type="button" class="value_btn btn_bo_val" style="display:inline-block;vertical-align: top;">선발</button> -->
@@ -187,6 +186,12 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                 </a>
                 <a href="<?= $action_url_value ?>?us_idx=<?= $list[$i]['wr_id'] ?>&bo_idx=<?= $_GET['bo_idx']?>" class="value_btn  <?= $admin_val > 2 ? "" : 'value_admin_btn'; ?>" onclick="return <?= $admin_val > 2 ?'false' : 'true'; ?>"  style="display:inline-block; background:<?= $admin_val > 2 ? "#ccc" :"#1F4392"; ?>" <?= $admin_val > 2? "disabled" :""; ?>>
                    발표
+                </a>
+            </td>
+
+            <td class=" td_center">
+                <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=<?=$_GET['bo_table']; ?>&wr_idx=<?php echo $list[$i]['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&us_idx=<?= $list[$i]['wr_id']; ?>&u_id=1&rater=1&quest=true" class="value_btn" style="display:inline-block; background:#1F4392">
+                  부여
                 </a>
             </td>
         </tr>

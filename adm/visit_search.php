@@ -132,14 +132,14 @@ if ($pagelist) {
 $(function(){
     $("#sch_sort").change(function(){ // select #sch_sort의 옵션이 바뀔때
         if($(this).val()=="vi_date"){ // 해당 value 값이 vi_date이면
-            $("#sch_word").datepicker({ changeMonth: true, changeYear: true, dateFormat: "yy-mm-dd", showButtonPanel: true, yearRange: "c-99:c+99", maxDate: "+0d" }); // datepicker 실행
+            $("#sch_word").datepicker({ changeMonth: true, changeYear: true, dateFormat: "yyyy-mm-dd", showButtonPanel: true, yearRange: "c-99:c+99", maxDate: "+0d" }); // datepicker 실행
         }else{ // 아니라면
             $("#sch_word").datepicker("destroy"); // datepicker 미실행
         }
     });
 
     if($("#sch_sort option:selected").val()=="vi_date"){ // select #sch_sort 의 옵션중 selected 된것의 값이 vi_date라면
-        $("#sch_word").datepicker({ changeMonth: true, changeYear: true, dateFormat: "yy-mm-dd", showButtonPanel: true, yearRange: "c-99:c+99", maxDate: "+0d" }); // datepicker 실행
+        $("#sch_word").datepicker({ changeMonth: true, changeYear: true, dateFormat: "yyyy-mm-dd", showButtonPanel: true, yearRange: "c-99:c+99", maxDate: "+0d" }); // datepicker 실행
     }
 });
 

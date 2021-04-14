@@ -25,9 +25,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 </aside>
 <div id="bo_list" >
     
-    
-    
-
     <!-- 게시판 페이지 정보 및 버튼 시작 { -->
     <div id="bo_btn_top">
     <?php 
@@ -67,33 +64,29 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             </thead>
             <tbody>
             <?php
-                // $sql = "  select COUNT(DISTINCT `idx`) as cnt from rater where user_id = '{$member['mb_id']}' and test_id = '{$_GET['bo_idx']}'";
-                // $row11 = sql_fetch($sql);
-                // $total_count = $row11['cnt'];
-                
                 if($_GET['bo_idx'] == 1){
-                    $sql44 = " select count(*) as cnt from g5_business_propos where bo_idx = '{$_GET['border_idx']}' order by idx desc";
+                    $sql44 = " select count(*) as cnt from g5_business_propos where bo_idx = '{$_GET['border_idx']}' order by info_number desc";
                     $result44 = sql_query($sql44);
                     $total_count = sql_fetch_array($result44);
                     $total_count=  $total_count['cnt'];
 
-                    $sql44 = " select * from g5_business_propos where bo_idx = '{$_GET['border_idx']}' order by idx desc";
+                    $sql44 = " select * from g5_business_propos where bo_idx = '{$_GET['border_idx']}' order by info_number desc";
                     $result44 = sql_query($sql44);
                 } else if($_GET['bo_idx'] == 2){
-                    $sql44 = " select count(*) as cnt  from g5_business_propos where bo_idx = '{$_GET['border_idx']}' and value = 4 order by idx desc";
+                    $sql44 = " select count(*) as cnt  from g5_business_propos where bo_idx = '{$_GET['border_idx']}' and value = 4 order by info_number desc";
                     $result44 = sql_query($sql44);
                     $total_count = sql_fetch_array($result44);
                     $total_count=  $total_count['cnt'];
 
-                    $sql44 = " select * from g5_business_propos where bo_idx = '{$_GET['border_idx']}' and value = 4 order by idx desc";
+                    $sql44 = " select * from g5_business_propos where bo_idx = '{$_GET['border_idx']}' and value = 4 order by info_number desc";
                     $result44 = sql_query($sql44);
                 } else if($_GET['bo_idx'] == 3){
-                    $sql44 = " select count(*) as cnt from g5_business_propos where bo_idx = '{$_GET['border_idx']}' and report_val_1 = 4 order by idx desc";
+                    $sql44 = " select count(*) as cnt from g5_business_propos where bo_idx = '{$_GET['border_idx']}' and report_val_1 = 4 order by info_number desc";
                     $result44 = sql_query($sql44);
                     $total_count = sql_fetch_array($result44);
                     $total_count=  $total_count['cnt'];
 
-                    $sql44 = " select * from g5_business_propos where bo_idx = '{$_GET['border_idx']}' and report_val_1 = 4 order by idx desc";
+                    $sql44 = " select * from g5_business_propos where bo_idx = '{$_GET['border_idx']}' and report_val_1 = 4 order by info_number desc";
                     $result44 = sql_query($sql44);
                 }
 
@@ -162,7 +155,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                                 $sql555 = " select * from rater where business_idx = '{$_GET['border_idx']}' and test_id = '{$_GET['bo_idx']}'";
                                 $result555 = sql_query($sql555);
                                 for($k =0; $k < $row555 = sql_fetch_array($result555); $k){
-                                    $sql333 = " select * from rater_value where rater_idx = '{$row555['idx']}' and report_idx= '{$value_idx}'";
+                                    $sql333 = " select * from rater_value where rater_idx = '{$row555['idx']}' and report_idx= '{$value_idx}' and value = 2";
                                     $result333 = sql_query($sql333);
                                     $row332 = sql_fetch_array($result333);
 
@@ -200,7 +193,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                                 $sql555 = " select * from rater where business_idx = '{$_GET['border_idx']}' and test_id = '{$_GET['bo_idx']}'";
                                 $result555 = sql_query($sql555);
                                 for($k =0; $k < $row555 = sql_fetch_array($result555); $k){
-                                    $sql333 = " select * from rater_value where rater_idx = '{$row555['idx']}' and report_idx= '{$row['idx']}'";
+                                    $sql333 = " select * from rater_value where rater_idx = '{$row555['idx']}' and report_idx= '{$row['idx']}' and value = 2";
                                     $result333 = sql_query($sql333);
                                     $row332 = sql_fetch_array($result333);
 
@@ -375,7 +368,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             </tbody>
             </table>
             <div style="text-align:center">
-                <button type="button" style="margin:40px; 0" id="top_esc" class="btn_next_prv_link">확인</button>
+                <button type="button" style="margin:40px;" id="top_esc" class="btn_next_prv_link">확인</button>
             </div>
         </fieldset>
         <div class="bo_sch_bg"></div>

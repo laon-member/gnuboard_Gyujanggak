@@ -446,7 +446,7 @@ box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.1)}
 #bo_w .bo_w_flie .file_del {position:absolute;top:10px;right:10px;font-size:0.92em;color:#7d7d7d}
 #bo_w .bo_w_select select {border:1px solid #d0d3db;width:100%;height:40px;border-radius:3px}
 #wr_content, #wr_subject{margin: 10px 0;}
-#file-label-btn{width: 20%;
+.file-label-btn{width: 20%;
     display: inline-block;
     height: 48px;
     text-align: center;
@@ -525,6 +525,7 @@ box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.1)}
 
 #bus_btn{text-align: center;}
 .btn_next_prv_link{ height:48px; font-size: 16px; width: 180px; color: #fff;padding: 10px; border: 1px solid #DDDDDD; background-color: #1D2E58; margin:10px 0px 10px 20px;}
+.add_btn{ height:45px; font-size: 16px; width: 120px; color: #fff;padding: 10px; border: 1px solid #DDDDDD; background-color: #1D2E58; margin:10px 0px 10px 20px;}
 .btn_color_white{font-weight: normal;font-size: 16px; height: 48px; line-height: 24px; width: 180px; color: #333333;padding: 10px; border: 1px solid #DDDDDD; background-color: #ffff; margin:10px 0px 10px 20px;}
 a.btn_color_white{display: inline-block; text-align: center; vertical-align: middle; border: 1px solid #DDDDDD;}
 button.btn_color_white{line-height: 0px; border: 1px solid #DDDDDD;}
@@ -552,24 +553,34 @@ button.btn_color_white{line-height: 0px; border: 1px solid #DDDDDD;}
 
 .write_div p, .label_text{margin: 20px 0 10px 10px;}
 .label_text{width: 15%; display: inline-block !important; text-align: left !important;}
-textarea.input_text {width: 100%;}
-.input_text{ width: 100%; height: 35px; border: none !important; padding: 0 10px; margin: 10px 0;}
+textarea.input_text {width: 100%; }
+.input_text{ width: 100%; height: 35px; border: none !important; padding: 0 10px; margin: 10px 0; word-break: break-all;}
  
 .input_text_10 {width: 10%;}
-.input_text_50 {width: 32%;}
-.input_text_40 {width: 28%;}
+.input_text_50 {width: 49%;}
+.input_text_40 {width: 46%;}
 .input_text_80 {width: 80%;}
 .input_text_80 {width: 90%;}
 .input_text_100{width: 100%;}
 .input_text_right{text-align: right;}
 .input_text_center{text-align: center;}
 
+.user_list_value td {
+    word-break: break-all;
+    text-align: left;
+    padding: 0 10px;
+}
+
 .input_border_true{border: 1px solid #ccc !important; height: 100%;}
 .view_table_padding{padding: 10px;}
 .btn-cont{text-align: right; padding: 40px 0;}
 .btn_cancel{width: 20%;}
-.btn_submit { width:20%;}
+.btn_submit { width:20%; height: 48px; border: 1px solid #ccc !important;}
 .sub_text{margin: 0  0 20px 17% !important; color: #999999;}
+.add_input{border: 1px solid #ccc !important; width: 250px; height: 48px; padding: 10px; font-size: 16px;}
+
+.report_add_input{border: 1px solid #ccc !important; width: 50%; height: 48px; padding: 10px; font-size: 16px;}
+.report_add_label{display: block; text-align: left; padding: 10px 0; font-size: 18px; width: 50%;}
 
 .frm_file{margin: 10px 0;border: 0;
     }
@@ -779,7 +790,8 @@ border:1px solid #ccc;
 
 #sql_ko_title_view{
     border: 1px solid #e8e8e8;
-    margin : 10px
+    margin : 10px;
+    font-size: 18px;
 }
 
 #test_opinion{
@@ -798,7 +810,6 @@ border:1px solid #ccc;
     height: 48px;
     margin: 0 10px;
     font-size: 16px;
-
 }
 
 .value_btn_submit_save{
@@ -859,4 +870,71 @@ table th,table td, table a{ font-size: 14px;}
 
 .input_date, .td_cursor{
     cursor: pointer;
+}
+
+.vlew_table_user{
+    text-align: right;
+    padding-right: 40px;
+}
+
+.user_table_ins, .user_table_del{
+    height: 40px;
+    width: 150px;
+}
+
+.file_table_all_rater th{
+    text-align: center;
+}
+
+/* .del-no-btn {
+    background-color: transparent !important;
+    color: #FF4343;
+    text-decoration: 1px;
+    border: none;
+    border-bottom: 1px solid #FF4343;
+} */
+
+
+.bo_add form{
+    padding: 10px;
+}
+.esc_btn{
+    color: red;   
+}
+
+.add_esc_btn{
+    color: red;
+    border: none;
+    background-color: transparent;  
+    border-bottom: 1px solid transparent; 
+}
+.add_esc_btn:hover{
+    border-bottom: 1px solid red;
+}
+
+.add_table_info{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.add_table_info_left{
+    width: 50%;
+    text-align: left;
+}
+
+.rater_date_table{
+    padding: 0 10px;
+}
+
+.add_list_table{
+    width: 98%;
+    margin: 10px;
+    border-collapse: collapse;
+}
+
+.rater_list_table{
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
 }

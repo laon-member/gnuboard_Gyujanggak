@@ -79,10 +79,11 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         <thead>
         <tr>
             <th scope="col" style="width:7%;">번호</th>
-            <th scope="col" style="width:45%;">제목</th>
+            <th scope="col" style="width:35%;">제목</th>
             <th scope="col" style="width:16%;">지원일자</th>
             <th scope="col" style="width:16%;">지원상태</th>
             <th scope="col" style="width:16%;">지원결과</th>
+            <th scope="col" style="width:10%;">취소</th>
         </tr>
         </thead>
         
@@ -132,6 +133,10 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                         }
                     ?>
                 </td>
+                <td class="td_center">
+                   <a href="<?= G5_BBS_URL ?>/user_list_del.php?us_idx=<?= $list[$i]['idx'] ?>" class="esc_btn">삭제</a>
+                </td>
+                
             </tr>
         </tbody>
         <?php }?>
@@ -152,6 +157,18 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 
 <?php if ($is_checkbox) { ?>
 <script>
+$(function(){
+    $('.esc_btn').click(function(){
+        var delConfirm = confirm('지원 내역을 취소 하시겠습니까?');
+        if (delConfirm) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    })
+})
+
 function all_checked(sw) {
     var f = document.fboardlist;
 

@@ -90,7 +90,7 @@ $result1 = sql_query($sql1);
         <h2 id="bo_v_atc_title">본문</h2>
 
         <!-- 본문 내용 시작 { -->
-        <div id="bo_v_con"><?php echo get_view_thumbnail($view['wr_content']); ?></div>
+            <div id="bo_v_con"><?php echo nl2br($view['wr_content']); ?></div>
         <!-- } 본문 내용 끝 -->
 
         <?php if ($is_signature) { ?><p><?php echo $signature ?></p><?php } ?>

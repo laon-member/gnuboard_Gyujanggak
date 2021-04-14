@@ -87,15 +87,25 @@ $action_url = https_url(G5_BBS_DIR)."/application_user_update.php";
 $action_url_value = G5_BBS_URL."/application_value_update.php";
 // 게시물 아이디가 있다면 게시물 보기를 INCLUDE
 
-if (isset($_GET['wr_idx']) && empty($_GET['us_idx']) && empty($_GET['reater'])) {
+if (isset($_GET['wr_idx']) && empty($_GET['us_idx']) && empty($_GET['reater']) && empty($_GET['quest'])) {
+    // 지원자 리스트
     include_once(G5_BBS_PATH.'/view.rater.admin.php');
-} else if(isset($_GET['wr_idx']) && isset($_GET['us_idx']) && empty($_GET['rater'])){
+} else if(isset($_GET['wr_idx']) && isset($_GET['us_idx']) && empty($_GET['rater']) && empty($_GET['quest'])){
     include_once (G5_BBS_PATH.'/application.rater.admin.php');
-} else if(isset($_GET['wr_idx']) && isset($_GET['us_idx']) && isset($_GET['rater'])){
-    include_once (G5_BBS_PATH.'/view.rater.user.php');
-} else if(isset($_GET['border_idx'])){
+} else if(isset($_GET['wr_idx']) && isset($_GET['us_idx']) && isset($_GET['rater']) && empty($_GET['quest'])){
+    // 심사위원 배정 리스트
+    if(isset($_GET['list'])){
+        include_once (G5_BBS_PATH.'/view.rater.user.list.php');
+    } else {
+        include_once (G5_BBS_PATH.'/view.rater.user.php');
+    }
+} else if(isset($_GET['border_idx']) && empty($_GET['quest'])){
+    // 합격자 선발 리스트
     include_once (G5_BBS_PATH.'/view.rater.selection.admin.php');
-}  else{
+} else if(isset($_GET['wr_idx']) && isset($_GET['us_idx']) && isset($_GET['rater']) && isset($_GET['quest'])){
+    include_once (G5_BBS_PATH.'/view.rater.quest.list.php');
+} else{
+    // 심사관리 리스트
     include_once (G5_BBS_PATH.'/list.rater.admin.php');
 }
 

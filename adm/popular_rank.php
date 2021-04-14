@@ -37,7 +37,7 @@ $colspan = 3;
 
 <script>
 $(function(){
-    $("#fr_date, #to_date").datepicker({ changeMonth: true, changeYear: true, dateFormat: "yy-mm-dd", showButtonPanel: true, yearRange: "c-99:c+99", maxDate: "+0d" });
+    $("#fr_date, #to_date").datepicker({ changeMonth: true, changeYear: true, dateFormat: "yyyy-mm-dd", showButtonPanel: true, yearRange: "c-99:c+99", maxDate: "+0d" });
 });
 </script>
 

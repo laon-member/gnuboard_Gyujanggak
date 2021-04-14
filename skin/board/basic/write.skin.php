@@ -4,10 +4,16 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
 
+
 $sql = " select * from g5_write_business_title where bo_table = '{$_GET['bo_table']}'";
 $result = sql_query($sql);
+
+
+
 ?>
+
 <aside id="bo_side">
+
     <h2 class="aside_nav_title">사업공고 관리</h2>
     <?php 
     $title_text="";
@@ -86,20 +92,22 @@ $result = sql_query($sql);
             </tr>
         </thead>
         <tbody class="view_table_body">
-            <tr>
+            <!-- <tr>
                 <th>과제번호</th>
                 <td colspan="6" class="view_table_padding">
                 
                     <input type="text" name="quest_number_view" id="quest_number_view"  class="input_text input_text_100 input_text_end input_border_true" placeholder="과제번호" value="<?= $write['wr_quest_number']; ?>" required>
                 </td>
-            </tr>
+            </tr> -->
             <tr>
                 <th>지원기간</th>
                 <td colspan="1" class="view_table_padding">
-                    <input type="text" name="date_start_act" id="date_start_view"  class="input_text frm_input required full_input input_text_100 input_text_end input_date input_border_true" value='<?= $write['wr_date_start'] ?>' max="9999-12-31" readonly placeholder="연도-월-일"   required>
+                    <input type="text" name="date_start_act" id="date_start_view datepicker1" class="date_start_view input_text frm_input required full_input input_date input_text_50 input_text_end  input_border_true" value='<?= $write['wr_date_start'] ?>' max="9999-12-31" readonly placeholder="연도-월-일"   required>
+                    <input type="text" name="date_start_time" id="datepicker2" class="input_text frm_input required full_input time_start_view input_time input_text_50 input_text_end input_border_true" value='<?= $write['wr_date_end'] ?>'   placeholder="시간">
                 </td>
                 <td colspan="5" class="view_table_padding">
-                    <input type="text" name="date_end_act" id="date_end_view" class="input_text frm_input required full_input input_text_100 input_text_end input_date input_border_true"   value='<?= $write['wr_date_end'] ?>' max="9999-12-31" readonly  placeholder="연도-월-일" required>
+                    <input type="text" name="date_end_act" id="date_end_view datepicker2" class="date_end_view input_text frm_input required full_input input_date input_text_50 input_text_end  input_border_true"  value='<?= $write['wr_date_end'] ?>' max="9999-12-31" readonly  placeholder="연도-월-일" >
+                    <input type="text" name="date_end_time" id="datepicker2" class="input_text frm_input required full_input time_end_view input_time input_text_50 input_text_end input_border_true" value='<?= $write['wr_date_end'] ?>'  placeholder="시간">
                 </td>
             </tr>
             <tr>
@@ -159,37 +167,110 @@ $result = sql_query($sql);
     </table>
     <div class ="btn_confirm write_div btn-cont">
         <div class="next_prev_bar">
-            <label for="upload01" id="file-label-btn" class="file-label"><img src="<?= G5_IMG_URL ?>/upload.png" alt=""> 파일 업로드</label>
+            <label for="upload01" id="file-label-btn" class="file-label-btn file-label"><img src="<?= G5_IMG_URL ?>/upload.png" alt=""> 파일 업로드</label>
             <a href="<?php echo G5_BBS_URL; ?>/board.app.php?bo_table=business&bo_idx=<?= $_GET['bo_idx'] ?>&u_id=1" class="btn_color_white btn">취소</a>
             <button type="submit" id="btn_submit" accesskey="s" class="btn_submit btn"><?= $w == ""? "저장" : "수정" ?></button>
         </div>
     </div>
 
     </form>
-              
+
+ 
     <script>
-    
+    // <?php if($write_min || $write_max) { ?>
+    // // 글자수 제한
+    // var char_min = parseInt(<?php echo $write_min; ?>); // 최소
+    // var char_max = parseInt(<?php echo $write_max; ?>); // 최대
+    // check_byte("wr_content", "char_count");
 
-    // alert(vkvk);
-    // alert("DSaf");
-    
-    <?php if($write_min || $write_max) { ?>
-    // 글자수 제한
-    var char_min = parseInt(<?php echo $write_min; ?>); // 최소
-    var char_max = parseInt(<?php echo $write_max; ?>); // 최대
-    check_byte("wr_content", "char_count");
-
-    $(function() {
-        
-
-        $("#wr_content").on("keyup", function() {
-            check_byte("wr_content", "char_count");
-        });
-
-    });
+    // $(function() {
+    //     $("#wr_content").on("keyup", function() {
+    //         check_byte("wr_content", "char_count");
+    //     });
+    // });
       
     <?php } ?>
 
+
+    //두개짜리 제어 연결된거 만들어주는 함수
+    datePickerSet($("#datepicker1"), $("#datepicker2"), true); //다중은 시작하는 달력 먼저, 끝달력 2번째
+    /*
+    * 달력 생성기
+    * @param sDate 파라미터만 넣으면 1개짜리 달력 생성
+    * @example   datePickerSet($("#datepicker"));
+    * 
+    * 
+    * @param sDate, 
+    * @param eDate 2개 넣으면 연결달력 생성되어 서로의 날짜를 넘어가지 않음
+    * @example   datePickerSet($("#datepicker1"), $("#datepicker2"));
+    */
+    function datePickerSet(sDate, eDate, flag) {
+            //시작 ~ 종료 2개 짜리 달력 datepicker	
+            if (!isValidStr(sDate) && !isValidStr(eDate) && sDate.length > 0 && eDate.length > 0) {
+                var sDay = sDate.val();
+                var eDay = eDate.val();
+
+                if (flag && !isValidStr(sDay) && !isValidStr(eDay)) { //처음 입력 날짜 설정, update...			
+                    var sdp = sDate.datepicker().data("datepicker");
+                    sdp.selectDate(new Date(sDay.replace(/-/g, "/")));  //익스에서는 그냥 new Date하면 -을 인식못함 replace필요
+
+                    var edp = eDate.datepicker().data("datepicker");
+                    edp.selectDate(new Date(eDay.replace(/-/g, "/")));  //익스에서는 그냥 new Date하면 -을 인식못함 replace필요
+                }
+
+                //시작일자 세팅하기 날짜가 없는경우엔 제한을 걸지 않음
+                if (!isValidStr(eDay)) {
+                    sDate.datepicker({
+                        maxDate: new Date(eDay.replace(/-/g, "/"))
+                    });
+                }
+                sDate.datepicker({
+                    language: 'ko',
+                    autoClose: true,
+                    dateFormat: 'yyyy-mm-dd',
+                    onSelect: function () {
+                        datePickerSet(sDate, eDate);
+                    }
+                });
+
+                //종료일자 세팅하기 날짜가 없는경우엔 제한을 걸지 않음
+                if (!isValidStr(sDay)) {
+                    eDate.datepicker({
+                        minDate: new Date(sDay.replace(/-/g, "/"))
+                    });
+                }
+                eDate.datepicker({
+                    language: 'ko',
+                    autoClose: true,
+                    dateFormat: 'yyyy-mm-dd',
+                    onSelect: function () {
+                        datePickerSet(sDate, eDate);
+                    }
+                });
+
+                //한개짜리 달력 datepicker
+            } else if (!isValidStr(sDate)) {
+                var sDay = sDate.val();
+                if (flag && !isValidStr(sDay)) { //처음 입력 날짜 설정, update...
+                    var sdp = sDate.datepicker().data("datepicker");
+                    sdp.selectDate(new Date(sDay.replace(/-/g, "/"))); //익스에서는 그냥 new Date하면 -을 인식못함 replace필요
+                }
+
+                sDate.datepicker({
+                    language: 'ko',
+                    autoClose: true
+                });
+            }
+
+
+            function isValidStr(str) {
+                if (str == null || str == undefined || str == "")
+                    return true;
+                else
+                    return false;
+            }
+    }
+    
     
     function html_auto_br(obj)
     {
@@ -264,27 +345,56 @@ $result = sql_query($sql);
 
     $(function(){
         $(".input_date").datepicker(
-            {dateFormat: 'yy-mm-dd'}
+            { language: 'ko',
+            autoClose: true,
+            dateFormat: 'yyyy-mm-dd'}
         );
+
+        $(".input_time").timepicker({
+            step: 30,            //시간간격 : 5분
+            timeFormat: "H:i"    //시간:분 으로표시
+        });
+
         $('#btn_submit').click(function(){
-            var date_start = $('#date_start_view').val();
-            var date_end = $('#date_end_view').val();
+            var date_start = $('.date_start_view').val();
+            var time_start = $('.time_start_view').val();
+
+            var date_end = $('.date_end_view').val();
+            var time_end = $('.time_end_view').val();
+
+            var timeFormat = /^([01][0-9]|2[0-3]):([0-5][0-9])$/; // 시간형식 체크 정규화 hh:mm
 
             IsValidDateStart = Date.parse(date_start);
             if (isNaN(IsValidDateStart)){
-                alert('총 지원기간 시작 날짜가 없는 날짜 입니다.');
+                alert('지원기간 시작 날짜가 없는 날짜 입니다.');
                 return false;
             } 
-                
-            IsValidDateEnd = Date.parse(date_end);
-            if (isNaN(IsValidDateEnd)){
-                alert('총 지원기간 끝나는 날짜가 없는 날짜 입니다.');
+            IsValidTimeStart = timeFormat.test(time_start);
+            if(!IsValidTimeStart){
+                alert('지원기간 시작 시간을 올바르게 입력해주세요.');
                 return false;
             }
+
+            IsValidDateEnd = Date.parse(date_end);
+            if (isNaN(IsValidDateEnd)){
+                alert('지원기간 끝나는 날짜가 없는 날짜 입니다.');
+                return false;
+            }
+
+            IsValidTimeEnd = timeFormat.test(time_end);
+            if (!IsValidTimeEnd){
+                alert('지원기간 끝나는 시간을 올바르게 입력해주세요.');
+                return false;
+            } 
             
             if(date_start > date_end) {
                 alert("지원기간 끝나는 날짜가 시작하는 날짜보다 빠릅니다");
-                return false;
+                return false; 
+            }
+
+            if(date_start == date_end && time_start > time_end) {
+                alert("지원기간 끝나는 시간이 시작하는 시간보다 빠릅니다");
+                return false; 
             }
         })
 
@@ -316,57 +426,61 @@ $result = sql_query($sql);
         //클릭이벤트 unbind 
         $("#file-label-btn").unbind("click"); 
         
-
+        var file_upload_check = true;
+        //클릭이벤트 bind
         $("#file-label-btn").bind("click",function(){ 
-            $('#upload0'+file_number).change(function(){
-                var fileValue = $(this).val().split("\\");
-                var fileName = fileValue[fileValue.length-1]; // 파일명
-                var fileSize = this.files[0].size;
-                var str ="";
+            if(file_upload_check){
+                file_upload_check = false;
+                $('#upload0'+file_number).change(function(){
+                    var fileValue = $(this).val().split("\\");
+                    var fileName = fileValue[fileValue.length-1]; // 파일명
+                    var fileSize = this.files[0].size;
+                    var str ="";
 
-                //MB 단위 이상일때 MB 단위로 환산
-                if (fileSize >= 1024 * 1024) {
-                    fileSize = fileSize / (1024 * 1024);
-                    var convertlastpage = fileSize.toFixed(2);
-                    str = convertlastpage + ' MB';
-                }
-    
-                else {
-                    fileSize = fileSize / 1024;
-                    var convertlastpage = fileSize.toFixed(2);
-                    str = convertlastpage + ' KB';
-                }
+                    //MB 단위 이상일때 MB 단위로 환산
+                    if (fileSize >= 1024 * 1024) {
+                        fileSize = fileSize / (1024 * 1024);
+                        var convertlastpage = fileSize.toFixed(2);
+                        str = convertlastpage + ' MB';
+                    }
+        
+                    else {
+                        fileSize = fileSize / 1024;
+                        var convertlastpage = fileSize.toFixed(2);
+                        str = convertlastpage + ' KB';
+                    }
 
-                if($(this).val() != ""){
-                  
-                    $(this).prev().val(str);
-                    $(this).parent().prev().prev().children().val(fileName);
+                    if($(this).val() != ""){
+                    
+                        $(this).prev().val(str);
+                        $(this).parent().prev().prev().children().val(fileName);
 
 
-                    file_number++;
+                        file_number++;
 
-                    // var html = '<div class="input-file"><input type="text" id="file_label_view'+file_number+'" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/><input type="text" id="file-size-'+file_number+'" class="file-name file-size" value="용량" readonly="readonly"/><input type="file" name="bf_file[]" id="upload0'+file_number+'" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?>/><button type="button" class="file-label file-del " id="file-del'+file_number+'" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>">삭제</button></div>';
-                    var html ='<tr class="input-file_list">'
-                    +'<th scope="col" class="view_table_header" colspan="1" style="width:10%; height:58px">파일명</th>'
-                    +'<td scope="col" class="view_table_text" colspan="1" style="width:40%">'
-                    +'    <input type="text" id="file_label_view'+file_number+'" readonly="readonly" class="input_text file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/>'
-                    +'</td>'
-                    +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 사이즈</th>'
-                    +'<td scope="col" class="view_table_text" colspan="2" style="width:20%">'
-                    +'    <input type="text" id="file-size-'+file_number+'" class="file-name file-size" value="용량" readonly="readonly"/>'
-                    +'    <input type="file" name="bf_file[]" id="upload0'+file_number+'" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?>/>'
-                    +'</td>'
-                    +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 삭제</th>'
-                    +'<td scope="col" class="view_table_text" colspan="1" style="width:10%">'
-                    +'<button type="button" class="file-label file-del " id="file-del'+file_number+'" <?= $row44['report'] ==2? "disabled": ""; ?>>삭제</button>'
-                    +'</td>'
-                    +'</tr>';
-                    $('.view_table_body').append(html);
+                        // var html = '<div class="input-file"><input type="text" id="file_label_view'+file_number+'" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/><input type="text" id="file-size-'+file_number+'" class="file-name file-size" value="용량" readonly="readonly"/><input type="file" name="bf_file[]" id="upload0'+file_number+'" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?>/><button type="button" class="file-label file-del " id="file-del'+file_number+'" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>">삭제</button></div>';
+                        var html ='<tr class="input-file_list">'
+                        +'<th scope="col" class="view_table_header" colspan="1" style="width:10%; height:58px">파일명</th>'
+                        +'<td scope="col" class="view_table_text" colspan="1" style="width:40%">'
+                        +'    <input type="text" id="file_label_view'+file_number+'" readonly="readonly" class="input_text file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/>'
+                        +'</td>'
+                        +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 사이즈</th>'
+                        +'<td scope="col" class="view_table_text" colspan="2" style="width:20%">'
+                        +'    <input type="text" id="file-size-'+file_number+'" class="file-name file-size" value="용량" readonly="readonly"/>'
+                        +'    <input type="file" name="bf_file[]" id="upload0'+file_number+'" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?>/>'
+                        +'</td>'
+                        +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 삭제</th>'
+                        +'<td scope="col" class="view_table_text" colspan="1" style="width:10%">'
+                        +'<button type="button" class="file-label file-del " id="file-del'+file_number+'" <?= $row44['report'] ==2? "disabled": ""; ?>>삭제</button>'
+                        +'</td>'
+                        +'</tr>';
+                        $('.view_table_body').append(html);
 
-                    $("#file-label-btn").attr('for', 'upload0'+file_number);
-
-                }
-            })
+                        $("#file-label-btn").attr('for', 'upload0'+file_number);
+                        file_upload_check = true;
+                    }
+                })
+            }
         })
 
 

@@ -43,7 +43,7 @@ function get_paging($write_pages, $cur_page, $total_page, $url, $add="")
     //     $str .= '<a href="'.$url.($start_page-1).$add.'" class="pg_page pg_prev">이전</a>'.PHP_EOL;
     // } 
 
-    if ($total_page > 0) {
+    if ($total_page > 0 ) {
         $num = $cur_page / 6;
         $val = floor($num);
         $val= $val * 5;
@@ -61,6 +61,8 @@ function get_paging($write_pages, $cur_page, $total_page, $url, $add="")
             else
                 $str .= '<span class="sound_only">열린</span><strong class="pg_current">'.$k.'</strong><span class="sound_only">페이지</span>'.PHP_EOL;
         }
+    } else if($total_page == 0) {
+        $str .= '<span class="sound_only">열린</span><strong class="pg_current">1</strong><span class="sound_only">페이지</span>'.PHP_EOL;
     }
 
     // if ($total_page > $end_page) $str .= '<a href="'.$url.($end_page+1).$add.'" class="pg_page pg_next">다음</a>'.PHP_EOL;

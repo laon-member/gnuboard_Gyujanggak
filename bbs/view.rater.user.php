@@ -71,9 +71,8 @@ if ($sca || $stx || $stx === '0') {     //검색이면
     //     alert('존재하지 않는 게시판입니다.', G5_URL);
     //  }
 
-    $sql = "  select COUNT(DISTINCT `idx`) as cnt from rater where business_idx = '{$_GET['wr_idx']}' and test_id = '{$_GET['bo_idx']}'";
+    $sql = "  select COUNT(DISTINCT `idx`) as cnt from rater where business_idx = '{$_GET['wr_idx']}'and propos_idx = '{$_GET['us_idx']}' and test_id = '{$_GET['bo_idx']}'";
     $row = sql_fetch($sql);
-    
     $total_count = $row['cnt'];
 }
 
@@ -125,7 +124,6 @@ if (!$is_search_bbs) {
             break;
     }
 }
-
 
 $total_page  = ceil($total_count / $page_rows);  // 전체 페이지 계산
 $from_record = ($page - 1) * $page_rows; // 시작 열을 구함
@@ -187,7 +185,7 @@ if ($sst) {
 
 
 // 여기 입니다.
-    $sql = " select * from rater where business_idx = '{$_GET['wr_idx']}' ";
+    $sql = " select * from rater where business_idx = '{$_GET['wr_idx']}'and propos_idx = '{$_GET['us_idx']}' ";
    
 // 페이지의 공지개수가 목록수 보다 작을 때만 실행
 if($page_rows > 0) {

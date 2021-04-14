@@ -8,6 +8,14 @@ include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 
 $g5['title'] = '게시글 저장';
 
+$sql = " select upload_date_time from report_date where business_idx= '{$_POST['wr_idx']}' and report_level = '{$_GET['bo_idx']}'";
+$result = sql_query($sql);
+$row55 = sql_fetch_array($result);
+
+$Now_date_time = $today = date("Y-m-d H:i");
+
+if($Now_date_time > $row55['upload_date_time'])
+    alert('제출기한이 지났습니다.');
 
 // if ($w == '' || $w == 'r') {
 //     if (isset($_SESSION['ss_datetime'])) {
@@ -312,9 +320,6 @@ if(isset($_FILES['bf_file']['name']) && is_array($_FILES['bf_file']['name'])) {
 for ($i=0; $i<count($upload); $i++)
 {
     if( $upload[$i]['source'] != ""){
-        if (!get_magic_quotes_gpc()) {
-            $upload[$i]['source'] = addslashes($upload[$i]['source']);
-        }
         $row = sql_fetch(" select count(*) as cnt from {$g5['board_file_table']} where bo_table = 'report' and wr_id = '{$_POST['file_idx']}' and bf_no = '{$i}' ");
         $row22 = sql_fetch(" select * from report where business_idx = '{$wr_bo_idx}' and report_idx='{$_POST['report_idx']}'");
         if ($row['cnt'] )
@@ -334,6 +339,7 @@ for ($i=0; $i<count($upload); $i++)
                                  bf_width = '".(int)$upload[$i]['image'][0]."',
                                  bf_height = '".(int)$upload[$i]['image'][1]."',
                                  bf_type = '".(int)$upload[$i]['image'][2]."',
+                                 
                                  bf_datetime = '".G5_TIME_YMDHIS."'
                           where bo_table = 'report'
                                     and wr_id = '{$row22['idx']}'
@@ -367,7 +373,8 @@ for ($i=0; $i<count($upload); $i++)
                              bf_width = '".(int)$upload[$i]['image'][0]."',
                              bf_height = '".(int)$upload[$i]['image'][1]."',
                              bf_type = '".(int)$upload[$i]['image'][2]."',
-                             bf_datetime = '".G5_TIME_YMDHIS."' ";
+                             bf_datetime = '".G5_TIME_YMDHIS."',
+                             bf_user_type = 0 ";
             sql_query($sql);
             run_event('write_update_file_insert', $bo_table, $wr_id, $upload[$i], $w);
         }

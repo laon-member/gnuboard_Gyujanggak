@@ -62,6 +62,17 @@ add_javascript('<script src="'.G5_JS_URL.'/query-ui.js"></script>', 0);
 add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/font-awesome/css/font-awesome.min.css">', 0);
 add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/jquerty_ui.css">', 0);
 
+
+
+add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/air-datepicker/dist/css/datepicker.min.css">', 0);
+add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/jquery-timepicker/jquery.timepicker.css">', 0);
+
+add_javascript('<script src="'.G5_JS_URL.'/air-datepicker/dist/js/datepicker.min.js"></script>', 0);
+add_javascript('<script src="'.G5_JS_URL.'/air-datepicker/dist/js/i18n/datepicker.ko.js"></script>', 0);
+add_javascript('<script src="'.G5_JS_URL.'/air-datepicker/dist/js/datepicker.js"></script>', 0);
+add_javascript('<script src="'.G5_JS_URL.'/jquery-timepicker/jquery.timepicker.min.js"></script>', 0);
+
+
 if(G5_IS_MOBILE) {
     add_javascript('<script src="'.G5_JS_URL.'/modernizr.custom.70111.js"></script>', 1); // overflow scroll 감지
 }
@@ -85,6 +96,7 @@ var g5_sca       = "<?php echo isset($sca)?$sca:''; ?>";
 var g5_editor    = "<?php echo ($config['cf_editor'] && $board['bo_use_dhtml_editor'])?$config['cf_editor']:''; ?>";
 var g5_cookie_domain = "<?php echo G5_COOKIE_DOMAIN ?>";
 </script>
+<link rel="stylesheet" href="//mugifly.github.io/jquery-simple-datetimepicker/jquery.simple-dtpicker.css">
 
 </head>
 <body <?php echo isset($g5['body_script']) ? $g5['body_script'] : ''; ?>>

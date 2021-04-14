@@ -5,6 +5,14 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
 
+$sql="select * from add_propos where business_idx = '{$_GET['wr_id']}' and mb_id = '{$member['mb_id']}'";
+$result=sql_query($sql);
+$row=sql_fetch_array($result);
+
+$nowDate = date("Y-m-d H:i:s");
+
+$add_propos_check = $row['date'] >= $nowDate? 'true' : 'false';
+
 // WHERE idx = {$view['wr_title_idx']}
 $sql1 = " SELECT * FROM `g5_write_business_title` where bo_table = '{$_GET['bo_table']}'";
 $result1 = sql_query($sql1);
@@ -43,7 +51,7 @@ $result1 = sql_query($sql1);
                 </tr>
                 <tr>
                     <th scope="col" class="view_table_header" style="width:10%;">지원기간</th>
-                    <td scope="col" class="view_table_text" id="board_date" colspan="2" style="width:40%;"><?php echo $view['wr_date_start']; ?> ~ <?php echo $view['wr_date_end']; ?></td>
+                    <td scope="col" class="view_table_text" id="board_date" colspan="2" style="width:40%;"><?= date("Y.m.d H:i", strtotime($view['wr_date_start'])); ?> ~ <?= date("Y.m.d H:i", strtotime($view['wr_date_end'])); ?></td>
                     <th scope="col" class="view_table_header" style="width:10%;">등록일</th>
                     <td scope="col" class="view_table_text" style="width:20%;"><?php echo date("y.m.d", strtotime($view['wr_datetime'])) ?></td>
                     <th scope="col" class="view_table_header" style="width:10%;">조회</th>
@@ -91,7 +99,7 @@ $result1 = sql_query($sql1);
         <h2 id="bo_v_atc_title">본문</h2>
 
         <!-- 본문 내용 시작 { -->
-        <div id="bo_v_con"><?php echo get_view_thumbnail($view['wr_content']); ?></div>
+        <div id="bo_v_con"><?php echo nl2br($view['wr_content']); ?></div>
         <!-- } 본문 내용 끝 -->
 
         <?php if ($is_signature) { ?><p><?php echo $signature ?></p><?php } ?>
@@ -140,38 +148,33 @@ $result1 = sql_query($sql1);
     </section>
     <!-- } 첨부파일 끝 -->
     
-
-
 </article>
 <script>
     $(function(){
 
-        var beforeStr = $('#board_date').text();
-        beforeStr.replace(/\s/gi, "");
-        beforeStr = beforeStr.split('~');
-
         var board_date_start = '<?=  $view['wr_date_start']; ?>';
-
         var board_date_end = '<?=  $view['wr_date_end']; ?>';
 
-        var now = new Date();
-        var year = now.getFullYear();
-        var month = now.getMonth() + 1;    //1월이 0으로 되기때문에 +1을 함.
-        month = month >= 10 ? month : '0' + month;
-        var date = now.getDate();
-        date = date >= 10 ? date : '0' + date;
-        var now_date = year + '-' + month + '-' + date;
-
+        var board_date_add = <?= $add_propos_check ?>;
         var board_value = <?= $view['value'] ?>;
 
+        var Now = new Date();
+
+        var NowTime = Now.getFullYear();
+            NowTime += '-' + ((Now.getMonth() + 1) >= 10? (Now.getMonth() + 1) : '0'+(Now.getMonth() + 1));
+            NowTime += '-' + (Now.getDate() >= 10? Now.getDate(): '0'+Now.getDate());
+            NowTime += ' ' + Now.getHours();
+            NowTime += ':' + Now.getMinutes();
 
         $('.btn_next_prv_link').click(function(){
 
-            if(now_date <= board_date_end && now_date >= board_date_start && board_value < 3){
-                
-            } else {
-                alert('접수 기간이 아닙니다.');
-                return false;
+            
+
+            if(NowTime > board_date_end || NowTime < board_date_start || board_value > 2){
+                if(!board_date_add){
+                    alert('접수 기간이 아닙니다.');
+                    return false;
+                }
             }
         })
 

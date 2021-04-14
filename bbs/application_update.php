@@ -7,6 +7,7 @@ include_once('./_common.php');
 // check_write_token($bo_table);
 
 
+
 $bo_table = 'g5_business_propos';
 
 
@@ -51,9 +52,7 @@ if (empty($_POST)) {
     alert("파일 또는 글내용의 크기가 서버에서 설정한 값을 넘어 오류가 발생하였습니다.\\npost_max_size=".ini_get('post_max_size')." , upload_max_filesize=".$upload_max_filesize."\\n게시판관리자 또는 서버관리자에게 문의 바랍니다.");
 }
 
-$notice_array = explode(",", $board['bo_notice']);
-
-
+// $notice_array = explode(",", $board['bo_notice']);
 
 $secret = '';
 if (isset($_POST['secret']) && $_POST['secret']) {
@@ -126,13 +125,13 @@ if ($w == '' || $w == 'r') {
         $info_number = $number + 1;
     }
 
-
     $sql = " insert into g5_business_propos
                 set bo_title_idx = '{$_POST['bo_idx']}',
                 bo_idx = '{$_POST['wr_id']}',
                 mb_id = '{$member['mb_id']}',
                 info_number = '{$info_number}',
-                quest_number = '{$_POST['quest_number']}',
+                quest_number = '',
+                quest_division = '{$_POST['quest_division']}',
                 ko_title = '{$_POST['ko_title']}',
                 en_title = '{$_POST['en_title']}',
                 name = '{$_POST['name']}',
@@ -149,15 +148,101 @@ if ($w == '' || $w == 'r') {
                 money = '{$_POST['money']}',
                 one_year = '{$_POST['one_year']}',
                 two_year = '{$_POST['two_year']}',
+
+                meeting_agency = '{$_POST['meeting_agency']}',
+                meeting_venue = '{$_POST['meeting_venue']}',
+                meeting_scale = '{$_POST['meeting_scale']}',
+
+                normal_manager_name = '{$_POST['normal_manager_name']}',
+                normal_manager_degree = '{$_POST['normal_manager_degree']}',
+                normal_manager_belong = '{$_POST['normal_manager_belong']}',
+                normal_manager_rank = '{$_POST['normal_manager_rank']}',
+                normal_manager_email = '{$_POST['normal_manager_email']}',
+                normal_manager_phone = '{$_POST['normal_manager_phone']}',
+
+                belong_agency = '{$_POST['belong_agency']}',
+                agency_name = '{$_POST['agency_name']}',
+                agency_degree = '{$_POST['agency_degree']}',
+                agency_belong = '{$_POST['agency_belong']}',
+                agency_rank = '{$_POST['agency_rank']}',
+                agency_email = '{$_POST['agency_email']}',
+                agency_phone = '{$_POST['agency_phone']}',
+                
+                host_name = '{$_POST['host_name']}',
+                host_date_start = '{$_POST['host_date_start']}',
+                host_date_end = '{$_POST['host_date_end']}',
+                host_venue = '{$_POST['host_venue']}',
+                host_public_check = '{$_POST['host_public_check']}',
+                host_public_name = '{$_POST['host_public_name']}',
+                host_support_count = '{$_POST['host_support_count']}',
+
+                host_support_1 = '{$_POST['host_support_1']}',
+                host_support_2 = '{$_POST['host_support_2']}',
+                host_support_3 = '{$_POST['host_support_3']}',
+
+                presenter_user = '{$_POST['presenter_user']}',
+                debater_user = '{$_POST['debater_user']}',
+                mc_user = '{$_POST['mc_user']}',
+                normal_user = '{$_POST['normal_user']}',
+
+                institute_manager_name = '{$_POST['institute_manager_name']}',
+                institute_manager_degree = '{$_POST['institute_manager_degree']}',
+                institute_manager_belong = '{$_POST['institute_manager_belong']}',
+                institute_manager_rank = '{$_POST['institute_manager_rank']}',
+                institute_manager_email = '{$_POST['institute_manager_email']}',
+                institute_manager_phone = '{$_POST['institute_manager_phone']}',
+
+                1_user_rank = '{$_POST['1_user_rank']}',
+                1_user_name = '{$_POST['1_user_name']}',
+                1_user_belong = '{$_POST['1_user_belong']}',
+                
+                2_user_rank = '{$_POST['2_user_rank']}',
+                2_user_name = '{$_POST['2_user_name']}',
+                2_user_belong = '{$_POST['2_user_belong']}',
+    
+                3_user_rank = '{$_POST['3_user_rank']}',
+                3_user_name = '{$_POST['3_user_name']}',
+                3_user_belong = '{$_POST['3_user_belong']}',
+
+                4_user_rank = '{$_POST['4_user_rank']}',
+                4_user_name = '{$_POST['4_user_name']}',
+                4_user_belong = '{$_POST['4_user_belong']}',
+
+                5_user_rank = '{$_POST['5_user_rank']}',
+                5_user_name = '{$_POST['5_user_name']}',
+                5_user_belong = '{$_POST['5_user_belong']}',
+
+                6_user_rank = '{$_POST['6_user_rank']}',
+                6_user_name = '{$_POST['6_user_name']}',
+                6_user_belong = '{$_POST['6_user_belong']}',
+
+                7_user_rank = '{$_POST['7_user_rank']}',
+                7_user_name = '{$_POST['7_user_name']}',
+                7_user_belong = '{$_POST['7_user_belong']}',
+
+                8_user_rank = '{$_POST['8_user_rank']}',
+                8_user_name = '{$_POST['8_user_name']}',
+                8_user_belong = '{$_POST['8_user_belong']}',
+
+                9_user_rank = '{$_POST['9_user_rank']}',
+                9_user_name = '{$_POST['9_user_name']}',
+                9_user_belong = '{$_POST['9_user_belong']}',
+
+                10_user_rank = '{$_POST['10_user_rank']}',
+                10_user_name = '{$_POST['10_user_name']}',
+                10_user_belong = '{$_POST['10_user_belong']}',
+
+                
                 file = 0,
                 wr_hit = 0,
-                report_val_1 = '0',
-                report_val_2 = '0',
-                value = '0'";
+                report_val_1 = 0,
+                report_val_2 = 0,
+                value = 0";
 
     sql_query($sql);
 
-}  
+}      
+
 
 // 파일개수 체크
 $file_count   = 0;
@@ -301,13 +386,13 @@ if(isset($_FILES['bf_file']['name']) && is_array($_FILES['bf_file']['name'])) {
     }   // end for
 }   // end if
 
+$all_file = 0;
+$rater_file = 0;
+
 // 나중에 테이블에 저장하는 이유는 $wr_id 값을 저장해야 하기 때문입니다.
 for ($i=0; $i<count($upload); $i++)
 {   
     if($upload[$i]['source'] != ""){
-        if (!get_magic_quotes_gpc()) {
-            $upload[$i]['source'] = addslashes($upload[$i]['source']);
-        }
     
         $row = sql_fetch(" select * from g5_business_propos where bo_idx = '{$_POST['wr_id']}' and mb_id = '{$member['mb_id']}'");
         $row2 = sql_fetch(" select count(*) as cnt from {$g5['board_file_table']} where bo_table = 'g5_business_propos' and wr_id = '{$row['idx']}' and bf_no = '{$i}' ");
@@ -318,56 +403,118 @@ for ($i=0; $i<count($upload); $i++)
             // 그렇지 않다면 내용만 업데이트 합니다.
             if ($upload[$i]['del_check'] || $upload[$i]['file'])
             {
-                $sql = " update {$g5['board_file_table']}
-                            set bf_source = '{$upload[$i]['source']}',
-                                 bf_file = '{$upload[$i]['file']}',
-                                 bf_content = '{$bf_content[$i]}',
-                                 bf_fileurl = '{$upload[$i]['fileurl']}',
-                                 bf_thumburl = '{$upload[$i]['thumburl']}',
-                                 bf_storage = '{$upload[$i]['storage']}',
-                                 bf_filesize = '".(int)$upload[$i]['filesize']."',
-                                 bf_width = '".(int)$upload[$i]['image'][0]."',
-                                 bf_height = '".(int)$upload[$i]['image'][1]."',
-                                 bf_type = '".(int)$upload[$i]['image'][2]."',
-                                 bf_datetime = '".G5_TIME_YMDHIS."'
-                          where bo_table = 'g5_business_propos'
-                                    and wr_id = '{$row['idx']}'
-                                    and bf_no = '{$i}' ";
-                sql_query($sql);
+                if($_POST['file_type'][$i] == 0){
+                    $sql = " update {$g5['board_file_table']}
+                                set bf_source = '{$upload[$i]['source']}',
+                                    bf_file = '{$upload[$i]['file']}',
+                                    bf_content = '{$bf_content[$i]}',
+                                    bf_fileurl = '{$upload[$i]['fileurl']}',
+                                    bf_thumburl = '{$upload[$i]['thumburl']}',
+                                    bf_storage = '{$upload[$i]['storage']}',
+                                    bf_filesize = '".(int)$upload[$i]['filesize']."',
+                                    bf_width = '".(int)$upload[$i]['image'][0]."',
+                                    bf_height = '".(int)$upload[$i]['image'][1]."',
+                                    bf_type = '".(int)$upload[$i]['image'][2]."',
+                                    bf_datetime = '".G5_TIME_YMDHIS."',
+                                    bf_user_type = '".$_POST['file_type'][$i]."'
+                            where bo_table = 'g5_business_propos'
+                                        and wr_id = '{$row['idx']}'
+                                        and bf_no = '{$all_file}' ";
+                    sql_query($sql);
+                    $all_file ++;
+                } else  if($_POST['file_type'][$i] == 1){
+                    $sql = " update {$g5['board_file_table']}
+                                set bf_source = '{$upload[$i]['source']}',
+                                    bf_file = '{$upload[$i]['file']}',
+                                    bf_content = '{$bf_content[$i]}',
+                                    bf_fileurl = '{$upload[$i]['fileurl']}',
+                                    bf_thumburl = '{$upload[$i]['thumburl']}',
+                                    bf_storage = '{$upload[$i]['storage']}',
+                                    bf_filesize = '".(int)$upload[$i]['filesize']."',
+                                    bf_width = '".(int)$upload[$i]['image'][0]."',
+                                    bf_height = '".(int)$upload[$i]['image'][1]."',
+                                    bf_type = '".(int)$upload[$i]['image'][2]."',
+                                    bf_datetime = '".G5_TIME_YMDHIS."',
+                                    bf_user_type = '".$_POST['file_type'][$i]."'
+                            where bo_table = 'g5_business_propos'
+                                        and wr_id = '{$row['idx']}'
+                                        and bf_no = '9_{$rater_file}' ";
+                    sql_query($sql);
+                    $rater_file++;
+                }
             }
             else
             {
-                $sql = " update {$g5['board_file_table']}
-                            set bf_content = '{$bf_content[$i]}'
-                            where bo_table = 'g5_business_propos'
-                                      and wr_id = '{$row['idx']}'
-                                      and bf_no = '{$i}' ";
-                sql_query($sql);
+                if($_POST['file_type'][$i] == 0){
+                    $sql = " update {$g5['board_file_table']}
+                                set bf_content = '{$bf_content[$i]}'
+                                where bo_table = 'g5_business_propos'
+                                        and wr_id = '{$row['idx']}'
+                                        and bf_no = '{$all_file}' ";
+                    sql_query($sql);
+                    $all_file ++;
+                } else  if($_POST['file_type'][$i] == 1){
+                    $sql = " update {$g5['board_file_table']}
+                                set bf_content = '{$bf_content[$i]}'
+                                where bo_table = 'g5_business_propos'
+                                        and wr_id = '{$row['idx']}'
+                                        and bf_no = '9_{$rater_file}' ";
+                    sql_query($sql);
+                    $rater_file++;
+                }
             }
         }
         else
         {
-            $sql = " insert into {$g5['board_file_table']}
-                        set bo_table = 'g5_business_propos',
-                             wr_id = '{$row['idx']}',
-                             bf_no = '{$i}',
-                             bf_source = '{$upload[$i]['source']}',
-                             bf_file = '{$upload[$i]['file']}',
-                             bf_content = '{$bf_content[$i]}',
-                             bf_fileurl = '{$upload[$i]['fileurl']}',
-                             bf_thumburl = '{$upload[$i]['thumburl']}',
-                             bf_storage = '{$upload[$i]['storage']}',
-                             bf_download = 0,
-                             bf_filesize = '".(int)$upload[$i]['filesize']."',
-                             bf_width = '".(int)$upload[$i]['image'][0]."',
-                             bf_height = '".(int)$upload[$i]['image'][1]."',
-                             bf_type = '".(int)$upload[$i]['image'][2]."',
-                             bf_datetime = '".G5_TIME_YMDHIS."' ";
-            sql_query($sql);
-            run_event('write_update_file_insert', $bo_table, $wr_id, $upload[$i], $w);
+            if($_POST['file_type'][$i] == 0){
+                $sql = " insert into {$g5['board_file_table']}
+                            set bo_table = 'g5_business_propos',
+                                wr_id = '{$row['idx']}',
+                                bf_no = '{$all_file}',
+                                bf_source = '{$upload[$i]['source']}',
+                                bf_file = '{$upload[$i]['file']}',
+                                bf_content = '{$bf_content[$i]}',
+                                bf_fileurl = '{$upload[$i]['fileurl']}',
+                                bf_thumburl = '{$upload[$i]['thumburl']}',
+                                bf_storage = '{$upload[$i]['storage']}',
+                                bf_download = 0,
+                                bf_filesize = '".(int)$upload[$i]['filesize']."',
+                                bf_width = '".(int)$upload[$i]['image'][0]."',
+                                bf_height = '".(int)$upload[$i]['image'][1]."',
+                                bf_type = '".(int)$upload[$i]['image'][2]."',
+                                bf_datetime = '".G5_TIME_YMDHIS."' ,
+                                bf_user_type = '".$_POST['file_type'][$i]."'";
+                sql_query($sql);
+                run_event('write_update_file_insert', $bo_table, $wr_id, $upload[$i], $w);
+                $all_file ++;
+            } else  if($_POST['file_type'][$i] == 1){
+                $sql = " insert into {$g5['board_file_table']}
+                            set bo_table = 'g5_business_propos',
+                                wr_id = '{$row['idx']}',
+                                bf_no = '9_{$rater_file}',
+                                bf_source = '{$upload[$i]['source']}',
+                                bf_file = '{$upload[$i]['file']}',
+                                bf_content = '{$bf_content[$i]}',
+                                bf_fileurl = '{$upload[$i]['fileurl']}',
+                                bf_thumburl = '{$upload[$i]['thumburl']}',
+                                bf_storage = '{$upload[$i]['storage']}',
+                                bf_download = 0,
+                                bf_filesize = '".(int)$upload[$i]['filesize']."',
+                                bf_width = '".(int)$upload[$i]['image'][0]."',
+                                bf_height = '".(int)$upload[$i]['image'][1]."',
+                                bf_type = '".(int)$upload[$i]['image'][2]."',
+                                bf_datetime = '".G5_TIME_YMDHIS."' ,
+                                bf_user_type = '".$_POST['file_type'][$i]."'";
+                sql_query($sql);
+                $rater_file++;
+            }
         }
     }
+
+
+   
 }
+
 
 // 업로드된 파일 내용에서 가장 큰 번호를 얻어 거꾸로 확인해 가면서
 // 파일 정보가 없다면 테이블의 내용을 삭제합니다.
@@ -395,7 +542,6 @@ sql_query(" update g5_business_propos set file = '{$file_count}' where idx = '{$
 sql_query(" delete from {$g5['autosave_table']} where as_uid = '{$uid}' ");
 //------------------------------------------------------------------------------
 
-
 // 사용자 코드 실행
 @include_once($board_skin_path.'/write_update.skin.php');
 @include_once($board_skin_path.'/write_update.tail.skin.php');
@@ -404,8 +550,11 @@ delete_cache_latest($bo_table);
 
 run_event('write_update_after', $board, $wr_id, $w, $qstr, $redirect_url);
 
+
+
+
 if ($file_upload_msg)
     alert($file_upload_msg, $redirect_url);
 else
-    alert('작성완료.', G5_BBS_URL.'/board.php?bo_table=business&bo_idx='.$_POST['bo_idx']);
+    alert('지원 신청이 완료되었습니다', G5_BBS_URL.'/board.php?bo_table=business&bo_idx='.$_POST['bo_idx']);
 ?>

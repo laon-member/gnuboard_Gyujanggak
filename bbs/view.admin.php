@@ -71,7 +71,7 @@ if ($sca || $stx || $stx === '0') {     //검색이면
     // if (!$bo_idx) {
     //     alert('존재하지 않는 게시판입니다.', G5_URL);
     //  }
-        $sql = " select COUNT(DISTINCT `idx`) as cnt from g5_business_propos where bo_idx = '{$_GET['wr_idx']}'";
+        $sql = " select COUNT(DISTINCT `idx`) as cnt from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' and value = 4";
         $row = sql_fetch($sql);
     
     $total_count = $row['cnt'];

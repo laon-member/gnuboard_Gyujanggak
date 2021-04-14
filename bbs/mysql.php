@@ -9,7 +9,7 @@ $result = sql_query($sql);
 
 for($i=0; $row=sql_fetch_array($result); $i++) {
 
-    $sql2 = " select * from rater_value where rater_idx = '{$row['idx']}' AND report_idx = '{$table}'";
+    $sql2 = " select * from rater_value where rater_idx = '{$row['idx']}' AND report_idx = '{$table}' AND value = 2";
     $row2 = sql_fetch($sql2);
 
     if($row2['idx'] != ""){
@@ -20,7 +20,7 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
         echo "<td class='td_datetime td_center'>".$row2['test_plan']."</td>";
         echo "<td class='td_datetime td_center'>".$row2['test_sum']."</td>";
         echo "<td class='td_datetime td_center'>".$row2['test_average']."</td>";
-        echo "<td colspan='2' class='td_title'>".$row2['test_opinion']."</td>";
+        echo "<td colspan='2' style='word-break: break-all;' class='td_title'>".$row2['test_opinion']."</td>";
         echo "</tr>";
     } 
     

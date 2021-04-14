@@ -93,8 +93,7 @@ $num = $row['cnt'];
         <thead>
         <tr>
             <th scope="col" style="width:10%">번호</th>
-            <th scope="col" style="width:20%">과제번호</th>
-            <th scope="col" style="width:50%">제목</th>
+            <th scope="col" style="width:70%">제목</th>
             <th scope="col" style="width:20%">대상자</th>
         </tr>
         </thead>
@@ -113,15 +112,9 @@ $num = $row['cnt'];
                 echo $list[$i]['num']; 
              ?>
             </td>
-            <td class="td_idx td_center">
-            <?php
-            
-                echo $list[$i]['wr_quest_number'];
-             ?>
-            </td>
             <td class="td_title" >
                 <?php
-                if ($is_category && $list[$i]['ca_name']) {
+                    if ($is_category && $list[$i]['ca_name']) {
 				?>
                 <a href="<?php echo $list[$i]['ca_name_href'] ?>" class="bo_cate_link"><?php echo $list[$i]['ca_name'] ?></a>
                 <?php } ?>
@@ -138,7 +131,7 @@ $num = $row['cnt'];
             </td>
             <td class="td_download td_center">
                 <?php
-                    $sql = " SELECT COUNT(DISTINCT `idx`) AS `cnt` FROM g5_business_propos where bo_idx = '{$list[$i]['wr_id']}'";
+                    $sql = " SELECT COUNT(DISTINCT `idx`) AS `cnt` FROM g5_business_propos where bo_idx = '{$list[$i]['wr_id']}' and value = 4";
                     $result = sql_query($sql);
                     $row = sql_fetch_array($result);
                      echo $row['cnt'];

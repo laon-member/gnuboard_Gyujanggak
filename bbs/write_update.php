@@ -1,10 +1,11 @@
 <?php
 include_once('./_common.php');
-include_once(G5_LIB_PATH.'/naver_syndi.lib.php');
-include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
+// include_once(G5_LIB_PATH.'/naver_syndi.lib.php');
+// include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 
 // 토큰체크
 // check_write_token($bo_table);
+
 
 $g5['title'] = '게시글 저장';
 
@@ -242,6 +243,11 @@ if ($w == '' || $w == 'r') {
         $wr_num = get_next_num($write_table);
         $wr_reply = '';
     }
+    
+
+
+    $date_time_start = $_POST['date_start_act']. ' '.$_POST['date_start_time'];
+    $date_time_end = $_POST['date_end_act']. ' '.$_POST['date_end_time'];
 
     $sql = " insert into $write_table
                 set wr_quest_number = '{$_POST['quest_number_view']}',
@@ -271,8 +277,8 @@ if ($w == '' || $w == 'r') {
                      wr_facebook_user = '$wr_1',
                      wr_twitter_user = '$wr_2',
                      wr_title_idx = '{$_POST['bo_idx']}',
-                     wr_date_start = '{$_POST['date_start_act']}',
-                     wr_date_end = '{$_POST['date_end_act']}',
+                     wr_date_start = '$date_time_start',
+                     wr_date_end = '$date_time_end',
                      middle_result = '0',
                      final_result = '0',
                      value = 0,
@@ -372,13 +378,16 @@ if ($w == '' || $w == 'r') {
     if (!$is_admin)
         $sql_ip = " , wr_ip = '{$_SERVER['REMOTE_ADDR']}' ";
 
+    $date_time_start = $_POST['date_start_act']. ' '.$_POST['date_start_time'];
+    $date_time_end = $_POST['date_end_act']. ' '.$_POST['date_end_time'];
+
     $sql = " update {$write_table}
                 set wr_quest_number = '{$_POST['quest_number_view']}',
                 wr_subject = '{$_POST['wr_subject']}',
                 wr_content = '{$_POST['wr_content']}',
                 wr_seo_title = '{$_POST['wr_subject']}',
-                wr_date_start = '{$_POST['date_start_act']}',
-                wr_date_end = '{$_POST['date_end_act']}'
+                wr_date_start = '$date_time_start',
+                wr_date_end = '$date_time_end'
                 where wr_id = '{$_POST['wr_id']}' ";
 
     sql_query($sql);
@@ -415,11 +424,6 @@ if ($w == '' || $w == 'r') {
 
     // 글을 수정한 경우에는 제목이 달라질수도 있으니 static variable 를 새로고침합니다.
     $write = get_write( $write_table, $wr['wr_id'], false);
-}
-
-// 게시판그룹접근사용을 하지 않아야 하고 비회원 글읽기가 가능해야 하며 비밀글이 아니어야 합니다.
-if (!$group['gr_use_access'] && $board['bo_read_level'] < 2 && !$secret) {
-    naver_syndi_ping($bo_table, $wr_id);
 }
 
 // 파일개수 체크
@@ -583,9 +587,9 @@ if(isset($_FILES['bf_file']['name']) && is_array($_FILES['bf_file']['name'])) {
 // 나중에 테이블에 저장하는 이유는 $wr_id 값을 저장해야 하기 때문입니다.
 for ($i=0; $i<count($upload); $i++)
 {
-    if (!get_magic_quotes_gpc()) {
-        $upload[$i]['source'] = addslashes($upload[$i]['source']);
-    }
+    // if (!get_magic_quotes_gpc()) {
+    //     $upload[$i]['source'] = addslashes($upload[$i]['source']);
+    // }
 
     $row = sql_fetch(" select count(*) as cnt from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
     if ($row['cnt'])
@@ -752,4 +756,3 @@ else
         alert('수정 완료', G5_BBS_URL."/board.app.php?bo_table=business&bo_idx=".$_POST['bo_idx']."&u_id=1");
     }
 ?>
-<!-- http://localhost/bbs/board.app.php?bo_table=business&bo_idx=1&u_id=1 -->

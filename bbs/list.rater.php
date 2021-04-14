@@ -71,7 +71,8 @@ if ($sca || $stx || $stx === '0') {     //검색이면
     //     alert('존재하지 않는 게시판입니다.', G5_URL);
     //  }
     // select COUNT(DISTINCT `idx`) as cnt from rater where user_id = '{$member['mb_id']}' and test_id = '{$_GET['bo_idx']}'
-    $sql = "  select COUNT(DISTINCT `idx`) as cnt from rater where user_id = '{$member['mb_id']}' AND value = '2' AND test_id = '{$_GET['bo_idx']}'";
+    $sql = " SELECT COUNT(cnt) as cnt  from(select COUNT(`idx`) as cnt from rater where user_id = '{$member['mb_id']}' AND value = '2' AND test_id = '{$_GET['bo_idx']}'  GROUP BY business_idx) rater";
+
     
     $row = sql_fetch($sql);
     $total_count = $row['cnt'];
@@ -178,15 +179,15 @@ if(!$sst)
     $sst  = "wr_num, wr_reply";
 
 if ($sst) {
-    $sql_order = " order by idx ";
+   $sql_order = " order by idx ";
 }
 
 
 // 여기 입니다.
-    $sql = " select * from rater where user_id = '{$member['mb_id']}' AND value = '2' AND test_id = '{$_GET['bo_idx']}'";
+    $sql = " select distinct business_idx from rater where user_id = '{$member['mb_id']}' AND value = '2' AND test_id = '{$_GET['bo_idx']}'";
     if(!empty($notice_array))
         $sql .= " and wr_id not in (".implode(', ', $notice_array).") ";
-    $sql .= " {$sql_order} DESC limit {$from_record}, $page_rows ";
+    $sql .= " {$sql_order}  DESC limit {$from_record}, $page_rows ";
 
 
 // 페이지의 공지개수가 목록수 보다 작을 때만 실행

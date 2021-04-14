@@ -22,16 +22,8 @@ $sql2 = " SELECT * FROM g5_write_business_title WHERE idx = {$row['wr_title_idx'
 $result2 = sql_query($sql2);
 $row2=sql_fetch_array($result2);
 
-
-// $sql1 = " SELECT * FROM {$write_table} WHERE wr_title_idx = {$bo_idx} ";
-// $result1 = sql_query($sql1);
-// $num = 0;
-// for($j=1; $row=sql_fetch_array($result1); $j++) {
-    
-//     $num ++;
-// }
-
 ?>
+
 <!-- 게시판 목록 시작 { -->
 <aside id="bo_side">
     <h2 class="aside_nav_title">심사 관리</h2>
@@ -41,8 +33,11 @@ $row2=sql_fetch_array($result2);
     <a class="aside_nav <?= $_GET['bo_idx'] == 3?"aisde_click":""; ?>" href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=<?= $bo_table ?>&bo_idx=3&u_id=1">결과(연차)보고서</a>
 </aside>
 <div id="bo_list" >
-    <div id="bo_btn_top">
+    <div id="bo_btn_top" style="display: block;">
         <h1 id="">[<?= $row2['title'];?>]<?= $row['wr_subject'];?></h1>
+        <div style="text-align: right; margin-top:10px">
+            <button class="add_btn">추가 지원</button>
+        </div>
     </div>
 
         	
@@ -53,9 +48,8 @@ $row2=sql_fetch_array($result2);
         <tr>
             <th scope="col" style="width:10%">번호</th>
             <th scope="col" style="width:10%">접수번호</th>
-            <th scope="col" style="width:40%">과제명</th>
-            <th scope="col" style="width:20%">연구책임자</th>
-            <th scope="col" style="width:20%">연구비 신청액</th>
+            <th scope="col" style="width:60%">과제명</th>
+            <th scope="col" style="width:20%">취소</th>
         </tr>
         </thead>
         <tbody>
@@ -64,36 +58,17 @@ $row2=sql_fetch_array($result2);
         $row11 = sql_fetch($sql);
         $total_count = $row11['cnt'];
 
-        
-
-
-
             if($_GET['bo_idx'] == 1){
-                $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' ORDER BY idx DESC";
+                $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' ORDER BY info_number DESC";
             } else if ($_GET['bo_idx'] == 2) {
-                $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' and value = 4  ORDER BY idx DESC";
+                $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' and value = 4  ORDER BY info_number DESC";
             } else if ($_GET['bo_idx'] == 3) {
-                $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' and report_val_1 = 4  ORDER BY idx DESC";
+                $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' and report_val_1 = 4  ORDER BY info_number DESC";
             }
-        
-
 
             $result = sql_query($sql);
-        
-
         for ($i=0; $i<$row = sql_fetch_array($result); $i++) {
 
-            // if($_GET['bo_idx'] == 2){
-            //     $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}'";
-            //     $result = sql_query($sql);
-            // } else if ($_GET['bo_idx'] == 3) {
-            //     $sql = " select * from rater where user_id = '{$member['mb_id']}' and test_id = '{$_GET['bo_idx']}'";
-            //     $result = sql_query($sql);
-            // }
-            
-        	// $sql55 = " select * from g5_write_business where wr_id = '{$row['business_idx']}'";
-            // $result55 = sql_query($sql55);
-            // $row22 = sql_fetch_array($result55);
         ?>
         
         <tr class="<?php echo $lt_class ?> tr_hover">
@@ -102,8 +77,6 @@ $row2=sql_fetch_array($result2);
                 <input type="hidden" class="sql_title" name="sql_title" value="<?php echo $row['title']; ?>">
                 <input type="hidden" class="sql_ko_title" name="sql_ko_title" value="<?php echo $row['ko_title']; ?>">
                 <input type="hidden" class="sql_us_idx" name="us_idx" value="<?php echo $row['idx']; ?>">
-
-                
             </td>
             
             <td class="td_idx td_center">
@@ -119,11 +92,11 @@ $row2=sql_fetch_array($result2);
             <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=qa&bo_idx=<?= $_GET['bo_idx'] ?>&wr_idx=<?= $_GET['wr_idx'] ?>&us_idx=<?= $row['idx']; ?>&u_id=1"><?= $row['ko_title']; ?></a>
                     
             </td>
-            <td class="td_datetime td_center"><?php echo $row['name']; ?></td>
-            <td class="td_datetime td_center"><?php echo number_format($row['money']); ?>원</td>
-            
+            <td class="td_center">
+                <a href="<?= G5_BBS_URL ?>/user_list_del.php?us_idx=<?= $row['idx'] ?>" class="esc_btn">삭제</a>
+            </td>
         </tr>
-      
+        
 
         <?php } ?>
         <?php if (count($list) == 0) { echo '<tr><td colspan="6" class="empty_table">신청한 지원자가 없습니다.</td></tr>'; } ?>
@@ -136,18 +109,21 @@ $row2=sql_fetch_array($result2);
     </section>
 
 </div>
+
 <script>
 jQuery(function($){
+    $('.esc_btn').click(function(){
+        var delConfirm = confirm('지원 내역을 취소 하시겠습니까?');
+        if (delConfirm) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    })
+
     // 게시판 검색
-    $(".btn_bo_val").on("click", function() {
-        var sql_title_view = $(this).parents('.tr_hover').find('.sql_title').attr('value');
-        $('#sql_title_view').text(sql_title_view);
-        var sql_ko_title = $(this).parents('.tr_hover').find('.sql_ko_title').attr('value')
-        $('#sql_ko_title_view').text(sql_ko_title);
-        var business_idx_form = $(this).parents('.tr_hover').find('#business_idx_form').attr('value');
-        $('#business_idx').text(business_idx_form);
-        var us_idx = $(this).parents('.tr_hover').find('.sql_us_idx').attr('value');
-        $('#us_idx').val(us_idx);
+    $(".add_btn").on("click", function() {
 
         $('.bo_sch_wrap').toggle();
 
@@ -155,70 +131,169 @@ jQuery(function($){
     $('.bo_sch_bg, .bo_sch_cls, .btn_esc').click(function(){
         $('.bo_sch_wrap').hide();
     });
-    var test_user = 0;
-    var test_title = 0;
-    var test_plan = 0;
-    var test_sum = 0;
-
-    $('#test_user').change(function(){
-        test_user = parseFloat ($('#test_user').val());
-        test_sum = (test_user + test_title + test_plan)/3;
-        $('#test_sum').val(test_sum);
-    });
-    $('#test_title').change(function(){
-        test_title = parseFloat ($('#test_title').val());
-        test_sum = (test_user + test_title + test_plan)/3;
-        $('#test_sum').val(test_sum);
-    });
-    $('#test_plan').change(function(){
-        test_plan = parseFloat ($('#test_plan').val());
-        test_sum = (test_user + test_title + test_plan)/3;
-        $('#test_sum').val(test_sum);
-    });
-   
 });
+
 </script>
 <div class="bo_sch_wrap">
-    <fieldset class="bo_sch" style="width:800px; max-height:noen;height:600px;">
+    <fieldset class="bo_sch bo_add" style="width:1000px; max-height:noen; height:700px;">
+        <?php 
+            $sql1 = " SELECT * FROM g5_write_business WHERE wr_id = {$_GET['wr_idx']} ";
+            $result1 = sql_query($sql1);
+            $row=sql_fetch_array($result1);
+        ?>
 
         <p id="sql_title_view"></p>
-        <h3 id="sql_ko_title_view"><?php echo $value; ?></h3>
-        <form name="fsearch" method="POST" action="<?= https_url(G5_BBS_DIR)."/application_rater_update.php" ?>">
-        <input type="hidden" name="business_idx" id= "business_idx" value="<?= $_GET['wr_idx'] ?>">
-        <input type="hidden" name="test_id"  value="<?= $_GET['bo_idx']?>">
-        <input type="hidden" name="value_id"  value="1">
-        <input type="hidden" name="us_idx" id="us_idx"  value="">
-        
-        <label for="" class="label_text" style="display:block !important;">항목평가</label>
-        <label for="test_user" class="label_text" style="vertical-align: inherit;">연구진</label>
-        <input type="number" name="test_user" id="test_user"  class="input_text input_text_40 input_text_end" placeholder="접수번호" value="<?= $row['info_number']; ?>"  maxlength="80"> 
-        <span>/80</span>
-        <label for="test_title" class="label_text" style="vertical-align: inherit;">주제</label>
-        <input type="number" name="test_title" id="test_title"  class="input_text input_text_40 input_text_end" placeholder="접수번호" value="<?= $row['info_number']; ?>"    maxlength="80" > 
-        <span>/80</span>
-        <label for="test_plan" class="label_text" style="vertical-align: inherit;">계획</label>
-        <input type="number" name="test_plan" id="test_plan"  class="input_text input_text_40 input_text_end" placeholder="접수번호" value="<?= $row['info_number']; ?>"    maxlength="80"> 
-        <span>/80</span>
-        <label for="test_sum" class="label_text" style="vertical-align: inherit;">종합평가</label>
-        <input type="number" name="test_sum" id="test_sum"  class="input_text input_text_40 input_text_end" placeholder="접수번호" value="<?= $row['info_number']; ?>" readonly > 
-        <span>/80</span>
-        <label for="test_opinion" class="label_text" style="vertical-align: top;">상세설명</label>
-        <input type="text" name="test_opinion" id ="test_opinion" class="input_text input_text_hight" value="<?= $row44['contents']; ?>"<?= $row44['report'] ==2? "disabled": ""; ?>> 
-        <div class="rater_value_btn_contianer">
-            <button type="button" class="btn_esc">취소</button>
-            <button type="submit" class="btn_submit">저장</button>
-        </div>
+        <h1 style="text-align: center;">추가 지원 권한 부여</h1>
+        <h3 id="sql_ko_title_view">[<?= $row2['title'];?>]<?= $row['wr_subject'];?></h3>
+        <form name="fsearch" method="POST" action="<?= https_url(G5_BBS_DIR)."/add_propos_update.php" ?>" style="text-align: center;" enctype="multipart/form-data"autocomplete="off" >
+            <input type="hidden" name="business_idx" id= "business_idx" value="<?= $_GET['wr_idx'] ?>">
+            <input type="hidden" name="value_id"  value="1">
+
+            <div class="add_table_info">
+                <input type="text" name="member_id" placeholder="회원 아이디" class="add_input">
+                <input type="text" name="add_date" placeholder="날짜" class="add_input add_date" id="datepicker" max="9999-12-31">
+                <input type="text" name="add_time" placeholder="시간" class="add_input add_time">
+                <button type="submit" class="btn_submit" style="font-size: 14px">추가</button>
+            </div>
         </form>
+        
+        <table class="tbl_head01 add_list_table">
+            <caption><?php echo $board['bo_subject'] ?> 목록</caption>
+            <thead>
+                <tr>
+                    <th scope="col" style="width:10%">번호</th>
+                    <th scope="col" style="width:40%">회원 아이디</th>
+                    <th scope="col" style="width:40%">권한 만료 기간</th>
+                    <th scope="col" style="width:10%">취소</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $sql = "  select COUNT(DISTINCT `idx`) as cnt from add_propos where business_idx = '{$_GET['wr_idx']}'";
+                $row11 = sql_fetch($sql);
+                $total_count = $row11['cnt'];
+
+                $sql = "  select * from add_propos where business_idx = '{$_GET['wr_idx']}'";
+                $result = sql_query($sql);
+                for ($i=0; $i<$row = sql_fetch_array($result); $i++) {
+
+                ?>
+                
+                <tr class="<?php echo $lt_class ?> tr_hover">
+                    <td class="hidden" style="display:none;">
+                        <input type="hidden" class="sql_idx" name="sql_idx" value="<?= $_GET['bo_idx'] ?>">
+                        <input type="hidden" class="sql_title" name="sql_title" value="<?php echo $row['title']; ?>">
+                        <input type="hidden" class="sql_ko_title" name="sql_ko_title" value="<?php echo $row['ko_title']; ?>">
+                        <input type="hidden" class="sql_us_idx" name="us_idx" value="<?php echo $row['idx']; ?>">
+                    </td>
+                    
+                    <td class="td_idx td_center">
+                        <?= $total_count - $i; ?>
+                    </td>
+
+                    <td class="td_center">
+                        <?= $row['mb_id'] ?> 
+                    </td>
+                    <td class="td_center">
+                        <?= $row['date'] ?>
+                    </td>
+                    <td class="td_center">
+                        <form name="fsearch" method="POST" action="<?= https_url(G5_BBS_DIR)."/add_propos_update.php" ?>" style="text-align: center;" enctype="multipart/form-data"autocomplete="off" >
+                            <input type="hidden" name="business_idx" id= "business_idx" value="<?= $_GET['wr_idx'] ?>">
+                            <input type="hidden" name="member_id" id= "member_id" value="<?= $row['mb_id'] ?>">
+                            <input type="hidden" name="value_id"  value="2">
+
+                            <button type="submit" class="add_esc_btn" style="font-size: 14px">삭제</button>
+                        </form>
+                    </td>
+                </tr>
+                <?php } ?>
+                <?php if ($total_count == 0) { echo '<tr><td colspan="6" class="empty_table">추가 지원이 가능한 지원자가 없습니다.</td></tr>'; } ?>
+            </tbody>
+        </table>
+        
+        <div class="rater_value_btn_contianer">
+            <button type="button" class="btn_esc">확인</button>
+        </div>
+        
         
     </fieldset>
     <div class="bo_sch_bg"></div>
     
 </div>
+<script>
 
-        
-            <!-- } 게시판 검색 끝 --> 
+// function fwrite_submit(f)
+//     {
+//         <?php echo $editor_js; // 에디터 사용시 자바스크립트에서 내용을 폼필드로 넣어주며 내용이 입력되었는지 검사함   ?>
 
+//         var subject = "";
+//         var content = "";
+//         $.ajax({
+//             url: g5_bbs_url+"/ajax.filter.php",
+//             type: "POST",
+//             data: {
+//                 "subject": f.wr_subject.value,
+//                 "content": f.wr_content.value
+//             },
+//             dataType: "json",
+//             async: false,
+//             cache: false,
+//             success: function(data, textStatus) {
+//                 subject = data.subject;
+//                 content = data.content;
+//             }
+//         });
 
+//         if (subject) {
+//             alert("제목에 금지단어('"+subject+"')가 포함되어있습니다");
+//             f.wr_subject.focus();
+//             return false;
+//         }
+
+//         if (content) {
+//             alert("내용에 금지단어('"+content+"')가 포함되어있습니다");
+//             if (typeof(ed_wr_content) != "undefined")
+//                 ed_wr_content.returnFalse();
+//             else
+//                 f.wr_content.focus();
+//             return false;
+//         }
+
+//         if (document.getElementById("char_count")) {
+//             if (char_min > 0 || char_max > 0) {
+//                 var cnt = parseInt(check_byte("wr_content", "char_count"));
+//                 if (char_min > 0 && char_min > cnt) {
+//                     alert("내용은 "+char_min+"글자 이상 쓰셔야 합니다.");
+//                     return false;
+//                 }
+//                 else if (char_max > 0 && char_max < cnt) {
+//                     alert("내용은 "+char_max+"글자 이하로 쓰셔야 합니다.");
+//                     return false;
+//                 }
+//             }
+//         }
+
+//         <?php echo $captcha_js; // 캡챠 사용시 자바스크립트에서 입력된 캡챠를 검사함  ?>
+
+//         document.getElementById("btn_submit").disabled = "disabled";
+
+//         return true;
+//     }
+    $(function(){
+        $("#datepicker").datepicker(
+            { 
+            autoClose: true,
+            dateFormat: 'yyyy-mm-dd'}
+        );
+        $('.datepickers-container').css('z-index', 99999999999999);
+
+        $(".add_time").timepicker({
+            step: 30,            //시간간격 : 5분
+            timeFormat: "H:i"    //시간:분 으로표시
+        });
+    })
+</script>
 <?php if($is_checkbox) { ?>
 <noscript>
 <p>자바스크립트를 사용하지 않는 경우<br>별도의 확인 절차 없이 바로 선택삭제 처리하므로 주의하시기 바랍니다.</p>

@@ -240,9 +240,14 @@ $user = 3;
 include_once(G5_BBS_PATH.'/board_head.php');
 $wr_bo_idx = $_GET['wr_bo_idx'];
 
-if($_GET['us_idx'] != ""){
+$action_table_url = https_url(G5_BBS_DIR)."/application_table_update.php";
+
+
+if($_GET['us_idx'] != "" && $_GET['update'] == ""){
     include_once (G5_BBS_PATH.'/application.value.php');
-} else{
+} else if ($_GET['us_idx'] != "" && $_GET['update'] != ""){
+    include_once (G5_BBS_PATH.'/application.value.update.php');
+}else{
     include_once (G5_BBS_PATH.'/list.value.php');
 }
 // 전체목록보이기 사용이 "예" 또는 wr_id 값이 없다면 목록을 보임

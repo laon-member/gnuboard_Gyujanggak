@@ -82,10 +82,10 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         <caption><?php echo $board['bo_subject'] ?> 목록</caption>
         <thead>
         <tr>
-            <th scope="col" style="width:8%">번호</th>
-            <th scope="col" style="width:30%">지원사업 분야</th>
+            <th scope="col" style="width:10%">번호</th>
+            <th scope="col" style="width:15%">지원사업 분야</th>
             <th scope="col" style="width:40%">제목</th>
-            <th scope="col" style="width:12%">마감일</th>
+            <th scope="col" style="width:20%">마감일</th>
             <th scope="col" style="width:10%">상태</th>
         </tr>
         </thead>
@@ -106,6 +106,11 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                 $sql = " select * from g5_write_business where wr_id= '{$list[$i]['bo_idx']}'";
                 $result = sql_query($sql);
                 $row44 = sql_fetch_array($result);
+
+                $sql = "select view_date_time from report_date where business_idx = '{$list[$i]['bo_idx']}' and report_level = '{$_GET['bo_idx']}'";
+                $result = sql_query($sql);
+                $end_date_time = sql_fetch_array($result);
+                
 		?>
         <tr class="<?= $lt_class ?> tr_hover">
             <td class="td_idx td_center">
@@ -122,7 +127,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                     <?= $row44['wr_subject']; ?>
                 </a>
             </td>
-            <td class="td_datetime td_center"><?= $row44['wr_date_end'] == ""? $list[$i]['wr_date_end']:$row44['wr_date_end']; ?></td>
+            <td class="td_datetime td_center"><?= $end_date_time['view_date_time'] != "" ? date("Y년 m월 d일 H시 i분", strtotime($end_date_time['view_date_time'])) : '없음'; ?></td>
             <td class="td_end td_center">
                 <?php  
                     if($row22['report'] == 2){

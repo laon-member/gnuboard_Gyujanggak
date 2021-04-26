@@ -4,8 +4,13 @@ include_once('./_common.php');
 $value = $_POST['value'] !=  "" ? $_POST['value'] : $_GET['value']; 
 
 if($value == 1){
+    // 심사위원 추가
     $count = @count($_POST['checkbox']);
-    if($count == 0){
+    if($_GET['bo_idx'] != 3 || $row['wr_title_idx'] != 3 || $row['wr_title_idx'] != 4 || $row['wr_title_idx'] != 5 || $row['wr_title_idx'] != 6){
+
+    }
+    
+    if($count == 0 ){
         alert('심사위원을 선택해주세요');
     }
     $count_num=0;
@@ -17,16 +22,16 @@ if($value == 1){
         if($row22['idx'] == "" ){
             $sql = " insert into rater
             set business_idx = '{$_POST['wr_idx']}',
-                 propos_idx= '{$_POST['us_idx']}',
+                 propos_idx = '{$_POST['us_idx']}',
                  user_id = '{$row['mb_id']}',
                  user_name = '{$row['mb_name']}',
                  test_id = '{$_POST['bo_idx']}',
                  value = '1'";
             sql_query($sql);
 
-            
             $count_num ++;
-        } 
+        }
+          
         if($row33 == ''){
             $sql = " insert into rater_board
             set propos_idx = '{$_POST['us_idx']}',
@@ -38,8 +43,8 @@ if($value == 1){
 
     }
     alert($count_num."명을 저장하였습니다");
-
 } else if($value == 2){
+    // 심사위원 의뢰
     $row22 = sql_fetch(" select * from rater where business_idx = '{$_GET['idx']}'and propos_idx = '{$_GET['us_idx']}' and test_id = '{$_GET['bo_idx']}'");
     if($row22['idx'] == ""){
         alert('심사위원을 추가해주세요');
@@ -62,8 +67,7 @@ if($value == 1){
 
     }
 } else if($value == 3){
-    // $row = sql_fetch("DELETE FROM rater WHERE idx = {$_GET['idx']}");
-    // echo count($_POST['checkbox']);
+    // 심사위원 제외
     if(@count($_POST['checkbox']) == 0) return alert('제외할 심사위원을 선택해주세요');
 
     for($i=0; $i<count($_POST['checkbox']); $i++){
@@ -73,22 +77,20 @@ if($value == 1){
     alert('심사위원을 제외했습니다.');
     
 } else if($value == 4){
+    // 합격자 배정
     if ($_POST['bo_idx_list'] == 1){
         for($i=0; $i<@count($_POST['checkbox']); $i++){
             $position = $_POST['checkbox'];
-
             sql_fetch("UPDATE g5_business_propos SET value = 1 WHERE idx = '{$position[$i]}'");
         }
     } else if ($_POST['bo_idx_list'] == 2){
         for($i=0; $i<@count($_POST['checkbox']); $i++){
             $position = $_POST['checkbox'];
-
             sql_fetch("UPDATE g5_business_propos SET report_val_1 = '1' WHERE idx = '{$position[$i]}'");
         }
     } else if ($_POST['bo_idx_list'] == 3){
         for($i=0; $i<@count($_POST['checkbox']); $i++){
             $position = $_POST['checkbox'];
-
             sql_fetch("UPDATE g5_business_propos SET report_val_2 = '1' WHERE idx = '{$position[$i]}'");
         }
     }
@@ -103,16 +105,15 @@ if($value == 1){
     sql_query($sql);
 
     alert('합격자를 선발 했습니다');
-    
         
 } else if($value == 5){
+    // 합격자 제외
     if($_GET['bo_idx'] == 1){
-       sql_fetch("UPDATE g5_business_propos SET value = '0' WHERE idx = '{$_GET['border_idx']}'");
+        sql_fetch("UPDATE g5_business_propos SET value = '0' WHERE idx = '{$_GET['border_idx']}'");
     } else if($_GET['bo_idx'] == 2){
         sql_fetch("UPDATE g5_business_propos SET report_val_1 = '0' WHERE idx = '{$_GET['border_idx']}'");
     } else if($_GET['bo_idx'] == 3){
         sql_fetch("UPDATE g5_business_propos SET report_val_2 = '0' WHERE idx = '{$_GET['border_idx']}'");
     }
-    
     alert('합격자에서 제외 되었습니다.');
 }

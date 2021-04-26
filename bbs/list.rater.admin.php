@@ -77,7 +77,11 @@ if ($sca || $stx || $stx === '0') {     //검색이면
     //  }
     // select COUNT(DISTINCT `idx`) as cnt from rater where user_id = '{$member['mb_id']}' and test_id = '{$_GET['bo_idx']}'
 
+    if($_GET['bo_idx'] == 2){
+        $sql = "select COUNT(`wr_id`) as cnt from g5_write_business where wr_title_idx = '1' or wr_title_idx = '2'";
+    } else {
         $sql = "select COUNT(`wr_id`) as cnt from g5_write_business";
+    }
     $row = sql_fetch($sql);
     $total_count = $row['cnt'];
 
@@ -194,16 +198,24 @@ if ($sst) {
     //     $sql .= " and wr_id not in (".implode(', ', $notice_array).") ";
     // $sql .= " {$sql_order} limit {$from_record}, $page_rows ";
 
-
     if ($is_search_bbs) {
-
-        $sql = " select  * from g5_write_business where {$sql_search} $fdsa {$sql_order} DESC limit {$from_record}, $page_rows ";
+        if($_GET['bo_idx'] == 2){
+            $sql = " select  * from g5_write_business where wr_title_idx = '1' or wr_title_idx = '2' and {$sql_search} $fdsa {$sql_order} DESC limit {$from_record}, $page_rows ";
+        } else {
+            $sql = " select  * from g5_write_business where {$sql_search} $fdsa {$sql_order} DESC limit {$from_record}, $page_rows ";
+        }       
     } else {
-        $sql = "select * from g5_write_business ";
-        if(!empty($notice_array))
-            $sql .= " and wr_id not in (".implode(', ', $notice_array).") ";
-        $sql .= " {$sql_order} DESC limit {$from_record}, $page_rows ";
-
+        if($_GET['bo_idx'] == 2){
+            $sql = "select * from g5_write_business ";
+            if(!empty($notice_array))
+                $sql .= "and wr_id not in (".implode(', ', $notice_array).") ";
+            $sql .= "where wr_title_idx = '1' or wr_title_idx = '2' {$sql_order} DESC limit {$from_record}, $page_rows ";        
+        } else {
+            $sql = "select * from g5_write_business ";
+            if(!empty($notice_array))
+                $sql .= " and wr_id not in (".implode(', ', $notice_array).") ";
+            $sql .= " {$sql_order} DESC limit {$from_record}, $page_rows ";
+        }
     }
 
 // 페이지의 공지개수가 목록수 보다 작을 때만 실행

@@ -75,10 +75,10 @@ if ($sca || $stx || $stx === '0') {     //검색이면
         $sql = " select COUNT(DISTINCT `idx`) as cnt from g5_business_propos where bo_idx = '{$_GET['wr_idx']}'";
         $row = sql_fetch($sql);
     } else if ($_GET['bo_idx'] == 2) {
-        $sql = " select COUNT(DISTINCT `idx`) as cnt from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' and report_val_1 = 2";
+        $sql = " select COUNT(DISTINCT `idx`) as cnt from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' and  value= 4";
         $row = sql_fetch($sql);
     } else if ($_GET['bo_idx'] == 3) {
-        $sql = " select COUNT(DISTINCT `idx`) as cnt from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' and report_val_2 = 2";
+        $sql = " select COUNT(DISTINCT `idx`) as cnt from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' and report_val_1 = 4";
         $row = sql_fetch($sql);
     }
     

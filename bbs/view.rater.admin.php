@@ -209,7 +209,9 @@ if ($sst) {
 
     if(!empty($notice_array))
         $sql .= " and wr_id not in (".implode(', ', $notice_array).") ";
-    $sql .= " {$sql_order} limit {$from_record}, $page_rows ";
+    $sql .= " {$sql_order}  ";
+    //limit {$from_record}, $page_rows
+
 
 // 페이지의 공지개수가 목록수 보다 작을 때만 실행
 if($page_rows > 0) {

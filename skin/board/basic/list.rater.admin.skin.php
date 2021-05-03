@@ -2,7 +2,6 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 include_once('./_common.php');
-
 // 선택옵션으로 인해 셀합치기가 가변적으로 변함
 $colspan = 5;
 
@@ -13,31 +12,7 @@ if ($is_nogood) $colspan++;
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
 
-
-
-
-// $sql = "  select COUNT(DISTINCT `idx`) as cnt from rater where user_id = '{$member['mb_id']}' and test_id = '{$_GET['bo_idx']}'";
-// echo $sql;
-// $row11 = sql_fetch($sql);
-// $total_count = $row11['cnt'];
-
-// $sql = " select * from rater where user_id = '{$member['mb_id']}' and test_id = '{$_GET['bo_idx']}'";
-// $result = sql_query($sql);
-
-
-
-// for ($i=0; $i<$row = sql_fetch_array($result); $i++) {
-
-// $sql1 = " SELECT * FROM {$write_table} WHERE wr_title_idx = {$bo_idx} ";
-// $result1 = sql_query($sql1);
-// $num = 0;
-// for($j=1; $row=sql_fetch_array($result1); $j++) {
-    
-//     $num ++;
-// }
-
 ?>
-<!-- 게시판 목록 시작 { -->
 <aside id="bo_side">
     <h2 class="aside_nav_title">심사 관리</h2>
    
@@ -96,114 +71,104 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             </li>
         </ul>
     </div>
-    <!-- } 게시판 페이지 정보 및 버튼 끝 -->
-        	
+
     <div class="tbl_head01 tbl_wrap">
-    <form name="fboardlist" id="fboardlist" action="<?php echo G5_BBS_URL; ?>/board_list_update.php" onsubmit="return fboardlist_submit(this);" method="post">
-    
-    <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
-    <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
-    <input type="hidden" name="stx" value="<?php echo $stx ?>">
-    <input type="hidden" name="spt" value="<?php echo $spt ?>">
-    <input type="hidden" name="sca" value="<?php echo $sca ?>">
-    <input type="hidden" name="sst" value="<?php echo $sst ?>">
-    <input type="hidden" name="sod" value="<?php echo $sod ?>">
-    <input type="hidden" name="page" value="<?php echo $page ?>">
-    <input type="hidden" name="sw" value="">
-        <table>
+        <form name="fboardlist" id="fboardlist" action="<?php echo G5_BBS_URL; ?>/board_list_update.php" onsubmit="return fboardlist_submit(this);" method="post">
+            <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
+            <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
+            <input type="hidden" name="stx" value="<?php echo $stx ?>">
+            <input type="hidden" name="spt" value="<?php echo $spt ?>">
+            <input type="hidden" name="sca" value="<?php echo $sca ?>">
+            <input type="hidden" name="sst" value="<?php echo $sst ?>">
+            <input type="hidden" name="sod" value="<?php echo $sod ?>">
+            <input type="hidden" name="page" value="<?php echo $page ?>">
+            <input type="hidden" name="sw" value="">
+                <table>
 
-        <caption><?php echo $board['bo_subject'] ?> 목록</caption>
-        <thead>
-        <tr>
-            <th scope="col" style="width: 10%;">번호</th>
-            <th scope="col" style="width: 40%;">제목</th>
-            <th scope="col" style="width: 14%;">심사위원</th>
-            <th scope="col" style="width: 22%;">심사결과</th>
-            <th scope="col" style="width: 14%;">과제번호</th>
+                <caption><?php echo $board['bo_subject'] ?> 목록</caption>
+                <thead>
+                <tr>
+                    <th scope="col" style="width: 10%;">번호</th>
+                    <th scope="col" style="width: 40%;">제목</th>
+                    <th scope="col" style="width: 14%;">심사위원</th>
+                    <th scope="col" style="width: 22%;">심사결과</th>
+                    <th scope="col" style="width: 14%;">과제번호</th>
 
-        </tr>
-        </thead>
-        <tbody>
-        <?php
-            $sql = "select * from g5_write_business";
-
-
-            if(!empty($notice_array))
-                $sql .= " and wr_id not in (".implode(', ', $notice_array).") ";
-            $sql .= " {$sql_order} limit {$from_record}, $page_rows ";
-            $result = sql_query($sql);
-       
-        
-        for ($i=0; $i < count($list); $i++) {
-            
-
-            if($_GET['bo_idx'] == 1){
-                $admin_val = $list[$i]['value'];
-            } else if($_GET['bo_idx'] == 2){
-                $admin_val = $list[$i]['wr_8'];
-            } else if($_GET['bo_idx'] == 3){
-                $admin_val = $list[$i]['wr_9'];
-            }
-
-		?>
-        <tr class="<?php if ($list[$i]['is_notice']) echo "bo_notice"; ?> <?php echo $lt_class ?> tr_hover">
-            <td class="td_idx td_center td_info" style="display:none">
-                <input type="hidden" id="idx_id" name="us_idx" value ="<?php echo $list[$i]['wr_id']; ?>">
-            </td>
-            <td class="td_idx td_center">
-            <?php
-                echo $list[$i]['num'];
-             ?>
-            </td>
-
-            
-            <td class="td_title " >
-               
-                <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=<?=$_GET['bo_table']; ?>&wr_idx=<?php echo $list[$i]['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&u_id=1">
+                </tr>
+                </thead>
+                <tbody>
                 <?php
-                    $sql66 = " select * from g5_write_business_title where idx = '{$list[$i]['wr_title_idx']}'";
-                    $result66 = sql_query($sql66);
-                    $row66 = sql_fetch_array($result66);
-                    
-                ?>
-                    [<?= $row66['title'] ?>]  <?= $list[$i]['wr_subject'] ?>
-                </a>
+                    $sql = "select * from g5_write_business";
 
-            </td>
+
+                    if(!empty($notice_array))
+                        $sql .= " and wr_id not in (".implode(', ', $notice_array).") ";
+                    $sql .= " {$sql_order} limit {$from_record}, $page_rows ";
+                    $result = sql_query($sql);
             
-            <td class="td_datetime td_center">
-                <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=<?=$_GET['bo_table']; ?>&wr_idx=<?php echo $list[$i]['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&us_idx=<?= $list[$i]['wr_id']; ?>&u_id=1&rater=1&list=true" class="value_btn" style="display:inline-block; background:#1F4392">
-                  배정
-                </a>
-                <!-- <a href="<?= $action_url ?>?value=2&idx=<?= $list[$i]['wr_id'] ?>&bo_idx=<?= $_GET['bo_idx']; ?>" class="value_btn <?= $admin_val > 0 ?'' : 'value_rater_btn'; ?>" onclick="return <?= $admin_val > 0 ?'false' : 'true'; ?>" style="display:inline-block; background:<?= $admin_val > 0 ? "#ccc" :"#1F4392"; ?>" <?= $admin_val > 0? "disabled" :""; ?>>
-                    의뢰
-                </a> -->
-            </td>
-            <td class="td_datetime td_center">
-                <!-- <button type="button" class="value_btn btn_bo_val" style="display:inline-block;vertical-align: top;">선발</button> -->
-                <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=<?=$_GET['bo_table']; ?>&border_idx=<?php echo $list[$i]['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&u_id=1" class="value_btn" style="display:inline-block; background:#1F4392">
-                   선발
-                </a>
-                <a href="<?= $action_url_value ?>?us_idx=<?= $list[$i]['wr_id'] ?>&bo_idx=<?= $_GET['bo_idx']?>" class="value_btn  <?= $admin_val > 2 ? "" : 'value_admin_btn'; ?>" onclick="return <?= $admin_val > 2 ?'false' : 'true'; ?>"  style="display:inline-block; background:<?= $admin_val > 2 ? "#ccc" :"#1F4392"; ?>" <?= $admin_val > 2? "disabled" :""; ?>>
-                   발표
-                </a>
-            </td>
+                
+                for ($i=0; $i < count($list); $i++) {
+                    
 
-            <td class=" td_center">
-                <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=<?=$_GET['bo_table']; ?>&wr_idx=<?php echo $list[$i]['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&us_idx=<?= $list[$i]['wr_id']; ?>&u_id=1&rater=1&quest=true" class="value_btn" style="display:inline-block; background:#1F4392">
-                  부여
-                </a>
-            </td>
-        </tr>
-        <?php } ?>
-        <?php if ($total_count == 0) { echo '<tr><td colspan="6" class="empty_table">심사 관리 내용이 없습니다.</td></tr>'; } ?>
-        </tbody>
-        </table>
-    </form>
-        
+                    if($_GET['bo_idx'] == 1){
+                        $admin_val = $list[$i]['value'];
+                    } else if($_GET['bo_idx'] == 2){
+                        $admin_val = $list[$i]['wr_8'];
+                    } else if($_GET['bo_idx'] == 3){
+                        $admin_val = $list[$i]['wr_9'];
+                    }
+
+                ?>
+                <tr class="<?php if ($list[$i]['is_notice']) echo "bo_notice"; ?> <?php echo $lt_class ?> tr_hover">
+                    <td class="td_idx td_center td_info" style="display:none">
+                        <input type="hidden" id="idx_id" name="us_idx" value ="<?php echo $list[$i]['wr_id']; ?>">
+                    </td>
+                    <td class="td_idx td_center">
+                    <?php
+                        echo $list[$i]['num'];
+                    ?>
+                    </td>
+
+                    
+                    <td class="td_title " >
+                    
+                        <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=<?=$_GET['bo_table']; ?>&wr_idx=<?php echo $list[$i]['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&u_id=1">
+                        <?php
+                            $sql66 = " select * from g5_write_business_title where idx = '{$list[$i]['wr_title_idx']}'";
+                            $result66 = sql_query($sql66);
+                            $row66 = sql_fetch_array($result66);
+                            
+                        ?>
+                            [<?= $row66['title'] ?>]  <?= $list[$i]['wr_subject'] ?>
+                        </a>
+
+                    </td>
+                    
+                    <td class="td_datetime td_center">
+                        <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=<?=$_GET['bo_table']; ?>&wr_idx=<?php echo $list[$i]['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&us_idx=<?= $list[$i]['wr_id']; ?>&u_id=1&rater=1&list=true" class="value_btn" style="display:inline-block; background:<?= $list[$i]['wr_title_idx'] == 6 && $_GET['bo_idx'] == 1 ? '#ccc' : '#1F4392' ?>" onclick="return <?= $list[$i]['wr_title_idx'] == 6 && $_GET['bo_idx'] == 1 ? 'false' : 'true' ?>"> 
+                        배정
+                        </a>
+                    </td>
+                    <td class="td_datetime td_center">
+                        <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=<?=$_GET['bo_table']; ?>&border_idx=<?php echo $list[$i]['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&u_id=1" class="value_btn" style="display:inline-block; background:#1F4392">
+                        선발
+                        </a>
+                        <a href="<?= $action_url_value ?>?us_idx=<?= $list[$i]['wr_id'] ?>&bo_idx=<?= $_GET['bo_idx']?>" class="value_btn  <?= $admin_val > 2 ? "" : 'value_admin_btn'; ?>" onclick="return <?= $admin_val > 2 ?'false' : 'true'; ?>"  style="display:inline-block; background:<?= $admin_val > 2 ? "#ccc" :"#1F4392"; ?>" <?= $admin_val > 2? "disabled" :""; ?>>
+                        발표
+                        </a>
+                    </td>
+                    <td class=" td_center">
+                        <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=<?=$_GET['bo_table']; ?>&wr_idx=<?php echo $list[$i]['wr_id']; ?>&bo_idx=<?= $_GET['bo_idx'] ?>&us_idx=<?= $list[$i]['wr_id']; ?>&u_id=1&rater=1&quest=true" class="value_btn" style="display:inline-block; background:#1F4392">
+                        부여
+                        </a>
+                    </td>
+                </tr>
+                <?php } ?>
+                <?php if ($total_count == 0) { echo '<tr><td colspan="6" class="empty_table">심사 관리 내용이 없습니다.</td></tr>'; } ?>
+                </tbody>
+                </table>
+        </form>
     </div>
-
-	
 </div>
  <!-- 페이지 -->
 

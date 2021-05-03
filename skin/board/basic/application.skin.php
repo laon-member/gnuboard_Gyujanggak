@@ -963,11 +963,11 @@ $result = sql_query($sql);
                     <tr>
                         <th scope="col" class="view_table_header" colspan="1" >소속</th>
                         <td scope="col" class="view_table_text" colspan="4" >
-                        <input type="text" name="belong_view" id="belong_view"  class="input_text" placeholder="소속" readonly>
+                            <input type="text" name="belong_view" id="belong_view"  class="input_text" placeholder="소속" readonly>
                         </td>
                         <th scope="col" class="view_table_header" colspan="1" >직급</th>
                         <td scope="col" class="view_table_text" colspan="3" >
-                        <input type="text" name="rank_view" id="rank_view"  class="input_text" placeholder="직급" readonly>
+                            <input type="text" name="rank_view" id="rank_view"  class="input_text" placeholder="직급" readonly>
                         </td>
                     </tr>
                     <tr>
@@ -1589,10 +1589,11 @@ $result = sql_query($sql);
                             <input type="text" name="money" id="money"  class="input_text input_border_true money" placeholder="숫자만 기재 (원)" >
                         </td>
                     </tr>
-
+                </tbody>
+                <tbody class="file_table_all">
                     <tr class="view_table_header_table"></tr>
-                    <tr>
-                        <th scope="col" class="view_table_header " colspan="9">자료첨부</th>
+                    <tr class="all_user_file">
+                        <th scope="col" class="view_table_header " colspan="9">자료 첨부</th>
                     </tr>
                 </tbody>
             </table>
@@ -1804,7 +1805,7 @@ $result = sql_query($sql);
 
                 if($('#meeting_agency').val() == "") return alert("소속기관이 비어있습니다");
                 if($('#meeting_venue').val() == "") return alert("개최장소가 비어있습니다");
-                if($('#meeting_scale').val() == "") return alert("칩담회 규모(인원)가 비어있습니다");
+                if($('#meeting_scale').val() == "") return alert("집담회 규모(인원)가 비어있습니다");
 
                 if($('#normal_manager_name').val() == "") return alert("책임자 성명이 비어있습니다");
                 if($('#normal_manager_degree').val() == "") return alert("책임자 전공이 비어있습니다");
@@ -1933,7 +1934,7 @@ $result = sql_query($sql);
             });
             
             var file_number = 1;
-            var html = '<tr class="input-file_list">'
+            var html = '<tr class="input-file_list ">'
                         +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일명</th>'
                         +'<td scope="col" class="view_table_text" colspan="2" style="width:40%">'
                         +'    <input type="text" style="margin: 0 -2px;" id="file_label_view1" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/> '
@@ -1941,7 +1942,7 @@ $result = sql_query($sql);
                         +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 사이즈</th>'
                         +'<td scope="col" class="view_table_text" colspan="2" style="width:20%">'
                         +'    <input type="text" id="file-size-'+file_number+'" class="file-name file-size" style="margin: 0 -2px;" value="용량" readonly="readonly"/>'
-                        +'    <input type="file" name="bf_file[]" id="upload01" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?> />'
+                        +'    <input type="file" name="bf_file_null[]" id="upload01" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?> />'
                         +'</td>'
                         +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 삭제</th>'
                         +'<td scope="col" class="view_table_text" colspan="1" style="width:10%">'
@@ -1949,7 +1950,7 @@ $result = sql_query($sql);
                         +'</td>'
                         +'</tr>';
 
-            $('.bo_class').append(html);
+            $('.file_table_all').append(html);
 
 
             //클릭이벤트 unbind 
@@ -2001,11 +2002,11 @@ $result = sql_query($sql);
                             // var html = '<div class="input-file"><input type="text" id="file_label_view'+file_number+'" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/><input type="text" id="file-size-'+file_number+'" class="file-name file-size" value="용량" readonly="readonly"/><input type="file" name="bf_file[]" id="upload0'+file_number+'" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?>/><button type="button" class="file-label file-del " id="file-del'+file_number+'" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>">삭제</button></div>';
                             var html ='<tr class="input-file_list input-file_list_all">'
                             +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일명</th>'
-                            +'<td scope="col" class="view_table_text" colspan="1" style="width:40%">'
+                            +'<td scope="col" class="view_table_text" colspan="2" style="width:40%">'
                             +'    <input type="text" id="file_label_view'+file_number+'" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/>'
                             +'</td>'
                             +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 사이즈</th>'
-                            +'<td scope="col" class="view_table_text" colspan="1" style="width:20%">'
+                            +'<td scope="col" class="view_table_text" colspan="2" style="width:20%">'
                             +'    <input type="text" id="file-size-'+file_number+'" class="file-name file-size" value="용량" readonly="readonly"/>'
                             +'    <input type="file" name="bf_file_null[]" id="upload0'+file_number+'" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?>/>'
                             +'</td>'
@@ -2258,10 +2259,11 @@ $result = sql_query($sql);
                             <input type="text" name="money" id="money"  class="input_text input_border_true money" placeholder="숫자만 기재 (원)" >
                         </td>
                     </tr>
-
+                </tbody>
+                <tbody class="file_table_all">
                     <tr class="view_table_header_table"></tr>
-                    <tr>
-                        <th scope="col" class="view_table_header " colspan="9">자료첨부</th>
+                    <tr class="all_user_file">
+                        <th scope="col" class="view_table_header " colspan="9">자료 첨부</th>
                     </tr>
                 </tbody>
             </table>
@@ -2472,7 +2474,7 @@ $result = sql_query($sql);
 
                 if($('#meeting_agency').val() == "") return alert("소속기관이 비어있습니다");
                 if($('#meeting_venue').val() == "") return alert("개최장소가 비어있습니다");
-                if($('#meeting_scale').val() == "") return alert("칩담회 규모(인원)가 비어있습니다");
+                if($('#meeting_scale').val() == "") return alert("집담회 규모(인원)가 비어있습니다");
 
                 if($('#normal_manager_name').val() == "") return alert("책임자 성명이 비어있습니다");
                 if($('#normal_manager_degree').val() == "") return alert("책임자 전공이 비어있습니다");
@@ -2617,7 +2619,7 @@ $result = sql_query($sql);
                         +'</td>'
                         +'</tr>';
 
-            $('.bo_class').append(html);
+            $('.file_table_all').append(html);
 
 
             //클릭이벤트 unbind 
@@ -2669,11 +2671,11 @@ $result = sql_query($sql);
                             // var html = '<div class="input-file"><input type="text" id="file_label_view'+file_number+'" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/><input type="text" id="file-size-'+file_number+'" class="file-name file-size" value="용량" readonly="readonly"/><input type="file" name="bf_file[]" id="upload0'+file_number+'" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?>/><button type="button" class="file-label file-del " id="file-del'+file_number+'" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>">삭제</button></div>';
                             var html ='<tr class="input-file_list input-file_list_all">'
                             +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일명</th>'
-                            +'<td scope="col" class="view_table_text" colspan="1" style="width:40%">'
+                            +'<td scope="col" class="view_table_text" colspan="2" style="width:40%">'
                             +'    <input type="text" id="file_label_view'+file_number+'" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/>'
                             +'</td>'
                             +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 사이즈</th>'
-                            +'<td scope="col" class="view_table_text" colspan="1" style="width:20%">'
+                            +'<td scope="col" class="view_table_text" colspan="2" style="width:20%">'
                             +'    <input type="text" id="file-size-'+file_number+'" class="file-name file-size" value="용량" readonly="readonly"/>'
                             +'    <input type="file" name="bf_file_null[]" id="upload0'+file_number+'" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?>/>'
                             +'</td>'
@@ -3016,9 +3018,10 @@ $result = sql_query($sql);
                             <input type="text" name="money" id="money"  class="input_text input_border_true money" placeholder="숫자만 기재 (원)" >
                         </td>
                     </tr>
-
+                </tbody>
+                <tbody class="file_table_all">
                     <tr class="view_table_header_table"></tr>
-                    <tr>
+                    <tr class="all_user_file">
                         <th scope="col" class="view_table_header " colspan="9">자료 첨부</th>
                     </tr>
                 </tbody>
@@ -3693,7 +3696,7 @@ $result = sql_query($sql);
         var file_number = 1;
         var html = '<tr class="input-file_list">'
                     +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일명</th>'
-                    +'<td scope="col" class="view_table_text" colspan="3" style="width:40%">'
+                    +'<td scope="col" class="view_table_text" colspan="2" style="width:40%">'
                     +'    <input type="text" style="margin: 0 -2px;" id="file_label_view1" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/> '
                     +'</td>'
                     +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 사이즈</th>'
@@ -3708,7 +3711,7 @@ $result = sql_query($sql);
                     +'</tr>';
 
 
-        $('.bo_class').append(html);
+        $('.file_table_all').append(html);
 
 
         //클릭이벤트 unbind 
@@ -3760,11 +3763,11 @@ $result = sql_query($sql);
                             // var html = '<div class="input-file"><input type="text" id="file_label_view'+file_number+'" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/><input type="text" id="file-size-'+file_number+'" class="file-name file-size" value="용량" readonly="readonly"/><input type="file" name="bf_file[]" id="upload0'+file_number+'" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?>/><button type="button" class="file-label file-del " id="file-del'+file_number+'" <?= $row44['report'] ==2? "disabled": ""; ?>style="background:<?= $row44['report'] ==2? '#ccc !important': 'crimson'; ?>">삭제</button></div>';
                             var html ='<tr class="input-file_list input-file_list_all">'
                             +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일명</th>'
-                            +'<td scope="col" class="view_table_text" colspan="1" style="width:40%">'
+                            +'<td scope="col" class="view_table_text" colspan="2" style="width:40%">'
                             +'    <input type="text" id="file_label_view'+file_number+'" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/>'
                             +'</td>'
                             +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 사이즈</th>'
-                            +'<td scope="col" class="view_table_text" colspan="1" style="width:20%">'
+                            +'<td scope="col" class="view_table_text" colspan="2" style="width:20%">'
                             +'    <input type="text" id="file-size-'+file_number+'" class="file-name file-size" value="용량" readonly="readonly"/>'
                             +'    <input type="file" name="bf_file_null[]" id="upload0'+file_number+'" class="file-upload" <?= $row44['report'] ==2? "disabled": ""; ?>/>'
                             +'</td>'
@@ -3944,11 +3947,12 @@ $result = sql_query($sql);
                             <input type="text" name="title_view" id="title_view"  class="input_text " placeholder="제목" value="<?= $row['wr_subject']; ?>"  readonly>
                         </td>
                     </tr>
+                </tbody>
+                <tbody class="file_table_all">
                     <tr class="view_table_header_table"></tr>
-                    <tr>
+                    <tr class="all_user_file">
                         <th scope="col" class="view_table_header " colspan="9">자료 첨부</th>
                     </tr>
-                 
                 </tbody>
             </table>
         
@@ -4209,7 +4213,7 @@ $result = sql_query($sql);
                         +'</tr>';
             
 
-            $('.bo_class').append(html);
+            $('.file_table_all').append(html);
             
 
             //클릭이벤트 unbind 

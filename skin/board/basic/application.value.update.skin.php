@@ -77,14 +77,14 @@ $category_title = $row33['title'];
                         <th scope="col" class="view_table_header " colspan="9">연구과제명</th>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">과제명(국문)</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="8" style="">
+                        <th scope="col" class="view_table_header" colspan="1">과제명(국문)</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="8">
                         <input type="text" name="ko_title" id="ko_title"  class="input_text input_border_true" placeholder="과제명(국문)"  value="<?= $row['ko_title']; ?>" >
                         </td>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">과제명(영문)</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="8" style="">
+                        <th scope="col" class="view_table_header" colspan="1">과제명(영문)</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="8">
                         <input type="text" name="en_title" id="en_title"  class="input_text input_border_true" placeholder="과제명(영문)"  value="<?= $row['en_title']; ?>" >
                         </td>
                     </tr>
@@ -93,43 +93,43 @@ $category_title = $row33['title'];
                         <th scope="col" class="view_table_header " colspan="9">연구책임자</th>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">성명</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="1" style="">
+                        <th scope="col" class="view_table_header" colspan="1">성명</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="1">
                         <input type="text" name="name" id="name"  class="input_text input_border_true" placeholder="성명"  value="<?= $row['name']; ?>" >
                         </td>
-                        <th scope="col" class="view_table_header" colspan="1" style="">전공(학위)</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="6" style="">
+                        <th scope="col" class="view_table_header" colspan="1">전공(학위)</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="6">
                         <input type="text" name="degree" id="degree"  class="input_text input_border_true" placeholder="전공(학위)"  value="<?= $row['degree']; ?>" >
                         </td>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">소속</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="1" style="">
+                        <th scope="col" class="view_table_header" colspan="1">소속</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="1">
                         <input type="text" name="belong" id="belong"  class="input_text input_border_true" placeholder="소속"  value="<?= $row['belong']; ?>" >
                         </td>
-                        <th scope="col" class="view_table_header" colspan="1" style="">직급</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="6" style="">
+                        <th scope="col" class="view_table_header" colspan="1">직급</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="6">
                         <input type="text" name="rank" id="rank"  class="input_text input_border_true" placeholder="직급"  value="<?= $row['rank']; ?>" >
                         </td>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">이메일</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="1" style="">
+                        <th scope="col" class="view_table_header" colspan="1">이메일</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="1">
                         <input type="text" name="email" id="email"  class="input_text input_border_true" placeholder="이메일"  value="<?= $row['email']; ?>" >
                         </td>
-                        <th scope="col" class="view_table_header" colspan="1" style="">전화</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="6" style="">
+                        <th scope="col" class="view_table_header" colspan="1">전화</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="6">
                         <input type="text" name="phone" id="phone"  class="input_text input_border_true" placeholder="전화"  value="<?= $row['phone']; ?>" >
                         </td>
                     </tr>
                 
                     <tr>
-                        <th scope="col" class="view_table_header" style="">공동연구원</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="1" style="">
+                        <th scope="col" class="view_table_header">공동연구원</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="1">
                         <input type="text" name="main_member" id="main_member"  class="input_text input_border_true" placeholder="명" value="<?= $row['main_member']; ?>" >
                         </td>
-                        <th scope="col" class="view_table_header" style="">연구원보조</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="6" style="">
+                        <th scope="col" class="view_table_header">연구원보조</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="6">
                         <input type="text" name="sub_member" id="sub_member"  class="input_text input_border_true" placeholder="명" value="<?= $row['sub_member']; ?>" >
                         </td>
                     </tr>
@@ -138,8 +138,8 @@ $category_title = $row33['title'];
                         <th scope="col" class="view_table_header " colspan="9">연구정보</th>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">연구비신청액</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="8" style="">
+                        <th scope="col" class="view_table_header" colspan="1">연구비신청액</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="8">
                         <input type="text" name="money" id="money"  class="input_text input_border_true" placeholder="연구비신청액"  value="<?= $row['money']; ?>" >
                         </td>
                     </tr>
@@ -566,14 +566,14 @@ $category_title = $row33['title'];
                         <th scope="col" class="view_table_header " colspan="9">연구과제명</th>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">과제명(국문)</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="8" style="">
+                        <th scope="col" class="view_table_header" colspan="1">과제명(국문)</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="8">
                         <input type="text" name="ko_title" id="ko_title"  class="input_text input_border_true" placeholder="과제명(국문)" value="<?= $row['ko_title']; ?>" >
                         </td>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">과제명(영문)</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="8" style="">
+                        <th scope="col" class="view_table_header" colspan="1">과제명(영문)</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="8">
                         <input type="text" name="en_title" id="en_title"  class="input_text input_border_true" placeholder="과제명(영문)" value="<?= $row['en_title']; ?>" >
                         </td>
                     </tr>
@@ -582,32 +582,32 @@ $category_title = $row33['title'];
                         <th scope="col" class="view_table_header " colspan="9">연구책임자</th>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">성명</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="1" style="">
+                        <th scope="col" class="view_table_header" colspan="1">성명</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="1">
                         <input type="text" name="name" id="name"  class="input_text input_border_true" placeholder="성명" value="<?= $row['name']; ?>" >
                         </td>
-                        <th scope="col" class="view_table_header" colspan="1" style="">전공(학위)</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="6" style="">
+                        <th scope="col" class="view_table_header" colspan="1">전공(학위)</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="6">
                         <input type="text" name="degree" id="degree"  class="input_text input_border_true" placeholder="전공(학위)" value="<?= $row['degree']; ?>" >
                         </td>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">소속</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="1" style="">
+                        <th scope="col" class="view_table_header" colspan="1">소속</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="1">
                         <input type="text" name="belong" id="belong"  class="input_text input_border_true" placeholder="소속" value="<?= $row['belong']; ?>" >
                         </td>
-                        <th scope="col" class="view_table_header" colspan="1" style="">직급</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="6" style="">
+                        <th scope="col" class="view_table_header" colspan="1">직급</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="6">
                         <input type="text" name="rank" id="rank"  class="input_text input_border_true" placeholder="직급" value="<?= $row['rank']; ?>" >
                         </td>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">이메일</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="1" style="">
+                        <th scope="col" class="view_table_header" colspan="1">이메일</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="1">
                         <input type="text" name="email" id="email"  class="input_text input_border_true" placeholder="이메일" value="<?= $row['email']; ?>" >
                         </td>
-                        <th scope="col" class="view_table_header" colspan="1" style="">전화</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="6" style="">
+                        <th scope="col" class="view_table_header" colspan="1">전화</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="6">
                         <input type="text" name="phone" id="phone"  class="input_text input_border_true" placeholder="전화" value="<?= $row['phone']; ?>" >
                         </td>
                     </tr>
@@ -616,12 +616,12 @@ $category_title = $row33['title'];
                         <th scope="col" class="view_table_header " colspan="9">연구참여자</th>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" style="">공동연구원<br>연구책임자 제외</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="1" style="">
+                        <th scope="col" class="view_table_header">공동연구원<br>연구책임자 제외</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="1">
                         <input type="text" name="main_member" id="main_member"  class="input_text input_border_true" placeholder="명" value="<?= $row['main_member']; ?>" >
                         </td>
-                        <th scope="col" class="view_table_header" style="">연구원보조</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="6" style="">
+                        <th scope="col" class="view_table_header">연구원보조</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="6">
                         <input type="text" name="sub_member" id="sub_member"  class="input_text input_border_true" placeholder="명" value="<?= $row['sub_member']; ?>" >
                         </td>
                     </tr>
@@ -630,18 +630,18 @@ $category_title = $row33['title'];
                         <th scope="col" class="view_table_header " colspan="9">연구정보</th>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">연구비신청액</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="8" style="">
+                        <th scope="col" class="view_table_header" colspan="1">연구비신청액</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="8">
                         <input type="text" name="money" id="money"  class="input_text input_border_true" placeholder="연구비신청액" value="<?= $row['money']; ?>" >
                         </td>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">1차년 연구비</th>
+                        <th scope="col" class="view_table_header" colspan="1">1차년 연구비</th>
                         <td scope="col" class=" view_table_text view_table_padding" colspan="1" style=" width:40%">
                         <input type="text" name="one_year" id="one_year"  class="input_text input_border_true" placeholder="1차년 연구비" value="<?= $row['one_year']; ?>" >
                         </td>
-                        <th scope="col" class="view_table_header" colspan="1" style="">2차년 연구비</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="6" style="">
+                        <th scope="col" class="view_table_header" colspan="1">2차년 연구비</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="6">
                             <input type="text" name="two_year" id="two_year"  class="input_text input_border_true" placeholder="2차년 연구비" value="<?= $row['two_year']; ?>" >
                         </td>
                     </tr>
@@ -1085,14 +1085,14 @@ $category_title = $row33['title'];
                         <th scope="col" class="view_table_header " colspan="9">연구과제명</th>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">과제명(국문)</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="8" style="">
+                        <th scope="col" class="view_table_header" colspan="1">과제명(국문)</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="8">
                         <input type="text" name="ko_title" id="ko_title"  class="input_text input_border_true" placeholder="과제명(국문)" value="<?= $row['ko_title']; ?>" >
                         </td>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">과제명(영문)</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="8" style="">
+                        <th scope="col" class="view_table_header" colspan="1">과제명(영문)</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="8">
                         <input type="text" name="en_title" id="en_title"  class="input_text input_border_true" placeholder="과제명(영문)" value="<?= $row['en_title']; ?>" >
                         </td>
                     </tr>
@@ -1101,18 +1101,18 @@ $category_title = $row33['title'];
                         <th scope="col" class="view_table_header " colspan="9">집단회 개최</th>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" style="">소속 기관</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="8" style="">
+                        <th scope="col" class="view_table_header">소속 기관</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="8">
                         <input type="text" name="meeting_agency" id="meeting_agency"  class="input_text input_border_true" placeholder="" value="<?= $row['meeting_agency']; ?>" >
                         </td>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" style="">개최장소</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="2" style="">
+                        <th scope="col" class="view_table_header">개최장소</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="2">
                         <input type="text" name="meeting_venue" id="meeting_venue"  class="input_text input_border_true" placeholder="" value="<?= $row['meeting_venue']; ?>" >
                         </td>
-                        <th scope="col" class="view_table_header" style="">집담회 규모(인원)</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="5" style="">
+                        <th scope="col" class="view_table_header">집담회 규모(인원)</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="5">
                         <input type="text" name="meeting_scale" id="meeting_scale"  class="input_text input_border_true" placeholder="명" value="<?= $row['meeting_scale']; ?>" >
                         </td>
                     </tr>
@@ -1121,32 +1121,32 @@ $category_title = $row33['title'];
                         <th scope="col" class="view_table_header " colspan="9">책임자현황</th>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">성명</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="2" style="">
+                        <th scope="col" class="view_table_header" colspan="1">성명</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="2">
                         <input type="text" name="normal_manager_name" id="normal_manager_name"  class="input_text input_border_true" placeholder="성명" value="<?= $row['normal_manager_name']; ?>" >
                         </td>
-                        <th scope="col" class="view_table_header" colspan="1" style="">전공(학위)</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="5" style="">
+                        <th scope="col" class="view_table_header" colspan="1">전공(학위)</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="5">
                         <input type="text" name="normal_manager_degree" id="normal_manager_degree"  class="input_text input_border_true" placeholder="전공(학위)" value="<?= $row['normal_manager_degree']; ?>" >
                         </td>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">소속</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="2" style="">
+                        <th scope="col" class="view_table_header" colspan="1">소속</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="2">
                         <input type="text" name="normal_manager_belong" id="normal_manager_belong"  class="input_text input_border_true" placeholder="소속" value="<?= $row['normal_manager_belong']; ?>" >
                         </td>
-                        <th scope="col" class="view_table_header" colspan="1" style="">직급</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="5" style="">
+                        <th scope="col" class="view_table_header" colspan="1">직급</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="5">
                         <input type="text" name="normal_manager_rank" id="normal_manager_rank"  class="input_text input_border_true" placeholder="직급" value="<?= $row['normal_manager_rank']; ?>" >
                         </td>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">이메일</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="2" style="">
+                        <th scope="col" class="view_table_header" colspan="1">이메일</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="2">
                         <input type="text" name="normal_manager_email" id="normal_manager_email"  class="input_text input_border_true" placeholder="이메일" value="<?= $row['normal_manager_email']; ?>" >
                         </td>
-                        <th scope="col" class="view_table_header" colspan="1" style="">전화</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="5" style="">
+                        <th scope="col" class="view_table_header" colspan="1">전화</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="5">
                         <input type="text" name="normal_manager_phone" id="normal_manager_phone"  class="input_text input_border_true" placeholder="전화" value="<?= $row['normal_manager_phone']; ?>" >
                         </td>
                     </tr>
@@ -1158,7 +1158,7 @@ $category_title = $row33['title'];
                     </tr>
                     <tr>
                         <th scope="col" class="view_table_header" colspan="1"style="">소속기관</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="8" style="">
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="8">
                             <input type="text" name="belong_agency" id="belong_agency" placeholder=""  class="input_text input_border_true"  value="<?= $row['belong_agency']; ?>" >
                         </td>
                     </tr>
@@ -1166,31 +1166,31 @@ $category_title = $row33['title'];
                     <tr>
                         <th scope="col" class="view_table_header" rowspan="3"style="">소속기관</th>
                         <th scope="col" class="view_table_header" colspan="1" style="width:10%">성명</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="1" style="">
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="1">
                         <input type="text" name="agency_name" id="agency_name"  class="input_text input_border_true" placeholder="성명" value="<?= $row['agency_name']; ?>" >
                         </td>
                         <th scope="col" class="view_table_header" colspan="1" style="width:10%">전공(학위)</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="6" style="">
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="6">
                         <input type="text" name="agency_degree" id="agency_degree"  class="input_text input_border_true" placeholder="전공(학위)" value="<?= $row['agency_degree']; ?>" >
                         </td>
                     </tr>
                     <tr>
                         <th scope="col" class="view_table_header" colspan="1" style="width:10%">소속</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="1" style="">
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="1">
                         <input type="text" name="agency_belong" id="agency_belong"  class="input_text input_border_true" placeholder="소속" value="<?= $row['agency_belong']; ?>" >
                         </td>
                         <th scope="col" class="view_table_header" colspan="1" style="width:10%">직급</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="6" style="">
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="6">
                         <input type="text" name="agency_rank" id="agency_rank"  class="input_text input_border_true" placeholder="직급" value="<?= $row['agency_rank']; ?>" >
                         </td>
                     </tr>
                     <tr>
                         <th scope="col" class="view_table_header" colspan="1" style="width:10%">이메일</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="1" style="">
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="1">
                         <input type="text" name="agency_email" id="agency_email"  class="input_text input_border_true" placeholder="이메일" value="<?= $row['agency_email']; ?>" >
                         </td>
                         <th scope="col" class="view_table_header" colspan="1" style="width:10%">전화</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="6" style="">
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="6">
                         <input type="text" name="agency_phone" id="agency_phone"  class="input_text input_border_true" placeholder="전화" value="<?= $row['agency_phone']; ?>" >
                         </td>
                     </tr>
@@ -1201,7 +1201,7 @@ $category_title = $row33['title'];
                     </tr>
                     <tr>
                         <th scope="col" class="view_table_header" colspan="1">연구비신청액</th>
-                        <td scope="col" class=" view_table_text view_table_padding " colspan="7" style="">
+                        <td scope="col" class=" view_table_text view_table_padding " colspan="7">
                             <input type="text" name="money" id="money"  class="input_text input_border_true  money" placeholder="숫자만 기재 (원)" value="<?= $row['money']; ?>" >
                         </td>
                     </tr>
@@ -1279,7 +1279,7 @@ $category_title = $row33['title'];
 
                 if($('#meeting_agency').val() == "") { alert("소속기관이 비어있습니다"); return false;}
                 if($('#meeting_venue').val() == "")  {alert("개최장소가 비어있습니다"); return false;}
-                if($('#meeting_scale').val() == "")  {alert("칩담회 규모(인원)가 비어있습니다"); return false;}
+                if($('#meeting_scale').val() == "")  {alert("집담회 규모(인원)가 비어있습니다"); return false;}
 
                 if($('#normal_manager_name').val() == "") { alert("책임자 성명이 비어있습니다"); return false;}
                 if($('#normal_manager_degree').val() == "") { alert("책임자 전공이 비어있습니다"); return false;}
@@ -1506,14 +1506,14 @@ $category_title = $row33['title'];
                         <th scope="col" class="view_table_header " colspan="9">연구과제명</th>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">과제명(국문)</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="8" style="">
+                        <th scope="col" class="view_table_header" colspan="1">과제명(국문)</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="8">
                         <input type="text" name="ko_title" id="ko_title"  class="input_text input_border_true" placeholder="과제명(국문)" value="<?= $row['ko_title']; ?>" >
                         </td>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">과제명(영문)</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="8" style="">
+                        <th scope="col" class="view_table_header" colspan="1">과제명(영문)</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="8">
                         <input type="text" name="en_title" id="en_title"  class="input_text input_border_true" placeholder="과제명(영문)" value="<?= $row['en_title']; ?>" >
                         </td>
                     </tr>
@@ -1522,18 +1522,18 @@ $category_title = $row33['title'];
                         <th scope="col" class="view_table_header " colspan="9">집단회 개최</th>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" style="">소속 기관</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="8" style="">
+                        <th scope="col" class="view_table_header">소속 기관</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="8">
                         <input type="text" name="meeting_agency" id="meeting_agency"  class="input_text input_border_true" placeholder="" value="<?= $row['meeting_agency']; ?>" >
                         </td>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" style="">개최장소</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="2" style="">
+                        <th scope="col" class="view_table_header">개최장소</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="2">
                         <input type="text" name="meeting_venue" id="meeting_venue"  class="input_text input_border_true" placeholder="" value="<?= $row['meeting_venue']; ?>" >
                         </td>
-                        <th scope="col" class="view_table_header" style="">집담회 규모(인원)</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="5" style="">
+                        <th scope="col" class="view_table_header">집담회 규모(인원)</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="5">
                         <input type="text" name="meeting_scale" id="meeting_scale"  class="input_text input_border_true" placeholder="명" value="<?= $row['meeting_scale']; ?>" >
                         </td>
                     </tr>
@@ -1542,32 +1542,32 @@ $category_title = $row33['title'];
                         <th scope="col" class="view_table_header " colspan="9">책임자현황</th>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">성명</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="2" style="">
+                        <th scope="col" class="view_table_header" colspan="1">성명</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="2">
                         <input type="text" name="normal_manager_name" id="normal_manager_name"  class="input_text input_border_true" placeholder="성명" value="<?= $row['normal_manager_name']; ?>" >
                         </td>
-                        <th scope="col" class="view_table_header" colspan="1" style="">전공(학위)</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="5" style="">
+                        <th scope="col" class="view_table_header" colspan="1">전공(학위)</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="5">
                         <input type="text" name="normal_manager_degree" id="normal_manager_degree"  class="input_text input_border_true" placeholder="전공(학위)" value="<?= $row['normal_manager_degree']; ?>" >
                         </td>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">소속</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="2" style="">
+                        <th scope="col" class="view_table_header" colspan="1">소속</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="2">
                         <input type="text" name="normal_manager_belong" id="normal_manager_belong"  class="input_text input_border_true" placeholder="소속" value="<?= $row['normal_manager_belong']; ?>" >
                         </td>
-                        <th scope="col" class="view_table_header" colspan="1" style="">직급</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="5" style="">
+                        <th scope="col" class="view_table_header" colspan="1">직급</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="5">
                         <input type="text" name="normal_manager_rank" id="normal_manager_rank"  class="input_text input_border_true" placeholder="직급" value="<?= $row['normal_manager_rank']; ?>" >
                         </td>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">이메일</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="2" style="">
+                        <th scope="col" class="view_table_header" colspan="1">이메일</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="2">
                         <input type="text" name="normal_manager_email" id="normal_manager_email"  class="input_text input_border_true" placeholder="이메일" value="<?= $row['normal_manager_email']; ?>" >
                         </td>
-                        <th scope="col" class="view_table_header" colspan="1" style="">전화</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="5" style="">
+                        <th scope="col" class="view_table_header" colspan="1">전화</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="5">
                         <input type="text" name="normal_manager_phone" id="normal_manager_phone"  class="input_text input_border_true" placeholder="전화" value="<?= $row['normal_manager_phone']; ?>" >
                         </td>
                     </tr>
@@ -1579,7 +1579,7 @@ $category_title = $row33['title'];
                     </tr>
                     <tr>
                         <th scope="col" class="view_table_header" colspan="1"style="">소속기관</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="8" style="">
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="8">
                             <input type="text" name="belong_agency" id="belong_agency" placeholder=""  class="input_text input_border_true"  value="<?= $row['belong_agency']; ?>" >
                         </td>
                     </tr>
@@ -1587,31 +1587,31 @@ $category_title = $row33['title'];
                     <tr>
                         <th scope="col" class="view_table_header" rowspan="3"style="">소속기관</th>
                         <th scope="col" class="view_table_header" colspan="1" style="width:10%">성명</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="1" style="">
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="1">
                         <input type="text" name="agency_name" id="agency_name"  class="input_text input_border_true" placeholder="성명" value="<?= $row['agency_name']; ?>" >
                         </td>
                         <th scope="col" class="view_table_header" colspan="1" style="width:10%">전공(학위)</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="6" style="">
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="6">
                         <input type="text" name="agency_degree" id="agency_degree"  class="input_text input_border_true" placeholder="전공(학위)" value="<?= $row['agency_degree']; ?>" >
                         </td>
                     </tr>
                     <tr>
                         <th scope="col" class="view_table_header" colspan="1" style="width:10%">소속</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="1" style="">
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="1">
                         <input type="text" name="agency_belong" id="agency_belong"  class="input_text input_border_true" placeholder="소속" value="<?= $row['agency_belong']; ?>" >
                         </td>
                         <th scope="col" class="view_table_header" colspan="1" style="width:10%">직급</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="6" style="">
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="6">
                         <input type="text" name="agency_rank" id="agency_rank"  class="input_text input_border_true" placeholder="직급" value="<?= $row['agency_rank']; ?>" >
                         </td>
                     </tr>
                     <tr>
                         <th scope="col" class="view_table_header" colspan="1" style="width:10%">이메일</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="1" style="">
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="1">
                         <input type="text" name="agency_email" id="agency_email"  class="input_text input_border_true" placeholder="이메일" value="<?= $row['agency_email']; ?>" >
                         </td>
                         <th scope="col" class="view_table_header" colspan="1" style="width:10%">전화</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="6" style="">
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="6">
                         <input type="text" name="agency_phone" id="agency_phone"  class="input_text input_border_true" placeholder="전화" value="<?= $row['agency_phone']; ?>" >
                         </td>
                     </tr>
@@ -1622,7 +1622,7 @@ $category_title = $row33['title'];
                     </tr>
                     <tr>
                         <th scope="col" class="view_table_header" colspan="1">연구비신청액</th>
-                        <td scope="col" class=" view_table_text view_table_padding " colspan="7" style="">
+                        <td scope="col" class=" view_table_text view_table_padding " colspan="7">
                             <input type="text" name="money" id="money"  class="input_text input_border_true  money" placeholder="숫자만 기재 (원)" value="<?= $row['money']; ?>" >
                         </td>
                     </tr>
@@ -1700,7 +1700,7 @@ $category_title = $row33['title'];
 
                 if($('#meeting_agency').val() == "") { alert("소속기관이 비어있습니다"); return false;}
                 if($('#meeting_venue').val() == "")  {alert("개최장소가 비어있습니다"); return false;}
-                if($('#meeting_scale').val() == "")  {alert("칩담회 규모(인원)가 비어있습니다"); return false;}
+                if($('#meeting_scale').val() == "")  {alert("집담회 규모(인원)가 비어있습니다"); return false;}
 
                 if($('#normal_manager_name').val() == "")  {alert("책임자 성명이 비어있습니다"); return false;}
                 if($('#normal_manager_degree').val() == ""){  alert("책임자 전공이 비어있습니다"); return false;}
@@ -1942,14 +1942,14 @@ $category_title = $row33['title'];
                         <th scope="col" class="view_table_header " colspan="9">연구과제명</th>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">과제명(국문)</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="8" style="">
+                        <th scope="col" class="view_table_header" colspan="1">과제명(국문)</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="8">
                         <input type="text" name="ko_title" id="ko_title"  class="input_text input_border_true" placeholder="과제명(국문)" value="<?= $row['ko_title']; ?>">
                         </td>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">과제명(영문)</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="8" style="">
+                        <th scope="col" class="view_table_header" colspan="1">과제명(영문)</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="8">
                         <input type="text" name="en_title" id="en_title"  class="input_text input_border_true" placeholder="과제명(영문)" value="<?= $row['en_title']; ?>" >
                         </td>
                     </tr>
@@ -1966,13 +1966,13 @@ $category_title = $row33['title'];
                     </tr>
 
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">개최일시</th>
-                        <td scope="col" class="view_table_text view_table_padding" colspan="3" style="">
+                        <th scope="col" class="view_table_header" colspan="1">개최일시</th>
+                        <td scope="col" class="view_table_text view_table_padding" colspan="3">
                             <input type="text" name="host_date_start" id="host_date_start"  class="date_start input_text input_date input_border_true input_text_40" value="<?= $row['host_date_start']; ?>"   max="9999-12-31" readonly placeholder="연도-월-일" >
                             ~
                             <input type="text" name="host_date_end" id="host_date_end" class="date_end input_text input_date input_border_true input_text_40" max="9999-12-31" value=" <?= $row['host_date_end']; ?>"  readonly placeholder="연도-월-일">
                         </td>
-                        <th scope="col" class="view_table_header" colspan="1" style="">개최장소</th>
+                        <th scope="col" class="view_table_header" colspan="1">개최장소</th>
                         <td scope="col" class=" view_table_text view_table_padding " colspan="4" style="width:40%;">
                             <input type="text" name="host_venue" id="host_venue"  class="input_text input_border_true " placeholder="개최장소" value="<?= $row['host_venue']; ?>"  >
                         </td>
@@ -1994,21 +1994,21 @@ $category_title = $row33['title'];
                     <tr>
                         <th scope="col" class="view_table_header" colspan="1" style="width:10%;">후원기관 현황</th>
                         <td scope="col" class=" view_table_text view_table_padding " colspan="3" style="width:40%;">
-                            <input type="text" name="host_support_count" id="host_support_count"  class="input_text input_border_true " placeholder="후원기관 현황" value="<?= $row['host_support_count']; ?>"  >
+                            <input type="text" name="host_support_count" id="host_support_count"  class="input_text input_border_true " placeholder="후원기관 현황" value="<?= $row['host_support_count']; ?>곳" readonly>
                         </td>
                         <th scope="col" class="view_table_header" colspan="1" style="width:10%;">후원기관1</th>
                         <td scope="col" class=" view_table_text view_table_padding " colspan="4" style="width:40%;">
-                            <input type="text" name="host_support_1" id="host_support_1"  class="input_text input_border_true " placeholder="후원기관1" value="<?= $row['host_support_1']; ?>"  >
+                            <input type="text" name="host_support_1" id="host_support_1"  class="input_text input_border_true host_support" placeholder="후원기관1" value="<?= $row['host_support_1']; ?>"  >
                         </td>
                     </tr>
                     <tr>
                         <th scope="col" class="view_table_header" colspan="1" style="width:10%;">후원기관2</th>
                         <td scope="col" class=" view_table_text view_table_padding " colspan="3" style="width:40%;">
-                            <input type="text" name="host_support_2" id="host_support_2"  class="input_text input_border_true " placeholder="후원기관2" value="<?= $row['host_support_2']; ?>" >
+                            <input type="text" name="host_support_2" id="host_support_2"  class="input_text input_border_true host_support" placeholder="후원기관2" value="<?= $row['host_support_2']; ?>" >
                         </td>
                         <th scope="col" class="view_table_header" colspan="1" style="width:10%;">후원기관3</th>
                         <td scope="col" class=" view_table_text view_table_padding " colspan="4" style="width:40%;">
-                        <input type="text" name="host_support_3" id="host_support_3"  class="input_text input_border_true " placeholder="후원기관3" value="<?= $row['host_support_3']; ?>" > 
+                        <input type="text" name="host_support_3" id="host_support_3"  class="input_text input_border_true host_support" placeholder="후원기관3" value="<?= $row['host_support_3']; ?>" > 
                         </td>
                     </tr>
 
@@ -2029,12 +2029,12 @@ $category_title = $row33['title'];
                     </tr>
 
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="2" style="">사회자</th>
-                        <td scope="col" class=" view_table_text view_table_padding " colspan="2" style="">
+                        <th scope="col" class="view_table_header" colspan="2">사회자</th>
+                        <td scope="col" class=" view_table_text view_table_padding " colspan="2">
                             <input type="text" name="mc_user" id="mc_user"  class="input_text input_border_true " placeholder="사회자" value="<?= $row['mc_user']; ?>" >
                         </td>
-                        <th scope="col" class="view_table_header" colspan="2" style="">일반참가자</th>
-                        <td scope="col" class=" view_table_text view_table_padding " colspan="3" style="">
+                        <th scope="col" class="view_table_header" colspan="2">일반참가자</th>
+                        <td scope="col" class=" view_table_text view_table_padding " colspan="3">
                             <input type="text" name="normal_user" id="normal_user"  class="input_text input_border_true " placeholder="일반참가자" value="<?= $row['normal_user']; ?>" >
                         </td>
                     </tr>
@@ -2046,31 +2046,31 @@ $category_title = $row33['title'];
                     <tr>
                         <th scope="col" class="view_table_header" rowspan="3"style="">기관책임자</th>
                         <th scope="col" class="view_table_header" colspan="1" style=" width:10%">성명</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="2" style="">
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="2">
                         <input type="text" name="institute_manager_name" id="institute_manager_name"  class="input_text input_border_true" placeholder="성명" value="<?= $row['institute_manager_name']; ?>" >
                         </td>
-                        <th scope="col" class="view_table_header" colspan="1" style="">전공(학위)</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="4" style="">
+                        <th scope="col" class="view_table_header" colspan="1">전공(학위)</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="4">
                         <input type="text" name="institute_manager_degree" id="institute_manager_degree"  class="input_text input_border_true" placeholder="전공(학위)" value="<?= $row['institute_manager_degree']; ?>" >
                         </td>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">소속</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="2" style="">
+                        <th scope="col" class="view_table_header" colspan="1">소속</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="2">
                         <input type="text" name="institute_manager_belong" id="institute_manager_belong"  class="input_text input_border_true" placeholder="소속" value="<?= $row['institute_manager_belong']; ?>" >
                         </td>
-                        <th scope="col" class="view_table_header" colspan="1" style="">직급</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="4" style="">
+                        <th scope="col" class="view_table_header" colspan="1">직급</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="4">
                         <input type="text" name="institute_manager_rank" id="institute_manager_rank"  class="input_text input_border_true" placeholder="직급" value="<?= $row['institute_manager_rank']; ?>" >
                         </td>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">이메일</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="2" style="">
+                        <th scope="col" class="view_table_header" colspan="1">이메일</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="2">
                         <input type="text" name="institute_manager_email" id="institute_manager_email"  class="input_text input_border_true" placeholder="이메일" value="<?= $row['institute_manager_email']; ?>" >
                         </td>
-                        <th scope="col" class="view_table_header" colspan="1" style="">전화</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="4" style="">
+                        <th scope="col" class="view_table_header" colspan="1">전화</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="4">
                         <input type="text" name="institute_manager_phone" id="institute_manager_phone"  class="input_text input_border_true" placeholder="전화" value="<?= $row['institute_manager_phone']; ?>" >
                         </td>
                     </tr>
@@ -2078,131 +2078,131 @@ $category_title = $row33['title'];
                    
                     <tr class="view_table_header_table"></tr>
                     <tr>
-                        <th scope="col" class="view_table_header" rowspan="11" colspan="1" style="">소속기관</th>
+                        <th scope="col" class="view_table_header" rowspan="11" colspan="1">소속기관</th>
                         <th scope="col" class="view_table_header" colspan="1" style="width:10%">연번</th>
-                        <th scope="col" class="view_table_header" colspan="2" style="">직위</th>
-                        <th scope="col" class="view_table_header" colspan="2" style="">성명</th>
-                        <th scope="col" class="view_table_header" colspan="3" style="">소속</th>
+                        <th scope="col" class="view_table_header" colspan="2">직위</th>
+                        <th scope="col" class="view_table_header" colspan="2">성명</th>
+                        <th scope="col" class="view_table_header" colspan="3">소속</th>
                     </tr>
 
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">1</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="2" style="">
+                        <th scope="col" class="view_table_header" colspan="1">1</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="2">
                             <input type="text" name="1_user_rank" id="1_user_rank"  class="input_text input_border_true" placeholder="직위" value="<?= $row['1_user_rank']; ?>" >
                         </td>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="2" style="">
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="2">
                             <input type="text" name="1_user_name" id="1_user_name"  class="input_text input_border_true" placeholder="성명" value="<?= $row['1_user_name']; ?>" >
                         </td>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="3" style="">
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="3">
                             <input type="text" name="1_user_belong" id="1_user_belong" class="input_text input_border_true" placeholder="소속" value="<?= $row['1_user_belong']; ?>" >
                         </td>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">2</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="2" style="">
+                        <th scope="col" class="view_table_header" colspan="1">2</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="2">
                             <input type="text" name="2_user_rank" id="2_user_rank"  class="input_text input_border_true" placeholder="직위" value="<?= $row['2_user_rank']; ?>" >
                         </td>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="2" style="">
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="2">
                             <input type="text" name="2_user_name" id="2_user_name"  class="input_text input_border_true" placeholder="성명" value="<?= $row['2_user_name']; ?>" >
                         </td>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="3" style="">
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="3">
                             <input type="text" name="2_user_belong" id="2_user_belong"  class="input_text input_border_true" placeholder="소속" value="<?= $row['2_user_belong']; ?>" >
                         </td>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">3</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="2" style="">
+                        <th scope="col" class="view_table_header" colspan="1">3</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="2">
                             <input type="text" name="3_user_rank" id="3_user_rank"  class="input_text input_border_true" placeholder="직위" value="<?= $row['3_user_rank']; ?>" >
                         </td>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="2" style="">
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="2">
                             <input type="text" name="3_user_name" id="3_user_name"  class="input_text input_border_true" placeholder="성명" value="<?= $row['3_user_name']; ?>" >
                         </td>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="3" style="">
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="3">
                             <input type="text" name="3_user_belong" id="3_user_belong"  class="input_text input_border_true" placeholder="소속" value="<?= $row['3_user_belong']; ?>" >
                         </td>
                     </tr>
 
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">4</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="2" style="">
+                        <th scope="col" class="view_table_header" colspan="1">4</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="2">
                             <input type="text" name="4_user_rank" id="4_user_rank"  class="input_text input_border_true" placeholder="직위" value="<?= $row['4_user_rank']; ?>" >
                         </td>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="2" style="">
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="2">
                             <input type="text" name="4_user_name" id="4e_user_name"  class="input_text input_border_true" placeholder="성명" value="<?= $row['4_user_name']; ?>" >
                         </td>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="3" style="">
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="3">
                             <input type="text" name="4_user_belong" id="4_user_belong"  class="input_text input_border_true" placeholder="소속" value="<?= $row['4_user_belong']; ?>" >
                         </td>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">5</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="2" style="">
+                        <th scope="col" class="view_table_header" colspan="1">5</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="2">
                             <input type="text" name="5_user_rank" id="5_user_rank"  class="input_text input_border_true" placeholder="직위" value="<?= $row['5_user_rank']; ?>" >
                         </td>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="2" style="">
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="2">
                             <input type="text" name="5_user_name" id="5_user_name"  class="input_text input_border_true" placeholder="성명" value="<?= $row['5_user_name']; ?>" >
                         </td>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="3" style="">
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="3">
                             <input type="text" name="5_user_belong" id="5_user_belong"  class="input_text input_border_true" placeholder="소속" value="<?= $row['5_user_belong']; ?>" >
                         </td>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">6</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="2" style="">
+                        <th scope="col" class="view_table_header" colspan="1">6</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="2">
                             <input type="text" name="6_user_rank" id="6_user_rank"  class="input_text input_border_true" placeholder="직위" value="<?= $row['6_user_rank']; ?>" >
                         </td>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="2" style="">
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="2">
                             <input type="text" name="6_user_name" id="6_user_name"  class="input_text input_border_true" placeholder="성명" value="<?= $row['6_user_name']; ?>" >
                         </td>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="3" style="">
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="3">
                             <input type="text" name="6_user_belong" id="6_user_belong"  class="input_text input_border_true" placeholder="소속" value="<?= $row['6_user_belong']; ?>" >
                         </td>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">7</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="2" style="">
+                        <th scope="col" class="view_table_header" colspan="1">7</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="2">
                             <input type="text" name="7_user_rank" id="7_user_rank"  class="input_text input_border_true" placeholder="직위" value="<?= $row['7_user_rank']; ?>" >
                         </td>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="2" style="">
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="2">
                             <input type="text" name="7_user_name" id="7_user_name"  class="input_text input_border_true" placeholder="성명" value="<?= $row['7_user_name']; ?>" >
                         </td>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="3" style="">
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="3">
                             <input type="text" name="7_user_belong" id="7_user_belong"  class="input_text input_border_true" placeholder="소속" value="<?= $row['7_user_belong']; ?>" >
                         </td>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">8</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="2" style="">
+                        <th scope="col" class="view_table_header" colspan="1">8</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="2">
                             <input type="text" name="8_user_rank" id="8_user_rank"  class="input_text input_border_true" placeholder="직위" value="<?= $row['8_user_rank']; ?>" >
                         </td>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="2" style="">
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="2">
                             <input type="text" name="8_user_name" id="8_user_name"  class="input_text input_border_true" placeholder="성명" value="<?= $row['8_user_name']; ?>" >
                         </td>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="3" style="">
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="3">
                             <input type="text" name="8_user_belong" id="8_user_belong"  class="input_text input_border_true" placeholder="소속" value="<?= $row['8_user_belong']; ?>" >
                         </td>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">9</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="2" style="">
+                        <th scope="col" class="view_table_header" colspan="1">9</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="2">
                             <input type="text" name="9_user_rank" id="9_user_rank"  class="input_text input_border_true" placeholder="직위" value="<?= $row['9_user_rank']; ?>" >
                         </td>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="2" style="">
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="2">
                             <input type="text" name="9_user_name" id="9_user_name"  class="input_text input_border_true" placeholder="성명" value="<?= $row['9_user_name']; ?>" >
                         </td>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="3" style="">
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="3">
                             <input type="text" name="9_user_belong" id="9_user_belong"  class="input_text input_border_true" placeholder="소속" value="<?= $row['9_user_belong']; ?>" >
                         </td>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">10</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="2" style="">
+                        <th scope="col" class="view_table_header" colspan="1">10</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="2">
                             <input type="text" name="10_user_rank" id="10_user_rank"  class="input_text input_border_true" placeholder="직위" value="<?= $row['10_user_rank']; ?>" >
                         </td>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="2" style="">
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="2">
                             <input type="text" name="10_user_name" id="10_user_name"  class="input_text input_border_true" placeholder="성명" value="<?= $row['10_user_name']; ?>" >
                         </td>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="3" style="">
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="3">
                             <input type="text" name="10_user_belong" id="10_user_belong"  class="input_text input_border_true" placeholder="소속" value="<?= $row['10_user_belong']; ?>" >
                         </td>
                     </tr>
@@ -2214,7 +2214,7 @@ $category_title = $row33['title'];
                     </tr>
                     <tr>
                         <th scope="col" class="view_table_header" colspan="1">연구비신청액</th>
-                        <td scope="col" class=" view_table_text view_table_padding " colspan="8" style="">
+                        <td scope="col" class=" view_table_text view_table_padding " colspan="8">
                             <input type="text" name="money" id="money"  class="input_text input_border_true  money" placeholder="숫자만 기재 (원)" value="<?= $row['money']; ?>" >
                         </td>
                     </tr>
@@ -2546,14 +2546,14 @@ $category_title = $row33['title'];
                         <th scope="col" class="view_table_header " colspan="9">연구과제명</th>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">과제명(국문)</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="8" style="">
+                        <th scope="col" class="view_table_header" colspan="1">과제명(국문)</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="8">
                         <input type="text" name="ko_title" id="ko_title"  class="input_text input_border_true" placeholder="과제명(국문)" value="<?= $row['ko_title']; ?>" >
                         </td>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">과제명(영문)</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="8" style="">
+                        <th scope="col" class="view_table_header" colspan="1">과제명(영문)</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="8">
                         <input type="text" name="en_title" id="en_title"  class="input_text input_border_true" placeholder="과제명(영문)" value="<?= $row['en_title']; ?>" >
                         </td>
                     </tr>
@@ -2562,32 +2562,32 @@ $category_title = $row33['title'];
                         <th scope="col" class="view_table_header " colspan="9">지원자</th>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">성명</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="3" style="">
+                        <th scope="col" class="view_table_header" colspan="1">성명</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="3">
                         <input type="text" name="name" id="name"  class="input_text input_border_true" placeholder="성명" value="<?= $row['name']; ?>" >
                         </td>
-                        <th scope="col" class="view_table_header" colspan="1" style="">전공(학위)</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="4" style="">
+                        <th scope="col" class="view_table_header" colspan="1">전공(학위)</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="4">
                         <input type="text" name="degree" id="degree"  class="input_text input_border_true" placeholder="전공(학위)" value="<?= $row['degree']; ?>" >
                         </td>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">소속</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="3" style="">
+                        <th scope="col" class="view_table_header" colspan="1">소속</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="3">
                         <input type="text" name="belong" id="belong"  class="input_text input_border_true" placeholder="소속" value="<?= $row['belong']; ?>" >
                         </td>
-                        <th scope="col" class="view_table_header" colspan="1" style="">직급</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="4" style="">
+                        <th scope="col" class="view_table_header" colspan="1">직급</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="4">
                         <input type="text" name="rank" id="rank"  class="input_text input_border_true" placeholder="직급" value="<?= $row['rank']; ?>" >
                         </td>
                     </tr>
                     <tr>
-                        <th scope="col" class="view_table_header" colspan="1" style="">이메일</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="3" style="">
+                        <th scope="col" class="view_table_header" colspan="1">이메일</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="3">
                         <input type="text" name="email" id="email"  class="input_text input_border_true" placeholder="이메일" value="<?= $row['email']; ?>" >
                         </td>
-                        <th scope="col" class="view_table_header" colspan="1" style="">전화</th>
-                        <td scope="col" class=" view_table_text view_table_padding" colspan="4" style="">
+                        <th scope="col" class="view_table_header" colspan="1">전화</th>
+                        <td scope="col" class=" view_table_text view_table_padding" colspan="4">
                         <input type="text" name="phone" id="phone"  class="input_text input_border_true" placeholder="전화" value="<?= $row['phone']; ?>" >
                         </td>
                     </tr>

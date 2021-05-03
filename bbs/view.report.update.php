@@ -14,18 +14,8 @@ $row55 = sql_fetch_array($result);
 
 $Now_date_time = $today = date("Y-m-d H:i");
 
-if($Now_date_time > $row55['upload_date_time'])
+if($Now_date_time > $row55['upload_date_time'] && $row55['upload_date_time'] != '')
     alert('제출기한이 지났습니다.');
-
-// if ($w == '' || $w == 'r') {
-//     if (isset($_SESSION['ss_datetime'])) {
-//         if ($_SESSION['ss_datetime'] >= (G5_SERVER_TIME - $config['cf_delay_sec']) && !$is_admin)
-//             alert('너무 빠른 시간내에 게시물을 연속해서 올릴 수 없습니다.');
-//     }
-
-//     set_session("ss_datetime", G5_SERVER_TIME);
-// }
-
 
 if($_GET['bo_idx'] == 1){
     $val = "report_val_1 =".$_POST['save']."";

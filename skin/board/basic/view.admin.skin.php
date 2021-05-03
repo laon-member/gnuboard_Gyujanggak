@@ -52,8 +52,8 @@ $num = $row['cnt'];
     <div id="bo_btn_top" style="display: block;">
         <h1 id="">[<?= $title_text ?>]<?= $row['wr_subject']; ?></h1>
         <div style="text-align: right; margin-top:10px">
-            <button class="add_btn add_btn_1" style="width:175px">중간보고서 제출기간</button>
-            <button class="add_btn add_btn_2">결과보고서</button>
+            <button class="add_btn add_btn_1" style="width:220px">중간보고서 제출기간 설정</button>
+            <button class="add_btn add_btn_2" style="width:220px">결과보고서 제출기간 설정</button>
         </div>
     </div>
     <!-- } 게시판 페이지 정보 및 버튼 끝 -->
@@ -66,7 +66,7 @@ $num = $row['cnt'];
             <th scope="col" style="width:10%">번호</th>
             <th scope="col" style="width:13%">접수번호</th>
             <th scope="col" style="width:37%">과제명</th>
-            <th scope="col" style="width:14%">연구책임자</th>
+            <!-- <th scope="col" style="width:14%">연구책임자</th> -->
             <th scope="col" style="width:13%">중간보고서</th>
             <th scope="col" style="width:13%">결과(연차)보고서</th>
         </tr>
@@ -101,9 +101,9 @@ $num = $row['cnt'];
             <td class="td_title ">
                 <?= $row['ko_title']; ?>
             </td>
-            <td class="td_datetime td_center">
+            <!-- <td class="td_datetime td_center">
                 <?php echo $row['name']; ?>
-            </td>
+            </td> -->
             <td class="td_datetime td_center">
                 <?php 
                     $sql1 = " select * from report where business_idx = '{$row['idx']}' and report_idx = '1' order by idx desc";

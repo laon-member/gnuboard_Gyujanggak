@@ -52,14 +52,20 @@ if(isset($row)){
                     $test_opinion = 'test_opinion = "'.$_POST['test_opinion'].'"';
                 } else { $test_opinion_value = false; $test_opinion = ''; }
 
-                @$average =  $_POST['test_fild_sum'] / $fild_cnt;
+                if($_POST['test_id'] == 2){
+                    $average = 0;
+                } else {
+                    $average =  $_POST['test_fild_sum'] / $fild_cnt;
+                }
+
+                $sum = $_POST['test_fild_sum'] == '' ? 0 : $_POST['test_fild_sum'];
         
                 $sql = " update rater_value set
                         test_fild_1 = '{$_POST['test_fild_1']}', 
                         test_fild_2 = '{$_POST['test_fild_2']}', 
                         test_fild_3 = '{$_POST['test_fild_3']}', 
                         test_fild_4 = '{$_POST['test_fild_4']}', 
-                        test_sum = '{$_POST['test_fild_sum']}',   
+                        test_sum = '$sum',   
                         test_average = '$average',
                         test_opinion = '{$_POST['test_opinion']}'
                         where idx = '{$row22['idx']}' and report_idx = {$_POST['us_idx']}";
@@ -320,9 +326,15 @@ if(isset($row)){
                 $test_opinion = 'test_opinion = "'.$_POST['test_opinion'].'"';
             } else { $test_opinion_value = false; $test_opinion = ''; }
 
-            $average =  $_POST['test_fild_sum'] / $fild_cnt;
+            if($_POST['test_id'] == 2){
+                $average = 0;
+            } else {
+                $average =  $_POST['test_fild_sum'] / $fild_cnt;
+            }
+
+            $sum = $_POST['test_fild_sum'] == '' ? 0 : $_POST['test_fild_sum'];
             
-            $sql = " insert into rater_value
+            $sql = " INSERT into rater_value
                                 set rater_idx = '{$row['idx']}',
                                     report_idx = '{$_POST['us_idx']}',
                                     test_fild_1 = '{$_POST['test_fild_1']}',
@@ -330,7 +342,7 @@ if(isset($row)){
                                     test_fild_3 = '{$_POST['test_fild_3']}',
                                     test_fild_4 = '{$_POST['test_fild_4']}',
                                     $test_opinion,
-                                    test_sum = '{$_POST['test_fild_sum']}',
+                                    test_sum = '$sum',
                                     test_average = '$average',
                                     value = '{$_POST['value_id']}'";
 
@@ -532,12 +544,7 @@ if(isset($row)){
                         run_event('write_update_file_insert', $bo_table, $wr_id, $upload[$i], $w);
                     }
                 }
-
-
-                
             }
-
-
 
             // 업로드된 파일 내용에서 가장 큰 번호를 얻어 거꾸로 확인해 가면서
             // 파일 정보가 없다면 테이블의 내용을 삭제합니다.
@@ -580,6 +587,6 @@ if(isset($row)){
     }
 }else {
     //없다면 권한이 없음
-    alert ('권한이 없습니다 관리자에게 문의해주세요');
+    // alert ('권한이 없습니다 관리자에게 문의해주세요');
 }
 ?>

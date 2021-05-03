@@ -69,10 +69,19 @@ $result2 = sql_query($sql2);
 ?>
 <script>
     $(function(){
-        $('#test_fild_1').val('<?= $row['test_fild_1'] ?>');
-        $('#test_fild_2').val('<?= $row['test_fild_2'] ?>');
-        $('#test_fild_3').val(<?= $row['test_fild_3'] ?>);
-        $('#test_fild_4').val(<?= $row['test_fild_4'] ?>);
+        if('<? $_POST['bo_idx'] ?>' != 2){
+            $('#test_fild_1').val('<?= $row['test_fild_1'] ?>');
+            $('#test_fild_2').val('<?= $row['test_fild_2'] ?>');
+            $('#test_fild_3').val(<?= $row['test_fild_3'] ?>);
+            $('#test_fild_4').val(<?= $row['test_fild_4'] ?>);
+        } else {
+            if('<?= $row['test_fild_1'] ?>' == 1) {
+                $('#test_radio_1').prop('checked', true); 
+            } else {
+                $('#test_radio_2').prop('checked', true);
+            }
+        }
+        
         $('#test_fild_sum').val('<?= $row['test_sum'] ?>');
         $('#test_opinion').val('<?= $row['test_opinion'] ?>');
         $('#us_idx').val('<?= $_POST['us_idx'] ?>');

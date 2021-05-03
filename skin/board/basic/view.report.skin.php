@@ -153,25 +153,27 @@ $j=0;
 </article>
 <script>
    $(function(){
-        var upload_date_time = '<?= $upload_date_time ?>';
-
-        var Now = new Date();
-
-        var getMonth = Now.getMonth()+1;
-        var NowMonth = getMonth < 10 ? '-0' + getMonth : '-' + getMonth ;
-
-        var getDate = Now.getDate();
-        var NowDate = getDate < 10 ? '-0' + getDate : '-' + getDate ;
-        
-        var NowTime = Now.getFullYear();
-        NowTime +=  NowMonth;
-        NowTime += NowDate  ;
-        NowTime += ' ' + Now.getHours();
-        NowTime += ':' + Now.getMinutes();
-
         $('.btn_next_prv_link').click(function(){
             if(confirm("보고서를 제출하시겠습니까?")) {
-                if(upload_date_time > NowTime){
+                var upload_date_time = '<?= $upload_date_time ?>';
+                var upload_date_time_pass = false;
+                if(upload_date_time == '0000-00-00 00:00') upload_date_time_pass = true;
+
+                var Now = new Date();
+
+                var getMonth = Now.getMonth()+1;
+                var NowMonth = getMonth < 10 ? '-0' + getMonth : '-' + getMonth ;
+
+                var getDate = Now.getDate();
+                var NowDate = getDate < 10 ? '-0' + getDate : '-' + getDate ;
+                
+                var NowTime = Now.getFullYear();
+                NowTime +=  NowMonth;
+                NowTime += NowDate  ;
+                NowTime += ' ' + Now.getHours();
+                NowTime += ':' + Now.getMinutes();
+
+                if(upload_date_time > NowTime || upload_date_time_pass == true){
                     return true;
                 } else {
                     alert('제출기한이 지났습니다.');

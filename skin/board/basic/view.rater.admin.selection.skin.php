@@ -56,7 +56,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                     <th scope="col" style="width:5%">번호</th>
                     <th scope="col" style="width:10%">접수번호</th>
                     <th scope="col" style="width:30%">과제명</th>
-                    <th scope="col" style="width:10%">책임연구원</th>
+                    <!-- <th scope="col" style="width:10%">책임연구원</th> -->
                     <th scope="col" style="width:15%">평점평균<br>(단순)</th>
                     <th scope="col" style="width:15%">평점평균<br>(최고/최저점 제외)</th>
                     <th scope="col" style="width:15%">합격자</th>
@@ -65,31 +65,23 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             <tbody>
             <?php
                 if($_GET['bo_idx'] == 1){
-                    $sql44 = " select count(*) as cnt from g5_business_propos where bo_idx = '{$_GET['border_idx']}' order by info_number desc";
-                    $result44 = sql_query($sql44);
-                    $total_count = sql_fetch_array($result44);
-                    $total_count=  $total_count['cnt'];
+                    $sql444 = " select count(*) as cnt from g5_business_propos where bo_idx = '{$_GET['border_idx']}' order by info_number desc";
 
                     $sql44 = " select * from g5_business_propos where bo_idx = '{$_GET['border_idx']}' order by info_number desc";
-                    $result44 = sql_query($sql44);
                 } else if($_GET['bo_idx'] == 2){
-                    $sql44 = " select count(*) as cnt  from g5_business_propos where bo_idx = '{$_GET['border_idx']}' and value = 4 order by info_number desc";
-                    $result44 = sql_query($sql44);
-                    $total_count = sql_fetch_array($result44);
-                    $total_count=  $total_count['cnt'];
+                    $sql444 = " select count(*) as cnt  from g5_business_propos where bo_idx = '{$_GET['border_idx']}' and value = 4 order by info_number desc";
 
                     $sql44 = " select * from g5_business_propos where bo_idx = '{$_GET['border_idx']}' and value = 4 order by info_number desc";
-                    $result44 = sql_query($sql44);
                 } else if($_GET['bo_idx'] == 3){
-                    $sql44 = " select count(*) as cnt from g5_business_propos where bo_idx = '{$_GET['border_idx']}' and report_val_1 = 4 order by info_number desc";
-                    $result44 = sql_query($sql44);
-                    $total_count = sql_fetch_array($result44);
-                    $total_count=  $total_count['cnt'];
+                    $sql444 = " select count(*) as cnt from g5_business_propos where bo_idx = '{$_GET['border_idx']}' and report_val_1 = 4 order by info_number desc";
 
                     $sql44 = " select * from g5_business_propos where bo_idx = '{$_GET['border_idx']}' and report_val_1 = 4 order by info_number desc";
-                    $result44 = sql_query($sql44);
                 }
+                $result444 = sql_query($sql444);
+                $total_count = sql_fetch_array($result444);
+                $total_count=  $total_count['cnt'];
 
+                $result44 = sql_query($sql44);
 
                 $list_num = 0;
                 for ($i=0; $i<$row = sql_fetch_array($result44); $i++) {
@@ -106,19 +98,24 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                     $value_idx == 0;
                     if($_GET['bo_idx'] == 1){
                         $value_num = $row['value'];
-                        $value_idx = $row['idx'];
                     } else if($_GET['bo_idx'] == 2){
                         $sql55 = " select * from report where business_idx = '{$row['idx']}' and report_idx = 1";
                         $row55 = sql_fetch($sql55);
                         $value_num = $row['report_val_1'];
-                        $value_idx = $row['idx'];
                     } else if($_GET['bo_idx'] == 3){
                         $sql55 = " select * from report where business_idx = '{$row['idx']}' and report_idx = 2";
                         $row55 = sql_fetch($sql55);
                         $value_num = $row['report_val_2'];
-                        $value_idx = $row['idx'];
                     }
+                    $value_idx = $row['idx'];
 
+                    $rater_category_sql = " select * from rater_category where category_idx = '{$row['bo_title_idx']}' and test_step = '{$_GET['bo_idx']}'";
+                    $rater_category = sql_fetch($rater_category_sql);
+                    $rater_category_idx = $rater_category['idx'];
+
+                    $rater_fild_sql = " select sum(test_score) as sum from rater_fild where test_fild_idx = '{$rater_category_idx}'";
+                    $rater_fild_row = sql_fetch($rater_fild_sql);
+                    $rater_max_score = $rater_fild_row['sum'] == ''? 0 : $rater_fild_row['sum'];
 
             ?>
                     <tr class="<?php echo $lt_class ?> tr_hover">
@@ -126,6 +123,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                             <input type="hidden" id="sql_us_idx" name="idx_id" value="<?php echo $row['idx']; ?>">
                             <input type="hidden" id="sql_wr_idx" name="wr_id" value="<?php echo $_GET['border_idx']; ?>">
                             <input type="hidden" id="sql_bo_idx" name="sql_bo_idx" value="<?php echo $_GET['bo_idx']; ?>">
+                            <input type="hidden" id="sql_title_idx" name="sql_title_idx" value="<?php echo $row['bo_title_idx']; ?>">
                         </td>
                         
                         <td class="td_idx td_center"><?= $list[$i]['num']; ?></td>
@@ -141,7 +139,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                         ?>
                             <?= $row['ko_title']; ?>    
                         </td>
-                        <td class="td_datetime td_center"><?php echo $row['name'];  ?></td>
+                        <!-- <td class="td_datetime td_center"><?php echo $row['name'];  ?></td> -->
                         <td class="td_center wr_average">
                             <?php
                                 $sum =0;
@@ -176,7 +174,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                                 
 
                             ?>
-                            <?= $average ?>/80 
+                            <?= $average ?>/<?= $rater_max_score?>
                         </td>
                         <td class="td_center wr_average_max_min">
                             <?php
@@ -228,7 +226,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                                 }
                                 $average_max_min_not = sprintf('%0.0f', $average_max_min_not);
                             ?>
-                            <?= $average_max_min_not ?>/80
+                            <?= $average_max_min_not ?>/<?= $rater_max_score?>
                         </td>
                         <td class="td_datetime td_center">
                                 <input type="hidden" id="sql_list_idx" name="bo_id" value="<?php echo $row['idx']; ?>">
@@ -275,7 +273,10 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             var us_idx;
             var wr_idx;
             var bo_idx;
+            var title_idx = $('#sql_title_idx').attr('value');
             $(".ko_title").on("click", function() {
+                if(title_idx == 6) return false;
+                    
                 $('.bo_sch_wrap').toggle();
 
                 $('#ko_title').text($(this).text());
@@ -291,7 +292,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                     type : "post",
                     data : {
                         tbl : us_idx,
-                        wrid : bo_idx,
+                        bo_idx : bo_idx,
                         wr_idx: wr_idx
                     },
                     success : function(res) {
@@ -305,7 +306,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                         }
                     }
                 });
-                
             });
             $('.bo_sch_bg, .bo_sch_cls, .btn_esc, #top_esc').click(function(){
                 $('.bo_sch_wrap').hide();
@@ -316,11 +316,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                 if (value) {    
                     $(this).text("선택");
                     $(this).css({"background": "#1D2E58"});
-
                 } else {
                     $(this).text("해제");
                     $(this).css({"background": "#CCC"});
-
                 }
             });
         });
@@ -346,21 +344,34 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                 <td style="width:95%" colspan="7" id="ko_title" class="td_title"></td>
                 
             </tr>
-            <tr>
+            <!-- <tr>
                 <th style="width:8%" class=" td_center">평점평균<br>(단순)</th>
                 <td style="width:40%" colspan="5" id="wr_average" class="td_title">70 / 80</td>
                 <th style="width:8%" class=" td_center">평점평균<br>(최고/최저점 제외)</th>
                 <td style="width:42%" id="wr_average_max_min" class="td_title">70 / 80</td>
-            </tr>
+            </tr> -->
             
             <tr class="view_table_header_table"></tr>
             <tr>
                 <th scope="col" style="width:8%" class=" td_center">심사위원</th> 
-                <th scope="col" style="width:8%" class=" td_center">연구진<br>평가점수</th>
-                <th scope="col" style="width:8%" class=" td_center">주제<br>평가점수</th>
-                <th scope="col" style="width:8%" class=" td_center">계획<br>평가점수</th>
+                <?php 
+                    $sql = " select idx from rater_category where category_idx = '{$row66['wr_title_idx']}' and test_step = '{$_GET['bo_idx']}'";
+                    $row77 = sql_fetch($sql);
+
+                    $sql = " select * from rater_fild where test_fild_idx = '{$row77['idx']}'";
+                    $result = sql_query($sql);
+                    for($i=0; $row88=sql_fetch_array($result); $i++) {
+                ?>
+                <th scope="col" style="width:8%" class="` td_center"><?= $row88['test_name'] ?></th>
+                <?php
+
+                    }
+                ?>
+                <?php if($_GET['bo_idx'] != '2'){ ?>
                 <th scope="col" style="width:8%" class=" td_center">총점</th>
-                <th scope="col" style="width:8%" class=" td_center">종합평가</th>
+                <!-- <th scope="col" style="width:8%" class=" td_center">종합평가</th> -->
+                <?php } ?>
+
                 <th scope="col" style="width:52%" colspan="2" class=" td_center">평가의견</th>
             </tr>
             </thead>

@@ -43,7 +43,7 @@ $row2=sql_fetch_array($result2);
             <th scope="col" style="width:10%">번호</th>
             <th scope="col" style="width:10%">접수번호</th>
             <th scope="col" style="width:50%">과제명</th>
-            <th scope="col" style="width:10%">연구책임자</th>
+            <!-- <th scope="col" style="width:10%">연구책임자</th> -->
             <th scope="col" style="width:20%">과제번호 부여</th>
         </tr>
         </thead>
@@ -86,7 +86,7 @@ $row2=sql_fetch_array($result2);
             <td class="td_title "  >
                 <a href="<?= G5_BBS_URL ?>/board.rater.admin.php?bo_table=qa&bo_idx=<?= $_GET['bo_idx'] ?>&wr_idx=<?= $_GET['wr_idx'] ?>&us_idx=<?= $row['idx']; ?>&u_id=1"><?= $row['ko_title']; ?></a>
             </td>
-            <td class="td_datetime td_center"><?php echo $row['name']; ?></td>
+            <!-- <td class="td_datetime td_center"><?php echo $row['name']; ?></td> -->
             <td class="td_datetime td_center">
                 <form action="<?= G5_BBS_URL ?>/quest_list_update.php" method="POST">
                     <input type="hidden" name="bo_table" value="<?=$_GET['bo_table']; ?>">

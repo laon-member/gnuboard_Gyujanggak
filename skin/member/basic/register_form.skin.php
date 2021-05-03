@@ -98,9 +98,10 @@ $(function(){
 			dataType: "text",
 			success: function(data) {
 				var str2 = data.replace(/(\r\n\t|\n|\r\t)/gm,""); 
+				str2 = str2.trim();
 				alert(str2);
 
-				if(str2 == "사용 가능한 아이디입니다." ){
+				if(str2 == "사용 가능한 아이디 입니다." ){
 					$("#btn_submit").removeAttr("disabled");
 					$("#btn_submit").css({background: "#1D2E58", color: "#fff"});
 					value = 1;

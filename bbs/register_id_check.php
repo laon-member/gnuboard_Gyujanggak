@@ -20,14 +20,15 @@ if (trim($mb_id)==''){
                 $test = "탈퇴한 아이디 입니다.";
             }else {
                 global $config;
-                if (preg_match("/[\,]?{$mb_id}/i", $config['cf_prohibit_id']))
+                if (preg_match("/[\,]?{$mb_id}/i", $config['cf_prohibit_id'])){
                     $test = "이미 예약된 단어로 사용할 수 없는 회원아이디 입니다.";
+                }
                 else{ 
-                    $test = "사용 가능한 아이디입니다.";
+                    $test = "사용 가능한 아이디 입니다.";
                 }
             }
         }
     }
 }
-echo $test;
+echo trim($test);
 ?>

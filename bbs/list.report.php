@@ -60,7 +60,11 @@ if ($sca || $stx || $stx === '0') {     //검색이면
 
     // 원글만 얻는다. (코멘트의 내용도 검색하기 위함)
     // 라엘님 제안 코드로 대체 http://sir.kr/g5_bug/2922
-    $sql2 = " SELECT count(bo_idx) as cnt FROM g5_business_propos as gbp INNER JOIN g5_write_business as gwb ON bo_idx = wr_id WHERE gwb.mb_id='{$member['mb_id']}' AND wr_subject LIKE '%".$stx."%'";
+    if($_GET['bo_idx'] == 1)
+        $sql2 = " SELECT count(bo_idx) as cnt FROM g5_business_propos as gbp INNER JOIN g5_write_business as gwb ON bo_idx = wr_id WHERE gwb.mb_id='{$member['mb_id']}' AND bo_title_idx='1' OR bo_title_idx='2'  AND wr_subject LIKE '%".$stx."%'";
+    else 
+        $sql2 = " SELECT count(bo_idx) as cnt FROM g5_business_propos as gbp INNER JOIN g5_write_business as gwb ON bo_idx = wr_id WHERE gwb.mb_id='{$member['mb_id']}' AND wr_subject LIKE '%".$stx."%'";
+
     $row = sql_fetch($sql2);
     $total_count = $row['cnt'];
     
@@ -69,8 +73,11 @@ if ($sca || $stx || $stx === '0') {     //검색이면
    
 } else {
     $sql_search = "";
+    if($_GET['bo_idx'] == 1)
+        $sql = " SELECT COUNT(DISTINCT `idx`) AS `cnt` FROM g5_business_propos where mb_id = '$member[mb_id]' AND $value = '4' AND bo_title_idx = '1' OR bo_title_idx = '2' ";
+    else 
+        $sql = " SELECT COUNT(DISTINCT `idx`) AS `cnt` FROM g5_business_propos where mb_id = '$member[mb_id]' AND $value = '4'";
 
-    $sql = " SELECT COUNT(DISTINCT `idx`) AS `cnt` FROM g5_business_propos where mb_id = '$member[mb_id]' AND $value = '4'";
     $row = sql_fetch($sql);
     $total_count = $row['cnt'];
 
@@ -151,10 +158,15 @@ if ($sst) {
 $last_idx = "";
 // 여기 입니다.
 if ($is_search_bbs) {
-    $sql = "SELECT idx,bo_idx,bo_title_idx,gwb.mb_id,wr_subject FROM g5_business_propos as gbp INNER JOIN g5_write_business as gwb ON bo_idx = wr_id WHERE gwb.mb_id='{$member['mb_id']}' AND wr_subject LIKE '%".$stx."%' {$sql_order}  limit {$from_record}, $page_rows ";
+    $sql = "SELECT idx,bo_idx,bo_title_idx,gwb.mb_id,wr_subject FROM g5_business_propos as gbp INNER JOIN g5_write_business as gwb ON bo_idx = wr_id WHERE gwb.mb_id='{$member['mb_id']}' AND bo_title_idx='1' OR bo_title_idx='2'  AND wr_subject LIKE '%".$stx."%' {$sql_order}  limit {$from_record}, $page_rows ";
     // $sql = " select  * from {$write_table} where {$sql_search}  and wr_title_idx = '{$_GET['bo_idx']}'";
+
 } else {
-    $sql = " select * from g5_business_propos where mb_id = '$member[mb_id]' AND $value = '4'";
+    if($_GET['bo_idx'] == 1)
+        $sql = " select * from g5_business_propos where mb_id = '$member[mb_id]' AND $value = '4' AND bo_title_idx='1' OR bo_title_idx='2' ";
+    else
+        $sql = " select * from g5_business_propos where mb_id = '$member[mb_id]' AND $value = '4'";
+
     $sql .= " {$sql_order} DESC limit {$from_record}, $page_rows ";
 }
 

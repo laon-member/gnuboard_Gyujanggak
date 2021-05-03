@@ -146,37 +146,9 @@ $row3 = sql_fetch_array($result3);
                         <input type="text" name="money_view" id="money_view"  class="input_text" placeholder="연구비신청액"  value="<?= number_format($row['money']); ?>원" readonly>
                         </td>
                     </tr>
-                    
+                
                 <tbody id="view_table_upload">
-                <tr class="view_table_header_table"></tr>
-                    <tr>
-                        <th scope="col" class="view_table_header " colspan="9">자료 첨부</th>
-                    </tr>
-                         <?php 
-
-                        $sql2 = " select * from g5_board_file where bo_table = 'g5_business_propos' and wr_id = '{$row['idx']}' and bf_user_type = 0";
-                        $result2 = sql_query($sql2);    
-
-                        // 가변 파일
-                            for ($i=0; $row_list2 = sql_fetch_array($result2); $i++) {
-                                if (isset($row_list2['bf_source'][$i])) {
-                        ?>
-                                <tr class="">
-                                    <th scope="col" colspan="1" class="view_table_header" style="width:10%;">첨부파일</th>
-                                    <td scope="col" colspan="1" class="view_table_text" style="width:10%;">
-                                        <img src="<?php echo G5_IMG_URL ?>/download_icon.png" alt="<?php echo $config['cf_title']; ?>">
-                                    </td>
-                                    <td scope="col" colspan="6" class="view_table_text" style="width:80%;">
-                                        <a href="<?= G5_BBS_URL ?>/download.php?bo_table=g5_business_propos&wr_id=<?= $row_list2['wr_id'] ?>&no=<?= $row_list2['bf_no'] ?>" class=""><?= $row_list2['bf_source'] ?></a>
-                                    </td>
-                                </tr>
-                        <?php
-                                }
-                            }
-                        ?>
-                </tbody>
-                <tbody id="view_table_upload">
-                <tr class="view_table_header_table"></tr>
+                    <tr class="view_table_header_table"></tr>
                     <tr>
                         <th scope="col" class="view_table_header " colspan="9">심사자용 자료 첨부(인적사항 무기입)</th>
                     </tr>
@@ -366,35 +338,6 @@ $row3 = sql_fetch_array($result3);
                     </tr>
                     
                 </tbody>
-                <tbody id="view_table_upload">
-                <tr class="view_table_header_table"></tr>
-                    <tr>
-                        <th scope="col" class="view_table_header " colspan="9">자료 첨부</th>
-                    </tr>
-                         <?php 
-
-                        $sql2 = " select * from g5_board_file where bo_table = 'g5_business_propos' and wr_id = '{$row['idx']}' and bf_user_type = 0";
-                        $result2 = sql_query($sql2);    
-
-                        // 가변 파일
-                            for ($i=0; $row_list2 = sql_fetch_array($result2); $i++) {
-                                if (isset($row_list2['bf_source'][$i])) {
-                        ?>
-                                <tr class="">
-                                    <th scope="col" colspan="1" class="view_table_header" style="width:10%;">첨부파일</th>
-                                    <td scope="col" colspan="1" class="view_table_text" style="width:10%;">
-                                        <img src="<?php echo G5_IMG_URL ?>/download_icon.png" alt="<?php echo $config['cf_title']; ?>">
-                                    </td>
-                                    <td scope="col" colspan="6" class="view_table_text" style="width:80%;">
-                                        <a href="<?= G5_BBS_URL ?>/download.php?bo_table=g5_business_propos&wr_id=<?= $row_list2['wr_id'] ?>&no=<?= $row_list2['bf_no'] ?>" class=""><?= $row_list2['bf_source'] ?></a>
-                                    </td>
-                                </tr>
-                        <?php
-                                }
-                            }
-                        ?>
-                </tbody>
-                <tbody id="view_table_upload">
                 <tr class="view_table_header_table"></tr>
                     <tr>
                         <th scope="col" class="view_table_header " colspan="9">심사자용 자료 첨부(인적사항 무기입)</th>
@@ -1517,13 +1460,23 @@ jQuery(function($){
         else 
             test_opinion = false;
 
-        for(var p = 1; p <= test_fild_length; p++){
-            if($('#test_fild_'+p).val() != "")
-                test_fild_value = true;
-            else 
-                test_fild_value = false;
+        if(bo_idx != 2){
+                var test_fild_length = $('.test_fild').length;
 
-                test_sum = Number(test_sum) +  Number($('#test_fild_'+p).val());
+                for(var p = 1; p <= test_fild_length; p++){
+                    if($('#test_fild_'+p).val() != "")
+                        test_fild_value = true;
+                    else 
+                        test_fild_value = false;
+
+                        test_sum = Number(test_sum) +  Number($('#test_fild_'+p).val());
+                }
+
+        } else {
+            if($('.test_fild_radio[name=test_fild_1]').is(':checked'))
+                test_fild_value = true;
+            else
+                test_fild_value = false;
         }
 
         $('#test_fild_sum').val(test_sum);
@@ -1551,6 +1504,7 @@ jQuery(function($){
             $sql3 = " select * from rater_value where rater_idx = '{$row2['idx']}' and report_idx = '{$_GET['us_idx']}'";
             $result3 = sql_query($sql3);
             $row3 = sql_fetch_array($result3);
+
         ?>
         <div id="bo_btn_top_app" class="bo_btn_view_title">
             <h1 class="view_title">[<?= $row33['title']?>]<?php echo $row22['wr_subject']; ?></h1>
@@ -1560,7 +1514,7 @@ jQuery(function($){
         <input type="hidden" name="business_idx" id= "business_idx" value="<?= $_GET['wr_idx'] ?>">
         <input type="hidden" name="test_id"  value="<?= $_GET['bo_idx']?>">
         <input type="hidden" name="value_id"  value="1">
-        <input type="hidden" name="us_idx" id="us_idx"  value="<?= $_GET['us_idx']?>">
+        <input type="hidden" name="us_idx" id="us_idx"  value="<?= $row['idx']; ?>">
         <input type="hidden" name="rater_idx" id="rater_idx"  value="<?= $row2['idx'] ?>">
         <table class="view_table_app">
             <thead>
@@ -1588,14 +1542,14 @@ jQuery(function($){
                     ?>
                     <?php
                         for($i = 1; $row7 = sql_fetch_array($result7);$i ++){
-                            if($row4['wr_title_idx'] == 2){
+                            if($_GET['bo_idx'] == 2){
                     ?>
                                 <tr>
                                     <th style="width:10%" class="input_text_center"><?= $row7['test_name'] ?></th>  
-                                    <td style="width:40%" colspan="3">
-                                       <input type="radio" name="test_fild_<?= $i ?>" id="test_radio_1" value="1" <?= $row3['test_fild_1'] == 1? 'checked' : '' ?> >
+                                    <td style="width:40%" colspan="5">
+                                       <input type="radio" name="test_fild_1" class="test_fild test_fild_radio" id="test_radio_1" value="1" <?= $row3['test_fild_1'] == 1? 'checked' : '' ?> >
                                        <label for="test_radio_1">지원</label>
-                                       <input type="radio" name="test_fild_<?= $i ?>" id="test_radio_2" value="0" <?= $row3['test_fild_1'] == 1? 'checked' : '' ?> >
+                                       <input type="radio" name="test_fild_1" class="test_fild test_fild_radio" id="test_radio_2" value="0" <?= $row3['test_fild_1'] == 0? 'checked' : '' ?> >
                                        <label for="test_radio_2">미지원</label>
                                     </td>
                                 </tr>
@@ -1697,8 +1651,9 @@ jQuery(function($){
             <?php } ?>
         </div> -->
         <div class="rater_value_btn_contianer">
+        <?php if($row3['value'] != 2){ ?>
             <label for="upload01" id="file-label-btn" class="file-label file-label-btn"><img src="<?= G5_IMG_URL ?>/upload.png" alt=""> 파일 업로드  </label>
-
+        <?php } ?>
             <button type="button" class="btn_esc btn_color_white" style="float:right;">취소</button>
             <?php if($row3['value'] != 2){ ?>
             <button type="submit" class="btn_submit" id="value_btn_submit" style="float:right;"><?= $row3['idx'] != ""? "수정" : "저장"; ?></button>

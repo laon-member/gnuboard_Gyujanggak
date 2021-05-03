@@ -102,12 +102,12 @@ $result = sql_query($sql);
             <tr>
                 <th>지원기간</th>
                 <td colspan="1" class="view_table_padding">
-                    <input type="text" name="date_start_act" id="date_start_view datepicker1" class="date_start_view input_text frm_input required full_input input_date input_text_50 input_text_end  input_border_true" value='<?= $write['wr_date_start'] ?>' max="9999-12-31" readonly placeholder="연도-월-일"   required>
-                    <input type="text" name="date_start_time" id="datepicker2" class="input_text frm_input required full_input time_start_view input_time input_text_50 input_text_end input_border_true" value='<?= $write['wr_date_end'] ?>'   placeholder="시간">
+                    <input type="text" name="date_start_act" id="date_start_view datepicker1" class="date_start_view input_text frm_input required full_input input_date input_text_50 input_text_end  input_border_true" value='<?= date("Y-m-d", strtotime($write['wr_date_start'])); ?>' max="9999-12-31" readonly placeholder="연도-월-일"   required>
+                    <input type="text" name="date_start_time" id="datepicker2" class="input_text frm_input required full_input time_start_view input_time input_text_50 input_text_end input_border_true" value='<?= date("H:i", strtotime($write['wr_date_start'])); ?>'   placeholder="시간">
                 </td>
                 <td colspan="5" class="view_table_padding">
-                    <input type="text" name="date_end_act" id="date_end_view datepicker2" class="date_end_view input_text frm_input required full_input input_date input_text_50 input_text_end  input_border_true"  value='<?= $write['wr_date_end'] ?>' max="9999-12-31" readonly  placeholder="연도-월-일" >
-                    <input type="text" name="date_end_time" id="datepicker2" class="input_text frm_input required full_input time_end_view input_time input_text_50 input_text_end input_border_true" value='<?= $write['wr_date_end'] ?>'  placeholder="시간">
+                    <input type="text" name="date_end_act" id="date_end_view datepicker2" class="date_end_view input_text frm_input required full_input input_date input_text_50 input_text_end  input_border_true"  value='<?= date("Y-m-d", strtotime($write['wr_date_end'])); ?>' max="9999-12-31" readonly  placeholder="연도-월-일" >
+                    <input type="text" name="date_end_time" id="datepicker2" class="input_text frm_input required full_input time_end_view input_time input_text_50 input_text_end input_border_true" value='<?= date("H:i", strtotime($write['wr_date_end'])); ?>'  placeholder="시간">
                 </td>
             </tr>
             <tr>

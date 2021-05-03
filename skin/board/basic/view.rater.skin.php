@@ -63,24 +63,20 @@ $row99 = sql_fetch_array($result);
         }
         $list_count = 0;
 
-        $sql88 = " select * from rater where user_id = '{$member['mb_id']}' and business_idx = '{$_GET['wr_idx']}' and test_id = '{$_GET['bo_idx']}' order by idx desc";
-        $result88 = sql_query($sql88);
+        if ($_GET['bo_idx'] == 1) {
+            $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' order by info_number desc";
+            $result = sql_query($sql);
+        } else if ($_GET['bo_idx'] == 2) {
+            $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' and value = 4 order by info_number desc";
+            $result = sql_query($sql);
+        } else if ($_GET['bo_idx'] == 3) {
+            $sql = " select * from g5_business_propos where bo_idx = '{$_GET['wr_idx']}' and report_val_1 = 4 order by info_number desc";
+            $result = sql_query($sql);
+        }
+
         
-        for($i =0; $row8 = sql_fetch_array($result88); $i ++){   
-            if ($_GET['bo_idx'] == 1) {
-                $sql = " select * from g5_business_propos where idx = '{$row8['propos_idx']}' order by info_number desc";
-                $result = sql_query($sql);
-            } else if ($_GET['bo_idx'] == 2) {
-                $sql = " select * from g5_business_propos where idx = '{$row8['propos_idx']}' and value = 4 order by info_number desc";
-                $result = sql_query($sql);
-            } else if ($_GET['bo_idx'] == 3) {
-                $sql = " select * from g5_business_propos where idx = '{$row8['propos_idx']}' and report_val_1 = 4 order by info_number desc";
-                $result = sql_query($sql);
-            }
-
+        for($i =0; $row = sql_fetch_array($result); $i ++){   
             $list_count ++;
-
-            $row = sql_fetch_array($result);            
 
             $sql23 = "select * from rater where business_idx = '{$_GET['wr_idx']}' and  propos_idx = '{$row['idx']}' and user_id ='{$member['mb_id']}' and test_id = '{$_GET['bo_idx']}'";
             $result23 = sql_query($sql23);
@@ -102,22 +98,21 @@ $row99 = sql_fetch_array($result);
             
             <td class="td_idx td_center">
                 <?php
-                    echo $list[$i]['num'];
+                    echo $list[$i]['num']; 
                 ?>
             </td>
 
             <td class="td_center ">
-                <?= $row['info_number'] ?> 
+                <?= $row['info_number'] ?>
             </td>
             <td class="td_download td_title"  >
-            <a href="<?= G5_BBS_URL ?>/board.rater.php?bo_table=qa&bo_idx=<?= $_GET['bo_idx'] ?>&wr_idx=<?= $_GET['wr_idx'] ?>&us_idx=<?= $row['idx']; ?>"><?= $row['ko_title']; ?></a>
-                    
+                <a href="<?= G5_BBS_URL ?>/board.rater.php?bo_table=qa&bo_idx=<?= $_GET['bo_idx'] ?>&wr_idx=<?= $_GET['wr_idx'] ?>&us_idx=<?= $row['idx']; ?>"><?= $row['ko_title']; ?></a>
             </td>
             <td class="td_datetime td_center"><button type="button" class="value_btn_a btn_bo_val_val" style="background:#1F4392"> <?= $row22['value']==2? "확인" :"평가"; ?></button></td>
             <td class="td_datetime td_center" value="<?= $i ?>">
                 <form name="fboardlist" id="fboardlist" action="<?= https_url(G5_BBS_DIR)."/application_rater_update.php"; ?>" method="post">
                     <input type="hidden" name="business_idx" class= "business_idx_form" value="<?php echo $_GET['wr_idx']; ?>">
-                    <input type="hidden" name="rater_idx" class= "sql_rater_idx" value="<?php echo $row8['idx']; ?>">
+                    <input type="hidden" name="rater_idx" class= "sql_rater_idx" value="<?php echo $row23['idx']; ?>">
                     <input type="hidden" name="test_id" class="test_id"  value="<?= $_GET['bo_idx']?>">
                     <input type="hidden" name="value_id"  value="2">
                     <input type="hidden" class="sql_us_idx " name="us_idx" value="<?php echo $row['idx']; ?>">
@@ -153,10 +148,9 @@ $row99 = sql_fetch_array($result);
             $result2 = sql_query($sql2);
             $row2 = sql_fetch_array($result2);
 
-            $sql3 = " select * from rater_value where rater_idx = '{$row2['idx']}' and report_idx = '{$_GET['bo_idx']}'";
+            $sql3 = " select * from rater_value where rater_idx = '{$row2['idx']}'";
             $result3 = sql_query($sql3);
             $row3 = sql_fetch_array($result3);
-
         ?>
         <div id="bo_btn_top_app" class="bo_btn_view_title">
             <h1 class="view_title">[<?= $row99['title']?>]<?= $row88['wr_subject'] ?></h1>
@@ -165,8 +159,8 @@ $row99 = sql_fetch_array($result);
         <input type="hidden" name="business_idx" id= "business_idx" value="<?= $_GET['wr_idx'] ?>">
         <input type="hidden" name="test_id"  value="<?= $_GET['bo_idx']?>">
         <input type="hidden" name="value_id"  value="1">
-        <input type="hidden" name="us_idx" id="us_idx"  value="">
-        <input type="hidden" name="rater_idx" id="rater_idx"  value="">
+        <input type="hidden" name="us_idx" id="us_idx"  value="<?= $row['idx']; ?>">
+        <input type="hidden" name="rater_idx" id="rater_idx"  value="<?= $row2['idx'] ?>">
         <table class="view_table_app">
             <thead>
                 <th colspan="1" style="width:10%" class="input_text_center">제목</th>
@@ -192,16 +186,16 @@ $row99 = sql_fetch_array($result);
                     
                     $sum = 0;
                     ?>
-                     <?php
+                    <?php
                         for($i = 1; $row7 = sql_fetch_array($result7);$i ++){
-                            if($row4['wr_title_idx'] == 2){
+                            if($_GET['bo_idx'] == 2){
                     ?>
                                 <tr>
                                     <th style="width:10%" class="input_text_center"><?= $row7['test_name'] ?></th>  
-                                    <td style="width:40%" colspan="3">
-                                       <input type="radio" name="test_fild_<?= $i ?>" id="test_radio_1" value="1" <?= $row7['test_fild_1'] == 1? 'checked' : '' ?> >
+                                    <td style="width:40%" colspan="5">
+                                       <input type="radio" name="test_fild_1" class="test_fild test_fild_radio" id="test_radio_1" value="1" <?= $row3['test_fild_1'] == 1? 'checked' : '' ?> >
                                        <label for="test_radio_1">지원</label>
-                                       <input type="radio" name="test_fild_<?= $i ?>" id="test_radio_2" value="0" <?= $row7['test_fild_1'] == 1? 'checked' : '' ?> >
+                                       <input type="radio" name="test_fild_1" class="test_fild test_fild_radio" id="test_radio_2" value="0" <?= $row3['test_fild_1'] == 0? 'checked' : '' ?> >
                                        <label for="test_radio_2">미지원</label>
                                     </td>
                                 </tr>
@@ -212,7 +206,7 @@ $row99 = sql_fetch_array($result);
                     ?>
                                     <th style="width:10%" class="input_text_center"><?= $row7['test_name'] ?></th>  
                                     <td style="width:40%" colspan="<?= $i % 2 == 1? '1': '3' ?>">
-                                        <input type="number" name="test_fild_<?= $i ?>" id="test_fild_<?= $i ?>"  class="input_text input_text_80  input_text_end test_fild" placeholder="<?= $row7['test_name'] ?>" value="<?= $row3['test_fild_'.$i] ?>" min="0" max="<?= $row7['test_score'] ?>" > 
+                                        <input type="number" name="test_fild_<?= $i ?>" id="test_fild_<?= $i ?>"  class="input_text input_text_80  input_text_end test_fild" placeholder="<?= $row7['test_name'] ?>" value="<?= $row3['test_fild_'.$i] ?>" min="0" max="<?= $row7['test_score'] ?>" <?= $row3['value'] == 2 ? 'disabled' : '' ?>> 
                                         <span>/<?= $row7['test_score'] ?></span>
                                     </td>
                     <?php 
@@ -221,7 +215,7 @@ $row99 = sql_fetch_array($result);
                                     <tr>
                                         <th style="width:10%" class="input_text_center">총 점</th>  
                                         <td style="width:90%" colspan="5">
-                                            <input type="number" name="test_fild_sum" id="test_fild_sum"  class="input_text input_text_80  input_text_end" placeholder="총 점" value="<?= $row3['test_sum'] ?>" min="0" max="80" > 
+                                            <input type="number" name="test_fild_sum" id="test_fild_sum"  class="input_text input_text_80  input_text_end" placeholder="총 점" value="<?= $row3['test_sum'] ?>" min="0" max="80" readonly> 
                                             <span>/<?= $sum ?></span>
                                         </td>
                                     </tr>
@@ -230,7 +224,7 @@ $row99 = sql_fetch_array($result);
                     ?>                                  
                                         <th style="width:10%" class="input_text_center">총 점</th>  
                                         <td style="width:40%" colspan="3">
-                                            <input type="number" name="test_fild_sum" id="test_fild_sum"  class="input_text input_text_80  input_text_end" placeholder="총 점" value="<?= $row3['test_sum'] ?>" min="0" max="80" > 
+                                            <input type="number" name="test_fild_sum" id="test_fild_sum"  class="input_text input_text_80  input_text_end" placeholder="총 점" value="<?= $row3['test_sum'] ?>" min="0" max="80" readonly> 
                                             <span>/<?= $sum ?></span>
                                         </td>
                                     </tr>
@@ -241,11 +235,10 @@ $row99 = sql_fetch_array($result);
                     ?>
                   <tr class="input_text_center">
                     <th>평가의견</th>
-                    <td colspan="5">
-                        <textarea name="test_opinion" id="test_opinion" class="input_text input_text_100 input_text_hight" <?= $row44['report'] ==2? "disabled": ""; ?> cols="20" rows="10" minlength="100"><?= $row3['test_opinion'] ?></textarea>
+                    <td colspan="6">
+                        <textarea name="test_opinion" id="test_opinion" class="input_text input_text_100 input_text_hight"  <?= $row3['value'] == 2 ? 'disabled' : '' ?> cols="20" rows="10" minlength="100"><?= $row3['test_opinion'] ?></textarea>
                     </td>
                 </tr>
-               
             </tbody>
             <tbody class="file_table_all file_table_all_rater">
                 <tr class="view_table_header_table"></tr>
@@ -255,8 +248,9 @@ $row99 = sql_fetch_array($result);
             </tbody>
         </table> 
         <div class="rater_value_btn_contianer">
+        <?php if($row3['value'] != 2){ ?>
             <label for="upload01" id="file-label-btn" class="file-label file-label-btn"><img src="<?= G5_IMG_URL ?>/upload.png" alt=""> 파일 업로드</label>
-
+        <?php } ?>
             <button type="button" class="btn_esc btn_color_white" style="float:right;">취소</button>
             <?php if($row3['value'] != 2){ ?>
             <button type="submit" class="btn_submit" id="value_btn_submit" style="float:right;">저장</button>
@@ -274,6 +268,7 @@ $row99 = sql_fetch_array($result);
                 var rater_idx = $(this).parent().next().find('.sql_rater_idx').val();
                 us_idx = $(this).parent().next().find('.sql_us_idx').val();
                 test_rater_value = $(this).parent().next().find('.sql_fild_value').val();
+                var bo_idx = '<?= $_GET['bo_idx'] ?>';
                 $.ajax({
                     url: "<?= G5_BBS_URL ?>/view.report.sql.php",
                     method: "POST",
@@ -303,23 +298,32 @@ $row99 = sql_fetch_array($result);
 
             $('.test_fild, #test_opinion').on("propertychange change keyup paste input", function(){
                 test_sum = 0;
+                var bo_idx = '<?= $_GET['bo_idx']; ?>';
+                
+                if(bo_idx != 2){
+                    var test_fild_length = $('.test_fild').length;
 
+                    for(var p = 1; p <= test_fild_length; p++){
+                        if($('#test_fild_'+p).val() != "")
+                            test_fild_value = true;
+                        else 
+                            test_fild_value = false;
+
+                            test_sum = Number(test_sum) +  Number($('#test_fild_'+p).val());
+                    }
+
+                } else {
+                    if($('.test_fild_radio[name=test_fild_1]').is(':checked'))
+                        test_fild_value = true;
+                    else
+                        test_fild_value = false;
+                }
                 if($('#test_opinion').val() != "")
                     test_opinion = true;
                 else 
                     test_opinion = false;
 
-                    var test_fild_length = $('.test_fild').length;
-
-                for(var p = 1; p <= test_fild_length; p++){
-                    if($('#test_fild_'+p).val() != "")
-                        test_fild_value = true;
-                    else 
-                        test_fild_value = false;
-
-                        test_sum = Number(test_sum) +  Number($('#test_fild_'+p).val());
-                }
-
+               
                 $('#test_fild_sum').val(test_sum);
                 if(test_fild_value && test_opinion){
                     $('#value_btn_submit').attr('disabled', false);
@@ -344,24 +348,25 @@ $row99 = sql_fetch_array($result);
 
             var file_number = 1;
 
-            var html = '<tr class="input-file_list ">'
-                        +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일명</th>'
-                        +'<td scope="col" class="view_table_text" colspan="1" style="width:40%">'
-                        +'    <input type="text" style="margin: 0 -2px;" id="file_label_view1" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/> '
-                        +'</td>'
-                        +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 사이즈</th>'
-                        +'<td scope="col" class="view_table_text" colspan="1" style="width:20%">'
-                        +'    <input type="text" id="file-size-'+file_number+'" class="file-name file-size" style="margin: 0 -2px;" value="용량" readonly="readonly"/>'
-                        +'    <input type="file" name="bf_file_null[]" id="upload01" class="file-upload" />'
-                        +'</td>'
-                        +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 삭제</th>'
-                        +'<td scope="col" class="view_table_text" colspan="1" style="width:10%">'
-                        +'<button type="button" class="file-label file-del   " id="file-del<?= $i ?>">삭제</button>'
-                        +'</td>'
-                        +'</tr>';
-
-
-            $('.file_table_all').append(html);
+            var disabled = '<?= $row3['value']  == 2? false : true; ?>';
+            if(disabled){
+                var html = '<tr class="input-file_list ">'
+                            +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일명</th>'
+                            +'<td scope="col" class="view_table_text" colspan="1" style="width:40%">'
+                            +'    <input type="text" style="margin: 0 -2px;" id="file_label_view1" readonly="readonly" class="file-name" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" value="파일명"/> '
+                            +'</td>'
+                            +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 사이즈</th>'
+                            +'<td scope="col" class="view_table_text" colspan="1" style="width:20%">'
+                            +'    <input type="text" id="file-size-'+file_number+'" class="file-name file-size" style="margin: 0 -2px;" value="용량" readonly="readonly"/>'
+                            +'    <input type="file" name="bf_file_null[]" id="upload01" class="file-upload" />'
+                            +'</td>'
+                            +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 삭제</th>'
+                            +'<td scope="col" class="view_table_text" colspan="1" style="width:10%">'
+                            +'<button type="button" class="file-label file-del   " id="file-del<?= $i ?>">삭제</button>'
+                            +'</td>'
+                            +'</tr>';
+                $('.file_table_all_rater').append(html);
+            }
 
             //클릭이벤트 unbind 
             $("#file-label-btn").unbind("click"); 

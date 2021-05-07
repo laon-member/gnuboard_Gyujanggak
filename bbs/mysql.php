@@ -26,6 +26,12 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
 
     $sql2 = " select * from rater_value where rater_idx = '{$row['idx']}' AND report_idx = '{$table}' AND value = 2";
     $row2 = sql_fetch($sql2);
+
+    $sql3 = "SELECT * from g5_board_file where bo_table = 'rater' and wr_id ='{$row['idx']}'";
+    $result3 = sql_query($sql3);
+
+    $sql4 = "SELECT * from g5_board_file where bo_table = 'rater' and wr_id ='{$row['idx']}'";
+    $row4 = sql_fetch($sql4);
     
     if($row2['idx'] != ""){
         echo "<tr class='".$lt_class."tr_hover'>";
@@ -42,6 +48,18 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
         }
         // echo "<td class='td_datetime td_center'>".$row2['test_average']."</td>";
         echo "<td colspan='2' style='word-break: break-all;' class='td_title'>".$row2['test_opinion']."</td>";
+        echo "<td colspan='2' style='word-break: break-all; text-align:center;' class='file_container'>" ;
+            if($row4) {
+                echo "<div class='file_hover'>";
+                echo "<img src='". G5_IMG_URL ."/download_icon.png' alt='download_icon' class='file_img'>";
+                echo "<ul class='file_list'";
+                for($i=0; $row3=sql_fetch_array($result3); $i++) {
+                    echo "<li><a href='".G5_BBS_URL."/download.php?bo_table=".$row3['bo_table']."&wr_id=".$row3['wr_id']."&no=".$row3['bf_no']."' class=''>".$row3['bf_source']."</a></li>";
+                }
+                echo "</ul>";
+                echo "</div>";
+            }
+        echo " </td>";
         echo "</tr>";
     }
 }

@@ -938,3 +938,38 @@ table th,table td, table a{ font-size: 14px;}
     margin-top: 20px;
     border-collapse: collapse;
 }
+
+.file_hover{
+    position: relative;
+    padding: 5px 0;
+}
+
+.file_img{
+    cursor: pointer;
+}
+
+.file_list{
+    display:none;
+    position: absolute;
+    z-index: 20;
+    width: 300px;
+    right: 0;
+    top: 100%;
+    border: 1px solid #1D2E58;
+    background: #fff;
+}
+
+.file_list li {
+    text-align: left;
+}
+
+.file_list a {
+    color: #1D2E58;
+    display: block;
+    text-align: left;
+    padding: 5px 10px;
+}
+
+.file_hover:hover .file_list{
+    display: block;
+}

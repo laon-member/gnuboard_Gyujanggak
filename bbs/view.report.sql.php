@@ -56,7 +56,7 @@ $result2 = sql_query($sql2);
             +'</td>'
             +'<th scope="col" class="view_table_header" colspan="1" style="width:10%">파일 삭제</th>'
             +'<td scope="col" class="view_table_text" colspan="1" style="width:10%">'
-            +'    <label for="del-_no<?= $i ?>" class="file-label del-no-btn">삭제</label>'
+            +'    <label for="del-_no<?= $i ?>" class="file-label del-no-btn file-del">삭제</label>'
             +'</td>'
             +'</tr>'
         );

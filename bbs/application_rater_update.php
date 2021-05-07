@@ -7,7 +7,7 @@ include_once('./_common.php');
 // check_write_token($bo_table);
 
 
-// $bo_table = 'g5_business_propos';
+$bo_table = 'rater';
 
 
 // $g5['title'] = '평가 업로드';
@@ -55,7 +55,7 @@ if(isset($row)){
                 if($_POST['test_id'] == 2){
                     $average = 0;
                 } else {
-                    $average =  $_POST['test_fild_sum'] / $fild_cnt;
+                    @$average =  $_POST['test_fild_sum'] / $fild_cnt;
                 }
 
                 $sum = $_POST['test_fild_sum'] == '' ? 0 : $_POST['test_fild_sum'];
@@ -79,7 +79,7 @@ if(isset($row)){
                     if($_FILES['bf_file']['name'][$i] && is_uploaded_file($_FILES['bf_file']['tmp_name'][$i]))
                         $file_count++;
                 }
-
+                
                 // 디렉토리가 없다면 생성합니다. (퍼미션도 변경하구요.)
                 @mkdir(G5_DATA_PATH.'/file/'.$bo_table, G5_DIR_PERMISSION);
                 @chmod(G5_DATA_PATH.'/file/'.$bo_table, G5_DIR_PERMISSION);

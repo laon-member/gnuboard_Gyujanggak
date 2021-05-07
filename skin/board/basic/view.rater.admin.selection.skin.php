@@ -321,6 +321,10 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                     $(this).css({"background": "#CCC"});
                 }
             });
+
+            // $(document).on('hover', '.file_hover', function(){
+            //     $(this).children('ul').slideToggle();
+            // })
         });
     </script>
     <div class="bo_sch_wrap">
@@ -336,12 +340,12 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             <thead>
             <tr>
                 <th style="width:5%" class=" td_center">과제명</th>
-                <td style="width:95%" colspan="7" class="td_title"><?= $row66['wr_subject'] ?></td>
+                <td style="width:95%" colspan="8" class="td_title"><?= $row66['wr_subject'] ?></td>
                 
             </tr>
             <tr>
                 <th style="width:5%" class=" td_center">과제명</th>
-                <td style="width:95%" colspan="7" id="ko_title" class="td_title"></td>
+                <td style="width:95%" colspan="8" id="ko_title" class="td_title"></td>
                 
             </tr>
             <!-- <tr>
@@ -362,7 +366,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                     $result = sql_query($sql);
                     for($i=0; $row88=sql_fetch_array($result); $i++) {
                 ?>
-                <th scope="col" style="width:8%" class="` td_center"><?= $row88['test_name'] ?></th>
+                <th scope="col" style="width:5%" class="` td_center"><?= $row88['test_name'] ?></th>
                 <?php
 
                     }
@@ -372,7 +376,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                 <!-- <th scope="col" style="width:8%" class=" td_center">종합평가</th> -->
                 <?php } ?>
 
-                <th scope="col" style="width:52%" colspan="2" class=" td_center">평가의견</th>
+                <th scope="col" style="width:45%" colspan="2" class=" td_center">평가의견</th>
+                <th scope="col" style="width:10%" colspan="2" class=" td_center">첨부파일</th>
+
             </tr>
             </thead>
             <tbody id="tbody">
